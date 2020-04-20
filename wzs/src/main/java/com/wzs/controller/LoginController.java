@@ -41,15 +41,14 @@ public class LoginController {
     @RequestMapping(value = "/api/loginCheck", method = RequestMethod.POST)
     public @ResponseBody
     Object loginCheck(HttpServletRequest request) {
-        long id = Long.parseLong(request.getParameter("id"));
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
         PasswordHelper helper = new PasswordHelper();
-        password = helper.encrypt(id, password);
-
-        boolean isUser = loginService.hasMatchUser(id, password);
+        password = helper.encryptByName(email, password);   //加密
+        boolean isUser = loginService.hasMatchUserByEmail(email, password);
         HashMap<String, String> res = new HashMap<>();
         if (isUser) {
-            Account account = loginService.findAccountById(id);
+            Account account = loginService.findAccountByEmail(email);
             request.getSession().setAttribute("account", account);
             res.put("typeNum", "1");
             res.put("msg", "登陆成功！");
@@ -81,12 +80,13 @@ public class LoginController {
     public String reUserPasswdDo(HttpServletRequest request, String oldPasswd, String newPasswd, String reNewPasswd, RedirectAttributes redirectAttributes) {
         Account user = (Account) request.getSession().getAttribute("account");
         long id = user.getId();
+        String email = user.getEmail();
         PasswordHelper helper = new PasswordHelper();
-        oldPasswd = helper.encrypt(id, oldPasswd);
+        oldPasswd = helper.encryptByName(email, oldPasswd);
         String password = loginService.getUserPassword(id);
 
         if (password.equals(oldPasswd)) {
-            newPasswd = helper.encrypt(id, newPasswd);
+            newPasswd = helper.encryptByName(email, newPasswd);
 
             if (loginService.reUserPassword(id, newPasswd)) {
                 redirectAttributes.addFlashAttribute("succ", "密码修改成功！");

@@ -20,24 +20,16 @@ public class UserInfoMap {
         return sqlSessionTemplate.selectOne(NAMESPACE + "findInfoById", id);
     }
 
-    public int editReaderInfo(final UserInfo userInfo) {
-        return sqlSessionTemplate.update(NAMESPACE + "editReaderInfo", userInfo);
+    public int editUserInfo(final UserInfo userInfo) {
+        return sqlSessionTemplate.update(NAMESPACE + "editUserInfo", userInfo);
     }
 
-    public int editReaderCard(final UserInfo userInfo) {
-        return sqlSessionTemplate.update(NAMESPACE + "editReaderCard", userInfo);
-    }
-
-    public final long addReaderInfo(final UserInfo userInfo) {
-        if (sqlSessionTemplate.insert(NAMESPACE + "addReaderInfo", userInfo) > 0) {
-            return sqlSessionTemplate.selectOne(NAMESPACE + "getReaderId", userInfo);
+    public final long addUserInfo(final UserInfo userInfo) {
+        if (sqlSessionTemplate.insert(NAMESPACE + "addUserInfo", userInfo) > 0) {
+            return sqlSessionTemplate.selectOne(NAMESPACE + "getUserId", userInfo);
         } else {
             return -1;
         }
-    }
-
-    public int deleteReaderInfo(final long id) {
-        return sqlSessionTemplate.delete(NAMESPACE + "deleteReaderInfo", id);
     }
 
     public ArrayList<UserInfo> getAllInfos() {

@@ -18,23 +18,16 @@ public class UserInfoService {
     }
 
     public boolean editUserInfo(UserInfo userInfo) {
-        return userInfoMap.editReaderInfo(userInfo) > 0;
+        return userInfoMap.editUserInfo(userInfo) > 0;
     }
 
-    public boolean editReaderCard(UserInfo userInfo) {
-        return userInfoMap.editReaderCard(userInfo) > 0;
-    }
-
-    public long addReaderInfo(UserInfo userInfo) {
+    public long addUserInfo(UserInfo userInfo) {
         if(userInfoMap.findInfoById(userInfo.getId())!=null){
             return -1;
         }
-        return userInfoMap.addReaderInfo(userInfo);
+        return userInfoMap.addUserInfo(userInfo);
     }
 
-    public boolean deleteReaderInfo(long Id) {
-        return userInfoMap.deleteReaderInfo(Id)> 0;
-    }
 
     public ArrayList<UserInfo> getAllInfos() {
         return userInfoMap.getAllInfos();
