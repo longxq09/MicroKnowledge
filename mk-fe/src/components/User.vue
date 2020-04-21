@@ -3,8 +3,11 @@
 		<el-header>
 			<div class="title">微知 MicroKnowledge</div>
 			<el-badge class="item">
-				<el-button>个人信息</el-button>
+				<el-button @click="userInfo">个人信息</el-button>
 			</el-badge>
+			<div class="avator">
+				<el-avatar> user </el-avatar>
+			</div>
 		</el-header>
 		<el-main>
 			
@@ -29,7 +32,9 @@
       }
     },
 		methods: {
-      
+      userInfo() {
+				this.$router.push('/userinfo');
+			}
 		}
 		
   }
@@ -60,5 +65,11 @@
 	.item {
 		float: right;
 		margin: 10px;
+	}
+	
+	.avator {
+		display: inline-block;
+		float: right;
+		margin-top: 5px;
 	}
 </style>
