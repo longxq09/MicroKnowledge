@@ -13,9 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+
 
 @Controller
 public class UserInfoController {
@@ -24,21 +23,6 @@ public class UserInfoController {
 
     @Autowired
     private LoginService loginService;
-
-
-    private UserInfo getPersonInfo(String email, String name,
-                                   String sex, String birth, String address, String work) {
-        UserInfo personInfo = new UserInfo();
-        Date date = new Date();
-        try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            date = df.parse(birth);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        personInfo.setInfo(email, name, sex, date, address, work);
-        return personInfo;
-    }
 
 
     @RequestMapping("/user_info.html")
@@ -64,14 +48,40 @@ public class UserInfoController {
     }
 
     @RequestMapping("user_edit_do_r.html")
-    public String userInfoEditDo(HttpServletRequest request, String name,
-                                 String sex, String birth, String address, String phone, RedirectAttributes redirectAttributes) {
+    public String userInfoEditDo(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         Account account = (Account) request.getSession().getAttribute("account");
-        UserInfo personInfo = getPersonInfo(account.getEmail(), name, sex, birth, address, phone);
-        if (userInfoService.editUserInfo(personInfo)) {
+        String name, sex, address, signature, education, work, introduction, contribution;
+        ArrayList<String> expertise;    //专业领域, not yet
+        ArrayList<String> interest;    //偏好领域, not yet
+        UserInfo userInfo = new UserInfo();
+        if ((name = request.getParameter("name")) != null) {
+            userInfo.setName(name);
+        }
+        if ((sex = request.getParameter("sex")) != null) {
+            userInfo.setSex(sex);
+        }
+        if ((address = request.getParameter("address")) != null) {
+            userInfo.setAddress(address);
+        }
+        if ((signature = request.getParameter("signature")) != null) {
+            userInfo.setSignature(signature);
+        }
+        if ((education = request.getParameter("education")) != null) {
+            userInfo.setEducation(education);
+        }
+        if ((work = request.getParameter("work")) != null) {
+            userInfo.setWork(work);
+        }
+        if ((introduction = request.getParameter("introduction")) != null) {
+            userInfo.setIntroduction(introduction);
+        }
+        if ((contribution = request.getParameter("contribution")) != null) {
+            userInfo.setContribution(contribution);
+        }
+        if (userInfoService.editUserInfo(userInfo)) {
             Account accountNew = loginService.findAccountById(account.getId());
             request.getSession().setAttribute("account", accountNew);
-            redirectAttributes.addFlashAttribute("succ", "信息修改成功！");
+            redirectAttributes.addFlashAttribute("success", "信息修改成功！");
         } else {
             redirectAttributes.addFlashAttribute("error", "信息修改失败！");
         }
@@ -87,33 +97,17 @@ public class UserInfoController {
     public String userInfoAddDo(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String email = request.getParameter("email");
         String name = request.getParameter("name");
-        String sex = request.getParameter("sex");
-        String birth = request.getParameter("birth");
-        String address = request.getParameter("address");
-        String work = request.getParameter("work");
         String password = request.getParameter("password");
-        UserInfo personInfo = getPersonInfo(email, name, sex, birth, address, work);
-        long ok = userInfoService.addUserInfo(personInfo);
-        if (ok > 0 && loginService.addAccount(personInfo, password)) {
-            redirectAttributes.addFlashAttribute("succ", "添加成功！");
+        UserInfo userInfo = new UserInfo();
+        userInfo.setName(name);
+        userInfo.setEmail(email);
+        long ok = userInfoService.addUserInfo(userInfo);
+        if (ok > 0 && loginService.addAccount(userInfo, password)) {
+            redirectAttributes.addFlashAttribute("success", "添加成功！");
         } else {
             redirectAttributes.addFlashAttribute("error", "已存在，添加失败！");
         }
         return "redirect:/account_add.html";
     }
 
-    /*  另一种传参方式
-    @RequestMapping("/account_add_do.html")
-    public String userInfoAddDo(String email, String name, String sex, String birth,
-                                  String address, String work, String password, RedirectAttributes redirectAttributes) {
-        UserInfo personInfo =  getPersonInfo(email, name, sex, birth, address, work);
-        long ok = userInfoService.addUserInfo(personInfo);
-        if (ok > 0 && loginService.addAccount(personInfo, password)) {
-            redirectAttributes.addFlashAttribute("succ", "添加成功！");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "已存在，添加失败！");
-        }
-        return "redirect:/account_add.html";
-    }
-    */
 }

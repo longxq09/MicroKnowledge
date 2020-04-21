@@ -77,8 +77,10 @@ public class LoginController {
     }
 
     @RequestMapping("/repasswd_do")
-    public String reUserPasswdDo(HttpServletRequest request, String oldPasswd, String newPasswd, String reNewPasswd, RedirectAttributes redirectAttributes) {
+    public String reUserPasswdDo(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         Account user = (Account) request.getSession().getAttribute("account");
+        String oldPasswd=request.getParameter("oldPasswd");
+        String newPasswd=request.getParameter("newPasswd");
         long id = user.getId();
         String email = user.getEmail();
         PasswordHelper helper = new PasswordHelper();
@@ -89,7 +91,7 @@ public class LoginController {
             newPasswd = helper.encryptByName(email, newPasswd);
 
             if (loginService.reUserPassword(id, newPasswd)) {
-                redirectAttributes.addFlashAttribute("succ", "密码修改成功！");
+                redirectAttributes.addFlashAttribute("success", "密码修改成功！");
                 return "redirect:/repasswd.html";
             } else {
                 redirectAttributes.addFlashAttribute("error", "密码修改失败！");

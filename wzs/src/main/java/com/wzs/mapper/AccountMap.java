@@ -57,10 +57,8 @@ public class AccountMap {
     }
 
     public int addAccount(final UserInfo personInfo, final String password) {
-        long id = personInfo.getId();
         String email = personInfo.getEmail();
         Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
         map.put("email", email);
         map.put("password", password);
         return sqlSessionTemplate.update(NAMESPACE + "addAccount", map);

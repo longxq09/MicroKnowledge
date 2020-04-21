@@ -20,6 +20,10 @@ public class UserInfoMap {
         return sqlSessionTemplate.selectOne(NAMESPACE + "findInfoById", id);
     }
 
+    public UserInfo findInfoByEmail(final String email) {
+        return sqlSessionTemplate.selectOne(NAMESPACE + "findInfoByEmail", email);
+    }
+
     public int editUserInfo(final UserInfo userInfo) {
         return sqlSessionTemplate.update(NAMESPACE + "editUserInfo", userInfo);
     }

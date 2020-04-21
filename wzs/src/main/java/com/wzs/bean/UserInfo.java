@@ -10,19 +10,18 @@ public class UserInfo implements Serializable {
     private String email;
     private String name;
     private String sex;
-    private Date birth;
+    //private Date birth;
     private String address;
     private String signature;   //个性签名
     private String education;   //学历
-    private String work;        //工作
+    private String work;        //工作信息，包括affiliation即工作单位
     private ArrayList<String> expertise;    //专业领域
     private ArrayList<String> interest;    //偏好领域
     private String introduction;            //简介（选填）
     private String contribution;            //贡献（选填）
 
-    public void setInfo(String email, String name, String sex, Date birth, String address, String work){
+    public void setInfo(String email, String name, String sex,String address, String work){
         this.address=address;
-        this.birth=birth;
         this.name=name;
         this.work=work;
         this.email=email;
@@ -59,14 +58,6 @@ public class UserInfo implements Serializable {
 
     public void setSex(String sex) {
         this.sex = sex;
-    }
-
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
     }
 
     public String getAddress() {

@@ -22,7 +22,7 @@ public class UserInfoService {
     }
 
     public long addUserInfo(UserInfo userInfo) {
-        if(userInfoMap.findInfoById(userInfo.getId())!=null){
+        if(userInfoMap.findInfoByEmail(userInfo.getEmail())!=null){
             return -1;
         }
         return userInfoMap.addUserInfo(userInfo);
