@@ -1,11 +1,11 @@
 server:
-  port: 8088
+  port: 18088
 
 spring:
   datasource:
-    name: wzs  #数据库名
-    url: jdbc:mysql://localhost:3306/wzs #url
-    username: root  #用户名
-    password: 123456  #密码
-    driver-class-name: com.mysql.cj.jdbc.Driver  #数据库链接驱动
+    name: wzs
+    url: jdbc:mysql://localhost:33006/vhr
+    username: root
+    password: haojiwei
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
