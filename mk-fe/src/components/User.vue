@@ -1,22 +1,20 @@
 <template>
 	<el-container>
 		<el-header>
-			<div class="title">微知 MicroKnowledge</div>
-			<el-badge class="item">
-				<el-button @click="userInfo">个人信息</el-button>
-			</el-badge>
-			<div class="avator">
-				<el-avatar> user </el-avatar>
-			</div>
+			<v-head v-bind:user=true></v-head>
 		</el-header>
+		
 		<el-main>
 			
 		</el-main>
-		<el-footer>copyright: Jiayi</el-footer>
+		<v-footer></v-footer>
 	</el-container>
 </template>
 
+
 <script>
+import vHead from './common/Header.vue';
+import vFooter from './common/Footer.vue';
   export default {
     name: "User",
     data() {
@@ -31,45 +29,21 @@
         }
       }
     },
+		components: {
+			vHead,
+			vFooter
+		},
 		methods: {
-      userInfo() {
-				this.$router.push('/userinfo');
-			}
+      
 		}
 		
   }
 </script>
 
-<style>
-  .el-header{
-    background-color: #FFFFFF;
-    line-height: 1.5;
-  }
-  
-	.title {
-		color: #409EFF;
-    text-align: left;
-		font-size: 30px;
-		font-weight: 800;
-		display: inline-block;
-	}
-	.el-footer {
-		text-align: center;
-	}
-	
+<style scoped>
   .el-main {
     background-color: #F4F4F5;
     color: #333;
   }
-	
-	.item {
-		float: right;
-		margin: 10px;
-	}
-	
-	.avator {
-		display: inline-block;
-		float: right;
-		margin-top: 5px;
-	}
+
 </style>

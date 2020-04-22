@@ -1,10 +1,7 @@
 <template>
 	<el-container>
 		<el-header>
-			<div class="title">微知 MicroKnowledge | 个人信息</div>
-			<el-badge class="item">
-				<el-button @click="user">回到主页</el-button>
-			</el-badge>
+			<v-head v-bind:title="title"  v-bind:userinfo=true></v-head>
 		</el-header>
 		<el-main>
 			<el-form ref="form" :model="form" label-width="80px">
@@ -89,15 +86,18 @@
 				</el-form-item>
 			</el-form>
 		</el-main>
-		<el-footer>copyright: Jiayi</el-footer>
+		<v-footer></v-footer>
 	</el-container>
 </template>
 
 <script>
+import vHead from './common/Header.vue';
+import vFooter from './common/Footer.vue';
   export default {
     name: "User",
     data() {
       return {
+				title: "微知 | 个人信息",
 				activeName: 'first',
         dataForm: {username: 'admin', password: '123456'},
 				fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
@@ -120,6 +120,10 @@
         }
       }
     },
+		components: {
+			vHead,
+			vFooter
+		},
 		methods: {
       user() {
 				this.$router.push('/user');
@@ -161,22 +165,6 @@
 </script>
 
 <style>
-  .el-header{
-    background-color: #FFFFFF;
-    line-height: 1.5;
-  }
-  
-	.title {
-		color: #409EFF;
-    text-align: left;
-		font-size: 30px;
-		font-weight: 800;
-		display: inline-block;
-	}
-	.el-footer {
-		text-align: center;
-	}
-	
   .el-main {
     background-color: #F4F4F5;
     color: #333;

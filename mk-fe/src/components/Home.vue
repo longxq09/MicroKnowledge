@@ -1,6 +1,8 @@
 <template>
 	<el-container>
-		<el-header>微知 MicroKnowledge</el-header>
+		<el-header>
+			<v-head></v-head>
+		</el-header>
 		<el-main>
 			<div style="height: 300px">
 				<el-image
@@ -37,11 +39,13 @@
 				
 			</div>
 		</el-main>
-		<el-footer>copyright: Jiayi</el-footer>
+		<v-footer></v-footer>
 	</el-container>
 </template>
 
 <script>
+import vHead from './common/Header.vue';
+import vFooter from './common/Footer.vue';
   export default {
     name: "Home",
     data() {
@@ -49,6 +53,7 @@
 				activeName: 'first',
         dataForm: {username: 'admin', password: '123456', email: 'test@mail.com'},
 				fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+				fit: 'fill',
         url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
         rules: {
           username: [{required: true, message: '账号不可为空', trigger: 'blur'}],
@@ -57,6 +62,10 @@
         }
       }
     },
+		components: {
+			vHead,
+			vFooter
+		},
 		methods: {
       login () {
         var params = new URLSearchParams();
@@ -95,18 +104,6 @@
 </script>
 
 <style>
-  .el-header{
-    background-color: #FFFFFF;
-    color: #409EFF;
-    text-align: left;
-    line-height: 1.5;
-		font-size: 30px;
-		font-weight: 800;
-  }
-  
-	.el-footer {
-		text-align: center;
-	}
 	
   .el-main {
     background-color: #F4F4F5;
