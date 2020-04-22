@@ -46,10 +46,10 @@ public class UserInfoController {
         HashMap<String, String> res = new HashMap<>();
         if (ok > 0 && loginService.addAccount(userInfo, password)) {
             res.put("code", "1");
-            res.put("msg", "注册成功！");
+            res.put("message", "注册成功！");
         } else {
             res.put("code", "0");
-            res.put("msg", "注册失败！");
+            res.put("message", "注册失败！");
         }
         return res;
     }

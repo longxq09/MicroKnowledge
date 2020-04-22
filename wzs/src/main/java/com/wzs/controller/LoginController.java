@@ -42,10 +42,10 @@ public class LoginController {
             Account account = loginService.findAccountByEmail(email);
             request.getSession().setAttribute("account", account);
             res.put("code", "1");
-            res.put("msg", "登陆成功！");
+            res.put("message", "登陆成功！");
         } else {
             res.put("code", "0");
-            res.put("msg", "账号或密码错误！");
+            res.put("message", "账号或密码错误！");
         }
         return res;
     }
