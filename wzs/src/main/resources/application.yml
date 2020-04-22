@@ -1,8 +1,17 @@
 
 spring:
   datasource:
-    name: test  #Êý¾Ý¿âÃû
+    name: test  #ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½
     url: jdbc:mysql://localhost:3306/vhr #url
-    username: root  #ÓÃ»§Ãû
-    password: 990421  #ÃÜÂë
-    driver-class-name: com.mysql.cj.jdbc.Driver  #Êý¾Ý¿âÁ´½ÓÇý¶¯
+    username: root  #ï¿½Ã»ï¿½ï¿½ï¿½
+    password: 990421  #ï¿½ï¿½ï¿½ï¿½
+    driver-class-name: com.mysql.cj.jdbc.Driver  #ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.wzs.mapper
+
+mapper:
+  mappers:  com.wzs.mapper
+  not-empty: false
+  identity: MYSQL

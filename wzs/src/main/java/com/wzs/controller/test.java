@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class test {
-    @ResponseBody
-    @RequestMapping("/")
     public String sayHello(){
         return "index";
     }
