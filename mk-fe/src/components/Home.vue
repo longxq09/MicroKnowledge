@@ -19,6 +19,13 @@
 								<el-input type="password" v-model="dataForm.password" placeholder="请输入密码"></el-input>
 							</el-form-item>
 							<el-button @click="login">登录</el-button>
+							<el-alert
+								v-show="loginFail"
+								title="邮箱或密码错误"
+								type="error"
+								center
+								show-icon>
+							</el-alert>
 						</el-form>
 					</el-tab-pane>
 					<el-tab-pane label="注册" name="second">
@@ -50,6 +57,7 @@ import vFooter from './common/Footer.vue';
     name: "Home",
     data() {
       return {
+				loginFail: false,
 				activeName: 'first',
         dataForm: {username: 'admin', password: '123456', email: 'test@mail.com'},
 				fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
@@ -71,18 +79,19 @@ import vFooter from './common/Footer.vue';
         var params = new URLSearchParams();
         params.append('email', this.dataForm.email);
         params.append('password',this.dataForm.password);
-        /*
 				this.axios.post('/user/login', params)
           .then((res)=>{
             if (res.data.code==0){
               this.$router.push("/user");
             }
+						else {
+							this.loginFail = true;
+						}
           })
           .catch((res)=>{
+						this.loginFail = true;
             console.log(res.data.message);
           });
-				*/
-				this.$router.push("/user");
       },
 			register () {
         var params = new URLSearchParams();
@@ -95,6 +104,7 @@ import vFooter from './common/Footer.vue';
             }
           })
           .catch((res)=>{
+						this.loginFail = true;
             console.log(res.data.message);
           });
       }
