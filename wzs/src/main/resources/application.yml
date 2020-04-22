@@ -1,8 +1,8 @@
 
 spring:
   datasource:
-    name: test  #数据库名
+    name: wzs  #数据库名
     url: jdbc:mysql://localhost:3306/vhr #url
     username: root  #用户名
-    password: 990421  #密码
+    password: 123456  #密码
     driver-class-name: com.mysql.cj.jdbc.Driver  #数据库链接驱动

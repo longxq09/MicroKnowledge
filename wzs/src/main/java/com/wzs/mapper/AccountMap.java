@@ -2,66 +2,29 @@ package com.wzs.mapper;
 
 import com.wzs.bean.Account;
 import com.wzs.bean.UserInfo;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
-@Repository
-public class AccountMap {
+@Mapper
+public interface AccountMap {
 
-    @Resource
-    private SqlSessionTemplate sqlSessionTemplate;
+    int getIdMatchCount(final long id, final String password);
 
-    private final static String NAMESPACE = "com.wzs.mapper.AccountMap.";
+    int getEmailMatchCount(final String email, final String password);
 
-    public int getIdMatchCount(final long id, final String password) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
-        map.put("password", password);
-        return sqlSessionTemplate.selectOne(NAMESPACE + "getIdMatchCount", map);
-    }
 
-    public int getEmailMatchCount(final String email, final String password) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("email", email);
-        map.put("password", password);
-        return sqlSessionTemplate.selectOne(NAMESPACE + "getEmailMatchCount", map);
-    }
+    int getAdminMatch(final String email);
 
-    public int getIdMatch(final long id) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
-        return sqlSessionTemplate.selectOne(NAMESPACE + "getIdMatch", map);
-    }
+    int getIdMatch(final long id);
 
-    public Account findAccountById(final long id) {
-        return sqlSessionTemplate.selectOne(NAMESPACE + "findAccountById", id);
-    }
+    Account findAccountById(final long id);
 
-    public Account findAccountByEmail(final String email) {
-        return sqlSessionTemplate.selectOne(NAMESPACE + "findAccountByEmail", email);
-    }
+    Account findAccountByEmail(final String email);
 
-    public int resetPassword(final long id, final String newPassword) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
-        map.put("password", newPassword);
-        return sqlSessionTemplate.update(NAMESPACE + "resetPassword", map);
-    }
+    int addAccount(final String email, final String password);
 
-    public String getPassword(final long id) {
-        return sqlSessionTemplate.selectOne(NAMESPACE + "getPassword", id);
-    }
+    int resetPassword(final long id, final String newPassword);
 
-    public int addAccount(final UserInfo personInfo, final String password) {
-        String email = personInfo.getEmail();
-        Map<String, Object> map = new HashMap<>();
-        map.put("email", email);
-        map.put("password", password);
-        return sqlSessionTemplate.update(NAMESPACE + "addAccount", map);
-    }
+    String getPassword(final long id);
 
 }

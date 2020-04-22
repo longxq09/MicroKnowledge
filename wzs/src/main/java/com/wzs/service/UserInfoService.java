@@ -1,35 +1,17 @@
 package com.wzs.service;
 
 import com.wzs.bean.UserInfo;
-import com.wzs.mapper.UserInfoMap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 
-@Service
-public class UserInfoService {
-    @Autowired
-    private UserInfoMap userInfoMap;
+public interface UserInfoService {
 
-    public UserInfo getUserInfo(long Id) {
-        return userInfoMap.findInfoById(Id);
-    }
+    UserInfo getUserInfo(long Id);
 
-    public boolean editUserInfo(UserInfo userInfo) {
-        return userInfoMap.editUserInfo(userInfo) > 0;
-    }
+    boolean editUserInfo(UserInfo userInfo);
 
-    public long addUserInfo(UserInfo userInfo) {
-        if(userInfoMap.findInfoByEmail(userInfo.getEmail())!=null){
-            return -1;
-        }
-        return userInfoMap.addUserInfo(userInfo);
-    }
+    long addUserInfo(UserInfo userInfo);
 
-
-    public ArrayList<UserInfo> getAllInfos() {
-        return userInfoMap.getAllInfos();
-    }
+    ArrayList<UserInfo> getAllInfos();
 }

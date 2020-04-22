@@ -10,22 +10,22 @@ public class UserInfo implements Serializable {
     private String email;
     private String name;
     private String sex;
-    //private Date birth;
+    //private Date birth; 待定
     private String address;
     private String signature;   //个性签名
     private String education;   //学历
     private String work;        //工作信息，包括affiliation即工作单位
-    private ArrayList<String> expertise;    //专业领域
-    private ArrayList<String> interest;    //偏好领域
-    private String introduction;            //简介（选填）
-    private String contribution;            //贡献（选填）
+    private String expertise;    //专业领域
+    private String interest;    //偏好领域
+    private String introduction;            //简介
+    private String contribution;            //贡献
 
-    public void setInfo(String email, String name, String sex,String address, String work){
-        this.address=address;
-        this.name=name;
-        this.work=work;
-        this.email=email;
-        this.sex=sex;
+    public void setInfo(String email, String name, String sex, String address, String work) {
+        this.address = address;
+        this.name = name;
+        this.work = work;
+        this.email = email;
+        this.sex = sex;
     }
 
     public void setId(long id) {
@@ -36,7 +36,7 @@ public class UserInfo implements Serializable {
         return id;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
@@ -92,19 +92,19 @@ public class UserInfo implements Serializable {
         this.work = work;
     }
 
-    public ArrayList<String> getExpertise() {
+    public String getExpertise() {
         return expertise;
     }
 
-    public void setExpertise(ArrayList<String> expertise) {
+    public void setExpertise(String expertise) {
         this.expertise = expertise;
     }
 
-    public ArrayList<String> getInterest() {
+    public String getInterest() {
         return interest;
     }
 
-    public void setInterest(ArrayList<String> interest) {
+    public void setInterest(String interest) {
         this.interest = interest;
     }
 

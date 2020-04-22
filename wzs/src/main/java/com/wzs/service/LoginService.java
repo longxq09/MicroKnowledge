@@ -1,40 +1,21 @@
 package com.wzs.service;
+
 import com.wzs.bean.Account;
 import com.wzs.bean.UserInfo;
-import com.wzs.mapper.AccountMap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class LoginService {
-    @Autowired
-    private AccountMap accountMap;
 
-    public boolean hasMatchUserById(long userId, String password) {
-        return accountMap.getIdMatchCount(userId, password) > 0;
-    }
+public interface LoginService {
+    boolean hasMatchUserById(long userId, String password);
 
-    public boolean hasMatchUserByEmail(String email, String password) {
-        return accountMap.getEmailMatchCount(email, password) > 0;
-    }
+    boolean hasMatchUserByEmail(String email, String password);
 
-    public Account findAccountById(long userId) {
-        return accountMap.findAccountById(userId);
-    }
+    Account findAccountById(long userId);
 
-    public Account findAccountByEmail(String email) {
-        return accountMap.findAccountByEmail(email);
-    }
+    Account findAccountByEmail(String email);
 
-    public boolean reUserPassword(long readerId, String newPassword) {
-        return accountMap.resetPassword(readerId, newPassword) > 0;
-    }
+    boolean reUserPassword(long readerId, String newPassword);
 
-    public String getUserPassword(long userId) {
-        return accountMap.getPassword(userId);
-    }
+    String getUserPassword(long userId);
 
-    public boolean addAccount(UserInfo userInfo, String password) {
-        return accountMap.addAccount(userInfo, password) > 0;
-    }
+    boolean addAccount(UserInfo userInfo, String password);
 }
