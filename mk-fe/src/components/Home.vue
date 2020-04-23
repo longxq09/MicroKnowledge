@@ -43,7 +43,7 @@
 				</el-tabs>
 			</div>
 			<div>
-				
+
 			</div>
 		</el-main>
 		<v-footer></v-footer>
@@ -109,17 +109,17 @@ import vFooter from './common/Footer.vue';
           });
       }
     }
-		
+
   }
 </script>
 
 <style>
-	
+
   .el-main {
     background-color: #F4F4F5;
     color: #333;
   }
-	
+
 	.remind {
 		display: inline-block;
 		font-size: 8px;
