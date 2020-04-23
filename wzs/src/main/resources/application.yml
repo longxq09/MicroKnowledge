@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     name: wzs
-    url: jdbc:mysql://localhost:33006/vhr
+    url: jdbc:mysql://localhost:33006/vhr?useUnicode=true&characterEncoding=utf8
     username: root
     password: haojiwei
     driver-class-name: com.mysql.cj.jdbc.Driver

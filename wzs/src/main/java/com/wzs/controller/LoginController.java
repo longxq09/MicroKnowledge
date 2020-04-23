@@ -51,7 +51,7 @@ public class LoginController {
         return res;
     }
 
-
+    /*
     @RequestMapping("/user_main.html")
     public ModelAndView toUserMain(HttpServletResponse response) {
         return new ModelAndView("user_main");
@@ -104,6 +104,6 @@ public class LoginController {
     @RequestMapping("*")
     public String notFind() {
         return "404";
-    }
+    }*/
 
 }
