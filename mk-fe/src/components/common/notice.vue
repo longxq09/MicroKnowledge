@@ -2,7 +2,7 @@
   <div class="notice">
     <div class="noice_title">{{type}} | {{title}}</div>
     <nobr style="font-weight: 600;margin-left: 10px;">{{author}}</nobr>
-    <el-tag v-for="tag in keyWordTags" class="keyword">{{tag}}</el-tag>
+    <el-tag key="tag" v-for="tag in keyWordTags" class="keyword">{{tag}}</el-tag>
     <div class="main_text">{{main_text}}</div>
     <el-tag class="bottom_tag">评论</el-tag>
     <el-tag class="bottom_tag">收藏</el-tag>
