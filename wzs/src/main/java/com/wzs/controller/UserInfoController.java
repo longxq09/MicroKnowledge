@@ -54,7 +54,7 @@ public class UserInfoController {
         return res;
     }
 
-
+    /*
     @RequestMapping("/user_info.html")
     public ModelAndView toUserInfo(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
@@ -117,5 +117,5 @@ public class UserInfoController {
         }
         return "redirect:/user_info.html";
     }
-
+    */
 }
