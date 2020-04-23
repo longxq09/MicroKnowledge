@@ -33,6 +33,7 @@ public class LoginController {
     Object loginCheck(HttpServletRequest request) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        System.out.println("email: "+email);
         PasswordHelper helper = new PasswordHelper();
         password = helper.encryptByName(email, password);   //加密
         boolean isUser = loginService.hasMatchUserByEmail(email, password);

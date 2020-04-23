@@ -9,3 +9,11 @@ spring:
     password: haojiwei
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.wzs.mapper
+
+mapper:
+  mappers:  com.wzs.mapper
+  not-empty: false
+  identity: MYSQL
