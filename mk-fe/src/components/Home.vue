@@ -90,7 +90,7 @@ import vFooter from './common/Footer.vue';
           })
           .catch((res)=>{
 						this.loginFail = true;
-            console.log(res.data.message);
+            console.log(res.message);
           });
       },
 			register () {
