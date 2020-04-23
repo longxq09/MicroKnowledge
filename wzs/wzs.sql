@@ -3,8 +3,8 @@ USE wzs;
 
 SET NAMES utf8;
 START TRANSACTION;
-CREATE TABLE `admin` ( `admin_id` BIGINT NOT NULL PRIMARY KEY, `password` VARCHAR ( 15 ) NOT NULL,
-`email` VARCHAR ( 15 ) DEFAULT NULL ) ENGINE = INNODB DEFAULT CHARSET = utf8;
+CREATE TABLE `admin` ( `admin_id` BIGINT NOT NULL PRIMARY KEY, `password` VARCHAR ( 33 ) NOT NULL,
+`email` VARCHAR ( 33 ) DEFAULT NULL ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 INSERT INTO `admin`
 VALUES
 	( 123456, '123456', 'admin@163.com' );
@@ -37,7 +37,7 @@ VALUES
 
 CREATE TABLE `user_info` (
 	`id` BIGINT NOT NULL PRIMARY KEY,
-	`email` VARCHAR ( 32 ) NOT NULL,
+	`email` VARCHAR ( 33 ) NOT NULL,
 	`name` VARCHAR ( 10 ) NOT NULL,
 	`sex` VARCHAR ( 2 ) NOT NULL,
 	`address` VARCHAR ( 50 ) NOT NULL,
@@ -58,8 +58,8 @@ VALUES
 	( 'wzs02@163.com','王小伟', '男', '北京市', 'work hard','本科生', '学生','','','对数据挖掘领域感兴趣', '研究方向为数据挖掘' ),
 	( 'wzs03@163.com','王莞尔', '女', '浙江省杭州市','work hard','本科生', '学生','','','对数据挖掘领域感兴趣', '研究方向为数据挖掘' );
 
-CREATE TABLE `account` ( `id` BIGINT NOT NULL PRIMARY KEY, `email` VARCHAR ( 32 ) NOT NULL,
-`password` VARCHAR ( 32 ) NOT NULL ) ENGINE = INNODB DEFAULT CHARSET = utf8;
+CREATE TABLE `account` ( `id` BIGINT NOT NULL PRIMARY KEY, `email` VARCHAR ( 33 ) NOT NULL,
+`password` VARCHAR ( 33 ) NOT NULL ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 INSERT INTO `account`
 VALUES
 	( 10000, 'wzs01@163.com', '0a7cd2f29c2c46302b0002ac6ecf6d03' ),
