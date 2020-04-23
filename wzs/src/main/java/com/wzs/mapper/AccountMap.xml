@@ -5,7 +5,10 @@
         select count(*) from account where
         id = #{id} and password = #{password}
     </select>
-
+    <select id="getEmailMatchCount" resultType="int">
+        select count(*) from account where
+        email = #{email} and password = #{password}
+    </select>
     <select id="getAdminMatch" resultType="int">
         select count(*) from admin where
         email = #{email} and password = #{password}
