@@ -126,8 +126,10 @@ public class UserInfoController {
         if (userInfoService.editUserInfo(userInfo)) {
             Account accountNew = loginService.findAccountById(account.getId());
             request.getSession().setAttribute("account", accountNew);
+            res.put("code", "0");
             res.put("message", "信息修改成功！");
         } else {
+            res.put("code", "500");
             res.put("message", "信息修改失败！");
         }
         return res;
