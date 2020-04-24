@@ -5,7 +5,6 @@ import User from '@/components/User'
 import UserInfo from '@/components/UserInfo'
 import NewNotice from '@/components/NewNotice.vue'
 import HomePage from '@/components/HomePage.vue'
-import Detail from '@/components/Detail.vue'
 
 Vue.use(Router)
 
@@ -34,11 +33,6 @@ export default new Router({
       path: '/homepage',
       name: 'HomePage',
       component: HomePage
-    },
-    {
-      path: '/detail',
-      name: 'Detail',
-      component: Detail
     },
   ]
 })
