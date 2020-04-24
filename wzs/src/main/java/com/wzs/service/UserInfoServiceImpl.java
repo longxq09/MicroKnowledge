@@ -27,7 +27,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         /*if (userInfoMap.findInfoByEmail(userInfo.getEmail()) != null) {
             return -1;
         }*/
-        if (userInfoMap.getEmailCount(userInfo.getEmail()) == 0) {
+        if (userInfoMap.getEmailCount(userInfo.getEmail()) != 0) {
             return -1;
         }
         userInfoMap.addUserInfo(userInfo);

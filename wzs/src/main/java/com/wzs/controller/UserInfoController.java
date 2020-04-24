@@ -37,8 +37,8 @@ public class UserInfoController {
         String name;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-//        System.out.println("email: "+email);
-//        System.out.println("password: "+password);
+        System.out.println("email: "+email);
+        System.out.println("password: "+password);
         UserInfo userInfo = new UserInfo();
         if ((name = request.getParameter("name")) != null) {
             userInfo.setName(name);
@@ -47,6 +47,7 @@ public class UserInfoController {
         PasswordHelper helper = new PasswordHelper();
         password = helper.encryptByName(email, password);   //加密
         long ok = userInfoService.addUserInfo(userInfo);
+        System.out.println("ok: "+ ok);
         HashMap<String, String> res = new HashMap<>();
         if (ok > 0 && loginService.addAccount(userInfo, password)) {
             res.put("code", "0");
@@ -55,6 +56,7 @@ public class UserInfoController {
             res.put("code", "1");
             res.put("message", "注册失败！");
         }
+        System.out.println(res);
         return res;
     }
 

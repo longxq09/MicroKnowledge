@@ -26,7 +26,7 @@
     </select>
     <insert id="addAccount">
         insert into account values
-        (null , #{email}, #{password})
+        (null, #{email}, #{password})
     </insert>
     <update id="resetPassword">
         update account set password = #{password}

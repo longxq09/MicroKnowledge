@@ -22,7 +22,7 @@
 
     <insert id="addUserInfo" parameterType="com.wzs.bean.UserInfo">
         insert into user_info values
-        (NULL,#{email}, #{name},#{sex},#{address},#{signature},#{education},#{work},#{expertise},#{interest}, #{introduction},#{contribution})
+        (null,#{email},#{name},#{sex},#{address},#{signature},#{education},#{work},#{expertise},#{interest},#{introduction},#{contribution})
     </insert>
 
     <select id="getAllInfos" resultType="com.wzs.bean.UserInfo">
