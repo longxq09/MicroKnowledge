@@ -5,15 +5,6 @@
 		</el-header>
 		<el-main>
 			<el-form ref="form" :model="form" label-width="80px">
-				<el-form-item label="头像">
-					<el-upload
-						action="https://jsonplaceholder.typicode.com/posts/"
-						list-type="picture-card"
-						:visible=false
-						:on-preview="handlePictureCardPreview"
-						<i class="el-icon-plus"></i>
-					</el-upload>
-				</el-form-item>
 				<el-form-item label="昵称">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
@@ -41,39 +32,22 @@
           <el-input type="textarea" v-model="form.address"></el-input>
         </el-form-item>
         <el-form-item label="自我介绍">
-          <el-input type="textarea" v-model="form.intro"></el-input>
+          <el-input type="textarea" v-model="form.introduction"></el-input>
         </el-form-item>
         <el-form-item label="突出贡献">
           <el-input type="textarea" v-model="form.contribution"></el-input>
         </el-form-item>
         <el-form-item label="专业领域">
+          <el-input type="textarea" v-model="form.expertise"></el-input>
+        </el-form-item>
+        <el-form-item label="兴趣领域">
           <el-tag :key="tag"
-            v-for="tag in expertiseTags"
+            v-for="tag in interestTags"
             closable
             :disable-transitions="false"
             @close="handleClose(tag)">
             {{tag}}
           </el-tag>
-          <el-select
-            v-model="selectValue"
-            v-if="selectVisible"
-            @keyup.enter.native="handleInputConfirm"
-            @blur="handleInputConfirm"
-            placeholder="请选择">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-          <el-button v-else class="button-new-tag" size="small" @click="showInput">增加</el-button>
-        </el-form-item>
-        <el-form-item label="兴趣领域">
-          <el-radio-group v-model="form.resource">
-            <el-radio label="线上品牌商赞助"></el-radio>
-            <el-radio label="线下场地免费"></el-radio>
-          </el-radio-group>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submit">立即更新</el-button>
@@ -94,29 +68,37 @@ import vFooter from './common/Footer.vue';
       return {
         title: "微知 | 个人信息",
         activeName: 'first',
-        expertiseTags: ['English', 'Speech Model', 'Deep Learning'],
+        interestTags: [],
         selectVisible: false,
         selectValue: '',
         dialogImageUrl: '',
         dialogVisible: false,
         notdialogVisible: true,
-        form: {
-          name: '',
-          sex: 0,
-          address: '',
-          signature: '',
-          education: 0,
-          work: '',
-          introduction: '',
-          contribution: ''
-        }
+        form: {}
       }
     },
 		components: {
 			vHead,
 			vFooter
 		},
+		mounted() {
+		  console.log("qwq");
+		  this.getUserInfo();
+		},
 		methods: {
+		  getUserInfo() {
+		    var params = new URLSearchParams();
+        params.append('account', 'wzs01@163.com');
+		    this.axios.get('/user/info', params)
+          .then((res) => {
+            console.log(res.data);
+            this.form = res.data
+            this.interestTags = String(this.form.interest).split('-');
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+		  },
 			handleClose(tag) {
         this.expertiseTags.splice(this.expertiseTags.indexOf(tag), 1);
       },
@@ -145,6 +127,33 @@ import vFooter from './common/Footer.vue';
       },
 
       submit() {
+        var params = new URLSearchParams();
+        params.append('account', 'wzs01@163.com');
+        params.append('name', this.form.name);
+        params.append('sex', this.form.sex);
+        params.append('education', this.form.education);
+        params.append('work', this.form.work);
+        params.append('address', this.form.address);
+        params.append('introduction', this.form.introduction);
+        params.append('contribution', this.form.contribution);
+        params.append('expertise', this.form.expertise);
+        params.append('interest', this.form.interest);
+        this.axios.post('/user/info', params)
+          .then((res) => {
+            var remindType = res.data.code == 0 ? 'success' : 'info';
+            var remindTitle = res.data.code == 0 ? '修改成功' : '修改失败';
+            var remindContent = res.data.code == 0 ? '个人信息更新啦！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
+            console.log("*********" + res.data.message);
+            if(res.data.code == 0) {
+              this.$router.push('/user');
+            }
+            this.$alert(remindContent, remindTitle, {
+              confirmButtonText: '确定'
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       },
 
       cancel() {
