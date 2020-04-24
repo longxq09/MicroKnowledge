@@ -78,8 +78,8 @@ public class UserInfoController {
         res.put("work", info.getWork());
         res.put("introduction", info.getIntroduction());
         res.put("contribution", info.getContribution());
-        //res.put("expertise", info.getExpertise());  //专业领域, not yet
-        //res.put("interest", info.getInterest());     //偏好领域, not yet
+        res.put("expertise", info.getExpertise());  //专业领域, not yet
+        res.put("interest", info.getInterest());     //偏好领域, not yet
         return res;
     }
 

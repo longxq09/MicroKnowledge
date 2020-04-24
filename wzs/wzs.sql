@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS wzs;
 CREATE DATABASE wzs;
 USE wzs;
 
@@ -47,8 +48,8 @@ CREATE TABLE `user_info` (
   `education` VARCHAR ( 20 ) DEFAULT NULL,
   `works` VARCHAR ( 50 ) DEFAULT NULL,
 
-  `expertise` VARCHAR ( 32 ) DEFAULT NULL,
-	`interest` VARCHAR ( 32 ) DEFAULT NULL,
+  `expertise` VARCHAR ( 256 ) DEFAULT NULL,
+	`interest` VARCHAR ( 256 ) DEFAULT NULL,
   `introduction` text,
 	`contribution` text
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
@@ -56,9 +57,9 @@ ALTER TABLE `user_info` MODIFY `id` BIGINT NOT NULL AUTO_INCREMENT,
 AUTO_INCREMENT = 1000;
 INSERT INTO `user_info` ( email, NAME, sex, address,signature, education, works,expertise,interest,introduction,contribution )
 VALUES
-	( 'wzs01@163.com','张华', '男', '天津市','fighting!','博士', '研究员','','','对数据挖掘领域感兴趣', '研究方向为数据挖掘' ),
-	( 'wzs02@163.com','王小伟', '男', '北京市', 'work hard','本科生', '学生','','','对数据挖掘领域感兴趣', '研究方向为数据挖掘' ),
-	( 'wzs03@163.com','王莞尔', '女', '浙江省杭州市','work hard','本科生', '学生','','','对数据挖掘领域感兴趣', '研究方向为数据挖掘' );
+	( 'wzs01@163.com','张华', '男', '天津市','fighting!','博士', '研究员','1:Computer Sciences-2:Data Mining','1:Statistics & Probability-2:High-performance computing-3:Music','对数据挖掘领域感兴趣', '研究方向为数据挖掘' ),
+	( 'wzs02@163.com','王小伟', '男', '北京市', 'work hard','本科生', '学生','1:Computer Sciences-2:Data Mining','1:Statistics & Probability-2:High-performance computing-3:Music','对数据挖掘领域感兴趣', '研究方向为数据挖掘' ),
+	( 'wzs03@163.com','王莞尔', '女', '浙江省杭州市','work hard','本科生', '学生','1:Computer Sciences-2:Data Mining','1:Statistics & Probability-2:High-performance computing-3:Music','对数据挖掘领域感兴趣', '研究方向为数据挖掘' );
 
 CREATE TABLE `account` ( `id` BIGINT NOT NULL PRIMARY KEY, `email` VARCHAR ( 33 ) NOT NULL,
 `password` VARCHAR ( 33 ) NOT NULL ) ENGINE = INNODB DEFAULT CHARSET = utf8;
