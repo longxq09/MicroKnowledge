@@ -54,10 +54,7 @@
     line-height: 1.5;
 		width: 100%;
   }
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 	.title {
 		color: #409EFF;
     text-align: left;
@@ -65,26 +62,15 @@
 		font-weight: 800;
 		display: inline-block;
 	}
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 	.button {
 		float: right;
 		margin: 10px;
 	}
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 	.photo {
 		display: inline-block;
 		float: right;
 		margin-top: 5px;
 	}
-<<<<<<< Updated upstream
-
 </style>
-=======
-</style>
->>>>>>> Stashed changes
