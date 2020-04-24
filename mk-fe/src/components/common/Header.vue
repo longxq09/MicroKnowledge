@@ -4,6 +4,9 @@
 		<el-badge class="button" v-if="user">
 			<el-button @click="toUserInfo">个人信息</el-button>
 		</el-badge>
+    <el-badge class="button" v-if="user">
+    	<el-button @click="toNewNotice">发布新公告</el-button>
+    </el-badge>
 		<el-badge class="button" v-if="userinfo">
 			<el-button @click="toUser">回到主页</el-button>
 		</el-badge>
@@ -20,7 +23,7 @@
 			title: {
 				type: String,
 				default: '微知 MicroKnowledge'
-			},	
+			},
 			user: {
 				type: Boolean,
 				default: false
@@ -37,7 +40,10 @@
 			},
 			toUser() {
 				this.$router.push('/user');
-			}
+			},
+      toNewNotice(){
+				this.$router.push('/new_notice');
+      }
 		}
 	}
 </script>
@@ -48,7 +54,7 @@
     line-height: 1.5;
 		width: 100%;
   }
-  
+
 	.title {
 		color: #409EFF;
     text-align: left;
@@ -56,16 +62,16 @@
 		font-weight: 800;
 		display: inline-block;
 	}
-	
+
 	.button {
 		float: right;
 		margin: 10px;
 	}
-	
+
 	.photo {
 		display: inline-block;
 		float: right;
 		margin-top: 5px;
 	}
-	
+
 </style>

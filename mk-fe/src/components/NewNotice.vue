@@ -6,7 +6,7 @@
     <el-main>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="引用论文">
-          <el-tag :key="tag" v-for="tag in referenceTags" closable :disable-transitions="false" @close="handleClose(tag)">
+          <el-tag :key="tag" v-for="tag in referenceTags" closable :disable-transitions="false" @close="handleClose(tag,1)">
             {{tag}}
           </el-tag>
           <el-input type="textarea" rows="2" v-model="referenceValue" placeholder="Fill in your references as follows"></el-input>
@@ -14,7 +14,7 @@
         </el-form-item>
 
         <el-form-item label="关键词">
-          <el-tag :key="tag" v-for="tag in keyWordTags" closable :disable-transitions="false" @close="handleClose(tag)">
+          <el-tag :key="tag" v-for="tag in keyWordTags" closable :disable-transitions="false" @close="handleClose(tag,2)">
             {{tag}}
           </el-tag>
           <el-input v-model="keyWordValue" placeholder="Fill in your keyword as follows"></el-input>
@@ -34,19 +34,19 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">发布</el-button>
-          <el-button @click="cancel">取消</el-button>
+          <el-button type="primary" @click="toHomepage">发布</el-button>
+          <el-button @click="toHomepage">取消</el-button>
         </el-form-item>
       </el-form>
     </el-main>
-		<v-footer></v-footer>
+    <v-footer></v-footer>
   </el-container>
 </template>
 
 <script>
-import vFooter from './common/Footer.vue';
+  import vFooter from './common/Footer.vue';
   export default {
-    name: "New_notice",
+    name: "NewNotice",
     data() {
       return {
         referenceTags: [],
@@ -59,19 +59,26 @@ import vFooter from './common/Footer.vue';
         form: {
           title: '',
           text: ''
+        },
+        rules: {
+          keyWordTags: [{required: true, message: '关键词不可为空', trigger: 'blur'}],
         }
       }
     },
     components: {
-    	vFooter
+      vFooter
     },
     methods: {
       user() {
         this.$router.push('/user');
       },
 
-      handleClose(tag) {
-        this.expertiseTags.splice(this.expertiseTags.indexOf(tag), 1);
+      handleClose(tag, type) {
+        if (type == 1) {
+          this.referenceTags.splice(this.referenceTags.indexOf(tag), 1);
+        } else {
+          this.keyWordTags.splice(this.keyWordTags.indexOf(tag), 1);
+        }
       },
 
       addTag(a) {
@@ -96,6 +103,9 @@ import vFooter from './common/Footer.vue';
           this.labelChoose.splice(this.labelChoose.indexOf(id), 1);
         }
       },
+      toHomepage() {
+        this.$router.push('/homepage');
+      }
     }
 
   }
@@ -129,5 +139,4 @@ import vFooter from './common/Footer.vue';
     margin-right: 10px;
     border-radius: 30px;
   }
-
 </style>
