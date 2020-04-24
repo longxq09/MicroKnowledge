@@ -3,37 +3,42 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import User from '@/components/User'
 import UserInfo from '@/components/UserInfo'
-import New_notice from '@/components/New_notice.vue'
+import NewNotice from '@/components/NewNotice.vue'
 import HomePage from '@/components/HomePage.vue'
+import Detail from '@/components/Detail.vue'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'Home',
       component: Home
     },
-		{
-			path: '/user',
-			name: 'User',
-			component: User
-		},
-		{
-			path: '/userinfo',
-			name: 'UserInfo',
-			component: UserInfo
-		},
-		{
+    {
+      path: '/user',
+      name: 'User',
+      component: User
+    },
+    {
+      path: '/userinfo',
+      name: 'UserInfo',
+      component: UserInfo
+    },
+    {
       path: '/new_notice',
-      name: 'New_notice',
-      component: New_notice
+      name: 'NewNotice',
+      component: NewNotice
     },
     {
       path: '/homepage',
       name: 'HomePage',
       component: HomePage
+    },
+    {
+      path: '/detail',
+      name: 'Detail',
+      component: Detail
     },
   ]
 })
