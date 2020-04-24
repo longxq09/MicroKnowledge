@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <v-head></v-head>
+      <v-head v-bind:user=true></v-head>
     </el-header>
     <el-main>
       <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
@@ -22,7 +22,7 @@
 <script>
   import vHead from './common/Header.vue';
   import vFooter from './common/Footer.vue';
-  import vNotice from './common/notice.vue';
+  import vNotice from './common/Notice.vue';
   export default {
     name: "HomePage",
     data() {

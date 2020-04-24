@@ -14,7 +14,7 @@
 
 <script>
   export default {
-    name: "HomePage",
+    name: "Notice",
     props: {
       type: {
         type: String,
@@ -61,6 +61,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
   .main_text {
     overflow: hidden;
     text-overflow: ellipsis;
