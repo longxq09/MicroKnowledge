@@ -37,8 +37,8 @@ public class UserInfoController {
         String name;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        System.out.println("email: "+email);
-        System.out.println("password: "+password);
+        System.out.println("email: " + email);
+        System.out.println("password: " + password);
         UserInfo userInfo = new UserInfo();
         if ((name = request.getParameter("name")) != null) {
             userInfo.setName(name);
@@ -47,7 +47,7 @@ public class UserInfoController {
         PasswordHelper helper = new PasswordHelper();
         password = helper.encryptByName(email, password);   //加密
         long ok = userInfoService.addUserInfo(userInfo);
-        System.out.println("ok: "+ ok);
+        System.out.println("ok: " + ok);
         HashMap<String, String> res = new HashMap<>();
         if (ok > 0 && loginService.addAccount(userInfo, password)) {
             res.put("code", "0");
@@ -60,31 +60,33 @@ public class UserInfoController {
         return res;
     }
 
-    /*
-    @RequestMapping("/user_info.html")
-    public ModelAndView toUserInfo(HttpServletRequest request) {
+    @CrossOrigin
+    @RequestMapping(value = "/user/info", method = RequestMethod.GET)
+    public @ResponseBody
+    Object userInfoGet(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
-        if (account == null) {
-            return new ModelAndView("user_main");
+        HashMap<String, String> res = new HashMap<>();
+        if(account==null){
+            res.put("message", "信息获取失败！");
+            return res;
         }
-        UserInfo personInfo = userInfoService.getUserInfo(account.getId());
-        ModelAndView modelAndView = new ModelAndView("userInfo");
-        modelAndView.addObject("userInfo", personInfo);
-        return modelAndView;
+        UserInfo info = userInfoService.getUserInfo(account.getId());
+        res.put("name", info.getName());
+        res.put("address", info.getAddress());
+        res.put("signature", info.getSignature());
+        res.put("education", info.getEducation());
+        res.put("work", info.getWork());
+        res.put("introduction", info.getIntroduction());
+        res.put("contribution", info.getContribution());
+        //res.put("expertise", info.getExpertise());  //专业领域, not yet
+        //res.put("interest", info.getInterest());     //偏好领域, not yet
+        return res;
     }
 
-    @RequestMapping("user_info_edit.html")
-    public ModelAndView userInfoEdit(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
-        UserInfo personInfo = userInfoService.getUserInfo(account.getId());
-        ModelAndView modelAndView = new ModelAndView("user_info_edit");
-        modelAndView.addObject("userInfo", personInfo);
-        return modelAndView;
-    }*/
-
     @CrossOrigin
-    @RequestMapping("user_edit_do.html")
-    public String userInfoEditDo(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/user/info", method = RequestMethod.POST)
+    public @ResponseBody
+    Object userInfoEdit(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
         String name, sex, address, signature, education, work, introduction, contribution;
         String expertise;    //专业领域, not yet
@@ -114,14 +116,21 @@ public class UserInfoController {
         if ((contribution = request.getParameter("contribution")) != null) {
             userInfo.setContribution(contribution);
         }
+        if ((expertise = request.getParameter("contribution")) != null) {
+            userInfo.setExpertise(expertise);
+        }
+        if ((interest = request.getParameter("interest")) != null) {
+            userInfo.setInterest(interest);
+        }
+        HashMap<String, String> res = new HashMap<>();
         if (userInfoService.editUserInfo(userInfo)) {
             Account accountNew = loginService.findAccountById(account.getId());
             request.getSession().setAttribute("account", accountNew);
-            redirectAttributes.addFlashAttribute("success", "信息修改成功！");
+            res.put("message", "信息修改成功！");
         } else {
-            redirectAttributes.addFlashAttribute("error", "信息修改失败！");
+            res.put("message", "信息修改失败！");
         }
-        return "redirect:/user_info.html";
+        return res;
     }
 
 }

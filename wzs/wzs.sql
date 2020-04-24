@@ -9,31 +9,33 @@ INSERT INTO `admin`
 VALUES
 	( 1, '123456', 'admin@163.com' );
 
-CREATE TABLE `class_info` ( `class_id` INT NOT NULL PRIMARY KEY, `class_name` VARCHAR ( 15 ) NOT NULL ) ENGINE = INNODB DEFAULT CHARSET = utf8;
-INSERT INTO `class_info`
+CREATE TABLE `topic` ( `id` INT NOT NULL PRIMARY KEY, `topicName` VARCHAR ( 20 ) NOT NULL,
+											 `flag` INT DEFAULT NULL )
+ENGINE = INNODB DEFAULT CHARSET = utf8;
+INSERT INTO `topic`
 VALUES
-	( 1, '马克思主义' ),
-	( 2, '哲学' ),
-	( 3, '社会科学总论' ),
-	( 4, '政治法律' ),
-	( 5, '军事' ),
-	( 6, '经济' ),
-	( 7, '文化' ),
-	( 8, '语言' ),
-	( 9, '文学' ),
-	( 10, '艺术' ),
-	( 11, '历史地理' ),
-	( 12, '自然科学总论' ),
-	( 13, ' 数理科学和化学' ),
-	( 14, '天文学、地球科学' ),
-	( 15, '生物科学' ),
-	( 16, '医药、卫生' ),
-	( 17, '农业科学' ),
-	( 18, '工业技术' ),
-	( 19, '交通运输' ),
-	( 20, '航空、航天' ),
-	( 21, '环境科学' ),
-	( 22, '综合' );
+	( 1, '马克思主义',1),
+	( 2, '哲学',1 ),
+	( 3, '社会科学总论' ,1),
+	( 4, '政治法律' ,1),
+	( 5, '军事',1 ),
+	( 6, '经济',1 ),
+	( 7, '文化' ,1),
+	( 8, '语言' ,1),
+	( 9, '文学' ,1),
+	( 10, '艺术' ,1),
+	( 11, '历史地理' ,1),
+	( 12, '自然科学总论',1 ),
+	( 13, ' 数理科学和化学',1 ),
+	( 14, '天文学、地球科学' ,1),
+	( 15, '生物科学' ,1),
+	( 16, '医药、卫生' ,1),
+	( 17, '农业科学' ,1),
+	( 18, '工业技术' ,1),
+	( 19, '交通运输',1 ),
+	( 20, '航空、航天' ,1),
+	( 21, '环境科学' ,1),
+	( 22, '综合' ,1);
 
 CREATE TABLE `user_info` (
 	`id` BIGINT NOT NULL PRIMARY KEY,
