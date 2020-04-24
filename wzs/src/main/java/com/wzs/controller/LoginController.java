@@ -33,6 +33,10 @@ public class LoginController {
     Object loginCheck(HttpServletRequest request) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+
+//        System.out.println("email: "+email);
+//        System.out.println("password: "+password);
+
         PasswordHelper helper = new PasswordHelper();
         password = helper.encryptByName(email, password);   //加密
         boolean isUser = loginService.hasMatchUserByEmail(email, password);
@@ -41,10 +45,10 @@ public class LoginController {
         if (isUser) {
             Account account = loginService.findAccountByEmail(email);
             request.getSession().setAttribute("account", account);
-            res.put("code", "1");
+            res.put("code", "0");
             res.put("message", "登陆成功！");
         } else {
-            res.put("code", "0");
+            res.put("code", "1");
             res.put("message", "账号或密码错误！");
         }
         return res;

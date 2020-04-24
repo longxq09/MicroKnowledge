@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzs.mapper.TopicMapper" >
+
+    <sql id="BASE_TABLE">
+        topic
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        id,`topicName`,flag
+    </sql>
+
+    <select id="selectTopic" resultType="com.wzs.bean.Topic" parameterType="java.util.Map">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        from <include refid="BASE_TABLE"/>
+        <where>
+            <if test="id !=null and id !=''">
+                and id=#{id,jdbcType=INTEGER}
+            </if>
+            <if test="topicName !=null and topic !=''">
+                and `topicName`=#{topicName,jdbcType=VARCHAR}
+            </if>
+            <if test="flag !=null and authorID !=''">
+                and flag=#{flag,jdbcType=INTEGER}
+            </if>
+        </where>
+
+    </select>
+
+    <insert id="insertTopic" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.wzs.bean.MicroGuess">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            `topicName`
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            #{topicName, jdbcType=VARCHAR},
+        </trim>
+    </insert>
+
+    <update id="updateTopic" parameterType="com.wzs.bean.MicroGuess" >
+        update <include refid="BASE_TABLE"/>
+        <set>
+            <if test="topicName !=null">
+                topicName=#{topicName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteTopicById" parameterType="java.lang.Integer" >
+        update<include refid="BASE_TABLE"/>
+        set flag=0
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+
+</mapper>

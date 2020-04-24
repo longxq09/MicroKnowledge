@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzs.mapper.MGuessMapper" >
+
+    <sql id="BASE_TABLE">
+        micro_guess
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        id,authorID,`topic`,`citedEvidList`,`keywords`,`summary`,`time`,judge
+    </sql>
+
+    <select id="selectMGuess" resultType="com.wzs.bean.MicroGuess" parameterType="java.util.Map">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        from <include refid="BASE_TABLE"/>
+        <where>
+            <if test="id !=null and id !=''">
+                and id=#{id,jdbcType=INTEGER}
+            </if>
+            <if test="authorID !=null and authorID !=''">
+                and authorID=#{authorID,jdbcType=INTEGER}
+            </if>
+            <if test="topic !=null and topic !=''">
+                and `topic`=#{topic,jdbcType=VARCHAR}
+            </if>
+            <if test="citedEvidList !=null and citedEvidList !=''">
+                and `citedEvidList`=#{citedEvidList,jdbcType=VARCHAR}
+            </if>
+            <if test="keywords !=null and keywords !=''">
+                and `keywords`=#{keywords,jdbcType=VARCHAR}
+            </if>
+            <if test="summary !=null and summary !=''">
+                and `summary`=#{summary,jdbcType=VARCHAR}
+            </if>
+            <if test="time !=null and time !=''">
+                and `time`=#{time,}
+            </if>
+            <if test="judge !=null and judge !=''">
+                and `judge`=#{judge,jdbcType=INTEGER}
+            </if>
+        </where>
+
+    </select>
+
+    <insert id="insertMGuess" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.wzs.bean.MicroGuess">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            `authorID`,`topic`,`citedEvidList`,`keywords`,`summary`,`time`
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            #{authorID, jdbcType=INTEGER},
+            #{topic, jdbcType=VARCHAR},
+            #{citedEvidList, jdbcType=VARCHAR},
+            #{keywords,jdbcType=VARCHAR},
+            #{summary,jdbcType=VARCHAR},
+            #{time, jdbcType=VARCHAR},
+        </trim>
+    </insert>
+
+    <update id="updateMGuess" parameterType="com.wzs.bean.MicroGuess" >
+        update <include refid="BASE_TABLE"/>
+        <set>
+            <if test="topic !=null">
+                topic=#{topic,jdbcType=VARCHAR},
+            </if>
+            <if test="citedEvidList !=null">
+                citedEvidList=#{citedEvidList,jdbcType=VARCHAR},
+            </if>
+            <if test="keywords !=null">
+                keywords=#{keywords,jdbcType=VARCHAR},
+            </if>
+            <if test="summary !=null">
+                summary=#{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="time !=null">
+                `time`=#{date},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteMGuessById" parameterType="java.lang.Integer" >
+        delete from <include refid="BASE_TABLE"/>
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+
+</mapper>

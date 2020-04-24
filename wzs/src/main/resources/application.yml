@@ -1,12 +1,12 @@
 server:
-  port: 8088
+  port: 18088
 
 spring:
   datasource:
-    name: test
-    url: jdbc:mysql://localhost:3306/wzs?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=true&serverTimezone=GMT%2B8
+    name: wzs
+    url: jdbc:mysql://localhost:33006/wzs?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=true&serverTimezone=GMT%2B8
     username: root
-    password: 123456
+    password: haojiwei
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
@@ -17,4 +17,3 @@ mapper:
   mappers:  com.wzs.mapper
   not-empty: false
   identity: MYSQL
-
