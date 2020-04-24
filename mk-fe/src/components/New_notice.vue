@@ -46,7 +46,7 @@
 <script>
 import vFooter from './common/Footer.vue';
   export default {
-    name: "User",
+    name: "New_notice",
     data() {
       return {
         referenceTags: [],
@@ -115,9 +115,6 @@ import vFooter from './common/Footer.vue';
     display: inline-block;
   }
 
-  .el-footer {
-    text-align: center;
-  }
 
   .el-main {
     background-color: #F4F4F5;
