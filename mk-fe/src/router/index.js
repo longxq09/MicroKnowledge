@@ -14,17 +14,17 @@ export default new Router({
       name: 'Home',
       component: Home
     },
-    {
-      path: '/user',
-      name: 'User',
-      component: User
-    },
-    {
-      path: '/userinfo',
-      name: 'UserInfo',
-      component: UserInfo
-    },
-    {
+		{
+			path: '/user',
+			name: 'User',
+			component: User
+		},
+		{
+			path: '/userinfo',
+			name: 'UserInfo',
+			component: UserInfo
+		},
+		{
       path: '/new_notice',
       name: 'New_notice',
       component: New_notice

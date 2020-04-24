@@ -69,11 +69,9 @@ import vFooter from './common/Footer.vue';
       user() {
         this.$router.push('/user');
       },
-
       handleClose(tag) {
         this.expertiseTags.splice(this.expertiseTags.indexOf(tag), 1);
       },
-
       addTag(a) {
         if (a == 1) {
           let referenceValue = this.referenceValue;
@@ -97,7 +95,6 @@ import vFooter from './common/Footer.vue';
         }
       },
     }
-
   }
 </script>
 
@@ -106,7 +103,6 @@ import vFooter from './common/Footer.vue';
     background-color: #FFFFFF;
     line-height: 1.5;
   }
-
   .title {
     color: #409EFF;
     text-align: left;
@@ -114,18 +110,14 @@ import vFooter from './common/Footer.vue';
     font-weight: 800;
     display: inline-block;
   }
-
-
   .el-main {
     background-color: #F4F4F5;
     color: #333;
   }
-
   .el-form-item {
     margin-right: 20%;
     margin-top: 30px;
   }
-
   .el-tag {
     margin-right: 10px;
     border-radius: 30px;

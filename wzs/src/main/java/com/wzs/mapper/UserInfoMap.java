@@ -13,9 +13,11 @@ public interface UserInfoMap {
 
     UserInfo findInfoByEmail(final String email);
 
+    int getEmailCount(final String email);
+
     int editUserInfo(final UserInfo userInfo);
 
-    long addUserInfo(final UserInfo userInfo);
+    boolean addUserInfo(final UserInfo userInfo);
 
     ArrayList<UserInfo> getAllInfos();
 }

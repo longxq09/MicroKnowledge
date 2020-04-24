@@ -61,7 +61,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
   .main_text {
     overflow: hidden;
     text-overflow: ellipsis;

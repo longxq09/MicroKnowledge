@@ -34,23 +34,29 @@ public class UserInfoController {
     @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     public @ResponseBody
     Object registerCheck(HttpServletRequest request) {
+        String name;
         String email = request.getParameter("email");
-        String name = request.getParameter("name");
         String password = request.getParameter("password");
+        System.out.println("email: "+email);
+        System.out.println("password: "+password);
         UserInfo userInfo = new UserInfo();
-        userInfo.setName(name);
+        if ((name = request.getParameter("name")) != null) {
+            userInfo.setName(name);
+        }
         userInfo.setEmail(email);
         PasswordHelper helper = new PasswordHelper();
         password = helper.encryptByName(email, password);   //加密
         long ok = userInfoService.addUserInfo(userInfo);
+        System.out.println("ok: "+ ok);
         HashMap<String, String> res = new HashMap<>();
         if (ok > 0 && loginService.addAccount(userInfo, password)) {
-            res.put("code", "1");
+            res.put("code", "0");
             res.put("message", "注册成功！");
         } else {
-            res.put("code", "0");
+            res.put("code", "1");
             res.put("message", "注册失败！");
         }
+        System.out.println(res);
         return res;
     }
 
@@ -67,7 +73,6 @@ public class UserInfoController {
         return modelAndView;
     }
 
-
     @RequestMapping("user_info_edit.html")
     public ModelAndView userInfoEdit(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
@@ -75,15 +80,16 @@ public class UserInfoController {
         ModelAndView modelAndView = new ModelAndView("user_info_edit");
         modelAndView.addObject("userInfo", personInfo);
         return modelAndView;
-    }
+    }*/
 
-    @RequestMapping("user_edit_do_r.html")
+    @CrossOrigin
+    @RequestMapping("user_edit_do.html")
     public String userInfoEditDo(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         Account account = (Account) request.getSession().getAttribute("account");
         String name, sex, address, signature, education, work, introduction, contribution;
         String expertise;    //专业领域, not yet
         String interest;    //偏好领域, not yet
-        UserInfo userInfo = new UserInfo();
+        UserInfo userInfo = userInfoService.getUserInfo(account.getId());
         if ((name = request.getParameter("name")) != null) {
             userInfo.setName(name);
         }
@@ -117,5 +123,5 @@ public class UserInfoController {
         }
         return "redirect:/user_info.html";
     }
-    */
+
 }

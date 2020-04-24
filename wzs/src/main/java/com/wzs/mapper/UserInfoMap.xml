@@ -4,9 +4,15 @@
     <select id="findInfoById" resultType="com.wzs.bean.UserInfo" parameterType="long">
         select * from user_info where id = #{id}
     </select>
-    <select id="findInfoByEmail" resultType="com.wzs.bean.UserInfo" parameterType="String">
+    <select id="findInfoByEmail" resultType="com.wzs.bean.UserInfo">
         select * from user_info where email = #{email}
     </select>
+
+    <select id="getEmailCount" resultType="int">
+        select count(*) from user_info where
+        email = #{email}
+    </select>
+
     <update id="editUserInfo" parameterType="com.wzs.bean.UserInfo">
         update user_info set name = #{name} , sex = #{sex},
        address = #{address}, signature= #{signature}, education= #{education}, works== #{work},
@@ -16,10 +22,11 @@
 
     <insert id="addUserInfo" parameterType="com.wzs.bean.UserInfo">
         insert into user_info values
-        (NULL,#{email}, #{name},#{sex},#{address},#{signature},#{education},#{work},#{expertise},#{interest}, #{introduction},#{contribution})
+        (null,#{email},#{name},#{sex},#{address},#{signature},#{education},#{work},#{expertise},#{interest},#{introduction},#{contribution})
     </insert>
 
     <select id="getAllInfos" resultType="com.wzs.bean.UserInfo">
         select * from user_info
     </select>
+
 </mapper>
