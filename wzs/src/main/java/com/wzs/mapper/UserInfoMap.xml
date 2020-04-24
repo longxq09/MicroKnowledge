@@ -15,8 +15,8 @@
 
     <update id="editUserInfo" parameterType="com.wzs.bean.UserInfo">
         update user_info set name = #{name} , sex = #{sex},
-       address = #{address}, signature= #{signature}, education= #{education}, works== #{work},
-       expertise= #{expertise},interest= #{interest},introduction= #{introduction},contribution== #{contribution}
+       address = #{address}, signature= #{signature}, education= #{education}, works = #{work},
+       expertise= #{expertise},interest= #{interest},introduction= #{introduction},contribution = #{contribution}
         where id = #{id}
     </update>
 
