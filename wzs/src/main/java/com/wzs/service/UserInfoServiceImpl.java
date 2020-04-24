@@ -24,10 +24,14 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public long addUserInfo(UserInfo userInfo) {
-        if (userInfoMap.findInfoByEmail(userInfo.getEmail()) != null) {
+        /*if (userInfoMap.findInfoByEmail(userInfo.getEmail()) != null) {
+            return -1;
+        }*/
+        if (userInfoMap.getEmailCount(userInfo.getEmail()) == 0) {
             return -1;
         }
-        return userInfoMap.addUserInfo(userInfo);
+        userInfoMap.addUserInfo(userInfo);
+        return 1;
     }
 
     @Override
