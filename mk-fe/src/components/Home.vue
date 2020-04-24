@@ -30,7 +30,7 @@
 <script>
 import vHead from './common/Header.vue';
 import vFooter from './common/Footer.vue';
-import vNotice from './common/notice.vue';
+import vNotice from './common/Notice.vue';
 import vLogin from './Login.vue';
 import vRegister from './Register.vue';
   export default {
