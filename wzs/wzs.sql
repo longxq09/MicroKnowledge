@@ -1,4 +1,4 @@
-
+CREATE DATABASE wzs;
 USE wzs;
 
 SET NAMES utf8;
