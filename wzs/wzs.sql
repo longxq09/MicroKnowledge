@@ -42,7 +42,7 @@ CREATE TABLE `user_info` (
 	`id` BIGINT NOT NULL PRIMARY KEY,
 	`email` VARCHAR ( 33 ) NOT NULL,
 	`name` VARCHAR ( 10 ) NOT NULL,
-	`sex` VARCHAR ( 2 ) DEFAULT NULL,
+	`sex` VARCHAR ( 20 ) DEFAULT NULL,
 	`address` VARCHAR ( 50 ) DEFAULT NULL,
   `signature` VARCHAR ( 32 ) DEFAULT NULL,
   `education` VARCHAR ( 20 ) DEFAULT NULL,
