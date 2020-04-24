@@ -47,6 +47,7 @@
     border-radius: 10px;
     margin-bottom: 10px;
   }
+
   .noice_title {
     color: #409EFF;
     text-align: left;
@@ -60,6 +61,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
   .main_text {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -69,11 +71,13 @@
     margin: 10px;
     margin-bottom: 1px;
   }
+
   .keyword {
     margin-left: 10px;
     border-radius: 30px;
     height: 23px;
   }
+
   .bottom_tag {
     margin: 10px;
     margin-right: 0;
