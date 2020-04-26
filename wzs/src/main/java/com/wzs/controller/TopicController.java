@@ -34,11 +34,11 @@ public class TopicController {
 
         JSONObject object = new JSONObject();
         List<Topic> topics = getALLTopic();
-        List<Integer> id=new LinkedList<>();
-        List<String> content=new LinkedList<>();
-        List<Integer> flag=new LinkedList<>();
+        List<Integer> id = new LinkedList<>();
+        List<String> content = new LinkedList<>();
+        List<Integer> flag = new LinkedList<>();
         for (int i = 0; i < topics.size(); i++) {
-            Topic topic=topics.get(i);
+            Topic topic = topics.get(i);
             id.add(topic.getId());
             content.add(topic.getTopicName());
             flag.add(topic.getFlag());
@@ -55,7 +55,7 @@ public class TopicController {
         return topicService.getALLTopic();      //返回了所有的标签
     }
 
-    public List<Topic>getALLValidTopic(){
+    public List<Topic> getALLValidTopic() {
         return topicService.getALLValidTopic();        //只返回了flag=1即有效的标签
     }
 

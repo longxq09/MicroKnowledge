@@ -66,7 +66,7 @@ public class UserInfoController {
     Object userInfoGet(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
         HashMap<String, String> res = new HashMap<>();
-        if(account==null){
+        if (account == null) {
             res.put("message", "信息获取失败！");
             return res;
         }
@@ -80,7 +80,7 @@ public class UserInfoController {
         res.put("contribution", info.getContribution());
         res.put("expertise", info.getExpertise());  //专业领域, id-id-id
         res.put("interest", info.getInterest());     //偏好领域, id-id-id
-        //System.out.println("contribution: "+ contribution+ "interest: "+interest);
+        res.put("picture", info.getPicture());       //头像的url
         return res;
     }
 
@@ -90,7 +90,7 @@ public class UserInfoController {
     Object userInfoEdit(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
         String name, sex, address, signature, education, work, introduction, contribution;
-        String expertise,interest;
+        String expertise, interest, picture;
         UserInfo userInfo = userInfoService.getUserInfo(account.getId());
         if ((name = request.getParameter("name")) != null) {
             userInfo.setName(name);
@@ -122,7 +122,10 @@ public class UserInfoController {
         if ((interest = request.getParameter("interest")) != null) {
             userInfo.setInterest(interest);
         }
-        System.out.println("contribution: "+ contribution+ "  interest: "+interest);
+        if ((picture = request.getParameter("picture")) != null) {
+            userInfo.setPicture(picture);
+        }
+        System.out.println("contribution: " + contribution + "  interest: " + interest);
         HashMap<String, String> res = new HashMap<>();
         if (userInfoService.editUserInfo(userInfo)) {
             Account accountNew = loginService.findAccountById(account.getId());

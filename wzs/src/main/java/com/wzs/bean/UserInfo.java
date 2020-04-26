@@ -10,7 +10,6 @@ public class UserInfo implements Serializable {
     private String email;
     private String name;
     private String sex;
-    //private Date birth; 待定
     private String address;
     private String signature;   //个性签名
     private String education;   //学历
@@ -19,6 +18,7 @@ public class UserInfo implements Serializable {
     private String interest;    //偏好领域
     private String introduction;            //简介
     private String contribution;            //贡献
+    private String picture;     //头像url
 
     public void setInfo(String email, String name, String sex, String address, String work) {
         this.address = address;
@@ -122,5 +122,13 @@ public class UserInfo implements Serializable {
 
     public void setContribution(String contribution) {
         this.contribution = contribution;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }

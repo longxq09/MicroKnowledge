@@ -51,7 +51,8 @@ CREATE TABLE `user_info` (
   `expertise` VARCHAR ( 256 ) DEFAULT NULL,
 	`interest` VARCHAR ( 256 ) DEFAULT NULL,
   `introduction` text,
-	`contribution` text
+	`contribution` text,
+	`picture` VARCHAR ( 50 ) DEFAULT NULL
 ) ENGINE = INNODB DEFAULT CHARSET = utf8;
 ALTER TABLE `user_info` MODIFY `id` BIGINT NOT NULL AUTO_INCREMENT,
 AUTO_INCREMENT = 1000;
