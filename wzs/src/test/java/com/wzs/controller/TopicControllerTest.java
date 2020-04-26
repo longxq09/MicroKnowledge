@@ -35,10 +35,10 @@ class TopicControllerTest {
     @Test
     void queryTopic() {
         Map<String, Object> map = new HashMap<>();
-        List<Topic> list =  controller.queryTopic(map);
-        for(Topic t : list){
-            System.out.println(t.getTopicName());
-        }
+//        List<Topic> list =  controller.queryTopic(map);
+//        for(Topic t : list){
+//            System.out.println(t.getTopicName());
+//        }
     }
 
     @Test

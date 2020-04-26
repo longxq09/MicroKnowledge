@@ -4,14 +4,15 @@ import com.wzs.bean.MicroEvidence;
 import com.wzs.service.MEvidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ import java.util.Map;
  * @Date 2020/4/20 12:17
  */
 @Controller
-@RequestMapping("/Evidence")
+@RequestMapping("/MEvidence")
 public class MEvidController {
 
     @Autowired
@@ -31,9 +32,21 @@ public class MEvidController {
         return mEvidService.queryMEvid(queryMap);
     }
 
-    public int insertMEvid(MicroEvidence mEvid, HttpSession session){
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/addMEvid", method = RequestMethod.POST)
+    public int insertMEvid(HttpServletRequest request , HttpSession session){
+        MicroEvidence evid = new MicroEvidence();
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
-        mEvidService.insertMEvid(mEvid);
+        evid.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
+        evid.setTopic(request.getParameter("topic"));
+        evid.setCitedPaper(request.getParameter("citedPaper"));
+        evid.setKeywords(request.getParameter("keywords"));
+        evid.setTitle(request.getParameter("title"));
+        evid.setSummary(request.getParameter("summary"));
+        evid.setTime(new Date());
+        mEvidService.insertMEvid(evid);
+
         return 0;
     }
 

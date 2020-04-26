@@ -17,6 +17,7 @@ public class MicroGuess {
     private String topic;
     private String citedEvidList;
     private String keywords;
+    private String title;
     private String summary;
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private Date time;
@@ -95,5 +96,13 @@ public class MicroGuess {
 
     public void setJudge(int judge) {
         Judge = judge;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
