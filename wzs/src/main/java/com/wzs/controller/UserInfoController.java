@@ -78,8 +78,9 @@ public class UserInfoController {
         res.put("work", info.getWork());
         res.put("introduction", info.getIntroduction());
         res.put("contribution", info.getContribution());
-        //res.put("expertise", info.getExpertise());  //专业领域, not yet
-        //res.put("interest", info.getInterest());     //偏好领域, not yet
+        res.put("expertise", info.getExpertise());  //专业领域, id-id-id
+        res.put("interest", info.getInterest());     //偏好领域, id-id-id
+        //System.out.println("contribution: "+ contribution+ "interest: "+interest);
         return res;
     }
 
@@ -89,8 +90,7 @@ public class UserInfoController {
     Object userInfoEdit(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
         String name, sex, address, signature, education, work, introduction, contribution;
-        String expertise;    //专业领域, not yet
-        String interest;    //偏好领域, not yet
+        String expertise,interest;
         UserInfo userInfo = userInfoService.getUserInfo(account.getId());
         if ((name = request.getParameter("name")) != null) {
             userInfo.setName(name);
@@ -116,18 +116,21 @@ public class UserInfoController {
         if ((contribution = request.getParameter("contribution")) != null) {
             userInfo.setContribution(contribution);
         }
-        if ((expertise = request.getParameter("contribution")) != null) {
+        if ((expertise = request.getParameter("expertise")) != null) {
             userInfo.setExpertise(expertise);
         }
         if ((interest = request.getParameter("interest")) != null) {
             userInfo.setInterest(interest);
         }
+        System.out.println("contribution: "+ contribution+ "  interest: "+interest);
         HashMap<String, String> res = new HashMap<>();
         if (userInfoService.editUserInfo(userInfo)) {
             Account accountNew = loginService.findAccountById(account.getId());
             request.getSession().setAttribute("account", accountNew);
+            res.put("code", "0");
             res.put("message", "信息修改成功！");
         } else {
+            res.put("code", "500");
             res.put("message", "信息修改失败！");
         }
         return res;

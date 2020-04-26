@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wzs.mapper.TopicMapper" >
+<mapper namespace="com.wzs.mapper.TopicMapper">
 
     <sql id="BASE_TABLE">
         topic
@@ -10,10 +10,41 @@
         id,`topicName`,flag
     </sql>
 
+    <select id="getALLTopic" resultType="com.wzs.bean.Topic" parameterType="java.util.Map">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        from
+        <include refid="BASE_TABLE"/>
+        <where>
+            <if test="id !=null and id !=''">
+            </if>
+            <if test="topicName !=null and topic !=''">
+            </if>
+            <if test="flag !=null and flag !=''">
+            </if>
+        </where>
+    </select>
+
+    <select id="getALLValidTopic" resultType="com.wzs.bean.Topic" parameterType="java.util.Map">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        from
+        <include refid="BASE_TABLE"/>
+        <where>
+            <if test="id !=null and id !=''">
+            </if>
+            <if test="topicName !=null and topic !=''">
+            </if>
+            <if test="flag !=null and flag !=''">
+                and flag=1
+            </if>
+        </where>
+    </select>
     <select id="selectTopic" resultType="com.wzs.bean.Topic" parameterType="java.util.Map">
         SELECT
         <include refid="BASE_COLUMN"/>
-        from <include refid="BASE_TABLE"/>
+        from
+        <include refid="BASE_TABLE"/>
         <where>
             <if test="id !=null and id !=''">
                 and id=#{id,jdbcType=INTEGER}
@@ -21,14 +52,15 @@
             <if test="topicName !=null and topic !=''">
                 and `topicName`=#{topicName,jdbcType=VARCHAR}
             </if>
-            <if test="flag !=null and authorID !=''">
+            <if test="flag !=null and flag !=''">
                 and flag=#{flag,jdbcType=INTEGER}
             </if>
         </where>
 
     </select>
 
-    <insert id="insertTopic" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.wzs.bean.MicroGuess">
+    <insert id="insertTopic" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="com.wzs.bean.MicroGuess">
         INSERT INTO
         <include refid="BASE_TABLE"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -39,8 +71,9 @@
         </trim>
     </insert>
 
-    <update id="updateTopic" parameterType="com.wzs.bean.MicroGuess" >
-        update <include refid="BASE_TABLE"/>
+    <update id="updateTopic" parameterType="com.wzs.bean.MicroGuess">
+        update
+        <include refid="BASE_TABLE"/>
         <set>
             <if test="topicName !=null">
                 topicName=#{topicName,jdbcType=VARCHAR},
@@ -49,8 +82,9 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <delete id="deleteTopicById" parameterType="java.lang.Integer" >
-        update<include refid="BASE_TABLE"/>
+    <delete id="deleteTopicById" parameterType="java.lang.Integer">
+        update
+        <include refid="BASE_TABLE"/>
         set flag=0
         where id = #{id,jdbcType=INTEGER}
     </delete>

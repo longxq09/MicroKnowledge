@@ -29,6 +29,7 @@ export default new Router({
       name: 'NewNotice',
       component: NewNotice
     },
+
     {
       path: '/homepage',
       name: 'HomePage',

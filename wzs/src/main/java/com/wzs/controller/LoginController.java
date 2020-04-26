@@ -55,16 +55,6 @@ public class LoginController {
     }
 
     /*
-    @RequestMapping("/user_main.html")
-    public ModelAndView toUserMain(HttpServletResponse response) {
-        return new ModelAndView("user_main");
-    }
-
-    @RequestMapping("/repasswd.html")
-    public ModelAndView reFreshPasswd() {
-        return new ModelAndView("repasswd");
-    }
-
     @RequestMapping("/repasswd_do")
     public String reUserPasswdDo(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         Account user = (Account) request.getSession().getAttribute("account");

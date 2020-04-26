@@ -21,7 +21,7 @@
       return {
         dataForm: {name: '', password: '', email: ''},
         rules: {
-          username: [{required: true, message: '账号不可为空', trigger: 'blur'}],
+          name: [{required: true, message: '账号不可为空', trigger: 'blur'}],
           password: [{required: true, message: '密码不可为空', trigger: 'blur'}],
           email: [{required: true, message: '邮箱不可为空', trigger: 'blur'}],
         },
@@ -35,9 +35,21 @@
         params.append('password',this.dataForm.password);
         this.axios.post('/user/register', params)
           .then((res)=>{
+            var remindType = res.data.code == 0 ? 'success' : 'info';
+            var remindTitle = res.data.code == 0 ? '注册成功' : '注册失败';
+            var remindContent = res.data.code == 0 ? '即将跳转个人页面' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
             if (res.data.code==0){
-              this.$router.push("/home");
+              this.$router.push("/user");
             }
+            this.$alert(remindContent, remindTitle, {
+              confirmButtonText: '确定',
+              callback: action => {
+                this.$message({
+                  type: remindType,
+                  message: remindTitle
+                });
+              }
+            });
           })
           .catch((res)=>{
             console.log(res.data.message);
