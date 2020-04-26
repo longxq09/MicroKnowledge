@@ -4,7 +4,9 @@ import com.wzs.bean.MicroEvidence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,6 +35,7 @@ class MEvidControllerTest {
         evid.setTopic("计算机科学与技术");
         evid.setKeywords("A,B,C,D");
         evid.setSummary("summary");
+        evid.setTitle("title");
         try {
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date time = sdf.parse("2020/04/21 02:58:00");
@@ -40,7 +43,7 @@ class MEvidControllerTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        controller.insertMEvid(evid,null);
+//        controller.insertMEvid(evid,null);
     }
 
     @Test
@@ -51,6 +54,7 @@ class MEvidControllerTest {
         evid.setTopic("update");
         evid.setKeywords("update");
         evid.setSummary("update");
+        evid.setTitle("update");
         controller.updateMEvid(evid);
     }
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +25,6 @@ import java.util.Map;
 public class TopicController {
     @Autowired
     private TopicService topicService;
-
 
     @CrossOrigin
     @RequestMapping(value = "/user/topic", method = RequestMethod.GET)
@@ -59,7 +58,11 @@ public class TopicController {
         return topicService.getALLValidTopic();        //只返回了flag=1即有效的标签
     }
 
-    public List<Topic> queryTopic(Map<String, Object> queryMap) {
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/Topic/getTopicList", method = RequestMethod.GET)
+    public List<Topic> queryTopic(HttpServletRequest request){
+        Map<String,Object> queryMap = new HashMap();
         return topicService.queryTopic(queryMap);
     }
 

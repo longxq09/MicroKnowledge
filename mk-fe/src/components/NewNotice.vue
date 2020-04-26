@@ -22,7 +22,7 @@
         </el-form-item>
 
         <el-form-item label="分类">
-          <el-checkbox :key="label" v-for="label in labelList" @change="chooseItem(value.id)">{{label}}</el-checkbox>
+          <el-checkbox v-for="(value,index) in labelList" key="value.topicName" @change="chooseItem(value.id)">{{value.topicName}}</el-checkbox>
         </el-form-item>
 
         <el-form-item label="主题">
@@ -34,8 +34,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="toHomepage">发布</el-button>
-          <el-button @click="toHomepage">取消</el-button>
+          <el-button type="primary" @click="toHomepageSubmit">发布</el-button>
+          <el-button @click="toHomepageCancel">取消</el-button>
         </el-form-item>
       </el-form>
     </el-main>
@@ -50,25 +50,40 @@
     data() {
       return {
         referenceTags: [],
-        keyWordTags: ['machine learning'],
-        labelList: ['machine learning', 'deep learning', 'c/c++', 'python', 'deep learning',
-          'c/c++', 'python', 'deep learning', 'c/c++', 'python', 'deep learning', 'c/c++', 'python',
-        ],
+        keyWordTags: [],
+        labelList: Array,
         referenceValue: '',
         keyWordValue: '',
+        labelChoose: [],
         form: {
           title: '',
-          text: ''
+          text: '',
+          keyWord: '',
+          label: '',
+          reference: ''
         },
-        rules: {
-          keyWordTags: [{required: true, message: '关键词不可为空', trigger: 'blur'}],
-        }
       }
     },
     components: {
       vFooter
     },
+    created() {
+      console.log("init");
+      this.getUserInfo();
+    },
     methods: {
+        getUserInfo() {
+          var params = new URLSearchParams();
+          this.axios.get('/Topic/getTopicList', params)
+            .then((res) => {
+              console.log(res.data);
+              this.labelList = res.data;
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        },
+
       user() {
         this.$router.push('/user');
       },
@@ -81,8 +96,8 @@
         }
       },
 
-      addTag(a) {
-        if (a == 1) {
+      addTag(type) {
+        if (type == 1) {
           let referenceValue = this.referenceValue;
           if (referenceValue) {
             this.referenceTags.push(referenceValue);
@@ -94,16 +109,48 @@
             this.keyWordTags.push(keyWordValue);
           }
           this.keyWordValue = '';
+          console.log(this.keyWordTags.join('-'))
         }
       },
       chooseItem(id) {
+        console.log("id:"+id);
         if (this.labelChoose.indexOf(id) == -1) {
           this.labelChoose.push(id)
         } else {
           this.labelChoose.splice(this.labelChoose.indexOf(id), 1);
         }
+        console.log("labelChoose:"+this.labelChoose);
       },
-      toHomepage() {
+      toHomepageSubmit() {
+        this.form.reference = this.referenceTags.join('-');
+        this.form.keyWord = this.keyWordTags.join('-');
+        this.form.label = this.labelChoose.join('-');
+        var params = new URLSearchParams();
+        params.append('topic', this.form.label);
+        params.append('citedPaper', this.form.reference);
+        params.append('keywords', this.form.keyWord);
+        params.append('title', this.form.title);
+        params.append('summary', this.form.text);
+        params.append('authorId', 0);
+        this.axios.post('/MEvidence/addMEvid', params)
+          .then((res) => {
+            // var remindType = res.data.code == 0 ? 'success' : 'info';
+            var remindTitle = res.data === 0 ? '发布微证据成功' : '发布微证据失败';
+            var remindContent = res.data === 0 ? '发布微证据成功！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
+            console.log("------------" + res.data);
+            this.$alert(remindContent, remindTitle, {
+              confirmButtonText: '确定'
+            });
+            if (res.data === 0) {
+              this.$router.push('/homepage');
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+      },
+      toHomepageCancel() {
         this.$router.push('/homepage');
       }
     }
