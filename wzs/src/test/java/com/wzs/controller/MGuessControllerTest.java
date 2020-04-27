@@ -41,7 +41,7 @@ class MGuessControllerTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        controller.insertMGuess(guess,null);
+//        controller.insertMGuess(guess,null);
         MicroGuess guess2 = new MicroGuess();
         guess2.setAuthorID(2);
         guess2.setCitedEvidList("evid-evid-evid");
@@ -55,7 +55,7 @@ class MGuessControllerTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        controller.insertMGuess(guess,null);
+//        controller.insertMGuess(guess,null);
     }
 
     @Test
