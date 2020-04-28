@@ -2,6 +2,7 @@ package com.wzs.controller;
 
 import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroGuess;
+import com.wzs.bean.MicroNotice;
 import com.wzs.service.MEvidService;
 import com.wzs.service.MGuessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description: TODO
@@ -42,21 +40,34 @@ public class MGuessController {
     @ResponseBody
     @RequestMapping(value = "/addMGuess", method = RequestMethod.POST)
     public int insertMGuess(HttpServletRequest request, HttpSession session){
-        MicroGuess evid = new MicroGuess();
+        MicroGuess guess = new MicroGuess();
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
-        evid.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
-        evid.setTopic(request.getParameter("topic"));
-        evid.setCitedEvidList(request.getParameter("citedEvidList"));
-        evid.setKeywords(request.getParameter("keywords"));
-        evid.setTitle(request.getParameter("title"));
-        evid.setSummary(request.getParameter("summary"));
-        evid.setTime(new Date());
-        guessService.insertMGuess(evid);
+        guess.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
+        guess.setTopic(request.getParameter("topic"));
+        guess.setCitedEvidList(request.getParameter("citedEvidList"));
+        guess.setKeywords(request.getParameter("keywords"));
+        guess.setTitle(request.getParameter("title"));
+        guess.setSummary(request.getParameter("summary"));
+        guess.setTime(new Date());
+        guessService.insertMGuess(guess);
         return 0;
     }
 
     //修改微猜想
-    public int updateMGuess(MicroGuess guess){
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/modifyMGuess", method = RequestMethod.POST)
+    public int updateMGuess(HttpServletRequest request, HttpSession session){
+        MicroGuess guess = new MicroGuess();
+//        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
+        guess.setId(Integer.parseInt(request.getParameter("id")));
+        guess.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
+        guess.setTopic(request.getParameter("topic"));
+        guess.setCitedEvidList(request.getParameter("citedEvidList"));
+        guess.setKeywords(request.getParameter("keywords"));
+        guess.setTitle(request.getParameter("title"));
+        guess.setSummary(request.getParameter("summary"));
+        guess.setTime(new Date());
         guessService.updateMGuess(guess);
         return 0;
     }
@@ -72,6 +83,24 @@ public class MGuessController {
     private List<MicroEvidence> getMEvidList(){
         Map<String,Object> queryMap = new HashMap();
         return evidService.queryMEvid(queryMap);
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/toModifyMGuess", method = RequestMethod.POST)
+    private Map<String,Object> toModifyMGuess(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("id"));
+        Map<String,Object> queryMap = new HashMap();
+        queryMap.put("id",id);
+        List<MicroGuess> list =  guessService.queryMGuess(queryMap);
+        MicroGuess guess = list.get(0);
+        Map<String,Object> retMap = new HashMap();
+        retMap.put("topic",guess.getTopic());
+        retMap.put("citedEvidList",guess.getCitedEvidList());
+        retMap.put("keywords",guess.getKeywords());
+        retMap.put("title",guess.getTitle());
+        retMap.put("summary",guess.getSummary());
+        return retMap;
     }
 
 }
