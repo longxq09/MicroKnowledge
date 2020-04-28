@@ -42,8 +42,8 @@ public class MGuessServiceImp implements MGuessService {
         return guessMapper.deleteMGuessById(id);
     }
 
-    public List<MicroGuess> fuzzyQueryMGuess(String word, ArrayList<String> topicList){
+    public List<MicroGuess> fuzzyQueryMGuess(String word, String topics){
         String search = "%" + word + "%";
-        return guessMapper.fuzzyQueryMGuess(search,topicList);
+        return guessMapper.fuzzyQueryMGuess(search,topics);
     }
 }

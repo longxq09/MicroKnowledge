@@ -18,5 +18,5 @@ public interface MEvidMapper {
     boolean insertMEvid(MicroEvidence evid);
     int updateMEvid(MicroEvidence evid);
     boolean deleteMEvidById(int id);
-    List<MicroEvidence> fuzzyQueryMEvid(String word, ArrayList<String> topicList);
+    List<MicroEvidence> fuzzyQueryMEvid(String word, String topics);
 }

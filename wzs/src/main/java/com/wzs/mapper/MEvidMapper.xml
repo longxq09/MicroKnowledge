@@ -37,7 +37,7 @@
                 and `title`=#{title,jdbcType=VARCHAR}
             </if>
             <if test="time !=null and time !=''">
-                and `time`=#{time,}
+                and `time`=#{time}
             </if>
             <if test="judge !=null and judge !=''">
                 and `judge`=#{judge,jdbcType=INTEGER}
@@ -79,10 +79,10 @@
                 summary=#{summary,jdbcType=VARCHAR},
             </if>
             <if test="title !=null">
-                summary=#{title,jdbcType=VARCHAR},
+                title=#{title,jdbcType=VARCHAR},
             </if>
             <if test="time !=null">
-                `time`=#{date},
+                `time`=#{time},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
@@ -93,8 +93,9 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
     <select id="fuzzyQueryMEvid" resultType="com.wzs.bean.MicroEvidence" parameterType="java.util.Map">
-        select * from micro_evidence where (authorName like #{word} or summary like #{word}
-        or keywords like #{word} or title like #{word} ) and
+        select * from micro_evidence where (topic like topics)
+        and (authorName like #{word} or summary like #{word}
+        or keywords like #{word} or title like #{word} ) and (judge= 1)
     </select>
 
 </mapper>

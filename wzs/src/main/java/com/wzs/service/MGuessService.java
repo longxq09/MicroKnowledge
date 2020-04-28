@@ -18,6 +18,6 @@ public interface MGuessService {
     boolean insertMGuess(MicroGuess guess);
     int updateMGuess(MicroGuess guess);
     boolean deleteMGuess(int id);
-    List<MicroGuess> fuzzyQueryMGuess(String word, ArrayList<String> topicList);
+    List<MicroGuess> fuzzyQueryMGuess(String word, String topics);
 
 }

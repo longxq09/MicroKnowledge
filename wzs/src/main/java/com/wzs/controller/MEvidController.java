@@ -1,7 +1,10 @@
 package com.wzs.controller;
 
 import com.wzs.bean.MicroEvidence;
+import com.wzs.bean.MicroGuess;
+import com.wzs.bean.Topic;
 import com.wzs.service.MEvidService;
+import com.wzs.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description: TODO
@@ -27,6 +28,8 @@ public class MEvidController {
 
     @Autowired
     private MEvidService mEvidService;
+    @Autowired
+    private TopicService topicService;
 
     public List<MicroEvidence> queryMEvid(Map<String,Object> queryMap){
         return mEvidService.queryMEvid(queryMap);
@@ -50,8 +53,21 @@ public class MEvidController {
         return 0;
     }
 
-    public int updateMEvid(MicroEvidence mEvid){
-        mEvidService.updateMEvid(mEvid);
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/modifyMEvid", method = RequestMethod.POST)
+    public int updateMEvid(HttpServletRequest request , HttpSession session){
+        MicroEvidence evid = new MicroEvidence();
+//        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
+        evid.setId(Integer.parseInt(request.getParameter("id")));
+        evid.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
+        evid.setTopic(request.getParameter("topic"));
+        evid.setCitedPaper(request.getParameter("citedPaper"));
+        evid.setKeywords(request.getParameter("keywords"));
+        evid.setTitle(request.getParameter("title"));
+        evid.setSummary(request.getParameter("summary"));
+        evid.setTime(new Date());
+        mEvidService.updateMEvid(evid);
         return 0;
     }
 
@@ -59,12 +75,36 @@ public class MEvidController {
         return mEvidService.deleteMEvid(id);
     }
 
-    private String toAddMEvdi(){
-        return "addMEvid";
-    }
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/toModifyMEvid", method = RequestMethod.POST)
+    private Map<String,Object> toModifyMEvid(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("id"));
+        Map<String,Object> queryMap = new HashMap();
+        queryMap.put("id",id);
+        List<MicroEvidence> list = mEvidService.queryMEvid(queryMap);
+        MicroEvidence evid = list.get(0);
+        Map<String,Object> retMap = new HashMap();
+        retMap.put("citedPaper",evid.getCitedPaper());
+        retMap.put("keywords",evid.getKeywords());
+        retMap.put("title",evid.getTitle());
+        retMap.put("summary",evid.getSummary());
 
-    private String toUpdateMEvdi(){
-        return "addMEvid";
+//        String topicStr = evid.getTopic();
+//        List<String> inTopicList = Arrays.asList(topicStr.split("-"));
+//        queryMap.remove("id");
+//        List<Topic> allTopicList =  topicService.queryTopic(queryMap);
+//        Map<Integer,Boolean> topicIdList = new HashMap<>();
+//        for(Topic t : allTopicList){
+//            if(inTopicList.contains(String.valueOf(t.getId()))){
+//                topicIdList.put(t.getId(),true);
+//            } else {
+//                topicIdList.put(t.getId(),false);
+//            }
+//        }
+
+        retMap.put("topic",evid.getTopic());
+        return retMap;
     }
 
 }

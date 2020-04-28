@@ -43,8 +43,8 @@ public class MEvidServiceImp implements MEvidService {
     }
 
     @Override
-    public List<MicroEvidence> fuzzyQueryMEvid(String word, ArrayList<String> topicList){
+    public List<MicroEvidence> fuzzyQueryMEvid(String word, String topics){
         String search = "%" + word + "%";
-        return evidMapper.fuzzyQueryMEvid(search,topicList);
+        return evidMapper.fuzzyQueryMEvid(search,topics);
     }
 }

@@ -18,5 +18,5 @@ public interface MEvidService {
     boolean insertMEvid(MicroEvidence evidence);
     int updateMEvid(MicroEvidence evidence);
     boolean deleteMEvid(int id);
-    List<MicroEvidence> fuzzyQueryMEvid(String word, ArrayList<String> topicList);
+    List<MicroEvidence> fuzzyQueryMEvid(String word, String topics);
 }
