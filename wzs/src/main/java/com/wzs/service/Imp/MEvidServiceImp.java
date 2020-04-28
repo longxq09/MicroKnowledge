@@ -1,11 +1,13 @@
 package com.wzs.service.Imp;
 
 import com.wzs.bean.MicroEvidence;
+import com.wzs.bean.MicroGuess;
 import com.wzs.mapper.MEvidMapper;
 import com.wzs.service.MEvidService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,5 +40,11 @@ public class MEvidServiceImp implements MEvidService {
     @Override
     public boolean deleteMEvid(int id) {
         return evidMapper.deleteMEvidById(id);
+    }
+
+    @Override
+    public List<MicroEvidence> fuzzyQueryMEvid(String word, ArrayList<String> topicList){
+        String search = "%" + word + "%";
+        return evidMapper.fuzzyQueryMEvid(search,topicList);
     }
 }

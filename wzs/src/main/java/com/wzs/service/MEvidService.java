@@ -1,7 +1,9 @@
 package com.wzs.service;
 
 import com.wzs.bean.MicroEvidence;
+import com.wzs.bean.MicroGuess;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,5 +18,5 @@ public interface MEvidService {
     boolean insertMEvid(MicroEvidence evidence);
     int updateMEvid(MicroEvidence evidence);
     boolean deleteMEvid(int id);
-
+    List<MicroEvidence> fuzzyQueryMEvid(String word, ArrayList<String> topicList);
 }

@@ -7,6 +7,7 @@ import com.wzs.service.MGuessService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,5 +40,10 @@ public class MGuessServiceImp implements MGuessService {
     @Override
     public boolean deleteMGuess(int id) {
         return guessMapper.deleteMGuessById(id);
+    }
+
+    public List<MicroGuess> fuzzyQueryMGuess(String word, ArrayList<String> topicList){
+        String search = "%" + word + "%";
+        return guessMapper.fuzzyQueryMGuess(search,topicList);
     }
 }

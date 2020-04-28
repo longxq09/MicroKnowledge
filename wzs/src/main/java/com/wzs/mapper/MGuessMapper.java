@@ -4,6 +4,7 @@ import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroGuess;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +19,5 @@ public interface MGuessMapper {
     boolean insertMGuess(MicroGuess guess);
     int updateMGuess(MicroGuess guess);
     boolean deleteMGuessById(int id);
+    List<MicroGuess> fuzzyQueryMGuess(String word, ArrayList<String> topicList);
 }

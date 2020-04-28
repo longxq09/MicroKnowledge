@@ -92,6 +92,9 @@
         delete from <include refid="BASE_TABLE"/>
         where id = #{id,jdbcType=INTEGER}
     </delete>
-
+    <select id="fuzzyQueryMEvid" resultType="com.wzs.bean.MicroEvidence" parameterType="java.util.Map">
+        select * from micro_evidence where (authorName like #{word} or summary like #{word}
+        or keywords like #{word} or title like #{word} ) and
+    </select>
 
 </mapper>

@@ -93,5 +93,9 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
+    <select id="fuzzyQueryMGuess" resultType="com.wzs.bean.MicroGuess" parameterType="java.util.Map">
+        select * from micro_guess where (authorName like #{word} or summary like #{word}
+        or keywords like #{word} or title like #{word} ) and
+    </select>
 
 </mapper>

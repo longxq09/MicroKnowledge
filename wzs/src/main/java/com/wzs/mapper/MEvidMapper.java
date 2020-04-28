@@ -3,6 +3,7 @@ package com.wzs.mapper;
 import com.wzs.bean.MicroEvidence;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +18,5 @@ public interface MEvidMapper {
     boolean insertMEvid(MicroEvidence evid);
     int updateMEvid(MicroEvidence evid);
     boolean deleteMEvidById(int id);
+    List<MicroEvidence> fuzzyQueryMEvid(String word, ArrayList<String> topicList);
 }
