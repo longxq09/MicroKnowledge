@@ -1,6 +1,18 @@
 <template>
   <div class="header">
     <div class="title">{{title}}</div>
+    <div style="width:200px; display:inline-block; margin-left: 8px">
+      <el-input
+        v-model="searchContent"
+        placeholder="搜索关键字">
+      </el-input>
+    </div>
+    <el-button
+      style="display: inline"
+      type="primary"
+      icon="el-icon-search"
+      @click="search">
+    </el-button>
     <el-badge class="button" v-if="user">
       <el-button @click="toUserInfo">个人信息</el-button>
     </el-badge>
@@ -36,6 +48,11 @@
         default: false
       }
     },
+    data() {
+      return {
+        searchContent: ''
+      }
+    },
     methods: {
       toUserInfo() {
         console.log("miaomiaomiao");
@@ -49,6 +66,9 @@
       },
       toNewMGuess() {
         this.$router.push('/new_mguess');
+      },
+      search() {
+        this.$router.push('/search?content='+this.search)
       }
     }
   }
@@ -79,4 +99,5 @@
     float: right;
     margin-top: 5px;
   }
+
 </style>
