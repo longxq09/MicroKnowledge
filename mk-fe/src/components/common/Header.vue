@@ -68,7 +68,7 @@
         this.$router.push('/new_mguess');
       },
       search() {
-        this.$router.push('/search?content='+this.search)
+        this.$router.push('/search?content='+this.searchContent)
       }
     }
   }
