@@ -71,6 +71,7 @@ public class UserInfoController {
             return res;
         }
         UserInfo info = userInfoService.getUserInfo(account.getId());
+        res.put("sex", info.getSex());
         res.put("name", info.getName());
         res.put("address", info.getAddress());
         res.put("signature", info.getSignature());
