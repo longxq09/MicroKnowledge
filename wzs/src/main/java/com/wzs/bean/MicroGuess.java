@@ -9,7 +9,7 @@ import java.util.Date;
  * @Author Wazak
  * @Date 2020/4/20 12:01
  */
-public class MicroGuess {
+public class MicroGuess implements MicroNotice{
 
     //与数据库对应，基础字段
     private int id;

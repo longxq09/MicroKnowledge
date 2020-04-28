@@ -6,7 +6,7 @@
     <el-main>
       <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
         <el-tab-pane label="推荐" name="first">
-          <v-notice></v-notice>
+          <v-notice v-bind:user=true></v-notice>
           <v-notice></v-notice>
         </el-tab-pane>
         <el-tab-pane label="关注" name="second">
