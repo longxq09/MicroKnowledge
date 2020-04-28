@@ -76,7 +76,7 @@ public class UserInfoController {
         res.put("address", info.getAddress());
         res.put("signature", info.getSignature());
         res.put("education", info.getEducation());
-        res.put("work", info.getWork());
+        res.put("works", info.getWorks());
         res.put("introduction", info.getIntroduction());
         res.put("contribution", info.getContribution());
         res.put("expertise", info.getExpertise());  //专业领域, id-id-id
@@ -90,7 +90,7 @@ public class UserInfoController {
     public @ResponseBody
     Object userInfoEdit(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
-        String name, sex, address, signature, education, work, introduction, contribution;
+        String name, sex, address, signature, education, works, introduction, contribution;
         String expertise, interest, picture;
         UserInfo userInfo = userInfoService.getUserInfo(account.getId());
         if ((name = request.getParameter("name")) != null) {
@@ -108,8 +108,8 @@ public class UserInfoController {
         if ((education = request.getParameter("education")) != null) {
             userInfo.setEducation(education);
         }
-        if ((work = request.getParameter("work")) != null) {
-            userInfo.setWork(work);
+        if ((works = request.getParameter("works")) != null) {
+            userInfo.setWorks(works);
         }
         if ((introduction = request.getParameter("introduction")) != null) {
             userInfo.setIntroduction(introduction);
