@@ -29,3 +29,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+### hjw ###
+hjw.md
+review.sql
