@@ -55,7 +55,6 @@
     },
     methods: {
       toUserInfo() {
-        console.log("miaomiaomiao");
         this.$router.push('/userinfo');
       },
       toUser() {
@@ -68,7 +67,12 @@
         this.$router.push('/new_mguess');
       },
       search() {
-        this.$router.push('/search?content='+this.searchContent)
+        this.$router.push({
+          path: '/search',
+          query: {
+            content: this.searchContent
+          }
+        })
       }
     }
   }

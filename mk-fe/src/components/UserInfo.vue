@@ -35,7 +35,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="工作">
-          <el-input v-model="form.work"></el-input>
+          <el-input v-model="form.works"></el-input>
         </el-form-item>
         <el-form-item label="居住地">
           <el-input type="textarea" v-model="form.address"></el-input>
@@ -107,8 +107,6 @@ import vFooter from './common/Footer.vue';
 		},
 		methods: {
 		  getUserInfo() {
-		    var params = new URLSearchParams()
-        params.append('account', 'wzs01@163.com')
         this.axios.get('/topic')
           .then((res) => {
             this.topics = res.data
@@ -116,7 +114,7 @@ import vFooter from './common/Footer.vue';
           .catch((error) => {
             console.log(error)
           })
-		    this.axios.get('/user/info', params)
+		    this.axios.get('/user/info')
           .then((res) => {
             this.form = res.data
             var tags = res.data.interest.split('-')
@@ -138,7 +136,7 @@ import vFooter from './common/Footer.vue';
         params.append('name', this.form.name)
         params.append('sex', this.form.sex)
         params.append('education', this.form.education)
-        params.append('work', this.form.work)
+        params.append('works', this.form.works)
         params.append('address', this.form.address)
         params.append('introduction', this.form.introduction)
         params.append('contribution', this.form.contribution)
@@ -147,7 +145,6 @@ import vFooter from './common/Footer.vue';
         params.append('picture', this.form.picture)
         this.axios.post('/user/info', params)
           .then((res) => {
-            var remindType = res.data.code == 0 ? 'success' : 'info'
             var remindTitle = res.data.code == 0 ? '修改成功' : '修改失败'
             var remindContent = res.data.code == 0 ? '个人信息更新啦！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧'
             if(res.data.code == 0) {
