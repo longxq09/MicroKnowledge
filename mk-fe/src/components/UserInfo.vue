@@ -5,6 +5,17 @@
 		</el-header>
 		<el-main>
 			<el-form ref="form" :model="form" label-width="80px">
+			  <el-form-item label="头像">
+			    <el-upload
+            class="avatar-uploader"
+            action="#"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="form.picture" :src="form.picture" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+			  </el-form-item>
 				<el-form-item label="昵称">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
@@ -12,17 +23,15 @@
           <el-input type="textarea" v-model="form.signature"></el-input>
         </el-form-item>
         <el-form-item label="性别">
-          <el-select v-model="form.sex" placeholder="请选择">
-            <el-option label="男" value="male"></el-option>
-            <el-option label="女" value="female"></el-option>
-          </el-select>
+          <el-radio v-model="form.sex" label="male">男</el-radio>
+          <el-radio v-model="form.sex" label="female">女</el-radio>
         </el-form-item>
         <el-form-item label="教育经历">
           <el-select v-model="form.education" placeholder="请选择">
-            <el-option label="高中及以下" value="male"></el-option>
-            <el-option label="本科" value="female"></el-option>
-            <el-option label="硕士" value="female"></el-option>
-            <el-option label="博士" value="female"></el-option>
+            <el-option label="高中及以下" value="高中及以下"></el-option>
+            <el-option label="本科" value="本科"></el-option>
+            <el-option label="硕士" value="硕士"></el-option>
+            <el-option label="博士" value="博士"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="工作">
@@ -38,16 +47,32 @@
           <el-input type="textarea" v-model="form.contribution"></el-input>
         </el-form-item>
         <el-form-item label="专业领域">
-          <el-input type="textarea" v-model="form.expertise"></el-input>
+          <el-select
+            style="display: block"
+            v-model="expertiseTags"
+            multiple
+            value-key="id">
+            <el-option
+              v-for="(value, index) in topics"
+              :key="value.id"
+              :label="value.topicName"
+              :value="value.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="兴趣领域">
-          <el-tag :key="tag"
-            v-for="tag in interestTags"
-            closable
-            :disable-transitions="false"
-            @close="handleClose(tag)">
-            {{tag}}
-          </el-tag>
+          <el-select
+            style="display: block"
+            v-model="interestTags"
+            multiple
+            value-key="id">
+            <el-option
+              v-for="(value, index) in topics"
+              :key="value.id"
+              :label="value.topicName"
+              :value="value.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submit">立即更新</el-button>
@@ -67,13 +92,9 @@ import vFooter from './common/Footer.vue';
     data() {
       return {
         title: "微知 | 个人信息",
-        activeName: 'first',
+        topics: Array,
         interestTags: [],
-        selectVisible: false,
-        selectValue: '',
-        dialogImageUrl: '',
-        dialogVisible: false,
-        notdialogVisible: true,
+        expertiseTags: [],
         form: {}
       }
     },
@@ -82,82 +103,97 @@ import vFooter from './common/Footer.vue';
 			vFooter
 		},
 		mounted() {
-		  console.log("qwq");
 		  this.getUserInfo();
 		},
 		methods: {
 		  getUserInfo() {
-		    var params = new URLSearchParams();
-        params.append('account', 'wzs01@163.com');
-		    this.axios.get('/user/info', params)
+		    var params = new URLSearchParams()
+        params.append('account', 'wzs01@163.com')
+        this.axios.get('/topic')
           .then((res) => {
-            console.log(res.data);
-            this.form = res.data
-            this.interestTags = String(this.form.interest).split('-');
+            this.topics = res.data
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error)
+          })
+		    this.axios.get('/user/info', params)
+          .then((res) => {
+            this.form = res.data
+            var tags = res.data.interest.split('-')
+            for(var i = 0; i < tags.length; i++)
+              this.interestTags.push(parseInt(tags[i]))
+            tags = res.data.expertise.split('-')
+            for(var i = 0; i < tags.length; i++)
+              this.expertiseTags.push(parseInt(tags[i]))
+          })
+          .catch((error) => {
+            console.log(error)
           });
+
 		  },
-			handleClose(tag) {
-        this.expertiseTags.splice(this.expertiseTags.indexOf(tag), 1);
-      },
-
-      showInput() {
-        this.inputVisible = true;
-        this.$nextTick(_ => {
-          this.$refs.saveTagInput.$refs.input.focus();
-        });
-      },
-
-      handleInputConfirm() {
-        let selectValue = this.selectValue;
-        if (selectValue) {
-          this.expertiseTags.push(selectValue);
-        }
-        this.selectVisible = false;
-        this.selectValue = '';
-      },
-
-
-
-      handlePictureCardPreview(file) {
-        this.dialogImageUrl = file.url;
-        this.dialogVisible = true;
-      },
 
       submit() {
-        var params = new URLSearchParams();
-        params.append('account', 'wzs01@163.com');
-        params.append('name', this.form.name);
-        params.append('sex', this.form.sex);
-        params.append('education', this.form.education);
-        params.append('work', this.form.work);
-        params.append('address', this.form.address);
-        params.append('introduction', this.form.introduction);
-        params.append('contribution', this.form.contribution);
-        params.append('expertise', this.form.expertise);
-        params.append('interest', this.form.interest);
+        var params = new URLSearchParams()
+        params.append('account', 'wzs01@163.com')
+        params.append('name', this.form.name)
+        params.append('sex', this.form.sex)
+        params.append('education', this.form.education)
+        params.append('work', this.form.work)
+        params.append('address', this.form.address)
+        params.append('introduction', this.form.introduction)
+        params.append('contribution', this.form.contribution)
+        params.append('interest', this.getInterest())
+        params.append('expertise', this.getExpertise())
+        params.append('picture', this.form.picture)
         this.axios.post('/user/info', params)
           .then((res) => {
-            var remindType = res.data.code == 0 ? 'success' : 'info';
-            var remindTitle = res.data.code == 0 ? '修改成功' : '修改失败';
-            var remindContent = res.data.code == 0 ? '个人信息更新啦！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
-            console.log("*********" + res.data.message);
+            var remindType = res.data.code == 0 ? 'success' : 'info'
+            var remindTitle = res.data.code == 0 ? '修改成功' : '修改失败'
+            var remindContent = res.data.code == 0 ? '个人信息更新啦！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧'
             if(res.data.code == 0) {
               this.$router.push('/user');
             }
             this.$alert(remindContent, remindTitle, {
               confirmButtonText: '确定'
-            });
+            })
           })
           .catch((error) => {
-            console.log(error);
-          });
+            console.log(error)
+          })
+      },
+
+      getInterest() {
+        var interest = ''
+        for (var i = 0; i < this.interestTags.length; i++)
+          interest = interest + this.interestTags[i].toString() + '-'
+        return interest.slice(0, -1)
+      },
+
+      getExpertise() {
+        var expertise = ''
+        for (var i = 0; i < this.expertiseTags.length; i++)
+          expertise = expertise + this.expertiseTags[i].toString() + '-'
+        return expertise.slice(0, -1)
       },
 
       cancel() {
-        this.$router.push('/user');
+        this.$router.push('/user')
+      },
+
+      handleAvatarSuccess(res, file) {
+        this.form.picture = URL.createObjectURL(file.raw)
+      },
+
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg'
+        const isLt2M = file.size / 1024 / 1024 < 2
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!')
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!')
+        }
+        return isJPG && isLt2M
       }
 		}
 
@@ -169,28 +205,27 @@ import vFooter from './common/Footer.vue';
     background-color: #F4F4F5;
     color: #333;
   }
-
-	.item {
-		float: right;
-		margin: 10px;
-	}
-
-	.el-tag + .el-tag {
-    margin-left: 10px;
+  .avatar-uploader .el-upload {
+      border: 1px dashed #d9d9d9;
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
   }
-
-  .button-new-tag {
-    margin-left: 10px;
-    height: 32px;
-    line-height: 30px;
-    padding-top: 0;
-    padding-bottom: 0;
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
   }
-
-  .input-new-tag {
-    width: 90px;
-    margin-left: 10px;
-    vertical-align: bottom;
-  }
-
+  .avatar {
+      width: 178px;
+      height: 178px;
+      display: block;
+    }
 </style>

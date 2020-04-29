@@ -13,7 +13,6 @@
 
  Date: 27/04/2020 15:24:04
 */
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -147,7 +146,8 @@ CREATE TABLE `user_info`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT,
   `email` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `sex` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `picture` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `sex` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `address` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `signature` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `education` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -162,8 +162,8 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (1000, 'wzs01@163.com', '张华', '男', '天津市', 'fighting!', '博士', '研究员', '1:Computer Sciences-2:Data Mining', '1:Statistics & Probability-2:High-performance computing-3:Music', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
-INSERT INTO `user_info` VALUES (1001, 'wzs02@163.com', '王小伟', '男', '北京市', 'work hard', '本科生', '学生', '1:Computer Sciences-2:Data Mining', '1:Statistics & Probability-2:High-performance computing-3:Music', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
-INSERT INTO `user_info` VALUES (1002, 'wzs03@163.com', '王莞尔', '女', '浙江省杭州市', 'work hard', '本科生', '学生', '1:Computer Sciences-2:Data Mining', '1:Statistics & Probability-2:High-performance computing-3:Music', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+INSERT INTO `user_info` VALUES (1000, 'wzs01@163.com', '张华', '', 'male', '天津市', 'fighting!', '博士', '研究员', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+INSERT INTO `user_info` VALUES (1001, 'wzs02@163.com', '王小伟', '', 'male', '北京市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+INSERT INTO `user_info` VALUES (1002, 'wzs03@163.com', '王莞尔', '', 'female', '浙江省杭州市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
 
 SET FOREIGN_KEY_CHECKS = 1;
