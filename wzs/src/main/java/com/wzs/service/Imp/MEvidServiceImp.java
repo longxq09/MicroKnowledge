@@ -2,12 +2,14 @@ package com.wzs.service.Imp;
 
 import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroGuess;
+import com.wzs.bean.SearchLimit;
 import com.wzs.mapper.MEvidMapper;
 import com.wzs.service.MEvidService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,8 +45,19 @@ public class MEvidServiceImp implements MEvidService {
     }
 
     @Override
-    public List<MicroEvidence> fuzzyQueryMEvid(String word, String topics){
-        String search = "%" + word + "%";
-        return evidMapper.fuzzyQueryMEvid(search,topics);
+    public List<MicroEvidence> singleQueryMEvid(String word, String topic) {
+        return evidMapper.singleQueryMEvid(word, topic);
     }
+
+    @Override
+    public List<MicroEvidence> multiQueryMEvid(ArrayList<String> topicList) {
+        return evidMapper.multiQueryMEvid(topicList);
+    }
+
+    @Override
+    public List<MicroEvidence> completeQueryMEvid(SearchLimit searchLimit) {
+        return evidMapper.completeQueryMEvid(searchLimit);
+    }
+
+
 }

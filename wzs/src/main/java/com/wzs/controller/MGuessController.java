@@ -103,39 +103,5 @@ public class MGuessController {
         return retMap;
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public @ResponseBody
-    Object getSearch(HttpServletRequest request) {
-        String word = request.getParameter("word");     //关键词
-        int kind = Integer.parseInt(request.getParameter("kind"));  // Evidence-Guess: 00,01,10,11
-        String topic = request.getParameter("topic");     //id-id-id
-        //ArrayList<String> topicList = new ArrayList<>();
-        String topics = "%[";
-        String[] tmp = topic.split("-");
-        for (int i = 0; i < tmp.length; i++) {
-            //System.out.println(tmp[i]);
-            topics = topics.concat(tmp[i]);
-        }
-        topics = topics.concat("]%");
-        List<MicroGuess> guessList;
-        List<MicroEvidence> evidenceList;
-        HashMap<String, Object> res = new HashMap<>();
-        if (kind == 1) {
-            guessList = guessService.fuzzyQueryMGuess(word, topics);
-            res.put("kind", "1");
-            res.put("guess", guessList);
-        } else if (kind == 2) {
-            evidenceList = evidService.fuzzyQueryMEvid(word, topics);
-            res.put("kind", "2");
-            res.put("evidence", evidenceList);
-        } else {
-            guessList = guessService.fuzzyQueryMGuess(word, topics);
-            evidenceList = evidService.fuzzyQueryMEvid(word, topics);
-            res.put("kind", "0");
-            res.put("guess", guessList);
-            res.put("evidence", evidenceList);
-        }
-        return res;
-    }
+
 }

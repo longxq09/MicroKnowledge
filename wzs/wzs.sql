@@ -57,27 +57,27 @@ DROP TABLE IF EXISTS `micro_evidence`;
 CREATE TABLE `micro_evidence`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `authorId` int(0) NULL DEFAULT NULL,
-  `topic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `citedPaper` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `topic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `citedPaper` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `time` datetime(0) NULL DEFAULT NULL,
   `judge` int(0) NULL DEFAULT 0,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of micro_evidence
 -- ----------------------------
-INSERT INTO `micro_evidence` VALUES (3, 1, '计算机科学与技术', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 0, 'title');
+INSERT INTO `micro_evidence` VALUES (3, 1, '-1-2-', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 0, 'title');
 INSERT INTO `micro_evidence` VALUES (4, 0, '', '1232-213', 'undefined', '213123124141412', '2020-04-26 16:25:45', 0, '12312414');
-INSERT INTO `micro_evidence` VALUES (5, 0, '1-4', '124', '213213-123', '213123', '2020-04-26 17:25:04', 0, '21321');
-INSERT INTO `micro_evidence` VALUES (6, 0, '2', '123', '124', '123', '2020-04-26 17:29:31', 0, '123');
-INSERT INTO `micro_evidence` VALUES (7, 0, '13-14', '213', '43243', '213', '2020-04-26 17:29:50', 0, '123123');
-INSERT INTO `micro_evidence` VALUES (8, 0, '22', '231', '123', '1243', '2020-04-26 17:31:24', 0, '14');
-INSERT INTO `micro_evidence` VALUES (9, 0, '13', '14', '12321', '124', '2020-04-26 17:32:50', 0, '124');
-INSERT INTO `micro_evidence` VALUES (10, 0, '20-14', '122', '123-12321', '213123', '2020-04-27 14:22:18', 0, '123123');
+INSERT INTO `micro_evidence` VALUES (5, 0, '-1-4-', '124', '213213-123', '213123', '2020-04-26 17:25:04', 0, '21321');
+INSERT INTO `micro_evidence` VALUES (6, 0, '-2-', '123', '124', '123', '2020-04-26 17:29:31', 0, '123');
+INSERT INTO `micro_evidence` VALUES (7, 0, '-13-14-', '213', '43243', '213', '2020-04-26 17:29:50', 0, '123123');
+INSERT INTO `micro_evidence` VALUES (8, 0, '-22-', '231', '123', '1243', '2020-04-26 17:31:24', 0, '14');
+INSERT INTO `micro_evidence` VALUES (9, 0, '-13-', '14', '12321', '124', '2020-04-26 17:32:50', 0, '124');
+INSERT INTO `micro_evidence` VALUES (10, 0, '-20-14-', '122', '123-12321', '213123', '2020-04-27 14:22:18', 0, '123123');
 
 -- ----------------------------
 -- Table structure for micro_guess
@@ -86,20 +86,20 @@ DROP TABLE IF EXISTS `micro_guess`;
 CREATE TABLE `micro_guess`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `authorId` int(0) NULL DEFAULT NULL,
-  `topic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `citedEvidList` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `topic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `citedEvidList` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `time` datetime(0) NULL DEFAULT NULL,
   `judge` int(0) NULL DEFAULT 0,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of micro_guess
 -- ----------------------------
-INSERT INTO `micro_guess` VALUES (3, 0, '1-13', '4-9', '13231', '12321312', '2020-04-27 14:56:55', 0, '123');
+INSERT INTO `micro_guess` VALUES (3, 0, '-1-13-', '4-9', '13231', '12321312', '2020-04-27 14:56:55', 0, '123');
 
 -- ----------------------------
 -- Table structure for topic

@@ -1,6 +1,8 @@
 package com.wzs.service.Imp;
 
+import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroGuess;
+import com.wzs.bean.SearchLimit;
 import com.wzs.mapper.MEvidMapper;
 import com.wzs.mapper.MGuessMapper;
 import com.wzs.service.MGuessService;
@@ -42,8 +44,18 @@ public class MGuessServiceImp implements MGuessService {
         return guessMapper.deleteMGuessById(id);
     }
 
-    public List<MicroGuess> fuzzyQueryMGuess(String word, String topics){
-        String search = "%" + word + "%";
-        return guessMapper.fuzzyQueryMGuess(search,topics);
+    @Override
+    public List<MicroGuess> singleQueryMGuess(String word, String topics) {
+        return guessMapper.singleQueryMGuess(word, topics);
+    }
+
+    @Override
+    public List<MicroGuess> multiQueryMGuess(ArrayList<String> topicList) {
+        return guessMapper.multiQueryMGuess(topicList);
+    }
+
+    @Override
+    public List<MicroGuess> completeQueryMGuess(SearchLimit searchLimit) {
+        return guessMapper.completeQueryMGuess(searchLimit);
     }
 }

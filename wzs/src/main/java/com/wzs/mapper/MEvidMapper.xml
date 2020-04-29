@@ -92,10 +92,23 @@
         delete from <include refid="BASE_TABLE"/>
         where id = #{id,jdbcType=INTEGER}
     </delete>
-    <select id="fuzzyQueryMEvid" resultType="com.wzs.bean.MicroEvidence" parameterType="java.util.Map">
-        select * from micro_evidence where (topic like topics)
-        and (authorName like #{word} or summary like #{word}
-        or keywords like #{word} or title like #{word} ) and (judge= 1)
+    <select id="singleQueryMEvid" resultType="com.wzs.bean.MicroEvidence" parameterType="java.util.Map">
+        select * from micro_evidence where (topic like #{topic})
+        and (summary like #{word} or keywords like #{word} or title like #{word} ) and (judge= 0)
+    </select>
+    <select id="multiQueryMEvid" resultType="com.wzs.bean.MicroEvidence">
+        select * from micro_evidence where
+        <foreach item="topicList" collection="list" separator="or" open="(" close=")" index="">
+            topic like #{topicList, jdbcType=VARCHAR}
+        </foreach>
+        and (judge= 0)
     </select>
 
+    <select id="completeQueryMEvid" resultType="com.wzs.bean.MicroEvidence">
+        select * from micro_evidence where
+        <foreach item="topicList" collection="search.topicList" separator="or" open="(" close=")" index="">
+            topic like #{topicList, jdbcType=VARCHAR}
+        </foreach>
+        and (summary like #{search.word} or keywords like #{search.word} or title like #{search.word} ) and (judge= 0)
+    </select>
 </mapper>
