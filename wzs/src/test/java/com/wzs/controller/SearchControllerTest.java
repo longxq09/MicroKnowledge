@@ -26,13 +26,15 @@ class SearchControllerTest {
 
     @Test
     public void testController(){
-        String word = "%1%";     //关键词
-        String topic = "1-2-3";     //id-id-id
+        String word = null;     //关键词 "1"
+        word = "%" + word + "%";
+        String topic = "1-2-14";     //id-id-id
         ArrayList<String> topicList = new ArrayList<>();
         String[] tmp = topic.split("-");
         for (int i = 0; i < tmp.length; i++) {
             topicList.add("%-" + tmp[i] + "-%");
         }
+        System.out.println(topicList);
         List<MicroEvidence> evidenceList;
         List<MicroGuess> guessList;
         //evidenceList=searchController.getMultiSearchMevid(topicList);
@@ -48,12 +50,16 @@ class SearchControllerTest {
 
     @Test
     public void testMultSearch() {
-        String word = "%1%";     //关键词
-        String topic = "1";     //id-id-id
+        String word = "%%";     //关键词
+        String topic = "";     //id-id-id
         ArrayList<String> topicList = new ArrayList<>();
-        String[] tmp = topic.split("-");
-        for (int i = 0; i < tmp.length; i++) {
-            topicList.add("%-" + tmp[i] + "-%");
+        if(topic.equals("")){
+            topicList.add("%");
+        }else{
+            String[] tmp = topic.split("-");
+            for (int i = 0; i < tmp.length; i++) {
+                topicList.add("%-" + tmp[i] + "-%");
+            }
         }
         System.out.println(topicList);
 
