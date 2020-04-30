@@ -24,7 +24,7 @@ class SearchControllerTest {
     @Autowired
     private MEvidService evidService;
 
-    @Test
+    /*@Test
     public void testController(){
         String word = null;     //关键词 "1"
         word = "%" + word + "%";
@@ -73,6 +73,6 @@ class SearchControllerTest {
         System.out.println("=======================");
         for (int i = 0; i < guessList.size(); i++)
             System.out.println(guessList.get(i).getTopic());
-    }
+    }*/
 
 }
