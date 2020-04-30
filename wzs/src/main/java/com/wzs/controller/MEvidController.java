@@ -1,8 +1,6 @@
 package com.wzs.controller;
 
 import com.wzs.bean.MicroEvidence;
-import com.wzs.bean.MicroGuess;
-import com.wzs.bean.Topic;
 import com.wzs.service.MEvidService;
 import com.wzs.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -41,9 +38,10 @@ public class MEvidController {
     public int insertMEvid(HttpServletRequest request , HttpSession session){
         MicroEvidence evid = new MicroEvidence();
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
+        evid.setType(1);
         evid.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
         evid.setTopic(request.getParameter("topic"));
-        evid.setCitedPaper(request.getParameter("citedPaper"));
+        evid.setReference(request.getParameter("citedPaper"));
         evid.setKeywords(request.getParameter("keywords"));
         evid.setTitle(request.getParameter("title"));
         evid.setSummary(request.getParameter("summary"));
@@ -60,9 +58,10 @@ public class MEvidController {
         MicroEvidence evid = new MicroEvidence();
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
         evid.setId(Integer.parseInt(request.getParameter("id")));
+        evid.setType(1);
         evid.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
         evid.setTopic(request.getParameter("topic"));
-        evid.setCitedPaper(request.getParameter("citedPaper"));
+        evid.setReference(request.getParameter("citedPaper"));
         evid.setKeywords(request.getParameter("keywords"));
         evid.setTitle(request.getParameter("title"));
         evid.setSummary(request.getParameter("summary"));
@@ -85,23 +84,10 @@ public class MEvidController {
         List<MicroEvidence> list = mEvidService.queryMEvid(queryMap);
         MicroEvidence evid = list.get(0);
         Map<String,Object> retMap = new HashMap();
-        retMap.put("citedPaper",evid.getCitedPaper());
+        retMap.put("citedPaper",evid.getReference());
         retMap.put("keywords",evid.getKeywords());
         retMap.put("title",evid.getTitle());
         retMap.put("summary",evid.getSummary());
-
-//        String topicStr = evid.getTopic();
-//        List<String> inTopicList = Arrays.asList(topicStr.split("-"));
-//        queryMap.remove("id");
-//        List<Topic> allTopicList =  topicService.queryTopic(queryMap);
-//        Map<Integer,Boolean> topicIdList = new HashMap<>();
-//        for(Topic t : allTopicList){
-//            if(inTopicList.contains(String.valueOf(t.getId()))){
-//                topicIdList.put(t.getId(),true);
-//            } else {
-//                topicIdList.put(t.getId(),false);
-//            }
-//        }
 
         retMap.put("topic",evid.getTopic());
         return retMap;

@@ -42,9 +42,10 @@ public class MGuessController {
     public int insertMGuess(HttpServletRequest request, HttpSession session) {
         MicroGuess guess = new MicroGuess();
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
+        guess.setType(2);
         guess.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
         guess.setTopic(request.getParameter("topic"));
-        guess.setCitedEvidList(request.getParameter("citedEvidList"));
+        guess.setReference(request.getParameter("citedEvidList"));
         guess.setKeywords(request.getParameter("keywords"));
         guess.setTitle(request.getParameter("title"));
         guess.setSummary(request.getParameter("summary"));
@@ -61,9 +62,10 @@ public class MGuessController {
         MicroGuess guess = new MicroGuess();
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
         guess.setId(Integer.parseInt(request.getParameter("id")));
+        guess.setType(2);
         guess.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
         guess.setTopic(request.getParameter("topic"));
-        guess.setCitedEvidList(request.getParameter("citedEvidList"));
+        guess.setReference(request.getParameter("citedEvidList"));
         guess.setKeywords(request.getParameter("keywords"));
         guess.setTitle(request.getParameter("title"));
         guess.setSummary(request.getParameter("summary"));
@@ -96,7 +98,7 @@ public class MGuessController {
         MicroGuess guess = list.get(0);
         Map<String, Object> retMap = new HashMap();
         retMap.put("topic", guess.getTopic());
-        retMap.put("citedEvidList", guess.getCitedEvidList());
+        retMap.put("citedEvidList", guess.getReference());
         retMap.put("keywords", guess.getKeywords());
         retMap.put("title", guess.getTitle());
         retMap.put("summary", guess.getSummary());
