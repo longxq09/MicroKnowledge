@@ -6,7 +6,7 @@
     <el-main>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="引用">
-          <el-checkbox v-for="(value,index) in referenceList" v-model="value.checked" key="value.evidName" @change="chooseItem(value.id,1)">{{value.evidName}}</el-checkbox>
+          <el-checkbox v-for="(value,index) in referenceList" v-model="value.checked" key="value.evidName" @change="chooseItem(value.id,1,value)">{{value.evidName}}</el-checkbox>
         </el-form-item>
 
         <el-form-item label="关键词">
@@ -18,7 +18,7 @@
         </el-form-item>
 
         <el-form-item label="分类">
-          <el-checkbox v-for="(value,index) in labelList" v-model="value.checked" key="value.topicName" @change="chooseItem(value.id,2)">{{value.topicName}}</el-checkbox>
+          <el-checkbox v-for="(value,index) in labelList" v-model="value.checked" key="value.topicName" @change="chooseItem(value.id,2,value)">{{value.topicName}}</el-checkbox>
         </el-form-item>
 
         <el-form-item label="主题">
@@ -40,13 +40,13 @@
 </template>
 
 <script>
-import vHead from './common/Header.vue';
+  import vHead from './common/Header.vue';
   import vFooter from './common/Footer.vue';
   export default {
     name: "ModifyMGuess",
     data() {
       return {
-        title:"微知 MicroKnowledge | 微猜想修改",
+        title: "微知 MicroKnowledge | 微猜想修改",
         referenceTags: [],
         keyWordTags: [],
         labelList: Array,
@@ -72,52 +72,81 @@ import vHead from './common/Header.vue';
       this.getUserInfo();
     },
     methods: {
-      getUserInfo() {
+      async getUserInfo() {
         var params = new URLSearchParams();
-        this.axios.get('/Topic/getTopicList', params)
-          .then((res) => {
-            console.log(res.data);
-            this.labelList = res.data;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
 
-        this.axios.get('/MGuess/getMEvid', params)
-          .then((res) => {
-            console.log(res.data);
-            this.referenceList = res.data;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        try {
+          let res = await this.axios.get('/Topic/getTopicList', params);
+          console.log(res.data);
+          this.labelList = res.data;
+        } catch (err) {
+          console.log(err);
+        }
+        // await this.axios.get('/Topic/getTopicList', params)
+        //   .then((res) => {
+        //     console.log(res.data);
+        //     this.labelList = res.data;
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
+
+        try {
+          let res = await this.axios.get('/MGuess/getMEvid', params);
+          console.log(res.data);
+          this.referenceList = res.data;
+        } catch (err) {
+          console.log(err);
+        }
+        // =this.axios.get('/MGuess/getMEvid', params)
+        //   .then((res) => {
+        //     console.log(res.data);
+        //     this.referenceList = res.data;
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
 
         params.append('id', this.$route.params.id);
-        this.axios.post('/MGuess/toModifyMGuess', params)
-          .then((res) => {
-            console.log(res.data);
-            this.form.title = res.data.title;
-            this.form.text = res.data.summary;
-            this.form.keyWord = res.data.keywords;
-            this.form.label = res.data.topic;
-            this.form.reference = res.data.citedEvidList;
 
-            this.referenceTags = this.form.reference.split('-');
-            this.keyWordTags = this.form.keyWord.split('-');
-            this.labelChoose = this.form.label.split('-');
+        try {
+          let res = await this.axios.post('/MGuess/toModifyMGuess', params);
+          console.log(res.data);
+          this.form.title = res.data.title;
+          this.form.text = res.data.summary;
+          this.form.keyWord = res.data.keywords;
+          this.form.label = res.data.topic;
+          this.form.reference = res.data.citedEvidList;
+          this.referenceTags = this.form.reference.split('-');
+          this.keyWordTags = this.form.keyWord.split('-');
+          this.labelChoose = this.form.label.split('-');
 
-            var temp = this.labelChoose;
-            this.labelList.forEach(item => {
-              item.checked = (temp.indexOf(item.id.toString()) !== -1);
-            });
-            temp = this.referenceTags;
-            this.referenceList.forEach(item => {
-              item.checked = (temp.indexOf(item.id.toString()) !== -1)
-            });
-          })
-          .catch((error) => {
-            console.log(error);
+          var temp = this.labelChoose;
+          this.labelList.forEach(item => {
+            item.checked = (temp.indexOf(item.id.toString()) !== -1);
           });
+          temp = this.referenceTags;
+          this.referenceList.forEach(item => {
+            item.checked = (temp.indexOf(item.id.toString()) !== -1)
+          });
+        } catch (err) {
+          console.log(err);
+        }
+
+        // this.axios.post('/MGuess/toModifyMGuess', params)
+        //   .then((res) => {
+        //     console.log(res.data);
+        //     this.form.title = res.data.title;
+        //     this.form.text = res.data.summary;
+        //     this.form.keyWord = res.data.keywords;
+        //     this.form.label = res.data.topic;
+        //     this.form.reference = res.data.citedEvidList;
+
+        //   })
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
+
       },
 
       user() {
@@ -138,22 +167,27 @@ import vHead from './common/Header.vue';
         console.log(this.keyWordTags.join('-'))
 
       },
-      chooseItem(id, type) {
+      chooseItem(id, type, value) {
+        id_str = id.toString();
         if (type == 1) {
           console.log("id:" + id);
-          if (this.referenceTags.indexOf(id) == -1) {
-            this.referenceTags.push(id)
+          if (this.referenceTags.indexOf(id_str) == -1) {
+            this.referenceTags.push(id_str);
+            value.checked = true;
           } else {
-            this.referenceTags.splice(this.referenceTags.indexOf(id), 1);
+            this.referenceTags.splice(this.referenceTags.indexOf(id_str), 1);
+            value.checked = false;
           }
           console.log("referenceTags:" + this.referenceTags);
 
         } else {
           console.log("id:" + id);
-          if (this.labelChoose.indexOf(id) == -1) {
-            this.labelChoose.push(id)
+          if (this.labelChoose.indexOf(id_str) == -1) {
+            this.labelChoose.push(id_str);
+            value.checked = true;
           } else {
-            this.labelChoose.splice(this.labelChoose.indexOf(id), 1);
+            this.labelChoose.splice(this.labelChoose.indexOf(id_str), 1);
+            value.checked = false;
           }
           console.log("labelChoose:" + this.labelChoose);
 
@@ -186,7 +220,7 @@ import vHead from './common/Header.vue';
           this.form.label = this.labelChoose.join('-');
           var params = new URLSearchParams();
           params.append('topic', this.form.label);
-          params.append('citedPaper', this.form.reference);
+          params.append('citedEvidList', this.form.reference);
           params.append('keywords', this.form.keyWord);
           params.append('title', this.form.title);
           params.append('summary', this.form.text);
