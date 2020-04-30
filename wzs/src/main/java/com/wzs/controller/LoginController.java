@@ -5,6 +5,7 @@ import com.wzs.bean.PasswordHelper;
 import com.wzs.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +27,61 @@ public class LoginController {
         this.loginService = loginService;
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    public @ResponseBody
+    Object loginCheck(HttpServletRequest request) {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+//        System.out.println("email: "+email);
+//        System.out.println("password: "+password);
+
+        PasswordHelper helper = new PasswordHelper();
+        password = helper.encryptByName(email, password);   //加密
+        boolean isUser = loginService.hasMatchUserByEmail(email, password);
+        // boolean isAdmin = loginService.hasMatchAdmin(email, password);
+        HashMap<String, String> res = new HashMap<>();
+        if (isUser) {
+            Account account = loginService.findAccountByEmail(email);
+            request.getSession().setAttribute("account", account);
+            res.put("code", "0");
+            res.put("message", "登陆成功！");
+        } else {
+            res.put("code", "1");
+            res.put("message", "账号或密码错误！");
+        }
+        return res;
+    }
+
+    /*
+    @RequestMapping("/repasswd_do")
+    public String reUserPasswdDo(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        Account user = (Account) request.getSession().getAttribute("account");
+        String oldPasswd = request.getParameter("oldPasswd");
+        String newPasswd = request.getParameter("newPasswd");
+        long id = user.getId();
+        String email = user.getEmail();
+        PasswordHelper helper = new PasswordHelper();
+        oldPasswd = helper.encryptByName(email, oldPasswd);
+        String password = loginService.getUserPassword(id);
+
+        if (password.equals(oldPasswd)) {
+            newPasswd = helper.encryptByName(email, newPasswd);
+
+            if (loginService.reUserPassword(id, newPasswd)) {
+                redirectAttributes.addFlashAttribute("success", "密码修改成功！");
+                return "redirect:/repasswd.html";
+            } else {
+                redirectAttributes.addFlashAttribute("error", "密码修改失败！");
+                return "redirect:/repasswd.html";
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("error", "旧密码错误！");
+            return "redirect:/repasswd.html";
+        }
+    }
+
     @RequestMapping(value = {"/", "/main.html"})
     public String toIndex(HttpServletRequest request) {
         request.getSession().invalidate();
@@ -38,72 +94,9 @@ public class LoginController {
         return "redirect:/main.html";
     }
 
-    @RequestMapping(value = "/api/loginCheck", method = RequestMethod.POST)
-    public @ResponseBody
-    Object loginCheck(HttpServletRequest request) {
-        long id = Long.parseLong(request.getParameter("id"));
-        String password = request.getParameter("password");
-        PasswordHelper helper = new PasswordHelper();
-        password = helper.encrypt(id, password);
-
-        boolean isUser = loginService.hasMatchUser(id, password);
-        HashMap<String, String> res = new HashMap<>();
-        if (isUser) {
-            Account account = loginService.findAccountById(id);
-            request.getSession().setAttribute("account", account);
-            res.put("typeNum", "1");
-            res.put("msg", "登陆成功！");
-        } else {
-            res.put("typeNum", "0");
-            res.put("msg", "账号或密码错误！");
-        }
-        return res;
-    }
-
-
-    @RequestMapping("/log_in.html")
-    public ModelAndView toLogIn(HttpServletResponse response) {
-        return new ModelAndView("log_in");
-    }
-
-
-    @RequestMapping("/user_main.html")
-    public ModelAndView toUserMain(HttpServletResponse response) {
-        return new ModelAndView("user_main");
-    }
-
-    @RequestMapping("/repasswd.html")
-    public ModelAndView reFreshPasswd() {
-        return new ModelAndView("repasswd");
-    }
-
-    @RequestMapping("/repasswd_do")
-    public String reUserPasswdDo(HttpServletRequest request, String oldPasswd, String newPasswd, String reNewPasswd, RedirectAttributes redirectAttributes) {
-        Account user = (Account) request.getSession().getAttribute("account");
-        long id = user.getId();
-        PasswordHelper helper = new PasswordHelper();
-        oldPasswd = helper.encrypt(id, oldPasswd);
-        String password = loginService.getUserPassword(id);
-
-        if (password.equals(oldPasswd)) {
-            newPasswd = helper.encrypt(id, newPasswd);
-
-            if (loginService.reUserPassword(id, newPasswd)) {
-                redirectAttributes.addFlashAttribute("succ", "密码修改成功！");
-                return "redirect:/repasswd.html";
-            } else {
-                redirectAttributes.addFlashAttribute("error", "密码修改失败！");
-                return "redirect:/repasswd.html";
-            }
-        } else {
-            redirectAttributes.addFlashAttribute("error", "旧密码错误！");
-            return "redirect:/repasswd.html";
-        }
-    }
-
     @RequestMapping("*")
     public String notFind() {
         return "404";
-    }
+    }*/
 
 }

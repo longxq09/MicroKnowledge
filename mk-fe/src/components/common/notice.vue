@@ -4,17 +4,18 @@
     <nobr style="font-weight: 600;margin-left: 10px;">{{author}}</nobr>
     <el-tag key="tag" v-for="tag in keyWordTags" class="keyword">{{tag}}</el-tag>
     <div class="main_text">{{main_text}}</div>
-    <el-tag class="bottom_tag">评论</el-tag>
-    <el-tag class="bottom_tag">收藏</el-tag>
-    <el-tag class="bottom_tag">点赞</el-tag>
-    <el-tag class="bottom_tag">关注作者</el-tag>
-    <el-tag class="bottom_tag">举报内容</el-tag>
+    <el-button class="bottom_tag">评论</el-button>
+    <el-button class="bottom_tag">收藏</el-button>
+    <el-button class="bottom_tag">点赞</el-button>
+    <el-button class="bottom_tag">关注作者</el-button>
+    <el-button class="bottom_tag">举报内容</el-button>
+    <el-button class="bottom_tag" v-if="user" @click="toModify">编辑</el-button>
   </div>
 </template>
 
 <script>
   export default {
-    name: "HomePage",
+    name: "Notice",
     props: {
       type: {
         type: String,
@@ -35,8 +36,23 @@
       main_text: {
         type: String,
         default: "冯如杯写不完是怎么回事呢？冯如杯相信大家都很熟悉，但是冯如杯写不完是怎么回事呢，下面就让小编带大家一起了解吧。冯如杯写不完， 其实就是冯如杯就是憨憨， 大家可能会很惊讶冯如杯怎么会写不完呢？ 但事实就是这样， 小编也感到非常惊讶。这就是关于冯如杯写不完的事情了， 大家有什么想法呢， 欢迎在评论区告诉小编一起讨论哦！ 啦啦啦啦啦啦啦"
-      }
+      },
+      user: {
+        type: Boolean,
+        default: false
+      },
     },
+
+    methods: {
+      toModify() {
+        this.$router.push({
+          path: '/modify_mevid/',
+          query: {
+            id: 1
+          }
+        });
+      }
+    }
   }
 </script>
 
@@ -81,5 +97,7 @@
   .bottom_tag {
     margin: 10px;
     margin-right: 0;
+    line-height: 7px;
+    height: 25px;
   }
 </style>

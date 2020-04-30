@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Account implements Serializable {
 
     private long id;
-    private String username;
+    private String email;
     private String password;
 
     public long getId() {
@@ -16,12 +16,12 @@ public class Account implements Serializable {
         this. id= id;
     }
 
-    public String getName() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
