@@ -71,7 +71,7 @@
     methods: {
       getUserInfo() {
         var params = new URLSearchParams();
-        this.axios.get('/Topic/getTopicList', params)
+        this.axios.get('/topic/getTopicList', params)
           .then((res) => {
             console.log(res.data);
             this.labelList = res.data;
@@ -80,7 +80,7 @@
             console.log(error);
           });
 
-        this.axios.get('/MGuess/getMEvid', params)
+        this.axios.get('/mGuess/getMEvid', params)
           .then((res) => {
             console.log(res.data);
             this.referenceList = res.data;
@@ -161,7 +161,7 @@
           params.append('title', this.form.title);
           params.append('summary', this.form.text);
           params.append('authorId', 0);
-          this.axios.post('/MGuess/addMGuess', params)
+          this.axios.post('/mGuess/addMGuess', params)
             .then((res) => {
               // var remindType = res.data.code == 0 ? 'success' : 'info';
               var remindTitle = res.data === 0 ? '发布微猜想成功' : '发布微猜想失败';
