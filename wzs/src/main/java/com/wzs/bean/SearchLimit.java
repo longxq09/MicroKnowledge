@@ -3,8 +3,9 @@ package com.wzs.bean;
 import java.util.List;
 
 public class SearchLimit {
-    List<String> topicList;
-    String word;
+    private List<String> topicList;
+    private String word;
+    private List<Integer> typeList;
 
     public List<String> getTopicList() {
         return topicList;
@@ -20,6 +21,14 @@ public class SearchLimit {
 
     public void setWord(String word) {
         this.word = word;
+    }
+
+    public List<Integer> getTypeList() {
+        return typeList;
+    }
+
+    public void setTypeList(List<Integer> typeList) {
+        this.typeList = typeList;
     }
 }
 

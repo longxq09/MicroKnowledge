@@ -1,14 +1,14 @@
 package com.wzs.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
+
 
 public class UserInfo implements Serializable {
 
     private long id;
     private String email;
     private String name;
+    private String picture;     //头像url
     private String sex;
     private String address;
     private String signature;   //个性签名
@@ -18,7 +18,8 @@ public class UserInfo implements Serializable {
     private String interest;    //偏好领域
     private String introduction;            //简介
     private String contribution;            //贡献
-    private String picture;     //头像url
+    //private String following;   //关注的人
+    //private String followers;   //粉丝
 
 
     public void setId(long id) {
@@ -124,4 +125,20 @@ public class UserInfo implements Serializable {
     public void setPicture(String picture) {
         this.picture = picture;
     }
+
+    /*public String getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(String following) {
+        this.following = following;
+    }
+
+    public String getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(String followers) {
+        this.followers = followers;
+    }*/
 }

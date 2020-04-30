@@ -2,11 +2,13 @@ package com.wzs.service.Imp;
 
 import com.wzs.bean.MicroGuess;
 import com.wzs.bean.MicroNotice;
+import com.wzs.bean.SearchLimit;
 import com.wzs.mapper.MNoticeMapper;
 import com.wzs.service.MNoticeService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,5 +40,15 @@ public class MNoticeServiceImp implements MNoticeService {
     @Override
     public boolean deleteMNotice(int id) {
         return noticeMapper.deleteMNoticeById(id);
+    }
+
+    @Override
+    public List<MicroNotice> multiQueryMNotice(ArrayList<String> topicList){
+        return  noticeMapper.multiQueryMNotice(topicList);
+    }
+
+    @Override
+    public List<MicroNotice> completeQueryMNotice(SearchLimit searchLimit){
+        return noticeMapper.completeQueryMNotice(searchLimit);
     }
 }
