@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <div class="title">微知 MicroKnowledge | 微证据发布</div>
+      <v-head v-bind:title="title"></v-head>
     </el-header>
     <el-main>
       <el-form ref="form" :model="form" label-width="80px">
@@ -22,8 +22,8 @@
         </el-form-item>
 
         <el-form-item label="分类">
-            <el-checkbox v-for="(value,index) in labelList" key="value.topicName" v-model="value.checked" @change="chooseItem(value.id)" >{{value.topicName}}
-            </el-checkbox>
+          <el-checkbox v-for="(value,index) in labelList" key="value.topicName" v-model="value.checked" @change="chooseItem(value.id)">{{value.topicName}}
+          </el-checkbox>
         </el-form-item>
 
         <el-form-item label="主题">
@@ -45,11 +45,13 @@
 </template>
 
 <script>
+  import vHead from './common/Header.vue';
   import vFooter from './common/Footer.vue';
   export default {
     name: "NewMEvid",
     data() {
       return {
+        title: "微知 MicroKnowledge | 微证据修改",
         referenceTags: [],
         keyWordTags: [],
         labelList: Array,
@@ -66,6 +68,7 @@
       }
     },
     components: {
+      vHead,
       vFooter
     },
     created() {
@@ -73,44 +76,38 @@
       this.getUserInfo();
     },
     methods: {
-      isChoose(id) {
-        return this.labelChoose.indexOf(id) != -1;
-      },
-      getUserInfo() {
+      async getUserInfo() {
         var params = new URLSearchParams();
 
-        this.axios.get('/Topic/getTopicList', params)
-          .then((res) => {
-            console.log(res.data);
-            this.labelList = res.data;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        try {
+          let res = await this.axios.get('/Topic/getTopicList', params);
+          console.log(res.data);
+          this.labelList = res.data;
+        } catch (err) {
+          console.log(err);
+        }
 
-        params.append('id', this.$route.params.id);
-        this.axios.post('/MEvidence/toModifyMEvid', params)
-          .then((res) => {
-            console.log(res.data);
-            this.form.title = res.data.title;
-            this.form.text = res.data.summary;
-            this.form.keyWord = res.data.keywords;
-            this.form.label = res.data.topic;
-            this.form.reference = res.data.citedPaper;
+        params.append('id', this.$route.query.id);
+        try {
+          let res = await this.axios.post('/MEvidence/toModifyMEvid', params);
+          console.log(res.data);
+          this.form.title = res.data.title;
+          this.form.text = res.data.summary;
+          this.form.keyWord = res.data.keywords;
+          this.form.label = res.data.topic;
+          this.form.reference = res.data.citedPaper;
 
-            this.referenceTags = this.form.reference.split('-');
-            this.keyWordTags = this.form.keyWord.split('-');
-            this.labelChoose = this.form.label.split('-');
-            var temp = [];
-            temp = this.labelChoose;
-            this.labelList.forEach(item => {
-              item.checked = (temp.indexOf(item.id.toString()) !== -1);
-              // item.checked = false;
-            });
-          })
-          .catch((error) => {
-            console.log(error);
+          this.referenceTags = this.form.reference.split('-');
+          this.keyWordTags = this.form.keyWord.split('-');
+          this.labelChoose = this.form.label.split('-');
+          var temp = this.labelChoose;
+          this.labelList.forEach(item => {
+            item.checked = (temp.indexOf(item.id.toString()) !== -1);
           });
+        } catch (err) {
+          console.log(err);
+        }
+
 
       },
 
@@ -142,13 +139,20 @@
           console.log(this.keyWordTags.join('-'))
         }
       },
-      chooseItem(id) {
+      chooseItem(id, value) {
+        id_str = id.toString();
         console.log("id:" + id);
-        if (this.labelChoose.indexOf(id) == -1) {
-          this.labelChoose.push(id)
+        if (this.labelChoose.indexOf(id_str) == -1) {
+          this.labelChoose.push(id_str);
+          value.checked = true;
         } else {
-          this.labelChoose.splice(this.labelChoose.indexOf(id), 1);
+          this.labelChoose.splice(this.labelChoose.indexOf(id_str), 1);
+          value.checked = false;
         }
+        var temp = this.labelChoose;
+        this.labelList.forEach(item => {
+          item.checked = (temp.indexOf(item.id.toString()) !== -1);
+        });
         console.log("labelChoose:" + this.labelChoose);
       },
       toHomepageSubmit() {
@@ -183,7 +187,7 @@
           params.append('keywords', this.form.keyWord);
           params.append('title', this.form.title);
           params.append('summary', this.form.text);
-          params.append('id', this.$route.params.id);
+          params.append('id', this.$route.query.id);
           params.append('authorId', 0);
           this.axios.post('/MEvidence/modifyMEvid', params)
             .then((res) => {

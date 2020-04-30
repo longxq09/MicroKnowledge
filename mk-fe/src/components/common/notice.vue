@@ -46,9 +46,9 @@
     methods: {
       toModify() {
         this.$router.push({
-          name: 'ModifyMGuess',
-          params: {
-            id: 3
+          path: '/modify_mevid/',
+          query: {
+            id: 1
           }
         });
       }

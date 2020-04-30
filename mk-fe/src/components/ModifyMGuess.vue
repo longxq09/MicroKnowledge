@@ -82,15 +82,6 @@
         } catch (err) {
           console.log(err);
         }
-        // await this.axios.get('/Topic/getTopicList', params)
-        //   .then((res) => {
-        //     console.log(res.data);
-        //     this.labelList = res.data;
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
-
         try {
           let res = await this.axios.get('/MGuess/getMEvid', params);
           console.log(res.data);
@@ -98,16 +89,7 @@
         } catch (err) {
           console.log(err);
         }
-        // =this.axios.get('/MGuess/getMEvid', params)
-        //   .then((res) => {
-        //     console.log(res.data);
-        //     this.referenceList = res.data;
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
-
-        params.append('id', this.$route.params.id);
+        params.append('id', this.$route.query.id);
 
         try {
           let res = await this.axios.post('/MGuess/toModifyMGuess', params);
@@ -132,20 +114,6 @@
         } catch (err) {
           console.log(err);
         }
-
-        // this.axios.post('/MGuess/toModifyMGuess', params)
-        //   .then((res) => {
-        //     console.log(res.data);
-        //     this.form.title = res.data.title;
-        //     this.form.text = res.data.summary;
-        //     this.form.keyWord = res.data.keywords;
-        //     this.form.label = res.data.topic;
-        //     this.form.reference = res.data.citedEvidList;
-
-        //   })
-        //   .catch((error) => {
-        //     console.log(error);
-        //   });
 
       },
 
@@ -178,6 +146,10 @@
             this.referenceTags.splice(this.referenceTags.indexOf(id_str), 1);
             value.checked = false;
           }
+          var temp = this.referenceTags;
+          this.referenceList.forEach(item => {
+            item.checked = (temp.indexOf(item.id.toString()) !== -1);
+          });
           console.log("referenceTags:" + this.referenceTags);
 
         } else {
@@ -189,6 +161,10 @@
             this.labelChoose.splice(this.labelChoose.indexOf(id_str), 1);
             value.checked = false;
           }
+          var temp = this.labelChoose;
+          this.labelList.forEach(item => {
+            item.checked = (temp.indexOf(item.id.toString()) !== -1);
+          });
           console.log("labelChoose:" + this.labelChoose);
 
         }
@@ -225,7 +201,7 @@
           params.append('title', this.form.title);
           params.append('summary', this.form.text);
           params.append('authorId', 0);
-          params.append('id', this.$route.params.id);
+          params.append('id', this.$route.query.id);
           this.axios.post('/MGuess/modifyMGuess', params)
             .then((res) => {
               // var remindType = res.data.code == 0 ? 'success' : 'info';

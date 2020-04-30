@@ -97,7 +97,6 @@
     float: right;
     margin: 10px;
   }
-
   .photo {
     display: inline-block;
     float: right;

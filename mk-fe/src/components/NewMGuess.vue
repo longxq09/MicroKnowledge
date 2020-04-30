@@ -130,8 +130,6 @@
         }
       },
       toHomepageSubmit() {
-        console.log(this.referenceTags);
-        console.log(this.labelChoose);
         if (this.referenceTags.length == 0) {
           this.$alert("请填写至少一个引用微证据", "引用微证据不能为空", {
             confirmButtonText: '确定'

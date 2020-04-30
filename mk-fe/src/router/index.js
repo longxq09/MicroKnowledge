@@ -9,6 +9,7 @@ import HomePage from '@/components/HomePage.vue'
 import ModifyMEvid from '@/components/ModifyMEvid.vue'
 import ModifyMGuess from '@/components/ModifyMGuess'
 import Search from '@/components/Search'
+import Detail from '@/components/Detail.vue'
 
 Vue.use(Router)
 
@@ -59,6 +60,11 @@ export default new Router({
       path: '/search',
       name: 'Search',
       component: Search
-    }
+    },
+    {
+      path: '/detail',
+      name: 'Detail',
+      component: Detail
+    },
   ]
 })

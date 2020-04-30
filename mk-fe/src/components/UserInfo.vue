@@ -78,15 +78,15 @@
           <el-button type="primary" @click="submit">立即更新</el-button>
           <el-button @click="cancel">取消</el-button>
         </el-form-item>
-			</el-form>
-		</el-main>
-		<v-footer></v-footer>
-	</el-container>
+      </el-form>
+    </el-main>
+    <v-footer></v-footer>
+  </el-container>
 </template>
 
 <script>
-import vHead from './common/Header.vue';
-import vFooter from './common/Footer.vue';
+  import vHead from './common/Header.vue';
+  import vFooter from './common/Footer.vue';
   export default {
     name: "User",
     data() {
@@ -192,7 +192,7 @@ import vFooter from './common/Footer.vue';
         }
         return isJPG && isLt2M
       }
-		}
+    }
 
   }
 </script>
