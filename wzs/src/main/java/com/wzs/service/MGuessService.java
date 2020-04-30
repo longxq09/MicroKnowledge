@@ -2,7 +2,9 @@ package com.wzs.service;
 
 import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroGuess;
+import com.wzs.bean.SearchLimit;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,5 +19,7 @@ public interface MGuessService {
     boolean insertMGuess(MicroGuess guess);
     int updateMGuess(MicroGuess guess);
     boolean deleteMGuess(int id);
-
+    List<MicroGuess> singleQueryMGuess(String word, String topics);
+    List<MicroGuess> multiQueryMGuess(ArrayList<String> topicList);
+    List<MicroGuess> completeQueryMGuess(SearchLimit searchLimit);
 }

@@ -2,8 +2,11 @@ package com.wzs.mapper;
 
 import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroGuess;
+import com.wzs.bean.SearchLimit;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +21,7 @@ public interface MGuessMapper {
     boolean insertMGuess(MicroGuess guess);
     int updateMGuess(MicroGuess guess);
     boolean deleteMGuessById(int id);
+    List<MicroGuess> singleQueryMGuess(String word, String topic);
+    List<MicroGuess> multiQueryMGuess(ArrayList<String> topicList);
+    List<MicroGuess> completeQueryMGuess(@Param("search")SearchLimit search);
 }

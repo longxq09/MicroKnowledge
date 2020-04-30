@@ -1,15 +1,16 @@
-package com.wzs.service;
+package com.wzs.service.Imp;
 
 import com.wzs.bean.UserInfo;
 import com.wzs.mapper.UserInfoMap;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.wzs.service.UserInfoService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
-    @Autowired
+    @Resource
     private UserInfoMap userInfoMap;
 
     @Override

@@ -1,12 +1,15 @@
 package com.wzs.service.Imp;
 
+import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroGuess;
+import com.wzs.bean.SearchLimit;
 import com.wzs.mapper.MEvidMapper;
 import com.wzs.mapper.MGuessMapper;
 import com.wzs.service.MGuessService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,5 +42,20 @@ public class MGuessServiceImp implements MGuessService {
     @Override
     public boolean deleteMGuess(int id) {
         return guessMapper.deleteMGuessById(id);
+    }
+
+    @Override
+    public List<MicroGuess> singleQueryMGuess(String word, String topics) {
+        return guessMapper.singleQueryMGuess(word, topics);
+    }
+
+    @Override
+    public List<MicroGuess> multiQueryMGuess(ArrayList<String> topicList) {
+        return guessMapper.multiQueryMGuess(topicList);
+    }
+
+    @Override
+    public List<MicroGuess> completeQueryMGuess(SearchLimit searchLimit) {
+        return guessMapper.completeQueryMGuess(searchLimit);
     }
 }

@@ -7,12 +7,14 @@ import NewMEvid from '@/components/NewMEvid.vue'
 import NewMGuess from '@/components/NewMGuess.vue'
 import HomePage from '@/components/HomePage.vue'
 import ModifyMEvid from '@/components/ModifyMEvid.vue'
-import ModifyMGuess from "../components/ModifyMGuess";
+import ModifyMGuess from '@/components/ModifyMGuess'
+import Search from '@/components/Search'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [{
+  routes: [
+    {
       path: '/',
       name: 'Home',
       component: Home
@@ -53,5 +55,10 @@ export default new Router({
       name: 'ModifyMGuess',
       component: ModifyMGuess
     },
+    {
+      path: '/search',
+      name: 'Search',
+      component: Search
+    }
   ]
 })

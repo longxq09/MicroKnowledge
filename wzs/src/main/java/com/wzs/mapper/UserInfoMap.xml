@@ -15,7 +15,7 @@
 
     <update id="editUserInfo" parameterType="com.wzs.bean.UserInfo">
         update user_info set name = #{name} , sex = #{sex},
-       address = #{address}, signature= #{signature}, education= #{education}, works = #{work},
+       address = #{address}, signature= #{signature}, education= #{education}, works = #{works},
        expertise= #{expertise},interest= #{interest},introduction= #{introduction},
        contribution = #{contribution},picture=#{picture}
         where id = #{id}
@@ -23,7 +23,7 @@
 
     <insert id="addUserInfo" parameterType="com.wzs.bean.UserInfo">
         insert into user_info values
-        (null,#{email},#{name},#{sex},#{address},#{signature},#{education},#{work},
+        (null,#{email},#{name},#{sex},#{address},#{signature},#{education},#{works},
         #{expertise},#{interest},#{introduction},#{contribution},#{picture})
     </insert>
 

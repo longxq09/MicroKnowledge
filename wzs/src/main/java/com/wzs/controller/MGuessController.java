@@ -31,7 +31,7 @@ public class MGuessController {
     private MEvidService evidService;
 
     //通过map查询
-    public List<MicroGuess> queryMGuess(Map<String,Object> queryMap){
+    public List<MicroGuess> queryMGuess(Map<String, Object> queryMap) {
         return guessService.queryMGuess(queryMap);
     }
 
@@ -39,7 +39,7 @@ public class MGuessController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/addMGuess", method = RequestMethod.POST)
-    public int insertMGuess(HttpServletRequest request, HttpSession session){
+    public int insertMGuess(HttpServletRequest request, HttpSession session) {
         MicroGuess guess = new MicroGuess();
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
         guess.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
@@ -57,7 +57,7 @@ public class MGuessController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/modifyMGuess", method = RequestMethod.POST)
-    public int updateMGuess(HttpServletRequest request, HttpSession session){
+    public int updateMGuess(HttpServletRequest request, HttpSession session) {
         MicroGuess guess = new MicroGuess();
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
         guess.setId(Integer.parseInt(request.getParameter("id")));
@@ -73,34 +73,35 @@ public class MGuessController {
     }
 
     //删除微猜想
-    public boolean deleteMGuess(int id){
+    public boolean deleteMGuess(int id) {
         return guessService.deleteMGuess(id);
     }
 
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getMEvid", method = RequestMethod.GET)
-    private List<MicroEvidence> getMEvidList(){
-        Map<String,Object> queryMap = new HashMap();
+    private List<MicroEvidence> getMEvidList() {
+        Map<String, Object> queryMap = new HashMap();
         return evidService.queryMEvid(queryMap);
     }
 
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/toModifyMGuess", method = RequestMethod.POST)
-    private Map<String,Object> toModifyMGuess(HttpServletRequest request){
+    private Map<String, Object> toModifyMGuess(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        Map<String,Object> queryMap = new HashMap();
-        queryMap.put("id",id);
-        List<MicroGuess> list =  guessService.queryMGuess(queryMap);
+        Map<String, Object> queryMap = new HashMap();
+        queryMap.put("id", id);
+        List<MicroGuess> list = guessService.queryMGuess(queryMap);
         MicroGuess guess = list.get(0);
-        Map<String,Object> retMap = new HashMap();
-        retMap.put("topic",guess.getTopic());
-        retMap.put("citedEvidList",guess.getCitedEvidList());
-        retMap.put("keywords",guess.getKeywords());
-        retMap.put("title",guess.getTitle());
-        retMap.put("summary",guess.getSummary());
+        Map<String, Object> retMap = new HashMap();
+        retMap.put("topic", guess.getTopic());
+        retMap.put("citedEvidList", guess.getCitedEvidList());
+        retMap.put("keywords", guess.getKeywords());
+        retMap.put("title", guess.getTitle());
+        retMap.put("summary", guess.getSummary());
         return retMap;
     }
+
 
 }

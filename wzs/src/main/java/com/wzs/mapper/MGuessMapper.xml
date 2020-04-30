@@ -93,5 +93,24 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
+    <select id="singleQueryMGuess" resultType="com.wzs.bean.MicroGuess" parameterType="java.util.Map">
+        select * from micro_guess where (topic like #{topic})
+        and (summary like #{word} or keywords like #{word} or title like #{word} )
+    </select>
+
+    <select id="multiQueryMGuess" resultType="com.wzs.bean.MicroGuess">
+        select * from micro_guess where
+        <foreach item="topicList" collection="list" separator="or" open="(" close=")" index="">
+            topic like #{topicList, jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <select id="completeQueryMGuess" resultType="com.wzs.bean.MicroGuess">
+        select * from micro_guess where
+        <foreach item="topicList" collection="search.topicList" separator="or" open="(" close=")" index="">
+            topic like #{topicList, jdbcType=VARCHAR}
+        </foreach>
+        and (summary like #{search.word} or keywords like #{search.word} or title like #{search.word} )
+    </select>
 
 </mapper>

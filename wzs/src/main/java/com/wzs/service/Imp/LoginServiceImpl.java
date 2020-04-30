@@ -1,15 +1,17 @@
-package com.wzs.service;
+package com.wzs.service.Imp;
 
 import com.wzs.bean.Account;
 import com.wzs.bean.UserInfo;
 import com.wzs.mapper.AccountMap;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.wzs.service.LoginService;
 import org.springframework.stereotype.Service;
 
-@Service
-public class LoginServiceImpl implements LoginService{
+import javax.annotation.Resource;
 
-    @Autowired
+@Service
+public class LoginServiceImpl implements LoginService {
+
+    @Resource
     private AccountMap accountMap;
 
     public boolean hasMatchUserById(long userId, String password) {
