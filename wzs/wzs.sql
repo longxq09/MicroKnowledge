@@ -56,17 +56,17 @@ INSERT INTO `admin` VALUES (1, '123456', 'admin@163.com');
 -- ----------------------------
 DROP TABLE IF EXISTS `micro_evidence`;
 CREATE TABLE `micro_evidence`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT,
+   `id` int(0) NOT NULL AUTO_INCREMENT,
   `authorId` int(0) NULL DEFAULT NULL,
-  `topic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `citedPaper` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `time` datetime(0) NULL DEFAULT NULL,
+  `topic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `citedPaper` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+   `time` datetime(0) NULL DEFAULT NULL,
   `judge` int(0) NULL DEFAULT 0,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of micro_evidence
@@ -87,15 +87,15 @@ DROP TABLE IF EXISTS `micro_guess`;
 CREATE TABLE `micro_guess`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `authorId` int(0) NULL DEFAULT NULL,
-  `topic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `citedEvidList` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `topic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL,
+  `citedEvidList` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL,
+  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL,
+  `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL,
   `time` datetime(0) NULL DEFAULT NULL,
   `judge` int(0) NULL DEFAULT 0,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci  NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE utf8_general_ci  ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of micro_guess
@@ -110,22 +110,22 @@ CREATE TABLE `micro_notice`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `type` int(0) NULL DEFAULT 0,
   `authorId` int(0) NULL DEFAULT NULL,
-  `authorName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `topic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `reference` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `authorName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `topic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `reference` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `time` datetime(0) NULL DEFAULT NULL,
   `judge` int(0) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of micro_notice
 -- ----------------------------
-INSERT INTO `micro_notice` VALUES (1, 1, 1, 'wzs', '1-2-3', '1-2-3', 'a-b-c', 'title', 'summary', '2020-04-30 13:35:02', 0);
-
+INSERT INTO `micro_notice` VALUES (1, 1, 1, 'wzs', '-1-2-3-', '1-2-3', 'abc', 'title', 'summary', '2020-04-30 13:35:02', 0);
+INSERT INTO `micro_notice` VALUES (2, 2, 1, 'wzs','-1-13-4-', '4-9-6', 'keyword', 'test12', 'summary', '2020-04-30 14:08:49', 0);
 -- ----------------------------
 -- Table structure for topic
 -- ----------------------------
@@ -171,6 +171,7 @@ CREATE TABLE `user_info`  (
   `id` bigint(0) NOT NULL AUTO_INCREMENT,
   `email` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `picture` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `sex` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `address` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `signature` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -186,8 +187,8 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (1000, 'wzs01@163.com', '张华', '男', '天津市', 'fighting!', '博士', '研究员', '1:Computer Sciences-2:Data Mining', '1:Statistics & Probability-2:High-performance computing-3:Music', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
-INSERT INTO `user_info` VALUES (1001, 'wzs02@163.com', '王小伟', '男', '北京市', 'work hard', '本科生', '学生', '1:Computer Sciences-2:Data Mining', '1:Statistics & Probability-2:High-performance computing-3:Music', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
-INSERT INTO `user_info` VALUES (1002, 'wzs03@163.com', '王莞尔', '女', '浙江省杭州市', 'work hard', '本科生', '学生', '1:Computer Sciences-2:Data Mining', '1:Statistics & Probability-2:High-performance computing-3:Music', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+INSERT INTO `user_info` VALUES (1000, 'wzs01@163.com', '张华', '', 'male', '天津市', 'fighting!', '博士', '研究员', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+INSERT INTO `user_info` VALUES (1001, 'wzs02@163.com', '王小伟', '', 'male', '北京市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+INSERT INTO `user_info` VALUES (1002, 'wzs03@163.com', '王莞尔', '', 'female', '浙江省杭州市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
 
 SET FOREIGN_KEY_CHECKS = 1;
