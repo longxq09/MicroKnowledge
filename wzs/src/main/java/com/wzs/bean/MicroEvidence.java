@@ -10,5 +10,4 @@ import java.util.Date;
  * @Date 2020/4/20 12:01
  */
 public class MicroEvidence extends MicroNotice{
-
 }

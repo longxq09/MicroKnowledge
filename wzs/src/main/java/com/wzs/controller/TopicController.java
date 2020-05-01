@@ -60,7 +60,7 @@ public class TopicController {
 
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/Topic/getTopicList", method = RequestMethod.GET)
+    @RequestMapping(value = "/topic/getTopicList", method = RequestMethod.GET)
     public List<Topic> queryTopic(HttpServletRequest request){
         Map<String,Object> queryMap = new HashMap();
         return topicService.queryTopic(queryMap);
