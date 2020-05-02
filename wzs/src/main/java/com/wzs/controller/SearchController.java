@@ -1,10 +1,8 @@
 package com.wzs.controller;
 
-import com.wzs.bean.MicroEvidence;
-import com.wzs.bean.MicroGuess;
+import com.wzs.bean.MicroNotice;
 import com.wzs.bean.SearchLimit;
-import com.wzs.service.MEvidService;
-import com.wzs.service.MGuessService;
+import com.wzs.service.MNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,25 +15,19 @@ import java.util.*;
 
 @Controller
 public class SearchController {
+
     @Autowired
-    private MGuessService guessService;
-    @Autowired
-    private MEvidService evidService;
+    private MNoticeService mNoticeService;
 
     //关键字+多标签
-    List<MicroEvidence> getCompleteSearchMevid(String word, ArrayList<String> topicList) {
+    List<MicroNotice> getCompleteSearchMNotice(String word, ArrayList<String> topicList, ArrayList<Integer> typeList) {
         SearchLimit searchLimit = new SearchLimit();
         searchLimit.setTopicList(topicList);
         searchLimit.setWord(word);
-        return evidService.completeQueryMEvid(searchLimit);
+        searchLimit.setTypeList(typeList);
+        return mNoticeService.completeQueryMNotice(searchLimit);
     }
 
-    List<MicroGuess> getCompleteSearchMGuess(String word, ArrayList<String> topicList) {
-        SearchLimit searchLimit = new SearchLimit();
-        searchLimit.setTopicList(topicList);
-        searchLimit.setWord(word);
-        return guessService.completeQueryMGuess(searchLimit);
-    }
 
     @CrossOrigin
     @RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -46,7 +38,7 @@ public class SearchController {
         int kind = Integer.parseInt(request.getParameter("kind"));  // Evidence-Guess: 00,01,10,11
         String topic = request.getParameter("topic");     //id-id-id
         ArrayList<String> topicList = new ArrayList<>();
-        if (topic==null) {
+        if (topic == null) {
             topicList.add("%");         //标签为空
         } else {
             String[] tmp = topic.split("-");
@@ -54,42 +46,28 @@ public class SearchController {
                 topicList.add("%-" + tmp[i] + "-%");
             }
         }
-        word = "%" + word + "%";
-        List<MicroGuess> guessList;
-        List<MicroEvidence> evidenceList;
-        HashMap<String, Object> res = new HashMap<>();
+        ArrayList<Integer> typeList = new ArrayList<>();
         if (kind == 1) {
-            guessList = getCompleteSearchMGuess(word, topicList);
-            res.put("guess", guessList);
+            typeList.add(1);
         } else if (kind == 2) {
-            evidenceList = getCompleteSearchMevid(word, topicList);
-            res.put("evidence", evidenceList);
+            typeList.add(2);
         } else {
-            guessList = getCompleteSearchMGuess(word, topicList);
-            evidenceList = getCompleteSearchMevid(word, topicList);
-            res.put("guess", guessList);
-            res.put("evidence", evidenceList);
+            typeList.add(1);
+            typeList.add(2);
         }
+        word = "%" + word + "%";
+        List<MicroNotice> noticeList = getCompleteSearchMNotice(word, topicList, typeList);
+        HashMap<String, Object> res = new HashMap<>();
+        res.put("notice", noticeList);
         res.put("kind", request.getParameter("kind"));
         return res;
     }
 
-    //关键字+单一标签
-    List<MicroEvidence> getSingleSearchMevid(String word, String topic) {
-        return evidService.singleQueryMEvid(word, topic);
-    }
-
-    List<MicroGuess> getSingleSearchMGuess(String word, String topic) {
-        return guessService.singleQueryMGuess(word, topic);
-    }
 
     //多个标签
-    List<MicroEvidence> getMultiSearchMevid(ArrayList<String> topicList) {
-        return evidService.multiQueryMEvid(topicList);
+    List<MicroNotice> getMultiSearch(ArrayList<String> topicList) {
+        return mNoticeService.multiQueryMNotice(topicList);
     }
 
-    List<MicroGuess> getMultiSearchMGuess(ArrayList<String> topicList) {
-        return guessService.multiQueryMGuess(topicList);
-    }
 
 }

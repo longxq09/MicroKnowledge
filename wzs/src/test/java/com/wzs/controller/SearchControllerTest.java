@@ -1,10 +1,7 @@
 package com.wzs.controller;
 
-import com.wzs.bean.MicroEvidence;
-import com.wzs.bean.MicroGuess;
-import com.wzs.bean.SearchLimit;
-import com.wzs.service.MEvidService;
-import com.wzs.service.MGuessService;
+import com.wzs.bean.*;
+import com.wzs.service.TopicService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,38 +16,22 @@ class SearchControllerTest {
 
     @Autowired
     private SearchController searchController;
+
     @Autowired
-    private MGuessService guessService;
-    @Autowired
-    private MEvidService evidService;
+    private TopicService topicService;
+
 
     @Test
-    public void testController(){
-        String word = null;     //关键词 "1"
-        word = "%" + word + "%";
-        String topic = "1-2-14";     //id-id-id
-        ArrayList<String> topicList = new ArrayList<>();
-        String[] tmp = topic.split("-");
-        for (int i = 0; i < tmp.length; i++) {
-            topicList.add("%-" + tmp[i] + "-%");
-        }
-        System.out.println(topicList);
-        List<MicroEvidence> evidenceList;
-        List<MicroGuess> guessList;
-        //evidenceList=searchController.getMultiSearchMevid(topicList);
-        //guessList=searchController.getMultiSearchMGuess(topicList);
-        evidenceList=searchController.getSingleSearchMevid(word,topicList.get(0));
-        guessList=searchController.getSingleSearchMGuess(word,topicList.get(0));
-        for (int i = 0; i < evidenceList.size(); i++)
-            System.out.println(evidenceList.get(i).getTopic());
-        System.out.println("=======================");
-        for (int i = 0; i < guessList.size(); i++)
-            System.out.println(guessList.get(i).getTopic());
+    public void testTopic(){
+        Map<String,Object> queryMap = new HashMap();
+        List<Topic> topicList=topicService.queryTopic(queryMap);
+        for (int i = 0; i < topicList.size(); i++)
+            System.out.println(topicList.get(i).getTopicName());
     }
 
     @Test
-    public void testMultSearch() {
-        String word = "%%";     //关键词
+    public void testMultiSearch() {
+        String word = "%wzs%";     //关键词
         String topic = "";     //id-id-id
         ArrayList<String> topicList = new ArrayList<>();
         if(topic.equals("")){
@@ -62,17 +43,21 @@ class SearchControllerTest {
             }
         }
         System.out.println(topicList);
+        int kind =1;
+        ArrayList<Integer> typeList = new ArrayList<>();
+        if (kind == 1) {
+            typeList.add(1);
+        } else if (kind == 2) {
+            typeList.add(2);
+        } else {
+            typeList.add(1);
+            typeList.add(2);
+        }
+        List<MicroNotice> noticeList = searchController.getCompleteSearchMNotice(word,topicList,typeList);
 
-        SearchLimit searchLimit = new SearchLimit();
-        searchLimit.setTopicList(topicList);
-        searchLimit.setWord(word);
-        List<MicroEvidence> evidenceList = evidService.completeQueryMEvid(searchLimit);
-        List<MicroGuess> guessList = guessService.completeQueryMGuess(searchLimit);
-        for (int i = 0; i < evidenceList.size(); i++)
-            System.out.println(evidenceList.get(i).getTopic());
-        System.out.println("=======================");
-        for (int i = 0; i < guessList.size(); i++)
-            System.out.println(guessList.get(i).getTopic());
+        for (int i = 0; i < noticeList.size(); i++)
+            System.out.println(noticeList.get(i).getTopic());
+
     }
 
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzs.mapper.FavoriteMapper" >
+
+    <sql id="BASE_TABLE">
+        favorite_info
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        id,userID, noticeID
+    </sql>
+
+    <select id="selectFavorite" resultType="com.wzs.bean.Favorite" parameterType="java.util.Map">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        from <include refid="BASE_TABLE"/>
+        <where>
+            <if test="userID !=null and userID !=''">
+                and userID=#{userID,jdbcType=INTEGER}
+            </if>
+            <if test="noticeID !=null and noticeID !=''">
+                and noticeID=#{noticeID,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+    </select>
+
+    <insert id="insertFavorite" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="com.wzs.bean.Favorite">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            userID,noticeID
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            #{userID, jdbcType=INTEGER},
+            #{noticeID, jdbcType=INTEGER},
+        </trim>
+    </insert>
+
+    <delete id="deleteFavorite" parameterType="com.wzs.bean.Favorite" >
+        delete from <include refid="BASE_TABLE"/>
+        where userID = #{userID,jdbcType=INTEGER} and
+        noticeID = #{noticeID,jdbcType=INTEGER}
+    </delete>
+
+
+
+</mapper>

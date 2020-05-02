@@ -74,7 +74,7 @@
     methods: {
       getUserInfo() {
         var params = new URLSearchParams();
-        this.axios.get('/Topic/getTopicList', params)
+        this.axios.get('/topic/getTopicList', params)
           .then((res) => {
             console.log(res.data);
             this.labelList = res.data;
@@ -154,7 +154,7 @@
           params.append('title', this.form.title);
           params.append('summary', this.form.text);
           params.append('authorId', 0);
-          this.axios.post('/MEvidence/addMEvid', params)
+          this.axios.post('/mEvidence/addMEvid', params)
             .then((res) => {
               // var remindType = res.data.code == 0 ? 'success' : 'info';
               var remindTitle = res.data === 0 ? '发布微证据成功' : '发布微证据失败';

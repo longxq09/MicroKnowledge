@@ -13,10 +13,14 @@ import java.util.Map;
  */
 @Mapper
 public interface TopicMapper {
-    List<Topic> getALLTopic();
-    List<Topic>getALLValidTopic();
+
+    List<Topic> getALLValidTopic();
+
     List<Topic> selectTopic(Map<String, Object> map);
+
     boolean insertTopic(Topic topic);
+
     int updateTopic(Topic topic);
+
     boolean deleteTopicById(int id);
 }

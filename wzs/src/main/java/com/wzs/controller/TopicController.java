@@ -26,41 +26,13 @@ public class TopicController {
     @Autowired
     private TopicService topicService;
 
-    @CrossOrigin
-    @RequestMapping(value = "/user/topic", method = RequestMethod.GET)
-    public @ResponseBody
-    Object userAllTopicGet(HttpServletRequest request) {
-
-        JSONObject object = new JSONObject();
-        List<Topic> topics = getALLTopic();
-        List<Integer> id = new LinkedList<>();
-        List<String> content = new LinkedList<>();
-        List<Integer> flag = new LinkedList<>();
-        for (int i = 0; i < topics.size(); i++) {
-            Topic topic = topics.get(i);
-            id.add(topic.getId());
-            content.add(topic.getTopicName());
-            flag.add(topic.getFlag());
-        }
-        object.put("id", id);
-        object.put("content", content);
-        object.put("flag", flag);  //标签有效或无效
-        object.toJSONString();
-        System.out.println(object);
-        return object;
-    }
-
-    public List<Topic> getALLTopic() {
-        return topicService.getALLTopic();      //返回了所有的标签
-    }
-
     public List<Topic> getALLValidTopic() {
         return topicService.getALLValidTopic();        //只返回了flag=1即有效的标签
     }
 
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/Topic/getTopicList", method = RequestMethod.GET)
+    @RequestMapping(value = "/topic/getTopicList", method = RequestMethod.GET)
     public List<Topic> queryTopic(HttpServletRequest request){
         Map<String,Object> queryMap = new HashMap();
         return topicService.queryTopic(queryMap);

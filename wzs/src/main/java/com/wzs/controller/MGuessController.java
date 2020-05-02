@@ -5,6 +5,7 @@ import com.wzs.bean.MicroGuess;
 import com.wzs.bean.MicroNotice;
 import com.wzs.service.MEvidService;
 import com.wzs.service.MGuessService;
+import com.wzs.service.MNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,23 +17,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
+import static com.wzs.bean.Type.*;
+
 /**
  * @Description: TODO
  * @Author Wazak
  * @Date 2020/4/20 16:41
  */
 @Controller
-@RequestMapping("/MGuess")
+@RequestMapping("/mGuess")
 public class MGuessController {
 
     @Autowired
-    private MGuessService guessService;
-    @Autowired
-    private MEvidService evidService;
+    private MNoticeService noticeService;
 
     //通过map查询
-    public List<MicroGuess> queryMGuess(Map<String, Object> queryMap) {
-        return guessService.queryMGuess(queryMap);
+    public List<MicroNotice> queryMGuess(Map<String, Object> queryMap) {
+        return noticeService.queryMNotice(queryMap);
     }
 
     //添加微猜想
@@ -41,16 +42,18 @@ public class MGuessController {
     @RequestMapping(value = "/addMGuess", method = RequestMethod.POST)
     public int insertMGuess(HttpServletRequest request, HttpSession session) {
         MicroGuess guess = new MicroGuess();
+        guess.setType(GUESS.getIndex());
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
-        guess.setType(2);
         guess.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
+        guess.setAuthorName(request.getParameter("authorName"));
         guess.setTopic(request.getParameter("topic"));
-        guess.setReference(request.getParameter("citedEvidList"));
+        guess.setReference(request.getParameter("reference"));
         guess.setKeywords(request.getParameter("keywords"));
         guess.setTitle(request.getParameter("title"));
         guess.setSummary(request.getParameter("summary"));
         guess.setTime(new Date());
-        guessService.insertMGuess(guess);
+
+        noticeService.insertMNotice(guess);
         return 0;
     }
 
@@ -60,31 +63,32 @@ public class MGuessController {
     @RequestMapping(value = "/modifyMGuess", method = RequestMethod.POST)
     public int updateMGuess(HttpServletRequest request, HttpSession session) {
         MicroGuess guess = new MicroGuess();
-//        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
         guess.setId(Integer.parseInt(request.getParameter("id")));
-        guess.setType(2);
-        guess.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
+
+        guess.setAuthorName(request.getParameter("authorName"));
         guess.setTopic(request.getParameter("topic"));
-        guess.setReference(request.getParameter("citedEvidList"));
+        guess.setReference(request.getParameter("reference"));
         guess.setKeywords(request.getParameter("keywords"));
         guess.setTitle(request.getParameter("title"));
         guess.setSummary(request.getParameter("summary"));
         guess.setTime(new Date());
-        guessService.updateMGuess(guess);
+
+        noticeService.updateMNotice(guess);
         return 0;
     }
 
     //删除微猜想
     public boolean deleteMGuess(int id) {
-        return guessService.deleteMGuess(id);
+        return noticeService.deleteMNotice(id);
     }
 
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getMEvid", method = RequestMethod.GET)
-    private List<MicroEvidence> getMEvidList() {
+    private List<MicroNotice> getMEvidList() {
         Map<String, Object> queryMap = new HashMap();
-        return evidService.queryMEvid(queryMap);
+        queryMap.put("type",EVIDENCE.getIndex());
+        return noticeService.queryMNotice(queryMap);
     }
 
     @CrossOrigin
@@ -94,14 +98,16 @@ public class MGuessController {
         int id = Integer.parseInt(request.getParameter("id"));
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("id", id);
-        List<MicroGuess> list = guessService.queryMGuess(queryMap);
-        MicroGuess guess = list.get(0);
+        List<MicroNotice> list = noticeService.queryMNotice(queryMap);
+        MicroNotice guess = list.get(0);
+
         Map<String, Object> retMap = new HashMap();
         retMap.put("topic", guess.getTopic());
-        retMap.put("citedEvidList", guess.getReference());
+        retMap.put("reference", guess.getReference());
         retMap.put("keywords", guess.getKeywords());
         retMap.put("title", guess.getTitle());
         retMap.put("summary", guess.getSummary());
+
         return retMap;
     }
 
