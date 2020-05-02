@@ -85,7 +85,7 @@
         if (id > 0) {
           params.append('id', id);
           try {
-            let res = await this.axios.post('/MEvidence/toModifyMEvid', params);
+            let res = await this.axios.post('/mEvidence/toModifyMEvid', params);
             console.log(res.data);
             this.form.title = res.data.title;
             this.form.text = res.data.summary;
@@ -99,7 +99,7 @@
         } else {
           params.append('id', -id);
           try {
-            let res = await this.axios.post('/MGuess/toModifyMGuess', params);
+            let res = await this.axios.post('/mGuess/toModifyMGuess', params);
             console.log(res.data);
             this.form.title = res.data.title;
             this.form.text = res.data.summary;

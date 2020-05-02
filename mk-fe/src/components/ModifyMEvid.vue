@@ -21,8 +21,8 @@
           <el-button class="button-new-tag" size="small" @click="addTag(2)">增加</el-button>
         </el-form-item>
 
-        <el-form-item label="分类">
-          <el-checkbox v-for="(value,index) in labelList" key="value.topicName" v-model="value.checked" @change="chooseItem(value.id)">{{value.topicName}}
+        <el-form-item label="分类" v-if="reset">
+          <el-checkbox v-for="(value,index) in labelList" key="value.topicName" v-model ="value.checked"  @change="chooseItem(value.id)">{{value.topicName}}
           </el-checkbox>
         </el-form-item>
 
@@ -58,6 +58,7 @@
         referenceValue: '',
         keyWordValue: '',
         labelChoose: [],
+        reset:true,
         form: {
           title: '',
           text: '',
@@ -80,7 +81,7 @@
         var params = new URLSearchParams();
 
         try {
-          let res = await this.axios.get('/Topic/getTopicList', params);
+          let res = await this.axios.get('/topic/getTopicList', params);
           console.log(res.data);
           this.labelList = res.data;
         } catch (err) {
@@ -89,13 +90,13 @@
 
         params.append('id', this.$route.query.id);
         try {
-          let res = await this.axios.post('/MEvidence/toModifyMEvid', params);
+          let res = await this.axios.post('/mEvidence/toModifyMEvid', params);
           console.log(res.data);
           this.form.title = res.data.title;
           this.form.text = res.data.summary;
           this.form.keyWord = res.data.keywords;
           this.form.label = res.data.topic;
-          this.form.reference = res.data.citedPaper;
+          this.form.reference = res.data.reference;
 
           this.referenceTags = this.form.reference.split('-');
           this.keyWordTags = this.form.keyWord.split('-');
@@ -139,20 +140,16 @@
           console.log(this.keyWordTags.join('-'))
         }
       },
-      chooseItem(id, value) {
-        id_str = id.toString();
+      chooseItem(id) {
+        var id_str = id.toString();
         console.log("id:" + id);
         if (this.labelChoose.indexOf(id_str) == -1) {
           this.labelChoose.push(id_str);
-          value.checked = true;
         } else {
           this.labelChoose.splice(this.labelChoose.indexOf(id_str), 1);
-          value.checked = false;
         }
-        var temp = this.labelChoose;
-        this.labelList.forEach(item => {
-          item.checked = (temp.indexOf(item.id.toString()) !== -1);
-        });
+        this.reset=false;
+        this.reset=true;
         console.log("labelChoose:" + this.labelChoose);
       },
       toHomepageSubmit() {
@@ -183,13 +180,13 @@
           this.form.label = this.labelChoose.join('-');
           var params = new URLSearchParams();
           params.append('topic', this.form.label);
-          params.append('citedPaper', this.form.reference);
+          params.append('reference', this.form.reference);
           params.append('keywords', this.form.keyWord);
           params.append('title', this.form.title);
           params.append('summary', this.form.text);
           params.append('id', this.$route.query.id);
           params.append('authorId', 0);
-          this.axios.post('/MEvidence/modifyMEvid', params)
+          this.axios.post('/mEvidence/modifyMEvid', params)
             .then((res) => {
               // var remindType = res.data.code == 0 ? 'success' : 'info';
               var remindTitle = res.data === 0 ? '发布微证据成功' : '发布微证据失败';

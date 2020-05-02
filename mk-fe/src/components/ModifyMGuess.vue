@@ -5,8 +5,8 @@
     </el-header>
     <el-main>
       <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="引用">
-          <el-checkbox v-for="(value,index) in referenceList" v-model="value.checked" key="value.evidName" @change="chooseItem(value.id,1,value)">{{value.evidName}}</el-checkbox>
+        <el-form-item label="引用"  v-if="reset_reference">
+          <el-checkbox v-for="(value,index) in referenceList" v-model="value.checked" key="value.evidName" @change="chooseItem(value.id,1)">{{value.evidName}}</el-checkbox>
         </el-form-item>
 
         <el-form-item label="关键词">
@@ -17,8 +17,8 @@
           <el-button class="button-new-tag" size="small" @click="addTag()">增加</el-button>
         </el-form-item>
 
-        <el-form-item label="分类">
-          <el-checkbox v-for="(value,index) in labelList" v-model="value.checked" key="value.topicName" @change="chooseItem(value.id,2,value)">{{value.topicName}}</el-checkbox>
+        <el-form-item label="分类" v-if="reset_label">
+          <el-checkbox v-for="(value,index) in labelList" v-model="value.checked" key="value.topicName" @change="chooseItem(value.id,2)">{{value.topicName}}</el-checkbox>
         </el-form-item>
 
         <el-form-item label="主题">
@@ -54,6 +54,8 @@
         referenceValue: '',
         keyWordValue: '',
         labelChoose: [],
+        reset_reference:true,
+        reset_label:true,
         form: {
           title: '',
           text: '',
@@ -76,14 +78,14 @@
         var params = new URLSearchParams();
 
         try {
-          let res = await this.axios.get('/Topic/getTopicList', params);
+          let res = await this.axios.get('/topic/getTopicList', params);
           console.log(res.data);
           this.labelList = res.data;
         } catch (err) {
           console.log(err);
         }
         try {
-          let res = await this.axios.get('/MGuess/getMEvid', params);
+          let res = await this.axios.get('/mGuess/getMEvid', params);
           console.log(res.data);
           this.referenceList = res.data;
         } catch (err) {
@@ -92,7 +94,7 @@
         params.append('id', this.$route.query.id);
 
         try {
-          let res = await this.axios.post('/MGuess/toModifyMGuess', params);
+          let res = await this.axios.post('/mGuess/toModifyMGuess', params);
           console.log(res.data);
           this.form.title = res.data.title;
           this.form.text = res.data.summary;
@@ -135,36 +137,28 @@
         console.log(this.keyWordTags.join('-'))
 
       },
-      chooseItem(id, type, value) {
-        id_str = id.toString();
+      chooseItem(id, type) {
+        var id_str = id.toString();
         if (type == 1) {
           console.log("id:" + id);
           if (this.referenceTags.indexOf(id_str) == -1) {
             this.referenceTags.push(id_str);
-            value.checked = true;
           } else {
             this.referenceTags.splice(this.referenceTags.indexOf(id_str), 1);
-            value.checked = false;
           }
-          var temp = this.referenceTags;
-          this.referenceList.forEach(item => {
-            item.checked = (temp.indexOf(item.id.toString()) !== -1);
-          });
+          this.reset_reference=false;
+          this.reset_reference=true;
           console.log("referenceTags:" + this.referenceTags);
 
         } else {
           console.log("id:" + id);
           if (this.labelChoose.indexOf(id_str) == -1) {
             this.labelChoose.push(id_str);
-            value.checked = true;
           } else {
             this.labelChoose.splice(this.labelChoose.indexOf(id_str), 1);
-            value.checked = false;
           }
-          var temp = this.labelChoose;
-          this.labelList.forEach(item => {
-            item.checked = (temp.indexOf(item.id.toString()) !== -1);
-          });
+          this.reset_label=false;
+          this.reset_label=true;
           console.log("labelChoose:" + this.labelChoose);
 
         }
@@ -202,7 +196,7 @@
           params.append('summary', this.form.text);
           params.append('authorId', 0);
           params.append('id', this.$route.query.id);
-          this.axios.post('/MGuess/modifyMGuess', params)
+          this.axios.post('/mGuess/modifyMGuess', params)
             .then((res) => {
               // var remindType = res.data.code == 0 ? 'success' : 'info';
               var remindTitle = res.data === 0 ? '修改微猜想成功' : '修改微猜想失败';
