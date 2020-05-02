@@ -41,3 +41,37 @@ SE work
 - (新增微猜想时)获取微证据列表：//mGuess/getMEvid
 - 获得所有微公告(用于混合显示)：/mNotice/getNotices
 - 删除某条微公告：/mNotice/deleteNotice
+
+
+
+`用户信息`：
+
+/user/info
+
+`其他url`：
+
+获取所有topic(TopicController)：/topic/getTopicList
+
+搜索(searchController)：/search
+
+收藏(favoriteController)：/favorite{
+
+```
+/checkFavorite
+/getFavorite
+/addFavorite
+/deleteFavorite
+```
+
+}
+
+关注(FollowController)：/follow{
+
+```
+/checkFollow
+/getFollow
+/addFollow
+/deleteFollow
+```
+
+}
