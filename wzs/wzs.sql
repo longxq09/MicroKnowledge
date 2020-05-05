@@ -171,15 +171,16 @@ CREATE TABLE `favorite_info`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `userID` int(0) NULL DEFAULT NULL,
   `noticeID` int(0) NULL DEFAULT NULL,
+  `time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of favorite_info
 -- ----------------------------
-INSERT INTO `favorite_info` VALUES (1, 1, 1);
-INSERT INTO `favorite_info` VALUES (2, 1, 2);
-INSERT INTO `favorite_info` VALUES (3, 2, 1);
+INSERT INTO `favorite_info` VALUES (1, 1, 1,'2020-04-30 13:35:02');
+INSERT INTO `favorite_info` VALUES (2, 1, 2,'2020-04-30 13:35:12');
+INSERT INTO `favorite_info` VALUES (3, 2, 1,'2020-04-30 13:35:22');
 
 -- ----------------------------
 -- Table structure for follow_info

@@ -7,7 +7,7 @@
     </sql>
 
     <sql id="BASE_COLUMN">
-        id,userID, noticeID
+        id,userID, noticeID,`time`
     </sql>
 
     <select id="selectFavorite" resultType="com.wzs.bean.Favorite" parameterType="java.util.Map">
@@ -21,9 +21,11 @@
             <if test="noticeID !=null and noticeID !=''">
                 and noticeID=#{noticeID,jdbcType=INTEGER}
             </if>
-
+            <if test="time !=null and time !=''">
+                and `time`=#{time,}
+            </if>
         </where>
-
+        ORDER BY `time` DESC
     </select>
 
     <insert id="insertFavorite" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
@@ -31,11 +33,12 @@
         INSERT INTO
         <include refid="BASE_TABLE"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            userID,noticeID
+            userID,noticeID,`time`
         </trim>
         <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
             #{userID, jdbcType=INTEGER},
             #{noticeID, jdbcType=INTEGER},
+            #{time, jdbcType=VARCHAR}
         </trim>
     </insert>
 

@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/favorite")
@@ -25,6 +23,17 @@ public class FavoriteController {
     private FavoriteService favoriteService;
     @Autowired
     private MNoticeService mNoticeService;
+
+    public List<Favorite> getFavorite(int id) {
+        Map<String, Object> queryMap = new HashMap();
+        queryMap.put("userID", id);
+        List<Favorite> favoriteList = favoriteService.selectFavorite(queryMap);
+        return favoriteList;
+    }
+
+    public List<MicroNotice> getFavoriteNoticeList(List<Favorite> favoriteList) { //返回的notice按创建时间排序，暂未使用
+        return mNoticeService.selectMNoticeByFavorite(favoriteList);
+    }
 
     //查看是否收藏
     @CrossOrigin
@@ -46,12 +55,6 @@ public class FavoriteController {
         }
     }
 
-    public List<Favorite> getFavorite(int id) {
-        Map<String, Object> queryMap = new HashMap();
-        queryMap.put("userID", id);
-        List<Favorite> favoriteList = favoriteService.selectFavorite(queryMap);
-        return favoriteList;
-    }
 
     //获得所有个人收藏的微知识
     @CrossOrigin
@@ -60,7 +63,13 @@ public class FavoriteController {
     public List<MicroNotice> getFavoriteList(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
         List<Favorite> favoriteList = getFavorite((int) account.getId());
-        List<MicroNotice> noticeList=mNoticeService.selectMNoticeByFavorite(favoriteList);
+        List<MicroNotice> noticeList = new ArrayList<>();
+        for (Favorite i : favoriteList) {
+            Map<String, Object> queryMap = new HashMap();
+            queryMap.put("id", i.getNoticeID());
+            MicroNotice microNotice = mNoticeService.queryMNotice(queryMap).get(0);
+            noticeList.add(microNotice);
+        }
         return noticeList;
     }
 
@@ -73,6 +82,7 @@ public class FavoriteController {
         Favorite favorite = new Favorite();
         favorite.setUserID((int) account.getId());
         favorite.setNoticeID(Integer.parseInt(request.getParameter("noticeID")));
+        favorite.setTime(new Date());
         favoriteService.insertFavorite(favorite);
         return 0;
     }
