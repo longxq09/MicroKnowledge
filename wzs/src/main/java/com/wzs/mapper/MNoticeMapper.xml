@@ -128,4 +128,20 @@
         </foreach>
     </select>
 
+
+    <select id="selectMNoticeByAuthorList" resultType="com.wzs.bean.MicroNotice">
+        select * from micro_notice where
+        <foreach item="authorList" collection="list" separator="or" open="(" close=")" index="">
+            authorID = #{authorList, jdbcType=INTEGER}
+        </foreach>
+        ORDER BY `time` DESC
+    </select>
+
+    <select id="selectMNoticeByFavorite" resultType="com.wzs.bean.MicroNotice">
+        select * from micro_notice where
+        <foreach item="favorites" collection="list" separator="or" open="(" close=")" index="">
+            id = #{favorites.noticeID, jdbcType=INTEGER}
+        </foreach>
+        ORDER BY `time` DESC
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.wzs.service.Imp;
 
+import com.wzs.bean.Favorite;
 import com.wzs.bean.MicroGuess;
 import com.wzs.bean.MicroNotice;
 import com.wzs.bean.SearchLimit;
@@ -50,5 +51,15 @@ public class MNoticeServiceImp implements MNoticeService {
     @Override
     public List<MicroNotice> completeQueryMNotice(SearchLimit searchLimit){
         return noticeMapper.completeQueryMNotice(searchLimit);
+    }
+
+    @Override
+    public List<MicroNotice> selectMNoticeByAuthorList(ArrayList<Integer> authorList){
+        return noticeMapper.selectMNoticeByAuthorList(authorList);
+    }
+
+    @Override
+    public List<MicroNotice> selectMNoticeByFavorite(List<Favorite> favorites){
+        return noticeMapper.selectMNoticeByFavorite(favorites);
     }
 }

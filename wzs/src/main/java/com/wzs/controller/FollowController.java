@@ -2,7 +2,9 @@ package com.wzs.controller;
 
 import com.wzs.bean.Account;
 import com.wzs.bean.Follow;
+import com.wzs.bean.MicroNotice;
 import com.wzs.service.FollowService;
+import com.wzs.service.MNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +23,26 @@ import java.util.Map;
 public class FollowController {
     @Autowired
     private FollowService followService;
+    @Autowired
+    private MNoticeService mNoticeService;
+
+    //查看关注的人的动态（微知识按时间排序）
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/getFollowingState", method = RequestMethod.GET)
+    public List<MicroNotice> getFollowingState(HttpServletRequest request) {
+        Account account = (Account) request.getSession().getAttribute("account");
+        int followerID = (int) account.getId();
+        ArrayList<Integer> authorList = new ArrayList<>();
+        Map<String, Object> queryMap = new HashMap();
+        queryMap.put("followerID", followerID);
+        List<Follow> followList = followService.selectFollow(queryMap);
+        for (Follow i : followList) {
+            authorList.add(i.getFollowingID());
+        }
+        List<MicroNotice> noticeList = mNoticeService.selectMNoticeByAuthorList(authorList);
+        return noticeList;
+    }
 
     //查看是否关注
     @CrossOrigin
@@ -41,14 +64,26 @@ public class FollowController {
         }
     }
 
-    //获得所有个人关注
+    //获得个人关注名单
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/getFollow", method = RequestMethod.GET)
-    public List<Follow> getFollow(HttpServletRequest request) {
+    @RequestMapping(value = "/getFollowing", method = RequestMethod.GET)
+    public List<Follow> getFollowing(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("followerID", (int) account.getId());
+        List<Follow> followList = followService.selectFollow(queryMap);
+        return followList;
+    }
+
+    //获得个人粉丝名单
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/getFollower", method = RequestMethod.GET)
+    public List<Follow> getFollower(HttpServletRequest request) {
+        Account account = (Account) request.getSession().getAttribute("account");
+        Map<String, Object> queryMap = new HashMap();
+        queryMap.put("followingID", (int) account.getId());
         List<Follow> followList = followService.selectFollow(queryMap);
         return followList;
     }

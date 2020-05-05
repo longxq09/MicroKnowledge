@@ -57,10 +57,10 @@ SE work
 收藏(favoriteController)：/favorite{
 
 ```
-/checkFavorite
-/getFavorite
-/addFavorite
-/deleteFavorite
+/checkFavorite	查看是否收藏
+/getFavoriteList	获得所有个人收藏的微知识
+/addFavorite	增加收藏
+/deleteFavorite	取消收藏
 ```
 
 }
@@ -68,10 +68,12 @@ SE work
 关注(FollowController)：/follow{
 
 ```
-/checkFollow
-/getFollow
-/addFollow
-/deleteFollow
+/getFollowingState 查看关注的人的动态（微知识按时间排序）
+/checkFollow	查看是否关注
+/getFollowing	获得个人关注名单
+/getFollower	获得个人粉丝名单
+/addFollow		增加关注
+/deleteFollow    取消关注
 ```
 
 }
