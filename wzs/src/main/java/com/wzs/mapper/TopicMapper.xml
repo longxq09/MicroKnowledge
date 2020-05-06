@@ -10,21 +10,6 @@
         id,`topicName`,flag
     </sql>
 
-    <select id="getALLTopic" resultType="com.wzs.bean.Topic" parameterType="java.util.Map">
-        SELECT
-        <include refid="BASE_COLUMN"/>
-        from
-        <include refid="BASE_TABLE"/>
-        <where>
-            <if test="id !=null and id !=''">
-            </if>
-            <if test="topicName !=null and topic !=''">
-            </if>
-            <if test="flag !=null and flag !=''">
-            </if>
-        </where>
-    </select>
-
     <select id="getALLValidTopic" resultType="com.wzs.bean.Topic" parameterType="java.util.Map">
         SELECT
         <include refid="BASE_COLUMN"/>

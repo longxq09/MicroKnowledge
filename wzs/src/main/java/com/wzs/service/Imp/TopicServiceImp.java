@@ -21,11 +21,6 @@ public class TopicServiceImp implements TopicService {
     private TopicMapper topicMapper;
 
     @Override
-    public List<Topic> getALLTopic(){
-        return topicMapper.getALLTopic();
-    }
-
-    @Override
     public List<Topic>getALLValidTopic(){
         return topicMapper.getALLValidTopic();
     }

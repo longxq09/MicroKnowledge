@@ -41,3 +41,39 @@ SE work
 - (新增微猜想时)获取微证据列表：//mGuess/getMEvid
 - 获得所有微公告(用于混合显示)：/mNotice/getNotices
 - 删除某条微公告：/mNotice/deleteNotice
+
+
+
+`用户信息`：
+
+/user/info
+
+`其他url`：
+
+获取所有topic(TopicController)：/topic/getTopicList
+
+搜索(searchController)：/search
+
+收藏(favoriteController)：/favorite{
+
+```
+/checkFavorite	查看是否收藏
+/getFavoriteList	获得所有个人收藏的微知识
+/addFavorite	增加收藏
+/deleteFavorite	取消收藏
+```
+
+}
+
+关注(FollowController)：/follow{
+
+```
+/getFollowingState 查看关注的人的动态（微知识按时间排序）
+/checkFollow	查看是否关注
+/getFollowing	获得个人关注名单
+/getFollower	获得个人粉丝名单
+/addFollow		增加关注
+/deleteFollow    取消关注
+```
+
+}

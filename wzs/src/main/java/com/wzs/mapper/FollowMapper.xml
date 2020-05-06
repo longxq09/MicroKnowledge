@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzs.mapper.FollowMapper" >
+
+    <sql id="BASE_TABLE">
+        follow_info
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        id,followerID, followingID
+    </sql>
+
+    <select id="selectFollow" resultType="com.wzs.bean.Follow" parameterType="java.util.Map">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        from <include refid="BASE_TABLE"/>
+        <where>
+            <if test="followerID !=null and followerID !=''">
+                and followerID=#{followerID,jdbcType=INTEGER}
+            </if>
+            <if test="followingID !=null and followingID !=''">
+                and followingID=#{followingID,jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+    </select>
+
+    <insert id="insertFollow" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="com.wzs.bean.Follow">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            followerID,followingID
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            #{followerID, jdbcType=INTEGER},
+            #{followingID, jdbcType=INTEGER},
+        </trim>
+    </insert>
+
+    <delete id="deleteFollow" parameterType="com.wzs.bean.Follow" >
+        delete from <include refid="BASE_TABLE"/>
+        where followerID = #{followerID,jdbcType=INTEGER} and
+        followingID = #{followingID,jdbcType=INTEGER}
+    </delete>
+
+
+
+</mapper>

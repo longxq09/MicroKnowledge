@@ -1,11 +1,7 @@
 package com.wzs.controller;
 
-import com.wzs.bean.MicroEvidence;
-import com.wzs.bean.MicroGuess;
 import com.wzs.bean.MicroNotice;
 import com.wzs.bean.SearchLimit;
-import com.wzs.service.MEvidService;
-import com.wzs.service.MGuessService;
 import com.wzs.service.MNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -60,8 +56,8 @@ public class SearchController {
             typeList.add(2);
         }
         word = "%" + word + "%";
-        HashMap<String, Object> res = new HashMap<>();
         List<MicroNotice> noticeList = getCompleteSearchMNotice(word, topicList, typeList);
+        HashMap<String, Object> res = new HashMap<>();
         res.put("notice", noticeList);
         res.put("kind", request.getParameter("kind"));
         return res;

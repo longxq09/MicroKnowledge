@@ -10,19 +10,19 @@ import java.util.Date;
  * @Date 2020/4/27 21:05
  */
 public class MicroNotice {
-    int id = 0;
-    int type = 0;
-    int authorID = 0;
-    String authorName = null;
-    String topic = null;
-    String reference = null;
-    String keywords = null;
-    String title = null;
-    String summary = null;
+    private int id = 0;
+    private int type = 0;
+    private int authorID = 0;
+    private String authorName = null;
+    private String topic = null;
+    private String reference = null;
+    private String keywords = null;
+    private String title = null;
+    private String summary = null;
 
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-    Date time = null;
-    int Judge = 0;
+    private Date time = null;
+    private int Judge = 0;
 
     public int getId() {
         return id;

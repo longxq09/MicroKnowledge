@@ -152,7 +152,7 @@ INSERT INTO `topic` VALUES (9, '文学', 1);
 INSERT INTO `topic` VALUES (10, '艺术', 1);
 INSERT INTO `topic` VALUES (11, '历史地理', 1);
 INSERT INTO `topic` VALUES (12, '自然科学总论', 1);
-INSERT INTO `topic` VALUES (13, ' 数理科学和化学', 1);
+INSERT INTO `topic` VALUES (13, '数理科学和化学', 1);
 INSERT INTO `topic` VALUES (14, '天文学、地球科学', 1);
 INSERT INTO `topic` VALUES (15, '生物科学', 1);
 INSERT INTO `topic` VALUES (16, '医药、卫生', 1);
@@ -162,6 +162,43 @@ INSERT INTO `topic` VALUES (19, '交通运输', 1);
 INSERT INTO `topic` VALUES (20, '航空、航天', 1);
 INSERT INTO `topic` VALUES (21, '环境科学', 1);
 INSERT INTO `topic` VALUES (22, '综合', 1);
+
+-- ----------------------------
+-- Table structure for favorite_info
+-- ----------------------------
+DROP TABLE IF EXISTS `favorite_info`;
+CREATE TABLE `favorite_info`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `userID` int(0) NULL DEFAULT NULL,
+  `noticeID` int(0) NULL DEFAULT NULL,
+  `time` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of favorite_info
+-- ----------------------------
+INSERT INTO `favorite_info` VALUES (1, 1, 1,'2020-04-30 13:35:02');
+INSERT INTO `favorite_info` VALUES (2, 1, 2,'2020-04-30 13:35:12');
+INSERT INTO `favorite_info` VALUES (3, 2, 1,'2020-04-30 13:35:22');
+
+-- ----------------------------
+-- Table structure for follow_info
+-- ----------------------------
+DROP TABLE IF EXISTS `follow_info`;
+CREATE TABLE `follow_info`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `followerID` int(0) NULL DEFAULT NULL,
+  `followingID` int(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of follow_info
+-- ----------------------------
+INSERT INTO `follow_info` VALUES (1, 1, 2);
+INSERT INTO `follow_info` VALUES (2, 2, 1);
+INSERT INTO `follow_info` VALUES (3, 3, 1);
 
 -- ----------------------------
 -- Table structure for user_info
@@ -182,13 +219,13 @@ CREATE TABLE `user_info`  (
   `introduction` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `contribution` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1003 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (1000, 'wzs01@163.com', '张华', '', 'male', '天津市', 'fighting!', '博士', '研究员', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
-INSERT INTO `user_info` VALUES (1001, 'wzs02@163.com', '王小伟', '', 'male', '北京市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
-INSERT INTO `user_info` VALUES (1002, 'wzs03@163.com', '王莞尔', '', 'female', '浙江省杭州市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+INSERT INTO `user_info` VALUES (1, 'wzs01@163.com', '张华', '', 'male', '天津市', 'fighting!', '博士', '研究员', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+INSERT INTO `user_info` VALUES (2, 'wzs02@163.com', '王小伟', '', 'male', '北京市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+INSERT INTO `user_info` VALUES (3, 'wzs03@163.com', '王莞尔', '', 'female', '浙江省杭州市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
 
 SET FOREIGN_KEY_CHECKS = 1;

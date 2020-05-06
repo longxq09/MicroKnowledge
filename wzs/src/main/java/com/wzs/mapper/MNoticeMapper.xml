@@ -121,10 +121,28 @@
         <foreach item="topicList" collection="search.topicList" separator="or" open="(" close=")" index="">
             topic like #{topicList, jdbcType=VARCHAR}
         </foreach>
-        and (summary like #{search.word} or keywords like #{search.word} or title like #{search.word} ) and (judge= 0)
+        and (authorName like #{search.word} or summary like #{search.word} or keywords like #{search.word}
+        or title like #{search.word} ) and (judge= 0)
         and <foreach item="typeList" collection="search.typeList" separator="or" open="(" close=")" index="">
         type = #{typeList, jdbcType=INTEGER}
         </foreach>
+    </select>
+
+
+    <select id="selectMNoticeByAuthorList" resultType="com.wzs.bean.MicroNotice">
+        select * from micro_notice where
+        <foreach item="authorList" collection="list" separator="or" open="(" close=")" index="">
+            authorID = #{authorList, jdbcType=INTEGER}
+        </foreach>
+        ORDER BY `time` DESC
+    </select>
+
+    <select id="selectMNoticeByFavorite" resultType="com.wzs.bean.MicroNotice">
+        select * from micro_notice where
+        <foreach item="favorites" collection="list" separator="or" open="(" close=")" index="">
+            id = #{favorites.noticeID, jdbcType=INTEGER}
+        </foreach>
+        ORDER BY `time` DESC
     </select>
 
 </mapper>

@@ -1,5 +1,6 @@
 package com.wzs.service;
 
+import com.wzs.bean.Favorite;
 import com.wzs.bean.MicroNotice;
 import com.wzs.bean.SearchLimit;
 
@@ -24,4 +25,8 @@ public interface MNoticeService {
     List<MicroNotice> multiQueryMNotice(ArrayList<String> topicList);
 
     List<MicroNotice> completeQueryMNotice(SearchLimit searchLimit);
+
+    List<MicroNotice> selectMNoticeByAuthorList(ArrayList<Integer> authorList);
+
+    List<MicroNotice> selectMNoticeByFavorite(List<Favorite> favorites);
 }
