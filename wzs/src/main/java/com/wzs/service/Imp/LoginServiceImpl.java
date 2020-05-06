@@ -14,7 +14,7 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     private AccountMap accountMap;
 
-    public boolean hasMatchUserById(long userId, String password) {
+    public boolean hasMatchUserById(int userId, String password) {
         return accountMap.getIdMatchCount(userId, password) > 0;
     }
 
@@ -22,7 +22,7 @@ public class LoginServiceImpl implements LoginService {
         return accountMap.getEmailMatchCount(email, password) > 0;
     }
 
-    public Account findAccountById(long userId) {
+    public Account findAccountById(int userId) {
         return accountMap.findAccountById(userId);
     }
 
@@ -30,11 +30,11 @@ public class LoginServiceImpl implements LoginService {
         return accountMap.findAccountByEmail(email);
     }
 
-    public boolean reUserPassword(long readerId, String newPassword) {
+    public boolean reUserPassword(int readerId, String newPassword) {
         return accountMap.resetPassword(readerId, newPassword) > 0;
     }
 
-    public String getUserPassword(long userId) {
+    public String getUserPassword(int userId) {
         return accountMap.getPassword(userId);
     }
 

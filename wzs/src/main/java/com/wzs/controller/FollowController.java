@@ -32,7 +32,7 @@ public class FollowController {
     @RequestMapping(value = "/getFollowingState", method = RequestMethod.GET)
     public List<MicroNotice> getFollowingState(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
-        int followerID = (int) account.getId();
+        int followerID = account.getId();
         ArrayList<Integer> authorList = new ArrayList<>();
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("followerID", followerID);
@@ -51,7 +51,7 @@ public class FollowController {
     public int checkFollow(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
 
-        int followerID = (int) account.getId();
+        int followerID = account.getId();
         int followingID = Integer.parseInt(request.getParameter("followingID"));
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("followerID", followerID);
@@ -95,7 +95,7 @@ public class FollowController {
     public int addFollow(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
         Follow follow = new Follow();
-        follow.setFollowerID((int) account.getId());
+        follow.setFollowerID(account.getId());
         follow.setFollowingID(Integer.parseInt(request.getParameter("followingID")));
         followService.insertFollow(follow);
         return 0;

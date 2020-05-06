@@ -14,7 +14,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     private UserInfoMap userInfoMap;
 
     @Override
-    public UserInfo getUserInfo(long Id) {
+    public UserInfo getUserInfo(int Id) {
         return userInfoMap.findInfoById(Id);
     }
 
@@ -25,9 +25,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public long addUserInfo(UserInfo userInfo) {
-        /*if (userInfoMap.findInfoByEmail(userInfo.getEmail()) != null) {
-            return -1;
-        }*/
         if (userInfoMap.getEmailCount(userInfo.getEmail()) != 0) {
             return -1;
         }
