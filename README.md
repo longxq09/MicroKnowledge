@@ -44,6 +44,22 @@ SE work
 
 
 
+`评论数据库结构`
+
+id，评论id，唯一主键
+
+noticeId、authorId，微公告的id和其作者id
+
+fromId，fromName，评论者的id和名字，为当前用户，后台获取session
+
+ToId，ToName，被评论者的id和名字，区分评论原微公告还是回复评论
+
+content，评论内容
+
+time，评论时间用于排序
+
+
+
 `用户信息`：
 
 /user/info
@@ -74,6 +90,17 @@ SE work
 /getFollower	获得个人粉丝名单
 /addFollow		增加关注
 /deleteFollow    取消关注
+```
+
+}
+
+
+
+评论功能 /comment{
+
+```
+/getCommentsOfNotice 获得某条微公告的全部评论
+/replyComment 添加评论或回复评论
 ```
 
 }
