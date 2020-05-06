@@ -5,6 +5,8 @@ SE work
 
 - 用户登录
 - 用户注册
+- 个人信息
+- 搜索
 
 
 
@@ -44,36 +46,108 @@ SE work
 
 
 
+`评论数据库结构`
+
+id，评论id，唯一主键
+
+noticeId、authorId，微公告的id和其作者id
+
+fromId，fromName，评论者的id和名字，为当前用户，后台获取session
+
+ToId，ToName，被评论者的id和名字，区分评论原微公告还是回复评论
+
+content，评论内容
+
+time，评论时间用于排序
+
+
+
 `用户信息`：
 
-/user/info
+- url:	/user/info
 
-`其他url`：
+- 具体字段
 
-获取所有topic(TopicController)：/topic/getTopicList
+```
+private int id;			//id为自增主键，唯一确定用户
+private String email;	//邮箱
+private String name;	//姓名
+private String picture;     //头像url
+private String sex;			//性别
+private String address;		//地址
+private String signature;   //个性签名
+private String education;   //学历
+private String works;        //工作信息，包括affiliation即工作单位
+private String expertise;    //专业领域
+private String interest;    //偏好领域
+private String introduction;            //简介
+private String contribution;            //贡献
+```
 
-搜索(searchController)：/search
 
-收藏(favoriteController)：/favorite{
+
+`其他`：
+
+1. 获取所有topic(TopicController)：/topic/getTopicList
+2. 搜索(searchController)：/search
+
+
+
+收藏(favoriteController)：
+
+- url：	/favorite{
 
 ```
 /checkFavorite	查看是否收藏
-/getFavoriteList	获得所有个人收藏的微知识
+/getFavoriteList	获得所有个人收藏的微知识（微知识按收藏时间排序）
 /addFavorite	增加收藏
 /deleteFavorite	取消收藏
 ```
 
 }
 
-关注(FollowController)：/follow{
+- 具体字段
 
 ```
-/getFollowingState 查看关注的人的动态（微知识按时间排序）
+int id;		//id为自增主键
+int userID;	 //用户id
+int noticeID;	 //收藏的微知识id
+```
+
+
+
+关注(FollowController)：	
+
+- url：	/follow{
+
+```
+/getFollowingState 查看关注的人的动态（微知识按创建时间排序）
 /checkFollow	查看是否关注
 /getFollowing	获得个人关注名单
 /getFollower	获得个人粉丝名单
 /addFollow		增加关注
 /deleteFollow    取消关注
+```
+
+}
+
+- 具体字段
+
+```
+int id;			//id为自增主键
+int followerID;   //粉丝
+int followingID;   //关注的人
+
+//followerID关注了followingID
+```
+
+
+
+评论功能 /comment{
+
+```
+/getCommentsOfNotice 获得某条微公告的全部评论
+/replyComment 添加评论或回复评论
 ```
 
 }

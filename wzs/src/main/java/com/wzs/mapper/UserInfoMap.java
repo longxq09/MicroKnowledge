@@ -9,7 +9,7 @@ import java.util.ArrayList;
 @Mapper
 public interface UserInfoMap {
 
-    UserInfo findInfoById(final long id);
+    UserInfo findInfoById(final int id);
 
     UserInfo findInfoByEmail(final String email);
 

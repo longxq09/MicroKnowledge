@@ -55,7 +55,7 @@ public class LoginController {
     }
 
     /*
-    @RequestMapping("/repasswd_do")
+    @RequestMapping("/repasswd")
     public String reUserPasswdDo(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         Account user = (Account) request.getSession().getAttribute("account");
         String oldPasswd = request.getParameter("oldPasswd");
@@ -82,21 +82,6 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(value = {"/", "/main.html"})
-    public String toIndex(HttpServletRequest request) {
-        request.getSession().invalidate();
-        return "index";
-    }
-
-    @RequestMapping("/out.html")
-    public String logout(HttpServletRequest request) {
-        request.getSession().invalidate();
-        return "redirect:/main.html";
-    }
-
-    @RequestMapping("*")
-    public String notFind() {
-        return "404";
     }*/
 
 }
