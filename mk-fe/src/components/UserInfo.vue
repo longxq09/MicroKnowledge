@@ -107,7 +107,7 @@
 		},
 		methods: {
 		  getUserInfo() {
-        this.axios.get('/topic')
+        this.axios.get('/topic/getTopicList')
           .then((res) => {
             this.topics = res.data
           })

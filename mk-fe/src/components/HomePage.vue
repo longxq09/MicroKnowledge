@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <v-head v-bind:user=true></v-head>
+      <v-head v-bind:homepage=true></v-head>
     </el-header>
     <el-main>
       <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">

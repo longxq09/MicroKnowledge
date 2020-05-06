@@ -30,7 +30,7 @@
 		methods: {
       register () {
         var params = new URLSearchParams();
-        params.append('name', this.dataForm.username);
+        params.append('name', this.dataForm.name);
         params.append('email', this.dataForm.email);
         params.append('password',this.dataForm.password);
         this.axios.post('/user/register', params)
