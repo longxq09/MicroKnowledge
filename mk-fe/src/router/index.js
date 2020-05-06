@@ -10,6 +10,7 @@ import ModifyMEvid from '@/components/ModifyMEvid.vue'
 import ModifyMGuess from '@/components/ModifyMGuess'
 import Search from '@/components/Search'
 import Detail from '@/components/Detail.vue'
+import Review from '@/components/Review.vue'
 
 Vue.use(Router)
 
@@ -65,6 +66,11 @@ export default new Router({
       path: '/detail',
       name: 'Detail',
       component: Detail
+    },
+    {
+      path: '/review',
+      name: 'Review',
+      component: Review
     },
   ]
 })

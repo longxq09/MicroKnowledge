@@ -6,6 +6,8 @@
     <el-main>
       <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
         <el-tab-pane label="推荐" name="first">
+          <v-comment></v-comment>
+          <v-comment></v-comment>
           <v-notice v-bind:user=true></v-notice>
 
           <v-notice :key="value.id" v-for="(value,index) in exhibition"
@@ -33,6 +35,7 @@
   import vHead from './common/Header.vue';
   import vFooter from './common/Footer.vue';
   import vNotice from './common/Notice.vue';
+  import vComment from './common/Comment.vue';
   export default {
     name: "HomePage",
     data() {
@@ -45,7 +48,8 @@
     components: {
       vHead,
       vFooter,
-      vNotice
+      vNotice,
+      vComment,
     },
     created() {
       console.log("init");

@@ -148,10 +148,6 @@
         } else {
           this.labelChoose.splice(this.labelChoose.indexOf(id_str), 1);
         }
-        // var temp = this.labelChoose;
-        // this.labelList.forEach(item => {
-        //   item.checked = (temp.indexOf(item.id.toString()) !== -1);
-        // });
         this.reset=false;
         this.reset=true;
         console.log("labelChoose:" + this.labelChoose);
