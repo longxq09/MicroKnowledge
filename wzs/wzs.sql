@@ -162,6 +162,7 @@ INSERT INTO `topic` VALUES (19, '交通运输', 1);
 INSERT INTO `topic` VALUES (20, '航空、航天', 1);
 INSERT INTO `topic` VALUES (21, '环境科学', 1);
 INSERT INTO `topic` VALUES (22, '综合', 1);
+INSERT INTO `topic` VALUES (23, '计算机', 1);
 
 -- ----------------------------
 -- Table structure for favorite_info
