@@ -59,13 +59,9 @@ public class UserInfoController {
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
     public @ResponseBody
     Object userInfoGet(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
         HashMap<String, String> res = new HashMap<>();
-        if (account == null) {
-            res.put("message", "信息获取失败！");
-            return res;
-        }
-        UserInfo info = userInfoService.getUserInfo(account.getId());
+        int id=Integer.parseInt(request.getParameter("id"));
+        UserInfo info = userInfoService.getUserInfo(id);
         res.put("sex", info.getSex());
         res.put("name", info.getName());
         res.put("address", info.getAddress());

@@ -3,8 +3,10 @@ package com.wzs.controller;
 import com.wzs.bean.Account;
 import com.wzs.bean.Follow;
 import com.wzs.bean.MicroNotice;
+import com.wzs.bean.UserInfo;
 import com.wzs.service.FollowService;
 import com.wzs.service.MNoticeService;
+import com.wzs.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,6 +27,8 @@ public class FollowController {
     private FollowService followService;
     @Autowired
     private MNoticeService mNoticeService;
+    @Autowired
+    private UserInfoService userInfoService;
 
     //查看关注的人的动态（微知识按时间排序）
     @CrossOrigin
@@ -64,28 +68,47 @@ public class FollowController {
         }
     }
 
-    //获得个人关注名单
+
+    public List<Follow> getFollowing(int id) {
+        Map<String, Object> queryMap = new HashMap();
+        queryMap.put("followerID", id);
+        return followService.selectFollow(queryMap);
+    }
+
+    //获得个人关注名单信息
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getFollowing", method = RequestMethod.GET)
-    public List<Follow> getFollowing(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
-        Map<String, Object> queryMap = new HashMap();
-        queryMap.put("followerID", (int) account.getId());
-        List<Follow> followList = followService.selectFollow(queryMap);
-        return followList;
+    public List<UserInfo> getFollowingInfo(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        List<Follow> followList = getFollowing(id);
+        List<UserInfo> userInfoList = new ArrayList<>();
+        for (Follow i : followList) {
+            UserInfo userInfo = userInfoService.getUserInfo(i.getFollowingID());
+            userInfoList.add(userInfo);
+        }
+        return userInfoList;
     }
 
-    //获得个人粉丝名单
+    public List<Follow> getFollower(int id) {
+        Map<String, Object> queryMap = new HashMap();
+        queryMap.put("followingID", id);
+        return followService.selectFollow(queryMap);
+    }
+
+    //获得个人粉丝名单信息
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getFollower", method = RequestMethod.GET)
-    public List<Follow> getFollower(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
-        Map<String, Object> queryMap = new HashMap();
-        queryMap.put("followingID", (int) account.getId());
-        List<Follow> followList = followService.selectFollow(queryMap);
-        return followList;
+    public List<UserInfo> getFollowerInfo(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        List<Follow> followList = getFollower(id);
+        List<UserInfo> userInfoList = new ArrayList<>();
+        for (Follow i : followList) {
+            UserInfo userInfo = userInfoService.getUserInfo(i.getFollowerID());
+            userInfoList.add(userInfo);
+        }
+        return userInfoList;
     }
 
     //增加关注
@@ -108,7 +131,7 @@ public class FollowController {
     public int deleteFollow(HttpServletRequest request) {
         Follow follow = new Follow();
         Account account = (Account) request.getSession().getAttribute("account");
-        follow.setFollowerID((int) account.getId());
+        follow.setFollowerID(account.getId());
         follow.setFollowingID(Integer.parseInt(request.getParameter("followingID")));
         followService.deleteFollow(follow);
         return 0;
