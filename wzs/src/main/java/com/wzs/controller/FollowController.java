@@ -1,6 +1,5 @@
 package com.wzs.controller;
 
-import com.wzs.bean.Account;
 import com.wzs.bean.Follow;
 import com.wzs.bean.MicroNotice;
 import com.wzs.bean.UserInfo;
@@ -35,8 +34,7 @@ public class FollowController {
     @ResponseBody
     @RequestMapping(value = "/getFollowingState", method = RequestMethod.GET)
     public List<MicroNotice> getFollowingState(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
-        int followerID = account.getId();
+        int followerID = Integer.parseInt(request.getParameter("id"));
         ArrayList<Integer> authorList = new ArrayList<>();
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("followerID", followerID);
@@ -53,9 +51,7 @@ public class FollowController {
     @ResponseBody
     @RequestMapping(value = "/checkFollow", method = RequestMethod.GET)
     public int checkFollow(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
-
-        int followerID = account.getId();
+        int followerID = Integer.parseInt(request.getParameter("id"));
         int followingID = Integer.parseInt(request.getParameter("followingID"));
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("followerID", followerID);
@@ -116,9 +112,8 @@ public class FollowController {
     @ResponseBody
     @RequestMapping(value = "/addFollow", method = RequestMethod.POST)
     public int addFollow(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
         Follow follow = new Follow();
-        follow.setFollowerID(account.getId());
+        follow.setFollowerID(Integer.parseInt(request.getParameter("id")));
         follow.setFollowingID(Integer.parseInt(request.getParameter("followingID")));
         followService.insertFollow(follow);
         return 0;
@@ -130,8 +125,7 @@ public class FollowController {
     @RequestMapping(value = "/deleteFollow", method = RequestMethod.POST)
     public int deleteFollow(HttpServletRequest request) {
         Follow follow = new Follow();
-        Account account = (Account) request.getSession().getAttribute("account");
-        follow.setFollowerID(account.getId());
+        follow.setFollowerID(Integer.parseInt(request.getParameter("id")));
         follow.setFollowingID(Integer.parseInt(request.getParameter("followingID")));
         followService.deleteFollow(follow);
         return 0;

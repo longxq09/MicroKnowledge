@@ -40,9 +40,7 @@ public class FavoriteController {
     @ResponseBody
     @RequestMapping(value = "/checkFavorite", method = RequestMethod.GET)
     public int checkFavorite(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
-
-        int userID = (int) account.getId();
+        int userID = Integer.parseInt(request.getParameter("id"));
         int noticeID = Integer.parseInt(request.getParameter("noticeID"));
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("userID", userID);
@@ -61,8 +59,8 @@ public class FavoriteController {
     @ResponseBody
     @RequestMapping(value = "/getFavoriteList", method = RequestMethod.GET)
     public List<MicroNotice> getFavoriteList(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
-        List<Favorite> favoriteList = getFavorite((int) account.getId());
+        int id = Integer.parseInt(request.getParameter("id"));
+        List<Favorite> favoriteList = getFavorite(id);
         List<MicroNotice> noticeList = new ArrayList<>();
         for (Favorite i : favoriteList) {
             Map<String, Object> queryMap = new HashMap();
@@ -78,9 +76,8 @@ public class FavoriteController {
     @ResponseBody
     @RequestMapping(value = "/addFavorite", method = RequestMethod.POST)
     public int addFavorite(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
         Favorite favorite = new Favorite();
-        favorite.setUserID((int) account.getId());
+        favorite.setUserID(Integer.parseInt(request.getParameter("id")));
         favorite.setNoticeID(Integer.parseInt(request.getParameter("noticeID")));
         favorite.setTime(new Date());
         favoriteService.insertFavorite(favorite);
@@ -93,8 +90,7 @@ public class FavoriteController {
     @RequestMapping(value = "/deleteFavorite", method = RequestMethod.POST)
     public int deleteFavorite(HttpServletRequest request) {
         Favorite favorite = new Favorite();
-        Account account = (Account) request.getSession().getAttribute("account");
-        favorite.setUserID((int) account.getId());
+        favorite.setUserID(Integer.parseInt(request.getParameter("id")));
         favorite.setNoticeID(Integer.parseInt(request.getParameter("noticeID")));
         favoriteService.deleteFavorite(favorite);
         return 0;

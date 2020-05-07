@@ -9,11 +9,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
 @Controller
@@ -34,9 +32,6 @@ public class LoginController {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-//        System.out.println("email: "+email);
-//        System.out.println("password: "+password);
-
         PasswordHelper helper = new PasswordHelper();
         password = helper.encryptByName(email, password);   //加密
         boolean isUser = loginService.hasMatchUserByEmail(email, password);
@@ -44,7 +39,8 @@ public class LoginController {
         HashMap<String, String> res = new HashMap<>();
         if (isUser) {
             Account account = loginService.findAccountByEmail(email);
-            request.getSession().setAttribute("account", account);
+            //request.getSession().setAttribute("account", account);
+            res.put("id", "" + account.getId());
             res.put("code", "0");
             res.put("message", "登陆成功！");
         } else {
@@ -54,34 +50,34 @@ public class LoginController {
         return res;
     }
 
-    /*
-    @RequestMapping("/repasswd")
-    public String reUserPasswdDo(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        Account user = (Account) request.getSession().getAttribute("account");
+    @CrossOrigin
+    @RequestMapping(value = "/user/repassword", method = RequestMethod.POST)
+    public @ResponseBody
+    Object reUserPassword(HttpServletRequest request) {
         String oldPasswd = request.getParameter("oldPasswd");
         String newPasswd = request.getParameter("newPasswd");
-        long id = user.getId();
-        String email = user.getEmail();
+        int id = Integer.parseInt(request.getParameter("id"));
+        String email = request.getParameter("email");
         PasswordHelper helper = new PasswordHelper();
         oldPasswd = helper.encryptByName(email, oldPasswd);
         String password = loginService.getUserPassword(id);
-
+        HashMap<String, String> res = new HashMap<>();
         if (password.equals(oldPasswd)) {
             newPasswd = helper.encryptByName(email, newPasswd);
-
             if (loginService.reUserPassword(id, newPasswd)) {
-                redirectAttributes.addFlashAttribute("success", "密码修改成功！");
-                return "redirect:/repasswd.html";
+                res.put("code", "0");
+                res.put("message", "密码修改成功！");
             } else {
-                redirectAttributes.addFlashAttribute("error", "密码修改失败！");
-                return "redirect:/repasswd.html";
+                res.put("code", "1");
+                res.put("message", "密码修改失败！");
             }
         } else {
-            redirectAttributes.addFlashAttribute("error", "旧密码错误！");
-            return "redirect:/repasswd.html";
+            res.put("code", "1");
+            res.put("message", "旧密码错误！");
         }
+        return res;
     }
 
-    }*/
+}
 
 }

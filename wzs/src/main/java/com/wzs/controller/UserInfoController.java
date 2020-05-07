@@ -60,7 +60,7 @@ public class UserInfoController {
     public @ResponseBody
     Object userInfoGet(HttpServletRequest request) {
         HashMap<String, String> res = new HashMap<>();
-        int id=Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter("id"));
         UserInfo info = userInfoService.getUserInfo(id);
         res.put("sex", info.getSex());
         res.put("name", info.getName());
@@ -80,10 +80,10 @@ public class UserInfoController {
     @RequestMapping(value = "/user/info", method = RequestMethod.POST)
     public @ResponseBody
     Object userInfoEdit(HttpServletRequest request) {
-        Account account = (Account) request.getSession().getAttribute("account");
+        int id = Integer.parseInt(request.getParameter("id"));
         String name, sex, address, signature, education, works, introduction, contribution;
         String expertise, interest, picture;
-        UserInfo userInfo = userInfoService.getUserInfo(account.getId());
+        UserInfo userInfo = userInfoService.getUserInfo(id);
         if ((name = request.getParameter("name")) != null) {
             userInfo.setName(name);
         }
@@ -117,11 +117,10 @@ public class UserInfoController {
         if ((picture = request.getParameter("picture")) != null) {
             userInfo.setPicture(picture);
         }
-        //System.out.println("contribution: " + contribution + "  interest: " + interest);
         HashMap<String, String> res = new HashMap<>();
         if (userInfoService.editUserInfo(userInfo)) {
-            Account accountNew = loginService.findAccountById(account.getId());
-            request.getSession().setAttribute("account", accountNew);
+            //Account accountNew = loginService.findAccountById(account.getId());
+            //request.getSession().setAttribute("account", accountNew);
             res.put("code", "0");
             res.put("message", "信息修改成功！");
         } else {
