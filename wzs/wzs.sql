@@ -238,13 +238,13 @@ CREATE TABLE `comment`  (
   `noticeId` int(0) NULL DEFAULT NULL,
   `authorId` int(0) NULL DEFAULT NULL,
   `fromId` int(0) NULL DEFAULT NULL,
-  `fromName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `fromName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `toId` int(0) NULL DEFAULT NULL,
-  `toName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `toName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `content` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comment
