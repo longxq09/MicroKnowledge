@@ -2,8 +2,10 @@ package com.wzs.controller;
 
 import com.wzs.bean.Account;
 import com.wzs.bean.Favorite;
-import com.wzs.bean.MicroGuess;
+
+import com.wzs.bean.MicroNotice;
 import com.wzs.service.FavoriteService;
+import com.wzs.service.MNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,17 +14,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/favorite")
 public class FavoriteController {
     @Autowired
     private FavoriteService favoriteService;
+    @Autowired
+    private MNoticeService mNoticeService;
+
+    public List<Favorite> getFavorite(int id) {
+        Map<String, Object> queryMap = new HashMap();
+        queryMap.put("userID", id);
+        List<Favorite> favoriteList = favoriteService.selectFavorite(queryMap);
+        return favoriteList;
+    }
+
+    public List<MicroNotice> getFavoriteNoticeList(List<Favorite> favoriteList) { //返回的notice按创建时间排序，暂未使用
+        return mNoticeService.selectMNoticeByFavorite(favoriteList);
+    }
 
     //查看是否收藏
     @CrossOrigin
@@ -44,16 +55,22 @@ public class FavoriteController {
         }
     }
 
-    //获得所有个人收藏
+
+    //获得所有个人收藏的微知识
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/getFavorite", method = RequestMethod.GET)
-    public List<Favorite> getFavorite(HttpServletRequest request) {
+    @RequestMapping(value = "/getFavoriteList", method = RequestMethod.GET)
+    public List<MicroNotice> getFavoriteList(HttpServletRequest request) {
         Account account = (Account) request.getSession().getAttribute("account");
-        Map<String, Object> queryMap = new HashMap();
-        queryMap.put("userID", (int) account.getId());
-        List<Favorite> favoriteList = favoriteService.selectFavorite(queryMap);
-        return favoriteList;
+        List<Favorite> favoriteList = getFavorite((int) account.getId());
+        List<MicroNotice> noticeList = new ArrayList<>();
+        for (Favorite i : favoriteList) {
+            Map<String, Object> queryMap = new HashMap();
+            queryMap.put("id", i.getNoticeID());
+            MicroNotice microNotice = mNoticeService.queryMNotice(queryMap).get(0);
+            noticeList.add(microNotice);
+        }
+        return noticeList;
     }
 
     //增加收藏
@@ -65,6 +82,7 @@ public class FavoriteController {
         Favorite favorite = new Favorite();
         favorite.setUserID((int) account.getId());
         favorite.setNoticeID(Integer.parseInt(request.getParameter("noticeID")));
+        favorite.setTime(new Date());
         favoriteService.insertFavorite(favorite);
         return 0;
     }

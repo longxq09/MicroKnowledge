@@ -22,25 +22,25 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `account`;
 CREATE TABLE `account`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `email` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `password` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1003 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of account
 -- ----------------------------
-INSERT INTO `account` VALUES (1000, 'wzs01@163.com', '0a7cd2f29c2c46302b0002ac6ecf6d03');
-INSERT INTO `account` VALUES (1001, 'wzs02@163.com', 'c9a6d3a645392a8f0d6a7514aa59d712');
-INSERT INTO `account` VALUES (1002, 'wzs03@163.com', '74b5d158e3a6263c26cddc5946d04e1e');
+INSERT INTO `account` VALUES (1, 'wzs01@163.com', '0a7cd2f29c2c46302b0002ac6ecf6d03');
+INSERT INTO `account` VALUES (2, 'wzs02@163.com', 'c9a6d3a645392a8f0d6a7514aa59d712');
+INSERT INTO `account` VALUES (3, 'wzs03@163.com', '74b5d158e3a6263c26cddc5946d04e1e');
 
 -- ----------------------------
 -- Table structure for admin
 -- ----------------------------
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin`  (
-  `admin_id` bigint(0) NOT NULL,
+  `admin_id` int(0) NOT NULL,
   `password` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `email` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`admin_id`) USING BTREE
@@ -171,15 +171,16 @@ CREATE TABLE `favorite_info`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `userID` int(0) NULL DEFAULT NULL,
   `noticeID` int(0) NULL DEFAULT NULL,
+  `time` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of favorite_info
 -- ----------------------------
-INSERT INTO `favorite_info` VALUES (1, 1, 1);
-INSERT INTO `favorite_info` VALUES (2, 1, 2);
-INSERT INTO `favorite_info` VALUES (3, 2, 1);
+INSERT INTO `favorite_info` VALUES (1, 1, 1,'2020-04-30 13:35:02');
+INSERT INTO `favorite_info` VALUES (2, 1, 2,'2020-04-30 13:35:12');
+INSERT INTO `favorite_info` VALUES (3, 2, 1,'2020-04-30 13:35:22');
 
 -- ----------------------------
 -- Table structure for follow_info
@@ -204,11 +205,11 @@ INSERT INTO `follow_info` VALUES (3, 3, 1);
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT,
+  `id` int(0) NOT NULL AUTO_INCREMENT,
   `email` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `picture` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `sex` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `sex` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `address` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `signature` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `education` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,

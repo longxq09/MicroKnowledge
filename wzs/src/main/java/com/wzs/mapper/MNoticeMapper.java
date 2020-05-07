@@ -1,5 +1,6 @@
 package com.wzs.mapper;
 
+import com.wzs.bean.Favorite;
 import com.wzs.bean.MicroNotice;
 import com.wzs.bean.SearchLimit;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,4 +28,8 @@ public interface MNoticeMapper {
     List<MicroNotice> multiQueryMNotice(ArrayList<String> topicList);
 
     List<MicroNotice> completeQueryMNotice(@Param("search") SearchLimit search);
+
+    List<MicroNotice> selectMNoticeByAuthorList(ArrayList<Integer> authorList);
+
+    List<MicroNotice> selectMNoticeByFavorite(List<Favorite> favorites);
 }

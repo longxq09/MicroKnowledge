@@ -23,7 +23,7 @@
     props: {
       id: {
         type: Number,
-        default: 6
+        default: 1
       },
       type: {
         type: Number,

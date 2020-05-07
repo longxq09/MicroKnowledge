@@ -95,11 +95,11 @@
         this.axios.post('/comment/getCommentsOfNotice', params2)
           .then((res) => {
             this.exhibition = res.data;
-            this.reply_num = this.reply_num + 1;
+            this.reply_num = this.exhibition.length;
           })
           .catch((error) => {
             console.log(error)
-          })
+          });
         this.refresh = true;
       },
       async getUserInfo() {
@@ -108,7 +108,7 @@
         try {
           let res = await this.axios.post('/comment/getCommentsOfNotice', params);
           this.exhibition = res.data;
-          this.reply_num = this.exhibition.length();
+          this.reply_num = this.exhibition.length;
         } catch (err) {
           console.log(err);
         }
@@ -168,7 +168,7 @@
               this.axios.post('/comment/getCommentsOfNotice', params2)
                 .then((res) => {
                   this.exhibition = res.data;
-                  this.reply_num = this.reply_num + 1;
+                  this.reply_num = this.exhibition.length;
                 })
                 .catch((error) => {
                   console.log(error)

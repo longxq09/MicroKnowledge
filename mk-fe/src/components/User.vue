@@ -4,14 +4,15 @@
 			<v-head v-bind:user=true></v-head>
 		</el-header>
 		<el-main>
-			<el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
-        <el-tab-pane label="推荐" name="first">
-          <v-notice></v-notice>
-          <v-notice></v-notice>
+      <div class="image">
+        <el-image :src="src"></el-image>
+      </div>
+			<el-tabs v-model="activeName">
+        <el-tab-pane label="我的关注" name="first">
         </el-tab-pane>
-        <el-tab-pane label="关注" name="second">
+        <el-tab-pane label="我的粉丝" name="second">
         </el-tab-pane>
-        <el-tab-pane label="热榜" name="third">
+        <el-tab-pane label="我的收藏" name="third">
         </el-tab-pane>
       </el-tabs>
 		</el-main>
@@ -28,16 +29,39 @@ import vNotice from './common/Notice.vue';
     name: "User",
     data() {
       return {
-        activeName: 'first'
-      }
+        src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
+        activeName: 'first',
+        following: Array,
+        follower: Array
+      };
     },
 		components: {
 			vHead,
 			vFooter,
 			vNotice
 		},
+		mounted() {
+		  this.getFollow()
+		},
 		methods: {
-
+      getFollow() {
+        this.axios.get('/getFollowing')
+          .then((res) => {
+            this.following = res.data
+            console.log(res.data)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+        this.axios.get('/getFollower')
+          .then((res) => {
+            this.follower = res.data
+            console.log(this.follower)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+       }
 		}
 
   }
@@ -47,6 +71,10 @@ import vNotice from './common/Notice.vue';
   .el-main {
     background-color: #F4F4F5;
     color: #333;
+  }
+
+  .image {
+    width: 240px;
   }
 
 </style>

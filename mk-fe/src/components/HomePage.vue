@@ -1,11 +1,13 @@
 <template>
   <el-container>
     <el-header>
-      <v-head v-bind:user=true></v-head>
+      <v-head v-bind:homepage=true></v-head>
     </el-header>
     <el-main>
       <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
         <el-tab-pane label="推荐" name="first">
+          <v-comment></v-comment>
+          <v-comment></v-comment>
           <v-notice v-bind:user=true></v-notice>
 
           <v-notice :key="value.id" v-for="(value,index) in exhibition"

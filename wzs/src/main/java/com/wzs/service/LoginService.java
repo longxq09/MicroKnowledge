@@ -5,17 +5,17 @@ import com.wzs.bean.UserInfo;
 
 
 public interface LoginService {
-    boolean hasMatchUserById(long userId, String password);
+    boolean hasMatchUserById(int userId, String password);
 
     boolean hasMatchUserByEmail(String email, String password);
 
-    Account findAccountById(long userId);
+    Account findAccountById(int userId);
 
     Account findAccountByEmail(String email);
 
-    boolean reUserPassword(long readerId, String newPassword);
+    boolean reUserPassword(int readerId, String newPassword);
 
-    String getUserPassword(long userId);
+    String getUserPassword(int userId);
 
     boolean addAccount(UserInfo userInfo, String password);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wzs.mapper.UserInfoMap">
-    <select id="findInfoById" resultType="com.wzs.bean.UserInfo" parameterType="long">
+    <select id="findInfoById" resultType="com.wzs.bean.UserInfo" parameterType="int">
         select * from user_info where id = #{id}
     </select>
     <select id="findInfoByEmail" resultType="com.wzs.bean.UserInfo">

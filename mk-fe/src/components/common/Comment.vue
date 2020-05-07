@@ -102,6 +102,7 @@
                 confirmButtonText: '确定'
               });
               this.reply_text = "";
+              this.if_reply = !this.if_reply;
               this.reply_watch = !this.reply_watch;
             })
 
