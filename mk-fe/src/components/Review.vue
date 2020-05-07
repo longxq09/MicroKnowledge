@@ -6,13 +6,13 @@
     <el-main>
       <div class="noice_title">{{form.type}} | {{form.title}}</div>
       <nobr style="font-weight: 600;margin-left: 10px;">{{form.author}}</nobr>
-      <el-tag key="tag" v-for="tag in keyWordList" class="keyword">{{tag}}</el-tag>
+      <el-tag :key="tag" v-for="tag in keyWordList" class="keyword">{{tag}}</el-tag>
       <div class="main_text">{{form.text}}</div>
       <div class="bottom_text">引用
-        <nobr key="reference" v-for="reference in referenceList" > | {{reference}}</nobr>
+        <nobr :key="reference" v-for="reference in referenceList" > | {{reference}}</nobr>
       </div>
       <div class="bottom_text">分类
-        <nobr key='label' v-for="label in labelList" > | {{label}}</nobr>
+        <nobr :key='label' v-for="label in labelList" > | {{label}}</nobr>
       </div>
       <div style="text-align: center;" v-if="need_review">
         <el-button class="review_button" @click="review(1)"> 通过 </el-button>

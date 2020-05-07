@@ -5,7 +5,7 @@
       <el-button class="bottom_tag" @click="toDetail">详情</el-button>
     </div>
     <nobr style="font-weight: 600;margin-left: 10px;">{{authorName}}</nobr>
-    <el-tag key="tag" v-for="tag in keywordTag" class="keyword">{{tag}}</el-tag>
+    <el-tag :key="tag" v-for="tag in keywordTag" class="keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
     <el-button class="bottom_tag">评论</el-button>
     <el-button class="bottom_tag">收藏</el-button>
