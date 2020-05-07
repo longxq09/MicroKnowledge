@@ -33,6 +33,7 @@
   import vHead from './common/Header.vue';
   import vFooter from './common/Footer.vue';
   import vNotice from './common/Notice.vue';
+  import vComment from './common/Comment.vue';
   export default {
     name: "HomePage",
     data() {
@@ -45,7 +46,8 @@
     components: {
       vHead,
       vFooter,
-      vNotice
+      vNotice,
+      vComment,
     },
     created() {
       console.log("init");

@@ -1,6 +1,9 @@
 <template>
   <div class="notice">
-    <div class="noice_title">{{type_name}} | {{title}}</div>
+    <div class="noice_title">
+      {{type_name}} | {{title}}
+      <el-button class="bottom_tag" @click="toDetail">详情</el-button>
+    </div>
     <nobr style="font-weight: 600;margin-left: 10px;">{{authorName}}</nobr>
     <el-tag key="tag" v-for="tag in keywordTag" class="keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
@@ -59,7 +62,15 @@
         this.$router.push({
           path: '/modify_mevid/',
           query: {
-            id: 1
+            id: this.id
+          }
+        });
+      },
+      toDetail() {
+        this.$router.push({
+          path: '/detail/',
+          query: {
+            id: this.id
           }
         });
       },
