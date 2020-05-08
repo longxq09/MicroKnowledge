@@ -167,3 +167,40 @@ int followingID;   //关注的人
 ```
 
 }
+
+
+
+Message结构
+
+​	userId	用户id表示给谁得消息
+
+​	type	消息类型，目前有关注(1),点赞(2),收藏(3),评论(4),回复(5),评审通过(6),评审未通过(7),全局(8)
+
+​	from相关，表示消息产生方(谁的操作)，包括fromId，fromName，
+
+​	relatedNotice相关，表示关于哪一条微公告包括relatedNoticeId，relatedNoticeType，relatedNoticeTitle
+
+​	detail，通知详情，视情况使用
+
+​	time，消息时间，用于排序
+
+​	flag，表示是否已读
+
+
+
+消息通知功能 /message{
+
+```
+/getMessages 获得某用户的全部消息
+/getCount 获得某用户的未读消息数量和各类消息数量 0代表未读消息数量，其他与Type对应
+/followMessage  用户被关注通知，至少传入from相关信息
+/likeMessage	微公告被点赞触发通知，至少传入from和reletedNotice相关信息
+/favoriteMessage 微公告被收藏触发通知，至少传入from和reletedNotice相关信息
+/commentMessage	微公告被评论触发通知，至少传入from和reletedNotice相关信息
+/replyMessage  评论被回复触发通知，至少传入from和reletedNotice相关信息
+/passMessage	微公告评审通过触发通知，至少reletedNotice相关信息
+/failMessage 微公告评审未通过通知，至少reletedNotice相关信息
+/broadcast	为管理员公告预留
+```
+
+}

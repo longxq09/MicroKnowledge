@@ -42,11 +42,14 @@ public class MessageController {
     @ResponseBody
     @RequestMapping(value = "/getCount", method = RequestMethod.POST)
     public int[] getCount(HttpServletRequest request){
-        int[ ] array = new int[8];
+        int[ ] array = new int[10];
         int userId = Integer.parseInt(request.getParameter("userId"));
         List<Message> messages = messageService.selectMessageByUser(userId);
         for(Message m : messages){
             array[m.getType()]++;
+            if(m.getFlag()==1){
+                array[0]++;
+            }
         }
         return array;
     }
