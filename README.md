@@ -62,6 +62,22 @@ time，评论时间用于排序
 
 
 
+`用户登录`：
+
+- url:	登录	/user/login
+
+  ​		  修改密码	/user/rePassword
+
+- 具体字段
+
+  ```
+  int id;				//id为自增主键，唯一确定用户
+  String email;		//邮箱
+  String password; 	//密码
+  ```
+
+
+
 `用户信息`：
 
 - url:	/user/info
@@ -69,24 +85,24 @@ time，评论时间用于排序
 - 具体字段
 
 ```
-private int id;			//id为自增主键，唯一确定用户
-private String email;	//邮箱
-private String name;	//姓名
-private String picture;     //头像url
-private String sex;			//性别
-private String address;		//地址
-private String signature;   //个性签名
-private String education;   //学历
-private String works;        //工作信息，包括affiliation即工作单位
-private String expertise;    //专业领域
-private String interest;    //偏好领域
-private String introduction;            //简介
-private String contribution;            //贡献
+int id;			//id为自增主键，唯一确定用户
+String email;	//邮箱
+String name;	//姓名
+String picture;     //头像url
+String sex;			//性别
+String address;		//地址
+String signature;   //个性签名
+String education;   //学历
+String works;        //工作信息，包括affiliation即工作单位
+String expertise;    //专业领域
+String interest;    	//偏好领域
+String introduction;       //简介
+String contribution;      //贡献
 ```
 
 
 
-`其他`：
+`交互`：
 
 1. 获取所有topic(TopicController)：/topic/getTopicList
 2. 搜索(searchController)：/search
@@ -109,8 +125,8 @@ private String contribution;            //贡献
 - 具体字段
 
 ```
-int id;		//id为自增主键
-int userID;	 //用户id
+int id;			//id为自增主键
+int userID;	 	//用户id
 int noticeID;	 //收藏的微知识id
 ```
 
@@ -134,11 +150,11 @@ int noticeID;	 //收藏的微知识id
 - 具体字段
 
 ```
-int id;			//id为自增主键
-int followerID;   //粉丝
+int id;				//id为自增主键
+int followerID;   	//粉丝
 int followingID;   //关注的人
 
-//followerID关注了followingID
+//即followerID关注了followingID
 ```
 
 

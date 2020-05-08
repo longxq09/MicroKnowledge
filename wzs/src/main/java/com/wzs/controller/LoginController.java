@@ -51,20 +51,20 @@ public class LoginController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/user/repassword", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/rePassword", method = RequestMethod.POST)
     public @ResponseBody
     Object reUserPassword(HttpServletRequest request) {
-        String oldPasswd = request.getParameter("oldPasswd");
-        String newPasswd = request.getParameter("newPasswd");
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
         int id = Integer.parseInt(request.getParameter("id"));
         String email = request.getParameter("email");
         PasswordHelper helper = new PasswordHelper();
-        oldPasswd = helper.encryptByName(email, oldPasswd);
+        oldPassword = helper.encryptByName(email, oldPassword);
         String password = loginService.getUserPassword(id);
         HashMap<String, String> res = new HashMap<>();
-        if (password.equals(oldPasswd)) {
-            newPasswd = helper.encryptByName(email, newPasswd);
-            if (loginService.reUserPassword(id, newPasswd)) {
+        if (password.equals(oldPassword)) {
+            newPassword = helper.encryptByName(email, newPassword);
+            if (loginService.reUserPassword(id, newPassword)) {
                 res.put("code", "0");
                 res.put("message", "密码修改成功！");
             } else {
@@ -72,7 +72,7 @@ public class LoginController {
                 res.put("message", "密码修改失败！");
             }
         } else {
-            res.put("code", "1");
+            res.put("code", "2");
             res.put("message", "旧密码错误！");
         }
         return res;
