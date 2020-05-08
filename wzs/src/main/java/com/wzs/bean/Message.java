@@ -13,17 +13,20 @@ import java.util.Date;
 public class Message {
     private int id;
     private int userId;
-    private MessageType type;
+    private int type;
 
-    private String fromUserId;
+    private int fromUserId;
     private String fromUserName;
 
     private int relatedNoticeId;
     private int relatedNoticeType;
-    private int relatedNoticeTitle;
+    private String relatedNoticeTitle;
+
+    private String detail;
 
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private Date time = null;
+    private int flag;
 
     public int getId() {
         return id;
@@ -41,19 +44,19 @@ public class Message {
         this.userId = userId;
     }
 
-    public MessageType getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(MessageType type) {
+    public void setType(int type) {
         this.type = type;
     }
 
-    public String getFromUserId() {
+    public int getFromUserId() {
         return fromUserId;
     }
 
-    public void setFromUserId(String fromUserId) {
+    public void setFromUserId(int fromUserId) {
         this.fromUserId = fromUserId;
     }
 
@@ -81,12 +84,20 @@ public class Message {
         this.relatedNoticeType = relatedNoticeType;
     }
 
-    public int getRelatedNoticeTitle() {
+    public String getRelatedNoticeTitle() {
         return relatedNoticeTitle;
     }
 
-    public void setRelatedNoticeTitle(int relatedNoticeTitle) {
+    public void setRelatedNoticeTitle(String relatedNoticeTitle) {
         this.relatedNoticeTitle = relatedNoticeTitle;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public Date getTime() {
@@ -96,4 +107,13 @@ public class Message {
     public void setTime(Date time) {
         this.time = time;
     }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
 }

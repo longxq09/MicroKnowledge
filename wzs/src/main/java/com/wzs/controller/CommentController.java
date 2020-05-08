@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +34,6 @@ public class CommentController {
         int noticeId = Integer.parseInt(request.getParameter("noticeId"));
         List<Comment> commentList = commentService.selectCommentOfANotice(noticeId);
         commentList.sort(Comparator.comparing(Comment::getTime));
-        commentList.get(0).getDisTime();
         return commentList;
     }
 
@@ -76,6 +73,5 @@ public class CommentController {
         commentService.insertComment(comment);
         return 0;
     }
-
 
 }
