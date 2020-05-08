@@ -2,7 +2,9 @@ package com.wzs.controller;
 
 import com.wzs.bean.Account;
 import com.wzs.bean.PasswordHelper;
+import com.wzs.bean.UserInfo;
 import com.wzs.service.LoginService;
+import com.wzs.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
@@ -18,6 +21,8 @@ import java.util.HashMap;
 public class LoginController {
 
     private LoginService loginService;
+    @Resource
+    private UserInfoService userInfoService;
 
 
     @Autowired
@@ -39,7 +44,8 @@ public class LoginController {
         HashMap<String, String> res = new HashMap<>();
         if (isUser) {
             Account account = loginService.findAccountByEmail(email);
-            //request.getSession().setAttribute("account", account);
+            UserInfo userInfo =  userInfoService.getUserInfo(account.getId());
+            request.getSession().setAttribute("userInfo", userInfo);
             res.put("id", "" + account.getId());
             res.put("code", "0");
             res.put("message", "登陆成功！");

@@ -119,8 +119,8 @@ public class UserInfoController {
         }
         HashMap<String, String> res = new HashMap<>();
         if (userInfoService.editUserInfo(userInfo)) {
-            //Account accountNew = loginService.findAccountById(account.getId());
-            //request.getSession().setAttribute("account", accountNew);
+//            Account accountNew = loginService.findAccountById(account.getId());
+            request.getSession().setAttribute("userInfo", userInfo);
             res.put("code", "0");
             res.put("message", "信息修改成功！");
         } else {

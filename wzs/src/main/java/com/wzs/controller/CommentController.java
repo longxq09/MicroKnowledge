@@ -1,6 +1,7 @@
 package com.wzs.controller;
 
 import com.wzs.bean.Comment;
+import com.wzs.bean.UserInfo;
 import com.wzs.service.CommentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +35,7 @@ public class CommentController {
     public List<Comment> getCommentsOfNotice(HttpServletRequest request) {
         int noticeId = Integer.parseInt(request.getParameter("noticeId"));
         List<Comment> commentList = commentService.selectCommentOfANotice(noticeId);
-//        commentList.sort();
+        commentList.sort(Comparator.comparing(Comment::getTime));
         commentList.get(0).getDisTime();
         return commentList;
     }
@@ -42,10 +45,12 @@ public class CommentController {
     @RequestMapping(value = "/addComment", method = RequestMethod.POST)
     public int addComment(HttpServletRequest request) {
         Comment comment = new Comment();
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+
         comment.setNoticeId(Integer.parseInt(request.getParameter("noticeId")));
         comment.setAuthorId(Integer.parseInt(request.getParameter("authorId")));
-        comment.setFromId(0);
-        comment.setFromName("from");
+        comment.setFromId(userInfo.getId());
+        comment.setFromName(userInfo.getName());
         comment.setToId(-1);
         comment.setContent(request.getParameter("content"));
         comment.setTime(new Date());
@@ -58,10 +63,12 @@ public class CommentController {
     @RequestMapping(value = "/replyComment", method = RequestMethod.POST)
     public int replyComment(HttpServletRequest request) {
         Comment comment = new Comment();
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+
         comment.setNoticeId(Integer.parseInt(request.getParameter("noticeId")));
-        comment.setAuthorId(Integer.parseInt(request.getParameter("authorId"))); //TODO
-        comment.setFromId(0);               //TODO
-        comment.setFromName("from");        //TODO
+        comment.setAuthorId(Integer.parseInt(request.getParameter("authorId")));
+        comment.setFromId(userInfo.getId());
+        comment.setFromName(userInfo.getName());
         comment.setToId(Integer.parseInt(request.getParameter("toId")));
         comment.setToName(request.getParameter("toName"));
         comment.setContent(request.getParameter("content"));
