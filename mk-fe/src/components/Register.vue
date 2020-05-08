@@ -40,6 +40,7 @@
             var remindContent = res.data.code == 0 ? '即将跳转个人页面' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
             if (res.data.code==0){
               localStorage.setItem("accountId", res.data.id)
+              localStorage.setItem("email", this.dataForm.email)
               this.$router.push("/homepage");
             }
             this.$alert(remindContent, remindTitle, {

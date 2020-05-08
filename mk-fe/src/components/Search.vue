@@ -133,7 +133,7 @@ import vNotice from './common/Notice.vue';
           for (var i = 0; i < t.length; i++)
             this.filterTopic.push(parseInt(t[i]))
         }
-		    this.axios.get('/search/result', {params: this.dataForm})
+		    this.axios.get('/search', {params: this.dataForm})
 		      .then((res) => {
 		        this.searchResult = res.data.notice
 		        this.resultNum = res.data.notice.length
