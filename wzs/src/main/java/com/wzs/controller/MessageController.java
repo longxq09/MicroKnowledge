@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Description: TODO
@@ -34,7 +32,41 @@ public class MessageController {
     public List<Message> getMessages(HttpServletRequest request){
         int userId = Integer.parseInt(request.getParameter("userId"));
         List<Message> messageList = messageService.selectMessageByUser(userId);
-        messageList.sort(Comparator.comparing(Message::getTime));
+        messageList.sort((m1, m2) -> {
+            if(m1.getFlag()==m1.getFlag()){
+                return m1.getTime().compareTo(m2.getTime());
+            } else {
+                return m1.getFlag() - m2.getFlag();
+            }
+        });
+        messageService.setFlagByUser(userId);   //改为已阅
+        return messageList;
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/selectMessages", method = RequestMethod.POST)
+    public List<Message> selectMessages(HttpServletRequest request){
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        int type =  Integer.parseInt(request.getParameter("type"));
+        int flag =  Integer.parseInt(request.getParameter("flag"));
+        Map<String,Object> queryMap = new HashMap<>();
+        queryMap.put("userId",userId);
+        if(type != -1){
+            queryMap.put("userId",type);
+        }
+        if(flag != -1){
+            queryMap.put("flag",flag);
+        }
+        List<Message> messageList = messageService.selectMessage(queryMap);
+        messageList.sort((m1, m2) -> {
+            if(m1.getFlag()==m1.getFlag()){
+                return m1.getTime().compareTo(m2.getTime());
+            } else {
+                return m1.getFlag() - m2.getFlag();
+            }
+        });
+        messageService.setFlagByUser(userId);   //改为已阅
         return messageList;
     }
 
@@ -214,5 +246,13 @@ public class MessageController {
         return 0;
     }
 
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/haveReadALL", method = RequestMethod.POST)
+    public int haveReadALL(HttpServletRequest request){
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        messageService.setFlagByUser(userId);
+        return 0;
+    }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: TODO
@@ -21,6 +22,11 @@ public class MessageServiceImp implements MessageService {
     @Override
     public boolean addMessage(Message message) {
         return messageMapper.insertMessage(message);
+    }
+
+    @Override
+    public List<Message> selectMessage(Map<String, Object> queryMap) {
+        return messageMapper.selectMessage(queryMap);
     }
 
     @Override

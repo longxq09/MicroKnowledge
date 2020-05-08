@@ -172,7 +172,7 @@ int followingID;   //关注的人
 
 Message结构
 
-​	userId	用户id表示给谁得消息
+​	userId	用户id表示给谁得消息，前端一定要传入
 
 ​	type	消息类型，目前有关注(1),点赞(2),收藏(3),评论(4),回复(5),评审通过(6),评审未通过(7),全局(8)
 
@@ -191,8 +191,10 @@ Message结构
 消息通知功能 /message{
 
 ```
-/getMessages 获得某用户的全部消息
+/getMessages 获得某用户的全部消息，传入用户id
+/selectMessages 传入用户id，消息type和flag，条件查询消息，不查询的话，type和flag设置为-1
 /getCount 获得某用户的未读消息数量和各类消息数量 0代表未读消息数量，其他与Type对应
+/haveReadALL 传入用户id，该用户未读消息全部标记为已读
 /followMessage  用户被关注通知，至少传入from相关信息
 /likeMessage	微公告被点赞触发通知，至少传入from和reletedNotice相关信息
 /favoriteMessage 微公告被收藏触发通知，至少传入from和reletedNotice相关信息
@@ -204,3 +206,4 @@ Message结构
 ```
 
 }
+

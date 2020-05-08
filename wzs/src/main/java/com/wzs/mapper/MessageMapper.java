@@ -4,6 +4,7 @@ import com.wzs.bean.Message;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: TODO
@@ -14,6 +15,7 @@ import java.util.List;
 public interface MessageMapper {
     boolean insertMessage(Message message);
     List<Message> selectMessageByUser(int userId);
+    List<Message> selectMessage(Map<String,Object> queryMap);
     boolean setFlagById(int id);
     boolean setFlagByUser(int userId);
 }
