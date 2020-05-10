@@ -33,4 +33,11 @@ public class FollowControllerTest {
             System.out.println(userInfo.getEmail());
         }
     }
+    @Test
+    public void getUserInfoTest(){
+        UserInfo userInfo = userInfoService.getUserInfo(10);
+        System.out.println(userInfo.getName());
+        userInfo.setAddress("aaa");
+        userInfoService.editUserInfo(userInfo);
+    }
 }

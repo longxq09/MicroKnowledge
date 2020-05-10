@@ -12,10 +12,8 @@ public interface AccountMap {
 
     int getEmailMatchCount(final String email, final String password);
 
+    int getAdminMatch(final String email, final String password);
 
-    int getAdminMatch(final String email);
-
-    int getIdMatch(final int id);
 
     Account findAccountById(final int id);
 

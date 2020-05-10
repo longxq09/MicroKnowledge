@@ -1,9 +1,7 @@
 package com.wzs.controller;
 
 
-import com.wzs.bean.PasswordHelper;
 import com.wzs.bean.UserInfo;
-import com.wzs.service.LoginService;
 import com.wzs.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -104,6 +102,7 @@ public class UserInfoController {
     Object userInfoGet(HttpServletRequest request) {
         HashMap<String, String> res = new HashMap<>();
         int id = Integer.parseInt(request.getParameter("id"));
+        System.out.println(id);
         UserInfo info = userInfoService.getUserInfo(id);
         res.put("sex", info.getSex());
         res.put("name", info.getName());
@@ -123,43 +122,20 @@ public class UserInfoController {
     @RequestMapping(value = "/user/info", method = RequestMethod.POST)
     public @ResponseBody
     Object userInfoEdit(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name, sex, address, signature, education, works, introduction, contribution;
-        String expertise, interest, picture;
-        UserInfo userInfo = userInfoService.getUserInfo(id);
-        if ((name = request.getParameter("name")) != null) {
-            userInfo.setName(name);
-        }
-        if ((sex = request.getParameter("sex")) != null) {
-            userInfo.setSex(sex);
-        }
-        if ((address = request.getParameter("address")) != null) {
-            userInfo.setAddress(address);
-        }
-        if ((signature = request.getParameter("signature")) != null) {
-            userInfo.setSignature(signature);
-        }
-        if ((education = request.getParameter("education")) != null) {
-            userInfo.setEducation(education);
-        }
-        if ((works = request.getParameter("works")) != null) {
-            userInfo.setWorks(works);
-        }
-        if ((introduction = request.getParameter("introduction")) != null) {
-            userInfo.setIntroduction(introduction);
-        }
-        if ((contribution = request.getParameter("contribution")) != null) {
-            userInfo.setContribution(contribution);
-        }
-        if ((expertise = request.getParameter("expertise")) != null) {
-            userInfo.setExpertise(expertise);
-        }
-        if ((interest = request.getParameter("interest")) != null) {
-            userInfo.setInterest(interest);
-        }
-        if ((picture = request.getParameter("picture")) != null) {
-            userInfo.setPicture(picture);
-        }
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(Integer.parseInt(request.getParameter("id")));
+        userInfo.setName(request.getParameter("name"));
+        userInfo.setSex(request.getParameter("sex"));
+        userInfo.setAddress(request.getParameter("address"));
+        userInfo.setSignature(request.getParameter("signature"));
+        userInfo.setEducation(request.getParameter("education"));
+        userInfo.setWorks(request.getParameter("works"));
+        userInfo.setIntroduction(request.getParameter("introduction"));
+        userInfo.setContribution(request.getParameter("contribution"));
+        userInfo.setExpertise(request.getParameter("expertise"));
+        userInfo.setInterest(request.getParameter("interest"));
+        userInfo.setPicture(request.getParameter("picture"));
+
         HashMap<String, String> res = new HashMap<>();
         if (userInfoService.editUserInfo(userInfo)) {
 //            Account accountNew = loginService.findAccountById(account.getId());

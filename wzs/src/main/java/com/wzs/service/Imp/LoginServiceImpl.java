@@ -1,7 +1,6 @@
 package com.wzs.service.Imp;
 
 import com.wzs.bean.Account;
-import com.wzs.bean.UserInfo;
 import com.wzs.mapper.AccountMap;
 import com.wzs.service.LoginService;
 import com.wzs.service.MailService;
@@ -57,7 +56,7 @@ public class LoginServiceImpl implements LoginService {
             //主题
             String subject = "MicroKnowledge微知识平台注册用户验证信息";
             //上面的激活码发送到用户注册邮箱
-            //本地运行可以使用 http://localhost:8088/
+            //本地运行可以使用 http://localhost:18088/
             String context = "亲爱的用户,您好！<br><br>" +
                     "欢迎注册微知识账号，请访问该链接，完成用户验证：<br> " +
                     "<a href=\"http://114.115.151.39:18088/user/checkCode?code="+code+"\">账号注册链接"+"</a>"

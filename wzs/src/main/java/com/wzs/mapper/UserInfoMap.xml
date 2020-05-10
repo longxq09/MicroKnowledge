@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wzs.mapper.UserInfoMap">
+    <sql id="BASE_TABLE">
+        user_info
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        id,email,`name`,picture,sex,address,signature,education,works,expertise,interest,introduction,contribution
+    </sql>
+
     <select id="findInfoById" resultType="com.wzs.bean.UserInfo" parameterType="int">
         select * from user_info where id = #{id}
     </select>
@@ -13,18 +21,50 @@
         email = #{email}
     </select>
 
-    <update id="editUserInfo" parameterType="com.wzs.bean.UserInfo">
-        update user_info set name = #{name} , sex = #{sex},
-       address = #{address}, signature= #{signature}, education= #{education}, works = #{works},
-       expertise= #{expertise},interest= #{interest},introduction= #{introduction},
-       contribution = #{contribution},picture=#{picture}
-        where id = #{id}
+    <update id="editUserInfo" parameterType="com.wzs.bean.UserInfo" >
+        update <include refid="BASE_TABLE"/>
+        <set>
+            <if test="name !=null">
+                `name`=#{name,jdbcType=VARCHAR},
+            </if>
+            <if test="picture !=null">
+                picture=#{picture,jdbcType=VARCHAR},
+            </if>
+            <if test="sex !=null">
+                sex=#{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="address !=null">
+                address=#{address,jdbcType=VARCHAR},
+            </if>
+            <if test="signature !=null">
+                signature=#{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="education !=null">
+                education=#{education,jdbcType=VARCHAR},
+            </if>
+            <if test="works !=null">
+                works=#{works,jdbcType=VARCHAR},
+            </if>
+            <if test="expertise !=null">
+                expertise=#{expertise,jdbcType=VARCHAR},
+            </if>
+            <if test="interest !=null">
+                interest=#{interest,jdbcType=VARCHAR},
+            </if>
+            <if test="introduction !=null">
+                introduction=#{introduction},
+            </if>
+            <if test="contribution !=null">
+                contribution=#{contribution},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
     </update>
 
     <insert id="addUserInfo" parameterType="com.wzs.bean.UserInfo">
         insert into user_info values
-        (null,#{email},#{name},#{sex},#{address},#{signature},#{education},#{works},
-        #{expertise},#{interest},#{introduction},#{contribution},#{picture})
+        (null,#{email},#{name},#{picture},#{sex},#{address},#{signature},#{education},#{works},
+        #{expertise},#{interest},#{introduction},#{contribution})
     </insert>
 
     <select id="getAllInfos" resultType="com.wzs.bean.UserInfo">
