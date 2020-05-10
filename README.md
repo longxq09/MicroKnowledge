@@ -62,6 +62,22 @@ time，评论时间用于排序
 
 
 
+`用户登录`：
+
+- url:	登录	/user/login
+
+  ​		  修改密码	/user/rePassword
+
+- 具体字段
+
+  ```
+  int id;				//id为自增主键，唯一确定用户
+  String email;		//邮箱
+  String password; 	//密码
+  ```
+
+
+
 `用户信息`：
 
 - url:	/user/info
@@ -69,24 +85,24 @@ time，评论时间用于排序
 - 具体字段
 
 ```
-private int id;			//id为自增主键，唯一确定用户
-private String email;	//邮箱
-private String name;	//姓名
-private String picture;     //头像url
-private String sex;			//性别
-private String address;		//地址
-private String signature;   //个性签名
-private String education;   //学历
-private String works;        //工作信息，包括affiliation即工作单位
-private String expertise;    //专业领域
-private String interest;    //偏好领域
-private String introduction;            //简介
-private String contribution;            //贡献
+int id;			//id为自增主键，唯一确定用户
+String email;	//邮箱
+String name;	//姓名
+String picture;     //头像url
+String sex;			//性别
+String address;		//地址
+String signature;   //个性签名
+String education;   //学历
+String works;        //工作信息，包括affiliation即工作单位
+String expertise;    //专业领域
+String interest;    	//偏好领域
+String introduction;       //简介
+String contribution;      //贡献
 ```
 
 
 
-`其他`：
+`交互`：
 
 1. 获取所有topic(TopicController)：/topic/getTopicList
 2. 搜索(searchController)：/search
@@ -109,8 +125,8 @@ private String contribution;            //贡献
 - 具体字段
 
 ```
-int id;		//id为自增主键
-int userID;	 //用户id
+int id;			//id为自增主键
+int userID;	 	//用户id
 int noticeID;	 //收藏的微知识id
 ```
 
@@ -134,11 +150,11 @@ int noticeID;	 //收藏的微知识id
 - 具体字段
 
 ```
-int id;			//id为自增主键
-int followerID;   //粉丝
+int id;				//id为自增主键
+int followerID;   	//粉丝
 int followingID;   //关注的人
 
-//followerID关注了followingID
+//即followerID关注了followingID
 ```
 
 
@@ -148,6 +164,43 @@ int followingID;   //关注的人
 ```
 /getCommentsOfNotice 获得某条微公告的全部评论
 /replyComment 添加评论或回复评论
+```
+
+}
+
+
+
+Message结构
+
+​	userId	用户id表示给谁得消息
+
+​	type	消息类型，目前有关注(1),点赞(2),收藏(3),评论(4),回复(5),评审通过(6),评审未通过(7),全局(8)
+
+​	from相关，表示消息产生方(谁的操作)，包括fromId，fromName，
+
+​	relatedNotice相关，表示关于哪一条微公告包括relatedNoticeId，relatedNoticeType，relatedNoticeTitle
+
+​	detail，通知详情，视情况使用
+
+​	time，消息时间，用于排序
+
+​	flag，表示是否已读
+
+
+
+消息通知功能 /message{
+
+```
+/getMessages 获得某用户的全部消息
+/getCount 获得某用户的未读消息数量和各类消息数量 0代表未读消息数量，其他与Type对应
+/followMessage  用户被关注通知，至少传入from相关信息
+/likeMessage	微公告被点赞触发通知，至少传入from和reletedNotice相关信息
+/favoriteMessage 微公告被收藏触发通知，至少传入from和reletedNotice相关信息
+/commentMessage	微公告被评论触发通知，至少传入from和reletedNotice相关信息
+/replyMessage  评论被回复触发通知，至少传入from和reletedNotice相关信息
+/passMessage	微公告评审通过触发通知，至少reletedNotice相关信息
+/failMessage 微公告评审未通过通知，至少reletedNotice相关信息
+/broadcast	为管理员公告预留
 ```
 
 }

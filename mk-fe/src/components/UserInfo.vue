@@ -114,8 +114,9 @@
           .catch((error) => {
             console.log(error)
           })
-		    this.axios.get('/user/info')
-          .then((res) => {
+		    this.axios.get('/user/info', {
+		      params: { id: localStorage.getItem("accountId")}
+		    }).then((res) => {
             this.form = res.data
             var tags = res.data.interest.split('-')
             for(var i = 0; i < tags.length; i++)

@@ -11,7 +11,7 @@ public interface UserInfoService {
 
     boolean editUserInfo(UserInfo userInfo);
 
-    long addUserInfo(UserInfo userInfo);
+    int addUserInfo(UserInfo userInfo);
 
     ArrayList<UserInfo> getAllInfos();
 }

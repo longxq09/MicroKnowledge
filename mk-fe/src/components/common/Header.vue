@@ -22,8 +22,14 @@
     <el-badge class="button" v-if="homepage">
       <el-button @click="toNewMGuess">发布新猜想</el-button>
     </el-badge>
-    <el-badge class="button" v-if="userinfo|user">
+    <el-badge class="button" v-if="user">
       <el-button @click="toHomePage">回到首页</el-button>
+    </el-badge>
+    <el-badge class="button" v-if="user">
+      <el-button @click="toUserInfo">修改个人信息</el-button>
+    </el-badge>
+    <el-badge class="button" v-if="userinfo">
+      <el-button @click="toUser">回到个人主页</el-button>
     </el-badge>
     <div class="photo" v-if="user">
       <el-avatar> user </el-avatar>
@@ -63,6 +69,9 @@
       },
       toUser() {
         this.$router.push('/user');
+      },
+      toUserInfo() {
+        this.$router.push('/userinfo');
       },
       toNewMEvid() {
         this.$router.push('/new_mevid');
