@@ -1,8 +1,13 @@
 package com.wzs.controller;
 
 import com.wzs.bean.Comment;
+import com.wzs.bean.Message;
+import com.wzs.bean.MicroNotice;
 import com.wzs.bean.UserInfo;
+import com.wzs.bean.selfEnum.MessageType;
 import com.wzs.service.CommentService;
+import com.wzs.service.MNoticeService;
+import com.wzs.service.MessageService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.security.MessageDigestSpi;
+import java.util.*;
 
 /**
  * @Description: TODO
@@ -26,6 +30,10 @@ public class CommentController {
 
     @Resource
     private CommentService commentService;
+    @Resource
+    private MNoticeService noticeService;
+    @Resource
+    private MessageService messageService;
 
     @CrossOrigin
     @ResponseBody
@@ -52,6 +60,7 @@ public class CommentController {
         comment.setContent(request.getParameter("content"));
         comment.setTime(new Date());
         commentService.insertComment(comment);
+
         return 0;
     }
 
@@ -71,6 +80,27 @@ public class CommentController {
         comment.setContent(request.getParameter("content"));
         comment.setTime(new Date());
         commentService.insertComment(comment);
+
+        Message message = new Message();
+        message.setUserId(Integer.parseInt(request.getParameter("authorId")));
+        if(Integer.parseInt(request.getParameter("toId"))==-1){ //评论
+            message.setType(MessageType.COMMENT.getIndex());
+        } else{ //回复评论
+            message.setType(MessageType.REPLY.getIndex());
+        }
+        message.setFromUserId(userInfo.getId());
+        message.setFromUserName(userInfo.getName());
+        message.setRelatedNoticeId(Integer.parseInt(request.getParameter("noticeId")));
+        Map<String,Object> querMap = new HashMap<>();
+        querMap.put("id",message.getRelatedNoticeId());
+        MicroNotice notice =  noticeService.queryMNotice(querMap).get(0);
+        message.setRelatedNoticeTitle(notice.getTitle());
+        message.setRelatedNoticeType(notice.getType());
+        message.setDetail(request.getParameter("content"));
+        message.setTime(new Date());
+
+        messageService.addMessage(message);
+
         return 0;
     }
 

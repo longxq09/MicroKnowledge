@@ -30,7 +30,19 @@ public class MNoticeController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getNotices", method = RequestMethod.GET)
-    public List<MicroNotice> queryMNotice(Map<String, Object> queryMap) {
+    public List<MicroNotice> getNotices() {
+        Map<String, Object> queryMap = new HashMap<>();
+        List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
+        noticeList.sort(Comparator.comparing(MicroNotice::getTime));
+        return noticeList;
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/getSelfNotices", method = RequestMethod.GET)
+    public List<MicroNotice> getSelfNotices(HttpServletRequest request) {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put("authorId",request.getParameter("id"));
         List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
         noticeList.sort(Comparator.comparing(MicroNotice::getTime));
         return noticeList;
