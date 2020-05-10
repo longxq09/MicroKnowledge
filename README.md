@@ -41,8 +41,9 @@ SE work
 - 修改微证据 url：/mEvidence/modifyMEvid
 - 修改猜想据 url：/mGuess//modifyMGuess
 - (新增微猜想时)获取微证据列表：//mGuess/getMEvid
-- 获得所有微公告(用于混合显示)：/mNotice/getNotices
+- 获得所有微公告(用于混合显示)：/mNotice/getNotice
 - 删除某条微公告：/mNotice/deleteNotice
+- 获得某一用户发布的所有微公告：/mNotice/getSelfNotices
 
 
 
@@ -176,7 +177,7 @@ Message结构
 
 ​	type	消息类型，目前有关注(1),点赞(2),收藏(3),评论(4),回复(5),评审通过(6),评审未通过(7),全局(8)
 
-​	from相关，表示消息产生方(谁的操作)，包括fromId，fromName，
+​	from相关，表示消息产生方(谁的操作)，包括fromUserId，fromUserName，
 
 ​	relatedNotice相关，表示关于哪一条微公告包括relatedNoticeId，relatedNoticeType，relatedNoticeTitle
 
@@ -187,6 +188,8 @@ Message结构
 ​	flag，表示是否已读
 
 
+
+消息可由后端直接触发，在相应*Controller中，实例MessageService，通过addaddMessage添加相应的Message。注意不要忘机传入userId，Time等字段。
 
 消息通知功能 /message{
 
