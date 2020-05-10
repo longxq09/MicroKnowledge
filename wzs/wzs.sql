@@ -25,15 +25,17 @@ CREATE TABLE `account`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `email` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `password` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `activeCode` varchar(100) DEFAULT NULL,
+  `activeStatus` int(0) DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of account
 -- ----------------------------
-INSERT INTO `account` VALUES (1, 'wzs01@163.com', '0a7cd2f29c2c46302b0002ac6ecf6d03');
-INSERT INTO `account` VALUES (2, 'wzs02@163.com', 'c9a6d3a645392a8f0d6a7514aa59d712');
-INSERT INTO `account` VALUES (3, 'wzs03@163.com', '74b5d158e3a6263c26cddc5946d04e1e');
+INSERT INTO `account` VALUES (1, 'wzs01@163.com', '0a7cd2f29c2c46302b0002ac6ecf6d03','hhh',1);
+INSERT INTO `account` VALUES (2, 'wzs02@163.com', 'c9a6d3a645392a8f0d6a7514aa59d712','hhh',1);
+INSERT INTO `account` VALUES (3, 'wzs03@163.com', '74b5d158e3a6263c26cddc5946d04e1e','hhh',1);
 
 -- ----------------------------
 -- Table structure for admin

@@ -125,6 +125,18 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.47</version>
         </dependency>
+
+        <!--邮箱认证-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+
     </dependencies>
 
     <build>
