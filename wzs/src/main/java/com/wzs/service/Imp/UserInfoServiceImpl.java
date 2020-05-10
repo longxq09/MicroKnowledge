@@ -24,7 +24,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public long addUserInfo(UserInfo userInfo) {
+    public int addUserInfo(UserInfo userInfo) {
         if (userInfoMap.getEmailCount(userInfo.getEmail()) != 0) {
             return -1;
         }

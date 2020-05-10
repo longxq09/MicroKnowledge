@@ -1,7 +1,6 @@
 package com.wzs.service;
 
 import com.wzs.bean.Account;
-import com.wzs.bean.UserInfo;
 
 
 public interface LoginService {
@@ -13,9 +12,13 @@ public interface LoginService {
 
     Account findAccountByEmail(String email);
 
-    boolean reUserPassword(int readerId, String newPassword);
+    boolean reUserPassword(int id, String newPassword);
 
     String getUserPassword(int userId);
 
-    boolean addAccount(UserInfo userInfo, String password);
+    boolean addAccount(Account account);
+
+    Account findAccountByActiveCode(String activeCode);
+
+    boolean updateAccount(Account account);
 }

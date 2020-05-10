@@ -12,19 +12,21 @@ public interface AccountMap {
 
     int getEmailMatchCount(final String email, final String password);
 
+    int getAdminMatch(final String email, final String password);
 
-    int getAdminMatch(final String email);
-
-    int getIdMatch(final int id);
 
     Account findAccountById(final int id);
 
     Account findAccountByEmail(final String email);
 
-    int addAccount(final String email, final String password);
+    int addAccount(Account account);
 
     int resetPassword(final int id, final String newPassword);
 
     String getPassword(final int id);
+
+    Account findAccountByActiveCode(String activeCode);
+
+    boolean updateAccount(Account account);
 
 }

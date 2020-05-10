@@ -14,19 +14,15 @@
         email = #{email} and password = #{password}
     </select>
 
-    <select id="getIdMatch" resultType="int">
-        select count(*) from account where
-        id = #{id}
-    </select>
     <select id="findAccountById" resultType="com.wzs.bean.Account" parameterType="int">
         select * from account where id = #{id}
     </select>
     <select id="findAccountByEmail" resultType="com.wzs.bean.Account">
         select * from account where email = #{email}
     </select>
-    <insert id="addAccount">
+    <insert id="addAccount"  parameterType="com.wzs.bean.Account">
         insert into account values
-        (null, #{email}, #{password})
+        (null, #{email}, #{password}, #{activeCode}, #{activeStatus})
     </insert>
     <update id="resetPassword">
         update account set password = #{password}
@@ -36,5 +32,15 @@
         select password from account where id = #{id}
     </select>
 
+    <select id="findAccountByActiveCode" resultType="com.wzs.bean.Account">
+        select * from account where activeCode = #{activeCode}
+    </select>
+
+    <!--激活账户，修改用户状态-->
+    <update id="updateAccount" parameterType="com.wzs.bean.Account">
+        update account set email=#{email},password=#{password},
+        activeCode=#{activeCode},activeStatus=#{activeStatus}
+        where id=#{id}
+     </update>
 
 </mapper>
