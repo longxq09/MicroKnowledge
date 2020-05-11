@@ -73,6 +73,7 @@ INSERT INTO `admin` VALUES (1, '123456', 'admin@163.com');
 -- ----------------------------
 -- Records of micro_evidence
 -- ----------------------------
+
 -- INSERT INTO `micro_evidence` VALUES (3, 1, '1-2-13', '123-312-4', '1-2-3', 'title111111111', '2020-04-28 18:55:30', 0, 'title332');
 -- INSERT INTO `micro_evidence` VALUES (4, 0, '', '1232-213', 'undefined', '213123124141412', '2020-04-26 16:25:45', 0, '12312414');
 -- INSERT INTO `micro_evidence` VALUES (5, 0, '1-4', '124', '213213-123', '213123', '2020-04-26 17:25:04', 0, '21321');
@@ -128,6 +129,7 @@ CREATE TABLE `micro_notice`  (
 -- ----------------------------
 INSERT INTO `micro_notice` VALUES (1, 1, 1, 'wzs', '-1-2-3-', '1-2-3', 'abc', 'title', 'summary', '2020-04-30 13:35:02', 0);
 INSERT INTO `micro_notice` VALUES (2, 2, 1, 'wzs','-1-13-4-', '4-9-6', 'keyword', 'test12', 'summary', '2020-04-30 14:08:49', 0);
+
 -- ----------------------------
 -- Table structure for topic
 -- ----------------------------
@@ -347,4 +349,49 @@ INSERT INTO `comment` VALUES (25, 1, 1, 0, 'from', -1, '', 'test count', '2020-0
 INSERT INTO `comment` VALUES (26, 1, 1, 0, 'from', -1, '', 'count change', '2020-05-06 22:38:54');
 INSERT INTO `comment` VALUES (27, 1, 1, 0, 'from', 0, 'from', 'reply count change', '2020-05-06 22:39:07');
 
+-- ----------------------------
+-- Table structure for Review
+-- ----------------------------
+-- ----------------------------
+-- type 0: evidence, 1: guess
+-- ----------------------------
+DROP TABLE IF EXISTS `review`;
+CREATE TABLE `review` (
+	`id` int(0) NOT NULL,
+    `authorId` int(0) NULL DEFAULT NULL,
+    `type` int (0) NULL default null,
+    `passNum` int(0) NULL default null,
+    `againstNum` int(0) NULL default null,
+    `topic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+    `citation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+    `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+    `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+    `time` datetime(0) NULL DEFAULT NULL,
+    `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL
+)ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+INSERT INTO `review` VALUES (3, 1, 0, 0, 0, '计算机科学与技术', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 'title');
+INSERT INTO `review` VALUES (3, 1, 1, 0, 0, '计算机科学与技术', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 'title');
+INSERT INTO `review` VALUES (3, 1, 1, 0, 0, '计算机科学与技术', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 'title');
+
+DROP TABLE IF EXISTS `like`;
+CREATE TABLE `like`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `noticeId` int(0) NULL DEFAULT NULL,
+  `authorId` int(0) NULL DEFAULT NULL,
+  `fromId` int(0) NULL DEFAULT NULL,
+  `fromName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `toId` int(0) NULL DEFAULT NULL,
+  `toName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `time` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of comment
+-- ----------------------------
+
+
 SET FOREIGN_KEY_CHECKS = 1;
+
