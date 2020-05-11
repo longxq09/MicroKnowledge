@@ -37,19 +37,11 @@
           </v-notice>
         </el-tab-pane>
         <el-tab-pane label="我的消息" name="forth">
-          <v-message v-bind:type=1></v-message>
-          <v-message v-bind:type=2></v-message>
-          <v-message v-bind:type=3></v-message>
-          <v-message v-bind:type=4></v-message>
-          <v-message v-bind:type=5></v-message>
-          <v-message v-bind:type=6></v-message>
-          <v-message v-bind:type=7></v-message>
-
           <v-message :key="value.id" v-for="(value,index) in message_list"
           v-bind:type="value.type"
           v-bind:fromName="value.fromUserName"
-          v-bind:relaltedNoticeId="value.relatedNoticeId"
-          v-bind:relaltedNoticeTitle="value.relatedNoticeTitle"
+          v-bind:relatedNoticeId="value.relatedNoticeId"
+          v-bind:relatedNoticeTitle="value.relatedNoticeTitle"
           v-bind:detail="value.detail"
           v-bind:time="value.disTime"
           v-bind:flag="value.flag"

@@ -14,8 +14,8 @@
       </div>
       <div v-if="if_has_notice" style="margin-bottom: 5px;">
           {{message_text1}}
-          【<router-link :to="{path: '/detail/',query: {id: relaltedNoticeId}}">
-          {{relaltedNoticeTitle}}
+          【<router-link :to="{path: '/detail/',query: {id: relatedNoticeId}}">
+          {{relatedNoticeTitle}}
           </router-link> 】{{message_text2}}
       </div>
       <div v-else style="margin-bottom: 5px;">
@@ -41,11 +41,11 @@
         type: String,
         default: '不懂学术怪'
       },
-      relaltedNoticeId: {
+      relatedNoticeId: {
         type: Number,
         default: 1
       },
-      relaltedNoticeTitle: {
+      relatedNoticeTitle: {
         type: String,
         default: '震惊！不懂学术怪居然不懂学术！'
       },
