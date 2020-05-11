@@ -134,7 +134,7 @@ INSERT INTO `micro_notice` VALUES (2, 2, 1, 'wzs','-1-13-4-', '4-9-6', 'keyword'
 DROP TABLE IF EXISTS `topic`;
 CREATE TABLE `topic`  (
   `id` int(0) NOT NULL,
-  `topicName` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `topicName` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `flag` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
