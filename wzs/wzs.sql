@@ -134,7 +134,7 @@ INSERT INTO `micro_notice` VALUES (2, 2, 1, 'wzs','-1-13-4-', '4-9-6', 'keyword'
 DROP TABLE IF EXISTS `topic`;
 CREATE TABLE `topic`  (
   `id` int(0) NOT NULL,
-  `topicName` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `topicName` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `flag` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
@@ -142,29 +142,97 @@ CREATE TABLE `topic`  (
 -- ----------------------------
 -- Records of topic
 -- ----------------------------
-INSERT INTO `topic` VALUES (1, '马克思主义', 1);
-INSERT INTO `topic` VALUES (2, '哲学', 1);
-INSERT INTO `topic` VALUES (3, '社会科学总论', 1);
-INSERT INTO `topic` VALUES (4, '政治法律', 1);
-INSERT INTO `topic` VALUES (5, '军事', 1);
-INSERT INTO `topic` VALUES (6, '经济', 1);
-INSERT INTO `topic` VALUES (7, '文化', 1);
-INSERT INTO `topic` VALUES (8, '语言', 1);
-INSERT INTO `topic` VALUES (9, '文学', 1);
-INSERT INTO `topic` VALUES (10, '艺术', 1);
-INSERT INTO `topic` VALUES (11, '历史地理', 1);
-INSERT INTO `topic` VALUES (12, '自然科学总论', 1);
-INSERT INTO `topic` VALUES (13, '数理科学和化学', 1);
-INSERT INTO `topic` VALUES (14, '天文学、地球科学', 1);
-INSERT INTO `topic` VALUES (15, '生物科学', 1);
-INSERT INTO `topic` VALUES (16, '医药、卫生', 1);
-INSERT INTO `topic` VALUES (17, '农业科学', 1);
-INSERT INTO `topic` VALUES (18, '工业技术', 1);
-INSERT INTO `topic` VALUES (19, '交通运输', 1);
-INSERT INTO `topic` VALUES (20, '航空、航天', 1);
-INSERT INTO `topic` VALUES (21, '环境科学', 1);
-INSERT INTO `topic` VALUES (22, '综合', 1);
-INSERT INTO `topic` VALUES (23, '计算机', 1);
+INSERT INTO `topic` VALUES (1, 'LIFE SCIENCES', 1);
+INSERT INTO `topic` VALUES (2, 'Biochemistry, Biophysics & Structural Biology', 1);
+INSERT INTO `topic` VALUES (3, 'Cell & Developmental Biology', 1);
+INSERT INTO `topic` VALUES (4, 'Ecology & Evolutionary Biology', 1);
+INSERT INTO `topic` VALUES (5, 'Public Health', 1);
+INSERT INTO `topic` VALUES (6, 'Genetics & Genomics', 1);
+INSERT INTO `topic` VALUES (7, 'Immunology & Infectious Disease', 1);
+INSERT INTO `topic` VALUES (8, 'Biology, Integrated Biology & Integrated Biomedical', 1);
+INSERT INTO `topic` VALUES (9, 'Sciences', 1);
+INSERT INTO `topic` VALUES (10, 'Kinesiology', 1);
+INSERT INTO `topic` VALUES (11, 'Microbiology', 1);
+INSERT INTO `topic` VALUES (12, 'Neuroscience & Neurobiology', 1);
+INSERT INTO `topic` VALUES (13, 'Nursing', 1);
+INSERT INTO `topic` VALUES (14, 'Pharmacology, Toxicology & Environmental Health', 1);
+INSERT INTO `topic` VALUES (15, 'Physiology', 1);
+INSERT INTO `topic` VALUES (16, 'Animal Sciences', 1);
+INSERT INTO `topic` VALUES (17, 'Entomology', 1);
+INSERT INTO `topic` VALUES (18, 'Food Science', 1);
+INSERT INTO `topic` VALUES (19, 'Forestry & Forest Sciences', 1);
+INSERT INTO `topic` VALUES (20, 'Nutrition', 1);
+INSERT INTO `topic` VALUES (21, 'Plant Sciences', 1);
+INSERT INTO `topic` VALUES (22, 'PHYSICAL SCIENCES & MATHEMATICS', 1);
+INSERT INTO `topic` VALUES (23, 'Physics', 1);
+INSERT INTO `topic` VALUES (24, 'Statistics & Probability', 1);
+INSERT INTO `topic` VALUES (25, 'ENGINEERING', 1);
+INSERT INTO `topic` VALUES (26, 'Aerospace Engineering', 1);
+INSERT INTO `topic` VALUES (27, 'Biomedical Engineering & Bioengineering', 1);
+INSERT INTO `topic` VALUES (28, 'Chemical Engineering', 1);
+INSERT INTO `topic` VALUES (29, 'Civil & Environmental Engineering', 1);
+INSERT INTO `topic` VALUES (30, 'Computer Engineering', 1);
+INSERT INTO `topic` VALUES (31, 'Applied Mathematics', 1);
+INSERT INTO `topic` VALUES (32, 'Astrophysics & Astronomy', 1);
+INSERT INTO `topic` VALUES (33, 'Chemistry', 1);
+INSERT INTO `topic` VALUES (34, 'Computer Sciences', 1);
+INSERT INTO `topic` VALUES (35, 'Earth Sciences', 1);
+INSERT INTO `topic` VALUES (36, 'Mathematics', 1);
+INSERT INTO `topic` VALUES (37, 'Oceanography & Atmospheric Sciences & Meteorology', 1);
+INSERT INTO `topic` VALUES (38, 'Electrical & Computer Engineering', 1);
+INSERT INTO `topic` VALUES (39, 'Engineering Science & Materials', 1);
+INSERT INTO `topic` VALUES (40, 'Mechanical Engineering', 1);
+INSERT INTO `topic` VALUES (41, 'Operations Research, Systems Engineering & Industrial Engineering', 1);
+INSERT INTO `topic` VALUES (42, 'SOCIAL & BEHAVIORAL SCIENCES', 1);
+INSERT INTO `topic` VALUES (43, 'Agricultural & Resource Economics', 1);
+INSERT INTO `topic` VALUES (44, 'Anthropology', 1);
+INSERT INTO `topic` VALUES (45, 'Communication', 1);
+INSERT INTO `topic` VALUES (46, 'Economics', 1);
+INSERT INTO `topic` VALUES (47, 'Geography', 1);
+INSERT INTO `topic` VALUES (48, 'Linguistics', 1);
+INSERT INTO `topic` VALUES (49, 'Political Science', 1);
+INSERT INTO `topic` VALUES (50, 'Public Affairs, Public Policy & Public Administration', 1);
+INSERT INTO `topic` VALUES (51, 'Psychology', 1);
+INSERT INTO `topic` VALUES (52, 'Sociolgy', 1);
+INSERT INTO `topic` VALUES (53, 'ARTS & HUMANITIES', 1);
+INSERT INTO `topic` VALUES (54, 'American Studies', 1);
+INSERT INTO `topic` VALUES (55, 'Classics', 1);
+INSERT INTO `topic` VALUES (56, 'Comparative Literature', 1);
+INSERT INTO `topic` VALUES (57, 'English Language & Literature', 1);
+INSERT INTO `topic` VALUES (58, 'French and Francophone Language and Literature', 1);
+INSERT INTO `topic` VALUES (59, 'German Language and Literature', 1);
+INSERT INTO `topic` VALUES (60, 'Languages, Societies & Cultures', 1);
+INSERT INTO `topic` VALUES (61, 'History', 1);
+INSERT INTO `topic` VALUES (62, 'History of Art, Architecture & Archaeology', 1);
+INSERT INTO `topic` VALUES (63, 'Music', 1);
+INSERT INTO `topic` VALUES (64, 'Philosophy', 1);
+INSERT INTO `topic` VALUES (65, 'Religion', 1);
+INSERT INTO `topic` VALUES (66, 'Spanish and Portuguese Language and Literature', 1);
+INSERT INTO `topic` VALUES (67, 'Theatre & Performance Studies', 1);
+INSERT INTO `topic` VALUES (68, 'Other', 1);
+-- INSERT INTO `topic` VALUES (1, '马克思主义', 1);
+-- INSERT INTO `topic` VALUES (2, '哲学', 1);
+-- INSERT INTO `topic` VALUES (3, '社会科学总论', 1);
+-- INSERT INTO `topic` VALUES (4, '政治法律', 1);
+-- INSERT INTO `topic` VALUES (5, '军事', 1);
+-- INSERT INTO `topic` VALUES (6, '经济', 1);
+-- INSERT INTO `topic` VALUES (7, '文化', 1);
+-- INSERT INTO `topic` VALUES (8, '语言', 1);
+-- INSERT INTO `topic` VALUES (9, '文学', 1);
+-- INSERT INTO `topic` VALUES (10, '艺术', 1);
+-- INSERT INTO `topic` VALUES (11, '历史地理', 1);
+-- INSERT INTO `topic` VALUES (12, '自然科学总论', 1);
+-- INSERT INTO `topic` VALUES (13, '数理科学和化学', 1);
+-- INSERT INTO `topic` VALUES (14, '天文学、地球科学', 1);
+-- INSERT INTO `topic` VALUES (15, '生物科学', 1);
+-- INSERT INTO `topic` VALUES (16, '医药、卫生', 1);
+-- INSERT INTO `topic` VALUES (17, '农业科学', 1);
+-- INSERT INTO `topic` VALUES (18, '工业技术', 1);
+-- INSERT INTO `topic` VALUES (19, '交通运输', 1);
+-- INSERT INTO `topic` VALUES (20, '航空、航天', 1);
+-- INSERT INTO `topic` VALUES (21, '环境科学', 1);
+-- INSERT INTO `topic` VALUES (22, '综合', 1);
+-- INSERT INTO `topic` VALUES (23, '计算机', 1);
 
 -- ----------------------------
 -- Table structure for favorite_info
