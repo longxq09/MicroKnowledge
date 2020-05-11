@@ -146,9 +146,7 @@
           }
         })
           .then((res) => {
-            console.log("favorite")
-            console.log(res.data.code)
-            if (res.data.code == 0) {
+            if (res.data == 0) {
               this.favorite = true
             }
           })
@@ -165,7 +163,7 @@
           }
         })
           .then((res) => {
-            if (res.data.code == 0) {
+            if (res.data == 0) {
               this.follow = true
             }
           })
