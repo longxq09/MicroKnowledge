@@ -7,11 +7,11 @@
     <nobr style="font-weight: 600;margin-left: 10px;">{{authorName}}</nobr>
     <el-tag :key="tag" v-for="tag in keywordTag" class="keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
-    <el-button class="bottom_tag">评论</el-button>
     <el-button class="bottom_tag">收藏</el-button>
     <el-button class="bottom_tag">点赞</el-button>
     <el-button class="bottom_tag">关注作者</el-button>
     <el-button class="bottom_tag">举报内容</el-button>
+    <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
     <el-button class="bottom_tag" v-if="user" @click="toModify">编辑</el-button>
     <el-button class="bottom_tag" v-if="user" @click="toDelete">删除</el-button>
   </div>
@@ -55,9 +55,18 @@
       return {
         keywordTag: [],
         type_name: '',
+        review: true,
       }
     },
     methods: {
+      toReview() {
+        this.$router.push({
+          path: '/review/',
+          query: {
+            id: this.id
+          }
+        });
+      },
       toModify() {
         this.$router.push({
           path: '/modify_mevid/',

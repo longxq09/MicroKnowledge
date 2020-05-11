@@ -3,6 +3,7 @@ package com.wzs.service;
 import com.wzs.bean.Message;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: TODO
@@ -11,6 +12,7 @@ import java.util.List;
  */
 public interface MessageService {
     boolean addMessage(Message message);
+    List<Message> selectMessage(Map<String,Object> queryMap);
     List<Message> selectMessageByUser(int userId);
     boolean setFlagById(int id);
     boolean setFlagByUser(int userId);

@@ -1,6 +1,5 @@
 package com.wzs.controller;
 
-import com.wzs.bean.Account;
 import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroNotice;
 import com.wzs.bean.UserInfo;
@@ -14,9 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static com.wzs.bean.selfEnum.NoticeType.*;
+import static com.wzs.bean.selfEnum.NoticeType.EVIDENCE;
 
 /**
  * @Description: TODO

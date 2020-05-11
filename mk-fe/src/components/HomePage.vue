@@ -6,22 +6,25 @@
     <el-main>
       <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
         <el-tab-pane label="推荐" name="first">
-          <v-comment></v-comment>
-          <v-comment></v-comment>
           <v-notice v-bind:user=true></v-notice>
-
           <v-notice :key="value.id" v-for="(value,index) in exhibition"
-          v-bind:id="value.id"
-          v-bind:type="value.type"
-          v-bind:authorName="value.authorName"
-          v-bind:keywords="value.keywords"
-          v-bind:title="value.title"
-          v-bind:summary="value.summary"
-          >
+            v-bind:id="value.id"
+            v-bind:type="value.type"
+            v-bind:authorName="value.authorName"
+            v-bind:keywords="value.keywords"
+            v-bind:title="value.title"
+            v-bind:summary="value.summary">
           </v-notice>
-
         </el-tab-pane>
         <el-tab-pane label="关注" name="second">
+          <v-notice :key="value.id" v-for="(value,index) in followingState"
+            v-bind:id="value.id"
+            v-bind:type="value.type"
+            v-bind:authorName="value.authorName"
+            v-bind:keywords="value.keywords"
+            v-bind:title="value.title"
+            v-bind:summary="value.summary">
+          </v-notice>
         </el-tab-pane>
         <el-tab-pane label="热榜" name="third">
         </el-tab-pane>
@@ -41,6 +44,7 @@
     data() {
       return {
         exhibition:Array,
+        followingState: Array,
         activeName:"first",
       }
     },
@@ -52,8 +56,8 @@
       vComment,
     },
     created() {
-      console.log("init");
-      this.getUserInfo();
+      this.getUserInfo()
+      this.getFollowingState()
     },
     methods: {
       async getUserInfo() {
@@ -66,6 +70,16 @@
           console.log(err);
         }
       },
+      getFollowingState() {
+        this.axios.get('/follow/getFollowingState', {
+            params: { id: localStorage.getItem("accountId")}
+        }).then((res) => {
+          this.followingState = res.data
+          })
+          .catch((error) => {
+            console.log(error)
+          });
+      }
     },
   }
 </script>
