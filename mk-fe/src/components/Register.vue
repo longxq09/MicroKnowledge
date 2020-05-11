@@ -35,22 +35,13 @@
         params.append('password',this.dataForm.password);
         this.axios.post('/user/register', params)
           .then((res)=>{
-            var remindType = res.data.code == 0 ? 'success' : 'info';
             var remindTitle = res.data.code == 0 ? '注册成功' : '注册失败';
-            var remindContent = res.data.code == 0 ? '即将跳转个人页面' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
+            var remindContent = res.data.code == 0 ? '请进行邮箱验证后登录' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
             if (res.data.code==0){
-              localStorage.setItem("accountId", res.data.id)
-              localStorage.setItem("email", this.dataForm.email)
-              this.$router.push("/homepage");
+              this.$router.push("/");
             }
             this.$alert(remindContent, remindTitle, {
               confirmButtonText: '确定',
-              callback: action => {
-                this.$message({
-                  type: remindType,
-                  message: remindTitle
-                });
-              }
             });
           })
           .catch((res)=>{

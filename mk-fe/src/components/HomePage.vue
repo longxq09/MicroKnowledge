@@ -7,17 +7,14 @@
       <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
         <el-tab-pane label="推荐" name="first">
           <v-notice v-bind:user=true></v-notice>
-
           <v-notice :key="value.id" v-for="(value,index) in exhibition"
-          v-bind:id="value.id"
-          v-bind:type="value.type"
-          v-bind:authorName="value.authorName"
-          v-bind:keywords="value.keywords"
-          v-bind:title="value.title"
-          v-bind:summary="value.summary"
-          >
+            v-bind:id="value.id"
+            v-bind:type="value.type"
+            v-bind:authorName="value.authorName"
+            v-bind:keywords="value.keywords"
+            v-bind:title="value.title"
+            v-bind:summary="value.summary">
           </v-notice>
-
         </el-tab-pane>
         <el-tab-pane label="关注" name="second">
           <v-notice :key="value.id" v-for="(value,index) in followingState"
