@@ -243,7 +243,26 @@
       },
 
       rePassword() {
-
+        var params = new URLSearchParams()
+        params.append('oldPassword', this.passwordForm.old)
+        params.append('newPassword', this.passwordForm.new)
+        params.append('email', localStorage.getItem("email"))
+        params.append('id', localStorage.getItem("accountId"))
+        print(this.passwordForm.old)
+        this.axios.post('/user/rePassword', params)
+          .then((res) => {
+            var remindTitle = res.data.code == 0 ? '修改成功' : '修改失败';
+            var remindContent = res.data.code == 0 ? '密码更新成功！' : '好像哪里出了问题/(ㄒoㄒ)/~~密码更改失败';
+            if(res.data.code == 0) {
+              this.$router.push('/user');
+            }
+            this.$alert(remindContent, remindTitle, {
+              confirmButtonText: '确定'
+            })
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       },
 
       cancel() {

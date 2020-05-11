@@ -39,8 +39,8 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public boolean reUserPassword(int readerId, String newPassword) {
-        return accountMap.resetPassword(readerId, newPassword) > 0;
+    public boolean reUserPassword(int id, String newPassword) {
+        return accountMap.resetPassword(id, newPassword) > 0;
     }
 
     @Override
