@@ -323,7 +323,6 @@ CREATE TABLE `like`  (
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES (1, 1, 1, 2, 'Tom', 0, NULL, 'abcdef', '2020-05-01 15:37:41');
 
 
 SET FOREIGN_KEY_CHECKS = 1;
