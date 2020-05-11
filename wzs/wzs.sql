@@ -351,19 +351,22 @@ INSERT INTO `review` VALUES (3, 1, 0, 0, 0, '计算机科学与技术', 'citatio
 INSERT INTO `review` VALUES (3, 1, 1, 0, 0, '计算机科学与技术', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 'title');
 INSERT INTO `review` VALUES (3, 1, 1, 0, 0, '计算机科学与技术', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 'title');
 
+-- ----------------------------
+-- Table structure for like
+-- ----------------------------
+DROP TABLE IF EXISTS `like_num`;
+CREATE TABLE `like_num`  (
+  `noticeId` int(0) NOT NULL,
+  `num` int(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`noticeId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
 DROP TABLE IF EXISTS `like`;
-CREATE TABLE `like`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT,
-  `noticeId` int(0) NULL DEFAULT NULL,
-  `authorId` int(0) NULL DEFAULT NULL,
-  `fromId` int(0) NULL DEFAULT NULL,
-  `fromName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `toId` int(0) NULL DEFAULT NULL,
-  `toName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `time` datetime(0) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+CREATE TABLE `like` (
+  `noticeId` int(0) NOT NULL,
+  `id` int(0) NOT NULL,
+  PRIMARY KEY (`noticeId`, `id`)
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comment
