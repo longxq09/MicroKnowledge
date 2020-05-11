@@ -65,16 +65,26 @@ time，评论时间用于排序
 
 `用户登录`：
 
-- url:	登录	/user/login
+- url:	/user{
 
-  ​		  修改密码	/user/rePassword
+```
+/register 注册
+/checkCode 校验激活码
+/logout 退出登录
+/login 登录
+/rePassword	修改密码
+```
 
-- 具体字段
+}
+
+- Account 具体字段
 
   ```
   int id;				//id为自增主键，唯一确定用户
   String email;		//邮箱
   String password; 	//密码
+  int activeStatus;   // 激活状态 0 未激活 1 已激活
+  String activeCode;  // 激活码
   ```
 
 

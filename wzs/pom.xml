@@ -8,7 +8,7 @@
         <version>2.2.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.wzs</groupId>
+    <grmoupId>com.wzs</grmoupId>
     <artifactId>demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>demo</name>
@@ -32,6 +32,12 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-all</artifactId>
             <version>1.4.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.shiro</groupId>
+                    <artifactId>shiro-quartz</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
