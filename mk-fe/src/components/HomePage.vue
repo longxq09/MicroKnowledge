@@ -20,6 +20,14 @@
 
         </el-tab-pane>
         <el-tab-pane label="关注" name="second">
+          <v-notice :key="value.id" v-for="(value,index) in followingState"
+            v-bind:id="value.id"
+            v-bind:type="value.type"
+            v-bind:authorName="value.authorName"
+            v-bind:keywords="value.keywords"
+            v-bind:title="value.title"
+            v-bind:summary="value.summary">
+          </v-notice>
         </el-tab-pane>
         <el-tab-pane label="热榜" name="third">
         </el-tab-pane>
@@ -39,6 +47,7 @@
     data() {
       return {
         exhibition:Array,
+        followingState: Array,
         activeName:"first",
       }
     },
@@ -50,8 +59,8 @@
       vComment,
     },
     created() {
-      console.log("init");
-      this.getUserInfo();
+      this.getUserInfo()
+      this.getFollowingState()
     },
     methods: {
       async getUserInfo() {
@@ -64,6 +73,16 @@
           console.log(err);
         }
       },
+      getFollowingState() {
+        this.axios.get('/follow/getFollowingState', {
+            params: { id: localStorage.getItem("accountId")}
+        }).then((res) => {
+          this.followingState = res.data
+          })
+          .catch((error) => {
+            console.log(error)
+          });
+      }
     },
   }
 </script>
