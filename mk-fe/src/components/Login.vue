@@ -34,7 +34,9 @@
             var remindTitle = res.data.code == 0 ? '登陆成功' : '登陆失败';
             var remindContent = res.data.code == 0 ? '欢迎来到微知！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
             if (res.data.code==0){
-              this.$router.push("/user");
+              localStorage.setItem("accountId", res.data.id)
+              localStorage.setItem("email", this.dataForm.email)
+              this.$router.push("/homepage");
             }
 						this.$alert(remindContent, remindTitle, {
               confirmButtonText: '确定',

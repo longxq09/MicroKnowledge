@@ -1,38 +1,30 @@
 package com.wzs.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
+
 
 public class UserInfo implements Serializable {
 
-    private long id;
+    private int id;
     private String email;
     private String name;
+    private String picture;     //头像url
     private String sex;
     private String address;
     private String signature;   //个性签名
     private String education;   //学历
-    private String work;        //工作信息，包括affiliation即工作单位
+    private String works;        //工作信息，包括affiliation即工作单位
     private String expertise;    //专业领域
     private String interest;    //偏好领域
     private String introduction;            //简介
     private String contribution;            //贡献
-    private String picture;     //头像url
 
-    public void setInfo(String email, String name, String sex, String address, String work) {
-        this.address = address;
-        this.name = name;
-        this.work = work;
-        this.email = email;
-        this.sex = sex;
-    }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -84,12 +76,12 @@ public class UserInfo implements Serializable {
         this.education = education;
     }
 
-    public String getWork() {
-        return work;
+    public String getWorks() {
+        return works;
     }
 
-    public void setWork(String work) {
-        this.work = work;
+    public void setWorks(String works) {
+        this.works = works;
     }
 
     public String getExpertise() {
@@ -131,4 +123,5 @@ public class UserInfo implements Serializable {
     public void setPicture(String picture) {
         this.picture = picture;
     }
+
 }

@@ -6,7 +6,7 @@
     <el-main>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="引用">
-          <el-checkbox v-for="(value,index) in referenceList" key="value.evidName" @change="chooseItem(value.id,1)">{{value.evidName}}</el-checkbox>
+          <el-checkbox v-for="(value,index) in referenceList" :key="value.evidName" @change="chooseItem(value.id,1)">{{value.evidName}}</el-checkbox>
         </el-form-item>
 
         <el-form-item label="关键词">
@@ -71,7 +71,7 @@
     methods: {
       getUserInfo() {
         var params = new URLSearchParams();
-        this.axios.get('/Topic/getTopicList', params)
+        this.axios.get('/topic/getTopicList', params)
           .then((res) => {
             console.log(res.data);
             this.labelList = res.data;
@@ -80,7 +80,7 @@
             console.log(error);
           });
 
-        this.axios.get('/MGuess/getMEvid', params)
+        this.axios.get('/mGuess/getMEvid', params)
           .then((res) => {
             console.log(res.data);
             this.referenceList = res.data;
@@ -130,8 +130,6 @@
         }
       },
       toHomepageSubmit() {
-        console.log(this.referenceTags);
-        console.log(this.labelChoose);
         if (this.referenceTags.length == 0) {
           this.$alert("请填写至少一个引用微证据", "引用微证据不能为空", {
             confirmButtonText: '确定'
@@ -163,7 +161,7 @@
           params.append('title', this.form.title);
           params.append('summary', this.form.text);
           params.append('authorId', 0);
-          this.axios.post('/MGuess/addMGuess', params)
+          this.axios.post('/mGuess/addMGuess', params)
             .then((res) => {
               // var remindType = res.data.code == 0 ? 'success' : 'info';
               var remindTitle = res.data === 0 ? '发布微猜想成功' : '发布微猜想失败';

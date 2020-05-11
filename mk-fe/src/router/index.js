@@ -7,7 +7,10 @@ import NewMEvid from '@/components/NewMEvid.vue'
 import NewMGuess from '@/components/NewMGuess.vue'
 import HomePage from '@/components/HomePage.vue'
 import ModifyMEvid from '@/components/ModifyMEvid.vue'
-import ModifyMGuess from '@/components/ModifyMGuess';
+import ModifyMGuess from '@/components/ModifyMGuess'
+import Search from '@/components/Search'
+import Detail from '@/components/Detail.vue'
+import Review from '@/components/Review.vue'
 
 Vue.use(Router)
 
@@ -53,6 +56,21 @@ export default new Router({
       path: '/modify_mguess',
       name: 'ModifyMGuess',
       component: ModifyMGuess
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: Search
+    },
+    {
+      path: '/detail',
+      name: 'Detail',
+      component: Detail
+    },
+    {
+      path: '/review',
+      name: 'Review',
+      component: Review
     },
   ]
 })

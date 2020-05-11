@@ -13,17 +13,23 @@
       icon="el-icon-search"
       @click="search">
     </el-button>
-    <el-badge class="button" v-if="user">
-      <el-button @click="toUserInfo">个人信息</el-button>
+    <el-badge class="button" v-if="homepage">
+      <el-button @click="toUser">个人主页</el-button>
     </el-badge>
-    <el-badge class="button" v-if="user">
+    <el-badge class="button" v-if="homepage">
       <el-button @click="toNewMEvid">发布新证据</el-button>
     </el-badge>
-    <el-badge class="button" v-if="user">
+    <el-badge class="button" v-if="homepage">
       <el-button @click="toNewMGuess">发布新猜想</el-button>
     </el-badge>
+    <el-badge class="button" v-if="user">
+      <el-button @click="toHomePage">回到首页</el-button>
+    </el-badge>
+    <el-badge class="button" v-if="user">
+      <el-button @click="toUserInfo">修改个人信息</el-button>
+    </el-badge>
     <el-badge class="button" v-if="userinfo">
-      <el-button @click="toUser">回到主页</el-button>
+      <el-button @click="toUser">回到个人主页</el-button>
     </el-badge>
     <div class="photo" v-if="user">
       <el-avatar> user </el-avatar>
@@ -39,11 +45,15 @@
         type: String,
         default: '微知 MicroKnowledge'
       },
-      user: {
+      homepage: {
         type: Boolean,
         default: false
       },
       userinfo: {
+        type: Boolean,
+        default: false
+      },
+      user: {
         type: Boolean,
         default: false
       }
@@ -54,12 +64,14 @@
       }
     },
     methods: {
-      toUserInfo() {
-        console.log("miaomiaomiao");
-        this.$router.push('/userinfo');
+      toHomePage() {
+        this.$router.push('/homepage');
       },
       toUser() {
         this.$router.push('/user');
+      },
+      toUserInfo() {
+        this.$router.push('/userinfo');
       },
       toNewMEvid() {
         this.$router.push('/new_mevid');
@@ -68,7 +80,14 @@
         this.$router.push('/new_mguess');
       },
       search() {
-        this.$router.push('/search?content='+this.searchContent)
+        this.$router.push({
+          path: '/search',
+          query: {
+            word: this.searchContent,
+            kind: 0,
+            topic: ''
+          }
+        })
       }
     }
   }
@@ -93,7 +112,6 @@
     float: right;
     margin: 10px;
   }
-
   .photo {
     display: inline-block;
     float: right;

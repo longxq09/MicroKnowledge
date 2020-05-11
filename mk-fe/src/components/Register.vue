@@ -30,7 +30,7 @@
 		methods: {
       register () {
         var params = new URLSearchParams();
-        params.append('name', this.dataForm.username);
+        params.append('name', this.dataForm.name);
         params.append('email', this.dataForm.email);
         params.append('password',this.dataForm.password);
         this.axios.post('/user/register', params)
@@ -39,7 +39,9 @@
             var remindTitle = res.data.code == 0 ? '注册成功' : '注册失败';
             var remindContent = res.data.code == 0 ? '即将跳转个人页面' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
             if (res.data.code==0){
-              this.$router.push("/user");
+              localStorage.setItem("accountId", res.data.id)
+              localStorage.setItem("email", this.dataForm.email)
+              this.$router.push("/homepage");
             }
             this.$alert(remindContent, remindTitle, {
               confirmButtonText: '确定',

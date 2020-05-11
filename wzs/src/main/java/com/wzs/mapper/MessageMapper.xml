@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzs.mapper.MessageMapper" >
+
+    <sql id="BASE_TABLE">
+        message
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        id,userId,`type`,`fromUserId`,`fromUserName`,`relatedNoticeId`,`relatedNoticeType`,`relatedNoticeTitle`,`detail`,`time`,flag
+    </sql>
+
+    <insert id="insertMessage" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.wzs.bean.Message">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            userId,`type`,`fromUserId`,`fromUserName`,`relatedNoticeId`,`relatedNoticeType`,`relatedNoticeTitle`,`detail`,`time`
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            #{userId, jdbcType=INTEGER},
+            #{type, jdbcType=INTEGER},
+            #{fromUserId, jdbcType=INTEGER},
+            #{fromUserName, jdbcType=VARCHAR},
+            #{relatedNoticeId, jdbcType=INTEGER},
+            #{relatedNoticeType,jdbcType=INTEGER},
+            #{relatedNoticeTitle,jdbcType=VARCHAR},
+            #{detail,jdbcType=VARCHAR},
+            #{time},
+        </trim>
+    </insert>
+
+    <select id="selectMessage" resultType="com.wzs.bean.Message" parameterType="java.util.Map">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        from <include refid="BASE_TABLE"/>
+        <where>
+            <if test="id !=null and id !=''">
+                and id=#{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId !=null and userId !=''">
+                and userId=#{userId,jdbcType=INTEGER}
+            </if>
+            <if test="type !=null and type !=''">
+                and `type`=#{type,jdbcType=INTEGER}
+            </if>
+            <if test="flag !=null and flag !=''">
+                and `flag`=#{flag,jdbcType=INTEGER}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="selectMessageByUser" resultType="com.wzs.bean.Message" parameterType="java.lang.Integer">
+        SELECT <include refid="BASE_COLUMN"/>
+        from <include refid="BASE_TABLE"/>
+        <where>
+            userId=#{userId,jdbcType=INTEGER}
+        </where>
+    </select>
+
+    <update id="setFlagById" parameterType="java.lang.Integer" >
+        update <include refid="BASE_TABLE"/>
+        set flag=0
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="setFlagByUser" parameterType="java.lang.Integer" >
+        update <include refid="BASE_TABLE"/>
+        set flag=0
+        where userId = #{userId,jdbcType=INTEGER}
+    </update>
+
+</mapper>

@@ -8,23 +8,25 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AccountMap {
 
-    int getIdMatchCount(final long id, final String password);
+    int getIdMatchCount(final int id, final String password);
 
     int getEmailMatchCount(final String email, final String password);
 
+    int getAdminMatch(final String email, final String password);
 
-    int getAdminMatch(final String email);
 
-    int getIdMatch(final long id);
-
-    Account findAccountById(final long id);
+    Account findAccountById(final int id);
 
     Account findAccountByEmail(final String email);
 
-    int addAccount(final String email, final String password);
+    int addAccount(Account account);
 
-    int resetPassword(final long id, final String newPassword);
+    int resetPassword(final int id, final String newPassword);
 
-    String getPassword(final long id);
+    String getPassword(final int id);
+
+    Account findAccountByActiveCode(String activeCode);
+
+    boolean updateAccount(Account account);
 
 }

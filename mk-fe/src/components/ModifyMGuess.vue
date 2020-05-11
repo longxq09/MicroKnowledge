@@ -5,7 +5,7 @@
     </el-header>
     <el-main>
       <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="引用">
+        <el-form-item label="引用"  v-if="reset_reference">
           <el-checkbox v-for="(value,index) in referenceList" v-model="value.checked" key="value.evidName" @change="chooseItem(value.id,1)">{{value.evidName}}</el-checkbox>
         </el-form-item>
 
@@ -17,7 +17,7 @@
           <el-button class="button-new-tag" size="small" @click="addTag()">增加</el-button>
         </el-form-item>
 
-        <el-form-item label="分类">
+        <el-form-item label="分类" v-if="reset_label">
           <el-checkbox v-for="(value,index) in labelList" v-model="value.checked" key="value.topicName" @change="chooseItem(value.id,2)">{{value.topicName}}</el-checkbox>
         </el-form-item>
 
@@ -40,13 +40,13 @@
 </template>
 
 <script>
-import vHead from './common/Header.vue';
+  import vHead from './common/Header.vue';
   import vFooter from './common/Footer.vue';
   export default {
     name: "ModifyMGuess",
     data() {
       return {
-        title:"微知 MicroKnowledge | 微猜想修改",
+        title: "微知 MicroKnowledge | 微猜想修改",
         referenceTags: [],
         keyWordTags: [],
         labelList: Array,
@@ -54,6 +54,8 @@ import vHead from './common/Header.vue';
         referenceValue: '',
         keyWordValue: '',
         labelChoose: [],
+        reset_reference:true,
+        reset_label:true,
         form: {
           title: '',
           text: '',
@@ -72,52 +74,49 @@ import vHead from './common/Header.vue';
       this.getUserInfo();
     },
     methods: {
-      getUserInfo() {
+      async getUserInfo() {
         var params = new URLSearchParams();
-        this.axios.get('/Topic/getTopicList', params)
-          .then((res) => {
-            console.log(res.data);
-            this.labelList = res.data;
-          })
-          .catch((error) => {
-            console.log(error);
+
+        try {
+          let res = await this.axios.get('/topic/getTopicList', params);
+          console.log(res.data);
+          this.labelList = res.data;
+        } catch (err) {
+          console.log(err);
+        }
+        try {
+          let res = await this.axios.get('/mGuess/getMEvid', params);
+          console.log(res.data);
+          this.referenceList = res.data;
+        } catch (err) {
+          console.log(err);
+        }
+        params.append('id', this.$route.query.id);
+
+        try {
+          let res = await this.axios.post('/mGuess/toModifyMGuess', params);
+          console.log(res.data);
+          this.form.title = res.data.title;
+          this.form.text = res.data.summary;
+          this.form.keyWord = res.data.keywords;
+          this.form.label = res.data.topic;
+          this.form.reference = res.data.reference;
+          this.referenceTags = this.form.reference.split('-');
+          this.keyWordTags = this.form.keyWord.split('-');
+          this.labelChoose = this.form.label.split('-');
+
+          var temp = this.labelChoose;
+          this.labelList.forEach(item => {
+            item.checked = (temp.indexOf(item.id.toString()) !== -1);
           });
-
-        this.axios.get('/MGuess/getMEvid', params)
-          .then((res) => {
-            console.log(res.data);
-            this.referenceList = res.data;
-          })
-          .catch((error) => {
-            console.log(error);
+          temp = this.referenceTags;
+          this.referenceList.forEach(item => {
+            item.checked = (temp.indexOf(item.id.toString()) !== -1)
           });
+        } catch (err) {
+          console.log(err);
+        }
 
-        params.append('id', this.$route.params.id);
-        this.axios.post('/MGuess/toModifyMGuess', params)
-          .then((res) => {
-            console.log(res.data);
-            this.form.title = res.data.title;
-            this.form.text = res.data.summary;
-            this.form.keyWord = res.data.keywords;
-            this.form.label = res.data.topic;
-            this.form.reference = res.data.citedEvidList;
-
-            this.referenceTags = this.form.reference.split('-');
-            this.keyWordTags = this.form.keyWord.split('-');
-            this.labelChoose = this.form.label.split('-');
-
-            var temp = this.labelChoose;
-            this.labelList.forEach(item => {
-              item.checked = (temp.indexOf(item.id.toString()) !== -1);
-            });
-            temp = this.referenceTags;
-            this.referenceList.forEach(item => {
-              item.checked = (temp.indexOf(item.id.toString()) !== -1)
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
       },
 
       user() {
@@ -139,22 +138,27 @@ import vHead from './common/Header.vue';
 
       },
       chooseItem(id, type) {
+        var id_str = id.toString();
         if (type == 1) {
           console.log("id:" + id);
-          if (this.referenceTags.indexOf(id) == -1) {
-            this.referenceTags.push(id)
+          if (this.referenceTags.indexOf(id_str) == -1) {
+            this.referenceTags.push(id_str);
           } else {
-            this.referenceTags.splice(this.referenceTags.indexOf(id), 1);
+            this.referenceTags.splice(this.referenceTags.indexOf(id_str), 1);
           }
+          this.reset_reference=false;
+          this.reset_reference=true;
           console.log("referenceTags:" + this.referenceTags);
 
         } else {
           console.log("id:" + id);
-          if (this.labelChoose.indexOf(id) == -1) {
-            this.labelChoose.push(id)
+          if (this.labelChoose.indexOf(id_str) == -1) {
+            this.labelChoose.push(id_str);
           } else {
-            this.labelChoose.splice(this.labelChoose.indexOf(id), 1);
+            this.labelChoose.splice(this.labelChoose.indexOf(id_str), 1);
           }
+          this.reset_label=false;
+          this.reset_label=true;
           console.log("labelChoose:" + this.labelChoose);
 
         }
@@ -186,13 +190,13 @@ import vHead from './common/Header.vue';
           this.form.label = this.labelChoose.join('-');
           var params = new URLSearchParams();
           params.append('topic', this.form.label);
-          params.append('citedPaper', this.form.reference);
+          params.append('reference', this.form.reference);
           params.append('keywords', this.form.keyWord);
           params.append('title', this.form.title);
           params.append('summary', this.form.text);
           params.append('authorId', 0);
-          params.append('id', this.$route.params.id);
-          this.axios.post('/MGuess/modifyMGuess', params)
+          params.append('id', this.$route.query.id);
+          this.axios.post('/mGuess/modifyMGuess', params)
             .then((res) => {
               // var remindType = res.data.code == 0 ? 'success' : 'info';
               var remindTitle = res.data === 0 ? '修改微猜想成功' : '修改微猜想失败';

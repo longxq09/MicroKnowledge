@@ -35,7 +35,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="工作">
-          <el-input v-model="form.work"></el-input>
+          <el-input v-model="form.works"></el-input>
         </el-form-item>
         <el-form-item label="居住地">
           <el-input type="textarea" v-model="form.address"></el-input>
@@ -78,15 +78,15 @@
           <el-button type="primary" @click="submit">立即更新</el-button>
           <el-button @click="cancel">取消</el-button>
         </el-form-item>
-			</el-form>
-		</el-main>
-		<v-footer></v-footer>
-	</el-container>
+      </el-form>
+    </el-main>
+    <v-footer></v-footer>
+  </el-container>
 </template>
 
 <script>
-import vHead from './common/Header.vue';
-import vFooter from './common/Footer.vue';
+  import vHead from './common/Header.vue';
+  import vFooter from './common/Footer.vue';
   export default {
     name: "User",
     data() {
@@ -107,17 +107,16 @@ import vFooter from './common/Footer.vue';
 		},
 		methods: {
 		  getUserInfo() {
-		    var params = new URLSearchParams()
-        params.append('account', 'wzs01@163.com')
-        this.axios.get('/topic')
+        this.axios.get('/topic/getTopicList')
           .then((res) => {
             this.topics = res.data
           })
           .catch((error) => {
             console.log(error)
           })
-		    this.axios.get('/user/info', params)
-          .then((res) => {
+		    this.axios.get('/user/info', {
+		      params: { id: localStorage.getItem("accountId")}
+		    }).then((res) => {
             this.form = res.data
             var tags = res.data.interest.split('-')
             for(var i = 0; i < tags.length; i++)
@@ -138,7 +137,7 @@ import vFooter from './common/Footer.vue';
         params.append('name', this.form.name)
         params.append('sex', this.form.sex)
         params.append('education', this.form.education)
-        params.append('work', this.form.work)
+        params.append('works', this.form.works)
         params.append('address', this.form.address)
         params.append('introduction', this.form.introduction)
         params.append('contribution', this.form.contribution)
@@ -147,7 +146,6 @@ import vFooter from './common/Footer.vue';
         params.append('picture', this.form.picture)
         this.axios.post('/user/info', params)
           .then((res) => {
-            var remindType = res.data.code == 0 ? 'success' : 'info'
             var remindTitle = res.data.code == 0 ? '修改成功' : '修改失败'
             var remindContent = res.data.code == 0 ? '个人信息更新啦！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧'
             if(res.data.code == 0) {
@@ -195,7 +193,7 @@ import vFooter from './common/Footer.vue';
         }
         return isJPG && isLt2M
       }
-		}
+    }
 
   }
 </script>

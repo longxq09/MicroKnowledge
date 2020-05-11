@@ -4,15 +4,19 @@ import java.io.Serializable;
 
 public class Account implements Serializable {
 
-    private long id;
+    private int id;
     private String email;
     private String password;
 
-    public long getId() {
+    private int activeStatus;   // 激活状态 0 未激活 1 已激活
+
+    private String activeCode;  // 激活码
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this. id= id;
     }
 
@@ -30,5 +34,21 @@ public class Account implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getActiveStatus() {
+        return activeStatus;
+    }
+
+    public String getActiveCode() {
+        return activeCode;
+    }
+
+    public void setActiveCode(String activeCode) {
+        this.activeCode = activeCode;
+    }
+
+    public void setActiveStatus(int activeStatus) {
+        this.activeStatus = activeStatus;
     }
 }

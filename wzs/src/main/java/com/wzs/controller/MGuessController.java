@@ -1,10 +1,9 @@
 package com.wzs.controller;
 
-import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroGuess;
 import com.wzs.bean.MicroNotice;
-import com.wzs.service.MEvidService;
-import com.wzs.service.MGuessService;
+import com.wzs.bean.UserInfo;
+import com.wzs.service.MNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,40 +15,45 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
+import static com.wzs.bean.selfEnum.NoticeType.*;
+
 /**
  * @Description: TODO
  * @Author Wazak
  * @Date 2020/4/20 16:41
  */
 @Controller
-@RequestMapping("/MGuess")
+@RequestMapping("/mGuess")
 public class MGuessController {
 
     @Autowired
-    private MGuessService guessService;
-    @Autowired
-    private MEvidService evidService;
+    private MNoticeService noticeService;
 
     //通过map查询
-    public List<MicroGuess> queryMGuess(Map<String, Object> queryMap) {
-        return guessService.queryMGuess(queryMap);
+    public List<MicroNotice> queryMGuess(Map<String, Object> queryMap) {
+        return noticeService.queryMNotice(queryMap);
     }
 
     //添加微猜想
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/addMGuess", method = RequestMethod.POST)
-    public int insertMGuess(HttpServletRequest request, HttpSession session) {
+    public int insertMGuess(HttpServletRequest request) {
         MicroGuess guess = new MicroGuess();
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+
+        guess.setType(GUESS.getIndex());
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
-        guess.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
+        guess.setAuthorID(userInfo.getId());
+        guess.setAuthorName(userInfo.getName());
         guess.setTopic(request.getParameter("topic"));
-        guess.setCitedEvidList(request.getParameter("citedEvidList"));
+        guess.setReference(request.getParameter("reference"));
         guess.setKeywords(request.getParameter("keywords"));
         guess.setTitle(request.getParameter("title"));
         guess.setSummary(request.getParameter("summary"));
         guess.setTime(new Date());
-        guessService.insertMGuess(guess);
+
+        noticeService.insertMNotice(guess);
         return 0;
     }
 
@@ -59,30 +63,31 @@ public class MGuessController {
     @RequestMapping(value = "/modifyMGuess", method = RequestMethod.POST)
     public int updateMGuess(HttpServletRequest request, HttpSession session) {
         MicroGuess guess = new MicroGuess();
-//        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
         guess.setId(Integer.parseInt(request.getParameter("id")));
-        guess.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
+
         guess.setTopic(request.getParameter("topic"));
-        guess.setCitedEvidList(request.getParameter("citedEvidList"));
+        guess.setReference(request.getParameter("reference"));
         guess.setKeywords(request.getParameter("keywords"));
         guess.setTitle(request.getParameter("title"));
         guess.setSummary(request.getParameter("summary"));
         guess.setTime(new Date());
-        guessService.updateMGuess(guess);
+
+        noticeService.updateMNotice(guess);
         return 0;
     }
 
     //删除微猜想
     public boolean deleteMGuess(int id) {
-        return guessService.deleteMGuess(id);
+        return noticeService.deleteMNotice(id);
     }
 
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getMEvid", method = RequestMethod.GET)
-    private List<MicroEvidence> getMEvidList() {
+    private List<MicroNotice> getMEvidList() {
         Map<String, Object> queryMap = new HashMap();
-        return evidService.queryMEvid(queryMap);
+        queryMap.put("type",EVIDENCE.getIndex());
+        return noticeService.queryMNotice(queryMap);
     }
 
     @CrossOrigin
@@ -92,50 +97,18 @@ public class MGuessController {
         int id = Integer.parseInt(request.getParameter("id"));
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("id", id);
-        List<MicroGuess> list = guessService.queryMGuess(queryMap);
-        MicroGuess guess = list.get(0);
+        List<MicroNotice> list = noticeService.queryMNotice(queryMap);
+        MicroNotice guess = list.get(0);
+
         Map<String, Object> retMap = new HashMap();
         retMap.put("topic", guess.getTopic());
-        retMap.put("citedEvidList", guess.getCitedEvidList());
+        retMap.put("reference", guess.getReference());
         retMap.put("keywords", guess.getKeywords());
         retMap.put("title", guess.getTitle());
         retMap.put("summary", guess.getSummary());
+
         return retMap;
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public @ResponseBody
-    Object getSearch(HttpServletRequest request) {
-        String word = request.getParameter("word");     //关键词
-        int kind = Integer.parseInt(request.getParameter("kind"));  // Evidence-Guess: 00,01,10,11
-        String topic = request.getParameter("topic");     //id-id-id
-        //ArrayList<String> topicList = new ArrayList<>();
-        String topics = "%[";
-        String[] tmp = topic.split("-");
-        for (int i = 0; i < tmp.length; i++) {
-            //System.out.println(tmp[i]);
-            topics = topics.concat(tmp[i]);
-        }
-        topics = topics.concat("]%");
-        List<MicroGuess> guessList;
-        List<MicroEvidence> evidenceList;
-        HashMap<String, Object> res = new HashMap<>();
-        if (kind == 1) {
-            guessList = guessService.fuzzyQueryMGuess(word, topics);
-            res.put("kind", "1");
-            res.put("guess", guessList);
-        } else if (kind == 2) {
-            evidenceList = evidService.fuzzyQueryMEvid(word, topics);
-            res.put("kind", "2");
-            res.put("evidence", evidenceList);
-        } else {
-            guessList = guessService.fuzzyQueryMGuess(word, topics);
-            evidenceList = evidService.fuzzyQueryMEvid(word, topics);
-            res.put("kind", "0");
-            res.put("guess", guessList);
-            res.put("evidence", evidenceList);
-        }
-        return res;
-    }
+
 }
