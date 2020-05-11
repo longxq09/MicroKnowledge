@@ -6,15 +6,12 @@ import com.wzs.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.HashMap;
 import java.io.*;
 import java.util.UUID;
@@ -24,10 +21,20 @@ public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserInfoController.class);
+    //private static final Logger logger = LoggerFactory.getLogger(UserInfoController.class);
 
-    public static boolean generateImage(String imgStr, String path) {
-        //前端通过控件传给后端的是经过base64编码的字符串
+    //前端通过控件传给后端的是经过base64编码的字符串
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/user/picUpload", method = RequestMethod.POST)
+    public Object picUpload(String imgStr, HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String rootPath = "/root";   //图片存放根路径
+        String sonPath = "/user_pic/";  //图片存放根目录下的子目录
+        String fileName = UUID.randomUUID().toString().replace("-", ""); // 获取文件名
+        String filePath = rootPath + sonPath;   // 设置文件上传后的路径
+        String imgPath = filePath + fileName;
+        HashMap<String, String> res = new HashMap<>();
         BASE64Decoder decoder = new BASE64Decoder();
         try {
             byte[] b = decoder.decodeBuffer(imgStr);
@@ -36,64 +43,21 @@ public class UserInfoController {
                     b[i] += 256;
                 }
             }
-            OutputStream out = new FileOutputStream(path);
+            OutputStream out = new FileOutputStream(imgPath);
             out.write(b);
             out.flush();
             out.close();
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @CrossOrigin
-    @ResponseBody
-    @RequestMapping(value = "/user/picUpload", method = RequestMethod.POST)
-    public String picUpload(MultipartFile file, HttpServletRequest request) throws IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        if (file.isEmpty()) {
-            return "文件为空";
-        }
-
-        String rootPath = "/root";   //图片存放根路径
-        String sonPath = "/user_pic/";  //图片存放根目录下的子目录
-        String fileName = UUID.randomUUID() + file.getOriginalFilename(); // 获取文件名
-
-        String filePath = rootPath + sonPath;   // 设置文件上传后的路径
-        File dest = new File(filePath + fileName);  //创建文件路径
-        String imgPath = (filePath + fileName);
-
-        if (!dest.getParentFile().exists()) {
-            dest.getParentFile().mkdir();
-        }
-        try {
-            //方法一
-            file.transferTo(dest);  //将上传文件写到服务器上指定的文件
-
-
-            //方法二， 如果上一个不行，可以试试这个
-            /*
-            OutputStream out = new FileOutputStream(filePath + fileName);
-            byte[] b = file.getBytes();
-            for (int i = 0; i < b.length; ++i) {
-                if (b[i] < 0) { //调整异常数据
-                    b[i] += 256;
-                }
-            }
-            out.write(b);
-            out.flush();
-            out.close();
-            */
-
             //url保存到数据库中
             UserInfo userInfo = userInfoService.getUserInfo(id);
             userInfo.setPicture(imgPath);
             userInfoService.editUserInfo(userInfo);
-            return "上传成功";
+            res.put("picture", imgPath);
+            res.put("message", "上传成功！");
+            return res;
         } catch (Exception e) {
-            return "上传失败";
+            res.put("message", "上传失败！");
+            return res;
         }
-
     }
 
     @CrossOrigin

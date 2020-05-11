@@ -21,7 +21,7 @@ public interface AccountMap {
 
     int addAccount(Account account);
 
-    int resetPassword(final int id, final String newPassword);
+    int resetPassword(final int id, final String password);
 
     String getPassword(final int id);
 
