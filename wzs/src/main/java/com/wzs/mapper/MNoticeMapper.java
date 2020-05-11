@@ -19,6 +19,8 @@ import java.util.Map;
 public interface MNoticeMapper {
     List<MicroNotice> selectMNotice(Map<String, Object> map);
 
+    MicroNotice getMNoticeById(int id);
+
     boolean insertMNotice(MicroNotice Notice);
 
     boolean updateMNotice(MicroNotice Notice);

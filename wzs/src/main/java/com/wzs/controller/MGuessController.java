@@ -102,7 +102,8 @@ public class MGuessController {
 
         Map<String, Object> retMap = new HashMap();
         retMap.put("topic", guess.getTopic());
-        retMap.put("reference", guess.getReference());
+        String reference = guess.getReference();
+        retMap.put("reference", reference);
         retMap.put("keywords", guess.getKeywords());
         retMap.put("title", guess.getTitle());
         retMap.put("summary", guess.getSummary());
