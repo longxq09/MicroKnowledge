@@ -10,9 +10,9 @@ public interface Like_numMapper {
     @Select("select `num` from like_num where `noticeId` = #{noticeId}")
     int getLikeNum(int noticeId);
 
-    @Update("update table like_num `num` = `num` + 1 where `noticeId` = #{noticeId}")
+    @Update("update `like_num` set `num` = `num` + 1 where `noticeId` = #{noticeId}")
     boolean addLikeNum(int noticeId);
 
-    @Update("update table like_num `num` = `num` - 1 where `noticeId` = #{noticeId}")
+    @Update("update `like_num` set `num` = `num` - 1 where `noticeId` = #{noticeId}")
     boolean subLikeNum(int noticeId);
 }

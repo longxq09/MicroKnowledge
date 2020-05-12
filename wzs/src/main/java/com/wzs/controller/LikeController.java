@@ -29,7 +29,7 @@ public class LikeController {
 
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/likeThis", method = RequestMethod.GET)
+    @RequestMapping(value = "/likeThis", method = RequestMethod.POST)
     public int likeThis(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
         int noticeId = Integer.parseInt(request.getParameter("noticeId"));
@@ -38,7 +38,7 @@ public class LikeController {
 
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/cancelLike", method = RequestMethod.GET)
+    @RequestMapping(value = "/cancelLike", method = RequestMethod.POST)
     public int cancelLike(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
         int noticeId = Integer.parseInt(request.getParameter("noticeId"));
