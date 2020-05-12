@@ -4,52 +4,67 @@
       <v-head v-bind:user=true></v-head>
     </el-header>
     <el-main>
-      <div style="text-align: center">
-        <div style="display: inline-block; width: 300px; margin: 20px; vertical-align: top">
-          <el-image class="image" :src="src"></el-image>
-          <p>{{name}}</p>
-          <p>{{email}}</p>
-        </div>
-        <el-tabs v-model="activeName" style="display: inline-block; width: 680px; margin-left: 20px">
-          <el-tab-pane label="我的关注" name="first">
-            <div class="follow" :key="index" v-for="(value,index) in following">
-              <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
-              <div style="display: inline-block">
-                <div>{{value.name}}</div>
-                <div>{{value.email}}</div>
-              </div>
-              <el-divider></el-divider>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="我的粉丝" name="second">
-            <div class="follow" :key="index" v-for="(value,index) in follower">
-              <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
-              <div style="display: inline-block">
-                <div>{{value.name}}</div>
-                <div>{{value.email}}</div>
-              </div>
-              <el-divider></el-divider>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="我的收藏" name="third">
-            <v-notice :key="value.id" v-for="(value,index) in favorite" v-bind:id="value.id" v-bind:type="value.type"
-                      v-bind:authorName="value.authorName" v-bind:keywords="value.keywords" v-bind:title="value.title"
-                      v-bind:summary="value.summary">
-            </v-notice>
-          </el-tab-pane>
-          <el-tab-pane label="我的消息" name="forth">
-            <v-message :key="value.id" v-for="(value,index) in message_list"
-                       v-bind:type="value.type"
-                       v-bind:fromName="value.fromUserName"
-                       v-bind:relatedNoticeId="value.relatedNoticeId"
-                       v-bind:relatedNoticeTitle="value.relatedNoticeTitle"
-                       v-bind:detail="value.detail"
-                       v-bind:time="value.disTime"
-                       v-bind:flag="value.flag">
-            </v-message>
-          </el-tab-pane>
-        </el-tabs>
+      <div style="display: inline-block; width: 300px; margin-left: 8%; vertical-align: top">
+        <el-image class="image" :src="src"></el-image>
+        <p>{{name}}</p>
+        <p>{{email}}</p>
       </div>
+      <el-tabs v-model="activeName" style="display: inline-block; width: 600px; margin-left: 40px; margin-right: 8%">
+        <el-tab-pane label="关注" name="first">
+          <div class="follow" :key="index" v-for="(value,index) in following">
+            <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
+            <div style="display: inline-block">
+              <div>{{value.name}}</div>
+              <div>{{value.email}}</div>
+            </div>
+            <v-follow v-if="accountId==hostId"
+                      style="float: right"
+                      v-bind:accountId="accountId"
+                      v-bind:authorId="value.id">
+            </v-follow>
+            <el-divider></el-divider>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="粉丝" name="second">
+          <div class="follow" :key="index" v-for="(value,index) in follower">
+            <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
+            <div style="display: inline-block">
+              <div>{{value.name}}</div>
+              <div>{{value.email}}</div>
+            </div>
+            <v-follow v-if="accountId==hostId"
+                      style="float: right"
+                      v-bind:accountId="accountId"
+                      v-bind:authorId="value.id">
+            </v-follow>
+            <el-divider></el-divider>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="收藏" name="third">
+          <v-notice :key="value.id"
+                    v-for="(value,index) in favorite"
+                    v-bind:accountId="accountId"
+                    v-bind:id="value.id"
+                    v-bind:type="value.type"
+                    v-bind:authorName="value.authorName"
+                    v-bind:keywords="value.keywords"
+                    v-bind:title="value.title"
+                    v-bind:summary="value.summary">
+          </v-notice>
+        </el-tab-pane>
+        <el-tab-pane v-if="accountId==hostId"
+                     label="我的消息" name="forth">
+          <v-message :key="value.id" v-for="(value,index) in message_list"
+                     v-bind:type="value.type"
+                     v-bind:fromName="value.fromUserName"
+                     v-bind:relatedNoticeId="value.relatedNoticeId"
+                     v-bind:relatedNoticeTitle="value.relatedNoticeTitle"
+                     v-bind:detail="value.detail"
+                     v-bind:time="value.disTime"
+                     v-bind:flag="value.flag">
+          </v-message>
+        </el-tab-pane>
+      </el-tabs>
     </el-main>
     <v-footer></v-footer>
   </el-container>
@@ -60,16 +75,13 @@
   import vFooter from './common/Footer.vue';
   import vNotice from './common/Notice.vue';
   import vMessage from './common/Message.vue';
+  import vFollow from './common/Follow.vue'
   export default {
     name: "User",
-    props: {
-      accountId: {
-        type: Number,
-        default: localStorage.getItem("accountId")
-      }
-    },
     data() {
       return {
+        hostId: localStorage.getItem("accountId"),
+        accountId: localStorage.getItem("accountId"),
         name: '',
         email: '',
         src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
@@ -85,6 +97,7 @@
       vFooter,
       vNotice,
       vMessage,
+      vFollow
     },
     mounted() {
       this.getUserInfo()
@@ -94,12 +107,12 @@
     methods: {
       async getUserInfo() {
         this.axios.get('/user/info', {
-            params: {
-              id: this.accountId
-            }
-          }).then((res) => {
-            this.name = res.data.name
-          })
+          params: {
+            id: this.accountId
+          }
+        }).then((res) => {
+          this.name = res.data.name
+        })
           .catch((error) => {
             console.log(error)
           })
@@ -116,34 +129,34 @@
       },
       getFollow() {
         this.axios.get('/follow/getFollowing', {
-            params: {
-              id: this.accountId
-            }
-          }).then((res) => {
-            this.following = res.data
-          })
+          params: {
+            id: this.accountId
+          }
+        }).then((res) => {
+          this.following = res.data
+        })
           .catch((error) => {
             console.log(error)
           })
         this.axios.get('/follow/getFollower', {
-            params: {
-              id: this.accountId
-            }
-          }).then((res) => {
-            this.follower = res.data
-          })
+          params: {
+            id: this.accountId
+          }
+        }).then((res) => {
+          this.follower = res.data
+        })
           .catch((error) => {
             console.log(error)
           })
       },
       getFavorite() {
         this.axios.get('/favorite/getFavoriteList', {
-            params: {
-              id: this.accountId
-            }
-          }).then((res) => {
-            this.favorite = res.data
-          })
+          params: {
+            id: this.accountId
+          }
+        }).then((res) => {
+          this.favorite = res.data
+        })
           .catch((error) => {
             console.log(error)
           })
@@ -166,6 +179,5 @@
 
   .follow {
     margin: 12px;
-    text-align: left;
   }
 </style>
