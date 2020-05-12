@@ -15,12 +15,15 @@
       <div class="bottom_text">分类
         <nobr :key='label' v-for="label in labelList"> | {{label}}</nobr>
       </div>
-      <el-button class="bottom_tag">收藏</el-button>
-      <el-button class="bottom_tag">点赞</el-button>
-      <el-button class="bottom_tag">关注作者</el-button>
-      <el-button class="bottom_tag">举报内容</el-button>
-      <el-button class="bottom_tag" v-if="user" @click="toModify">编辑</el-button>
-      <el-button class="bottom_tag" v-if="user" @click="toDelete">删除</el-button>
+
+      <v-like v-bind:accountId="accountId" v-bind:id="this.$route.query.id">
+      </v-like>
+
+      <v-favorite v-bind:accountId="accountId" v-bind:id="this.$route.query.id">
+      </v-favorite>
+
+      <v-follow v-bind:accountId="accountId" v-bind:id="this.$route.query.id" v-bind:authorId="authorId">
+      </v-follow>
 
       <div class="comment_count">
         {{reply_num}}评论
@@ -51,6 +54,9 @@
   import vHead from './common/Header.vue';
   import vFooter from './common/Footer.vue';
   import vComment from './common/Comment.vue';
+  import vFollow from './common/Follow.vue'
+  import vLike from './common/Like.vue'
+  import vFavorite from './common/Favorite'
   export default {
     name: "Detail",
     data() {
@@ -65,6 +71,7 @@
         radioValue: true,
         reply_num: 0,
         user: true,
+        accountId: 0,
         form: {
           type_str: "微证据",
           title: '震惊！冯如杯要写不完了？！',
@@ -82,38 +89,16 @@
       vHead,
       vFooter,
       vComment,
+      vFollow,
+      vLike,
+      vFavorite,
     },
     created() {
       console.log("init");
+      this.accountId = localStorage.getItem("accountId");
       this.getUserInfo();
     },
     methods: {
-      toModify() {
-        this.$router.push({
-          path: '/modify_mevid/',
-          query: {
-            id: this.id
-          }
-        });
-      },
-      toDelete() {
-        var params = new URLSearchParams();
-        params.append('id', this.id);
-        this.axios.post('/mNotice/deleteNotice', params)
-          .then((res) => {
-            var remindTitle = res.data === 0 ? '删除微证据成功' : '删除微证据失败';
-            var remindContent = res.data === 0 ? '删除微证据成功！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
-            this.$alert(remindContent, remindTitle, {
-              confirmButtonText: '确定'
-            });
-            if (res.data === 0) {
-              this.$router.push('/homepage');
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      },
       changFlag(a) {
         console.log("we catch the change!!!!!!!!!!!!!!!");
         this.refresh = false;

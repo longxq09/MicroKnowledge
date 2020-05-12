@@ -11,14 +11,17 @@
     <el-tag :key="tag" v-for="tag in keywordTag" class="keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
     <v-like v-bind:accountId="accountId"
-            v-bind:id="id">
+            v-bind:id="id"
+            v-if="toShow">
     </v-like>
     <v-favorite v-bind:accountId="accountId"
-                v-bind:id="id">
+                v-bind:id="id"
+                v-if="toShow">
     </v-favorite>
     <v-follow v-bind:accountId="accountId"
               v-bind:id="id"
-              v-bind:authorId="authorId">
+              v-bind:authorId="authorId"
+              v-if="toShow">
     </v-follow>
   </div>
 </template>
