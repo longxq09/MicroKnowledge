@@ -34,7 +34,6 @@ public class MNoticeController {
         Map<String, Object> queryMap = new HashMap<>();
         List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
         noticeList.sort(Comparator.comparing(MicroNotice::getTime));
-        String str = noticeList.get(0).getShowTime();
         return noticeList;
     }
 
