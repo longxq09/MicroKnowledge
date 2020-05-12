@@ -16,6 +16,9 @@
     <el-badge class="button" v-if="!home">
       <el-button @click="logout">登出</el-button>
     </el-badge>
+    <el-badge class="button" v-if="search">
+      <el-button @click="back">返回</el-button>
+    </el-badge>
     <el-badge class="button" v-if="homepage">
       <el-button @click="toUser">个人主页</el-button>
     </el-badge>
@@ -52,6 +55,10 @@
         default: '微知 MicroKnowledge'
       },
       home: {
+        type: Boolean,
+        default: false,
+      },
+      search: {
         type: Boolean,
         default: false,
       },
@@ -99,6 +106,14 @@
       },
       toUser() {
         this.$router.push('/user');
+      },
+      back() {
+        if(localStorage.getItem("accountId") === "") {
+          this.$router.push('/')
+        }
+        else {
+          this.toHomePage()
+        }
       },
       toUserInfo() {
         this.$router.push('/userinfo');
