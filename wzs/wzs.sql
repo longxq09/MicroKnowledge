@@ -33,10 +33,12 @@ CREATE TABLE `account`  (
 -- ----------------------------
 -- Records of account
 -- ----------------------------
-INSERT INTO `account` VALUES (1, 'wzs01@163.com', '0a7cd2f29c2c46302b0002ac6ecf6d03','hhh',1);
-INSERT INTO `account` VALUES (2, 'wzs02@163.com', 'c9a6d3a645392a8f0d6a7514aa59d712','hhh',1);
-INSERT INTO `account` VALUES (3, 'wzs03@163.com', '74b5d158e3a6263c26cddc5946d04e1e','hhh',1);
-
+INSERT INTO `account` VALUES (1, 'wzs1@163.com', '740cf33d334637bf2b3d00433cea6ec3','',1);
+INSERT INTO `account` VALUES (2, 'wzs2@163.com', '0103b33cd3ddbf771af44b60418e0365','',1);
+INSERT INTO `account` VALUES (3, 'wzs3@163.com', 'a8d324fb901015bef22df9ae607c0e65','',1);
+INSERT INTO `account` VALUES (1, 'wzs4@163.com', '32db4b4d3d6d37bd0c02b1647645ab30','',1);
+INSERT INTO `account` VALUES (2, 'wzs5@163.com', '635282d5f184b759b5730351016a39ba','',1);
+INSERT INTO `account` VALUES (3, 'wzs6@163.com', 'bd717bd1e47d94bf67403dde69d54583','',1);
 -- ----------------------------
 -- Table structure for admin
 -- ----------------------------
@@ -127,8 +129,17 @@ CREATE TABLE `micro_notice`  (
 -- ----------------------------
 -- Records of micro_notice
 -- ----------------------------
-INSERT INTO `micro_notice` VALUES (1, 1, 1, 'wzs', '-1-2-3-', '1-2-3', 'abc', 'title', 'summary', '2020-04-30 13:35:02', 0);
-INSERT INTO `micro_notice` VALUES (2, 2, 1, 'wzs','-1-13-4-', '4-9-6', 'keyword', 'test12', 'summary', '2020-04-30 14:08:49', 0);
+INSERT INTO `micro_notice` VALUES (1, 1, 5, 'Xiao Liu', '-21-', 'Liu, X., Gopal, V., and Kalagnanam, J. (2018), ""A Spatio-Temporal Modeling Framework for Weather Radar Image Data in Tropical Southeast Asia"",  Annals of Applied Statistics, 12(1), 378–407.', 'partial differential equations-spatio temporal model-uncertainty quantification-statistical learning', 'upub-evidence', 'Leveraging both data-driven approaches and physics knowledge for modeling and uncertainty quantification of spatio-temporal data arising from a generic class of convection-diffusion processes.', '2019-8-14 13:35:02', 0);
+INSERT INTO `micro_notice` VALUES (2, 1, 3, 'Jan Vandenbrande', '-21-30-22-', 'Keyes et al., Multiphysics Simulations: Challenges and Opportunities, International Journal of High Performance Computing Applications.', 'modeling multi physics-multi scale-simulation', 'upub-evidence', 'Comprehensive survey paper on the difficulties (effort, limitations, accuracy) of building multi-physics simulators.', '2019-8-17 17:35:02', 0);
+INSERT INTO `micro_notice` VALUES (3, 1, 6, 'Diane Stevens', '-23-', 'Crawford, Chris. “Inside Look at Using Telemedicine During COVID-19 Pandemic.” AAFP Home, American Academy of Family Physicians (AAFP), 23 Mar. 2020, www.aafp.org/news/health-of-the-public/20200323covidtelehealth.html.', '', 'upub-evidence', 'Telehealth has become a useful tool to provide health care during the coronavirus crisis. Converting to telemedicine has the benefit of not worrying about adequate test kits or N95 masks or other PPE.', '2020-04-17 12:40:02', 0);
+INSERT INTO `micro_notice` VALUES (4, 1, 4, 'Matt Mihelic, MD', '-23-', 'Center for Medicare and Medicaid Services, “Physicians and Other Clinicians: CMS Flexibilities to Fight COVID-19”, April 29, 2020.', '', 'upub-evidence', 'The US Federal Government is recognizing the need for telehealth and is responding with an unprecedented array of temporary regulatory waivers and new rules that will enable telemedicine.', '2020-05-05 13:35:02', 0);
+INSERT INTO `micro_notice` VALUES (5, 1, 2, 'Kenneth Frumkin', '-2-3-', 'Madden KS, Boehm GW, Lee SC, Grota LJ, Cohen N, Ader R. One-trial conditioning of the antibody response to hen egg lysozyme in rats. J Neuroimmunol. 2001;113:236-239.', '', 'upub-evidence', 'In rats, after a single pairing of a novel taste with a protein antigen, the taste alone could elicit an IgG antibody response.', '2020-05-07 13:35:02', 0);
+INSERT INTO `micro_notice` VALUES (6, 1, 2, 'Kenneth Frumkin', '-11-12-', 'Frumkin, K: Behavioral Conditioning, the Placebo Effect, and Emergency Department Pain Management. J. Emerg Med, 2020; in press. Version accepted for publication (MSWord), April 2020', '', 'upub-evidence', 'Review of behavioral conditioning of the immune system and drug effects. Benign taste stimuli paired with immunoactive or pharmacologic agents, when administered alone, elicit the same response.', '2020-05-08 13:35:02', 0);
+INSERT INTO `micro_notice` VALUES (7, 2, 1, 'Changqing Cheng', '-22-23-', '1-2', '', 'upub-evidence', 'While complex systems generally exhibit multi-scale and multi-physics behaviors, machine learning can make the tedious simulation realistic.', '2020-04-26 13:35:02', 0);
+INSERT INTO `micro_notice` VALUES (8, 2, 4, 'Matt Mihelic, MD', '-2-3-', '3-4', '', 'upub-evidence', 'How will issues such as credentialing, privacy, payment, liability, and regulation be addressed in remote culture telemedicine?', '2020-05-09 13:35:02', 0);
+INSERT INTO `micro_notice` VALUES (9, 2, 2, 'Kenneth Frumkin', '-2-3-', '5-6', '', 'upub-evidence', 'Can pairing a unique taste with COVID vaccine create a safe, cheap, conditioned stimulus to boost immunity? Could warfighters carry such conditioned immunity boosters downrange in the event of tactical exposure to biological agents?', '2020-05-09 13:35:02', 0);
+-- INSERT INTO `micro_notice` VALUES (1, 1, 1, 'wzs', '-1-2-3-', '1-2-3', 'abc', 'title', 'summary', '2020-04-30 13:35:02', 0);
+-- INSERT INTO `micro_notice` VALUES (2, 2, 1, 'wzs','-1-13-4-', '4-9-6', 'keyword', 'test12', 'summary', '2020-04-30 14:08:49', 0);
 
 -- ----------------------------
 -- Table structure for topic
@@ -257,15 +268,15 @@ DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `email` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `name` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `picture` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `sex` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `address` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `address` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `signature` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `education` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `works` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `expertise` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `interest` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `education` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `works` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `expertise` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `interest` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `introduction` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `contribution` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -274,9 +285,15 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (1, 'wzs01@163.com', '张华', '', 'male', '天津市', 'fighting!', '博士', '研究员', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
-INSERT INTO `user_info` VALUES (2, 'wzs02@163.com', '王小伟', '', 'male', '北京市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
-INSERT INTO `user_info` VALUES (3, 'wzs03@163.com', '王莞尔', '', 'female', '浙江省杭州市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+INSERT INTO `user_info` VALUES (1,'wzs1@163.com','Changqing Cheng','','male','NY','fighting!','SSIE at BU','SUNY Binghamton','23-24-29','21-30-40','','');
+INSERT INTO `user_info` VALUES (2,'wzs2@163.com','Kenneth Frumkin','','male','Philadelphia Pennsylvania Area','work hard!','PhD, MD; Emergency Physician: Military Medicine; Physiological Psychologist','Naval Medical Center, Portsmouth, Virginia','23-24-29','21-30-40','','');
+INSERT INTO `user_info` VALUES (3,'wzs3@163.com','Jan Vandenbrande','','male','Arlington, VA','fighting!','SSIE at BU','DARPA/DSO','30-38','21-24','','');
+INSERT INTO `user_info` VALUES (4,'wzs4@163.com','Matt Mihelic, MD','','male','Graduate School of Medicine','work hard!','Associate Professor','University of Tennessee','23-24-29','21-30-40','','');
+INSERT INTO `user_info` VALUES (5,'wzs5@163.com','Xiao Liu','','female','Fayetteville, Arkansas','fighting!','Assistant Professor at University of Arkansas; Former Research Scientist at IBM T.J. Watson.','Industrial Engineering, University of Arkansas','30-23-40','21-34-36-24','','');
+INSERT INTO `user_info` VALUES (6,'wzs6@163.com','Diane Stevens','','male','Northern California','work hard!','Decades of involvement in the humanities, the arts, public service, and science.','UCLA, San Francisco State University','15-52-56-59-61-63','3-15-19-20','','');
+-- INSERT INTO `user_info` VALUES (1, 'wzs01@163.com', '张华', '', 'male', '天津市', 'fighting!', '博士', '研究员', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+-- INSERT INTO `user_info` VALUES (2, 'wzs02@163.com', '王小伟', '', 'male', '北京市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
+-- INSERT INTO `user_info` VALUES (3, 'wzs03@163.com', '王莞尔', '', 'female', '浙江省杭州市', 'work hard', '本科生', '学生', '1-2', '1-2-3', '对数据挖掘领域感兴趣', '研究方向为数据挖掘');
 
 -- ----------------------------
 -- Table structure for comment
@@ -339,13 +356,13 @@ CREATE TABLE `review` (
     `type` int (0) NULL default null,
     `passNum` int(0) NULL default null,
     `againstNum` int(0) NULL default null,
-    `topic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-    `citation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-    `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-    `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+    `topic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `citation` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+    `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
     `time` datetime(0) NULL DEFAULT NULL,
-    `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL
-)ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+    `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL
+)ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 INSERT INTO `review` VALUES (3, 1, 0, 0, 0, '计算机科学与技术', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 'title');
 INSERT INTO `review` VALUES (3, 1, 1, 0, 0, '计算机科学与技术', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 'title');
