@@ -11,7 +11,7 @@
       style="display: inline"
       type="primary"
       icon="el-icon-search"
-      @click="search">
+      @click="toSearch">
     </el-button>
     <el-badge class="button" v-if="!home">
       <el-button @click="logout">登出</el-button>
@@ -124,7 +124,7 @@
       toNewMGuess() {
         this.$router.push('/new_mguess');
       },
-      search() {
+      toSearch() {
         this.$router.push({
           path: '/search',
           query: {
