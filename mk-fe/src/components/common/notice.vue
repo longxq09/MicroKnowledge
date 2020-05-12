@@ -3,8 +3,8 @@
     <div class="noice_title">
       {{type_name}} | {{title}}
       <el-button class="bottom_tag" @click="toDetail"  v-if="!review">详情</el-button>
-      <el-button class="bottom_tag" v-if="user" @click="toModify">编辑</el-button>
-      <el-button class="bottom_tag" v-if="user" @click="toDelete">删除</el-button>
+      <el-button class="bottom_tag" v-if="authorId==accountId" @click="toModify">编辑</el-button>
+      <el-button class="bottom_tag" v-if="authorId==accountId" @click="toDelete">删除</el-button>
       <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
     </div>
     <nobr style="font-weight: 600;margin-left: 10px;">{{authorName}}</nobr>
@@ -79,7 +79,7 @@
       return {
         keywordTag: [],
         type_name: '',
-        toShow: true,
+        toShow: false,
       }
     },
     components: {
@@ -147,7 +147,7 @@
       } else {
         this.type_name = "微猜想";
       }
-      this.toShow=!(this.user||this.review);
+      this.toShow= !(this.user||this.review)
     },
   }
 </script>
