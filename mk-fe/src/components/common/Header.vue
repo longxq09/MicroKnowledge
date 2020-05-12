@@ -13,7 +13,7 @@
       icon="el-icon-search"
       @click="search">
     </el-button>
-    <el-badge class="button">
+    <el-badge class="button" v-if="!home">
       <el-button @click="logout">登出</el-button>
     </el-badge>
     <el-badge class="button" v-if="homepage">
@@ -50,6 +50,10 @@
       title: {
         type: String,
         default: '微知 MicroKnowledge'
+      },
+      home: {
+        type: Boolean,
+        default: false,
       },
       homepage: {
         type: Boolean,
