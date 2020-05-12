@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 
 @Mapper
-public interface UserInfoMap {
+public interface UserInfoMapper {
 
     UserInfo findInfoById(final int id);
 

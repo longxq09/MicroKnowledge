@@ -1,10 +1,13 @@
 package com.wzs.controller;
 
 import com.wzs.bean.Follow;
+import com.wzs.bean.Message;
 import com.wzs.bean.MicroNotice;
 import com.wzs.bean.UserInfo;
+import com.wzs.bean.selfEnum.MessageType;
 import com.wzs.service.FollowService;
 import com.wzs.service.MNoticeService;
+import com.wzs.service.MessageService;
 import com.wzs.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/follow")
@@ -28,6 +28,8 @@ public class FollowController {
     private MNoticeService mNoticeService;
     @Autowired
     private UserInfoService userInfoService;
+    @Autowired
+    private MessageService messageService;
 
     //查看关注的人的动态（微知识按时间排序）
     @CrossOrigin
@@ -107,15 +109,28 @@ public class FollowController {
         return userInfoList;
     }
 
+    private void addFollowMessage(UserInfo userInfo,int followingID){
+        Message message = new Message();
+        message.setUserId(followingID);
+        message.setType(MessageType.FOLLOW.getIndex());
+        message.setFromUserId(userInfo.getId());
+        message.setFromUserName(userInfo.getName());
+        message.setTime(new Date());
+        messageService.addMessage(message);
+    }
+
     //增加关注
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/addFollow", method = RequestMethod.POST)
     public int addFollow(HttpServletRequest request) {
         Follow follow = new Follow();
+        int followingID=Integer.parseInt(request.getParameter("followingID"));
         follow.setFollowerID(Integer.parseInt(request.getParameter("id")));
-        follow.setFollowingID(Integer.parseInt(request.getParameter("followingID")));
+        follow.setFollowingID(followingID);
         followService.insertFollow(follow);
+        //message
+        addFollowMessage((UserInfo) request.getSession().getAttribute("userInfo"),followingID);
         return 0;
     }
 

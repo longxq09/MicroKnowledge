@@ -1,12 +1,11 @@
 package com.wzs.mapper;
 
 import com.wzs.bean.Account;
-import com.wzs.bean.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 
 @Mapper
-public interface AccountMap {
+public interface AccountMapper {
 
     int getIdMatchCount(final int id, final String password);
 

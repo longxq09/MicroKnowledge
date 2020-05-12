@@ -1,11 +1,11 @@
 package com.wzs.controller;
 
-import com.wzs.bean.Account;
-import com.wzs.bean.Favorite;
+import com.wzs.bean.*;
 
-import com.wzs.bean.MicroNotice;
+import com.wzs.bean.selfEnum.MessageType;
 import com.wzs.service.FavoriteService;
 import com.wzs.service.MNoticeService;
+import com.wzs.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +23,9 @@ public class FavoriteController {
     private FavoriteService favoriteService;
     @Autowired
     private MNoticeService mNoticeService;
+    @Autowired
+    private MessageService messageService;
+
 
     public List<Favorite> getFavorite(int id) {
         Map<String, Object> queryMap = new HashMap();
@@ -71,16 +74,36 @@ public class FavoriteController {
         return noticeList;
     }
 
+    private void addFavoriteMessage(UserInfo userInfo,int noticeID){
+        Message message = new Message();
+        message.setType(MessageType.FAVORITE.getIndex());
+        message.setFromUserId(userInfo.getId());
+        message.setFromUserName(userInfo.getName());
+        message.setRelatedNoticeId(noticeID);
+        Map<String,Object> queryMap = new HashMap<>();
+        queryMap.put("id",noticeID);
+        MicroNotice notice =  mNoticeService.queryMNotice(queryMap).get(0);
+        message.setRelatedNoticeTitle(notice.getTitle());
+        message.setRelatedNoticeType(notice.getType());
+        message.setUserId(notice.getAuthorID());
+        message.setTime(new Date());
+        messageService.addMessage(message);
+    }
+
     //增加收藏
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/addFavorite", method = RequestMethod.POST)
     public int addFavorite(HttpServletRequest request) {
         Favorite favorite = new Favorite();
+        int noticeID=Integer.parseInt(request.getParameter("noticeID"));
         favorite.setUserID(Integer.parseInt(request.getParameter("id")));
-        favorite.setNoticeID(Integer.parseInt(request.getParameter("noticeID")));
+        favorite.setNoticeID(noticeID);
         favorite.setTime(new Date());
         favoriteService.insertFavorite(favorite);
+
+        //message
+        addFavoriteMessage((UserInfo) request.getSession().getAttribute("userInfo"),noticeID);
         return 0;
     }
 

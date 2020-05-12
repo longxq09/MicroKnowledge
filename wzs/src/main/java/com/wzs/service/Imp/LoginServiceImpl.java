@@ -1,7 +1,7 @@
 package com.wzs.service.Imp;
 
 import com.wzs.bean.Account;
-import com.wzs.mapper.AccountMap;
+import com.wzs.mapper.AccountMapper;
 import com.wzs.service.LoginService;
 import com.wzs.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,44 +13,44 @@ import javax.annotation.Resource;
 public class LoginServiceImpl implements LoginService {
 
     @Resource
-    private AccountMap accountMap;
+    private AccountMapper accountMapper;
 
     @Autowired
     private MailService mailService;
 
     @Override
     public boolean hasMatchUserById(int userId, String password) {
-        return accountMap.getIdMatchCount(userId, password) > 0;
+        return accountMapper.getIdMatchCount(userId, password) > 0;
     }
 
     @Override
     public boolean hasMatchUserByEmail(String email, String password) {
-        return accountMap.getEmailMatchCount(email, password) > 0;
+        return accountMapper.getEmailMatchCount(email, password) > 0;
     }
 
     @Override
     public Account findAccountById(int userId) {
-        return accountMap.findAccountById(userId);
+        return accountMapper.findAccountById(userId);
     }
 
     @Override
     public Account findAccountByEmail(String email) {
-        return accountMap.findAccountByEmail(email);
+        return accountMapper.findAccountByEmail(email);
     }
 
     @Override
     public boolean reUserPassword(int id, String newPassword) {
-        return accountMap.resetPassword(id, newPassword) > 0;
+        return accountMapper.resetPassword(id, newPassword) > 0;
     }
 
     @Override
     public String getUserPassword(int userId) {
-        return accountMap.getPassword(userId);
+        return accountMapper.getPassword(userId);
     }
 
     @Override
     public boolean addAccount(Account account) {
-        int res = accountMap.addAccount(account);
+        int res = accountMapper.addAccount(account);
         if (res > 0) {
             String code = account.getActiveCode();
             //主题
@@ -69,12 +69,12 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public Account findAccountByActiveCode(String activeCode) {
-        return accountMap.findAccountByActiveCode(activeCode);
+        return accountMapper.findAccountByActiveCode(activeCode);
     }
 
     @Override
     public boolean updateAccount(Account account) {
-        return accountMap.updateAccount(account);
+        return accountMapper.updateAccount(account);
     }
 }
 

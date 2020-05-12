@@ -27,7 +27,8 @@ public class UserInfoController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/user/picUpload", method = RequestMethod.POST)
-    public Object picUpload(String imgStr, HttpServletRequest request) {
+    public Object picUpload(HttpServletRequest request) {
+        String imgStr =request.getParameter("imgStr");
         int id = Integer.parseInt(request.getParameter("id"));
         String rootPath = "/root";   //图片存放根路径
         String sonPath = "/user_pic/";  //图片存放根目录下的子目录
@@ -53,8 +54,10 @@ public class UserInfoController {
             userInfoService.editUserInfo(userInfo);
             res.put("picture", imgPath);
             res.put("message", "上传成功！");
+            res.put("code", "0");
             return res;
         } catch (Exception e) {
+            res.put("code", "1");
             res.put("message", "上传失败！");
             return res;
         }
