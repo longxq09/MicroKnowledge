@@ -2,6 +2,7 @@ package com.wzs.mapper;
 
 import com.wzs.bean.Topic;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,9 @@ import java.util.Map;
 public interface TopicMapper {
 
     List<Topic> getALLValidTopic();
+
+    @Select("select * from topic where `id` = #{id}")
+    Topic getTopicById(int id);
 
     List<Topic> selectTopic(Map<String, Object> map);
 

@@ -1,6 +1,7 @@
 package com.wzs.service;
 
 import com.wzs.bean.Topic;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import java.util.Map;
 public interface TopicService {
 
     List<Topic> getALLValidTopic();
+
+    Topic getTopicById(int id);
 
     List<Topic> queryTopic(Map<String, Object> map);
 
