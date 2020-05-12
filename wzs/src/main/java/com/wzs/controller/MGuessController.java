@@ -1,10 +1,8 @@
 package com.wzs.controller;
 
-import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroGuess;
 import com.wzs.bean.MicroNotice;
-import com.wzs.service.MEvidService;
-import com.wzs.service.MGuessService;
+import com.wzs.bean.UserInfo;
 import com.wzs.service.MNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
-import static com.wzs.bean.Type.*;
+import static com.wzs.bean.selfEnum.NoticeType.*;
 
 /**
  * @Description: TODO
@@ -40,12 +38,14 @@ public class MGuessController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/addMGuess", method = RequestMethod.POST)
-    public int insertMGuess(HttpServletRequest request, HttpSession session) {
+    public int insertMGuess(HttpServletRequest request) {
         MicroGuess guess = new MicroGuess();
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+
         guess.setType(GUESS.getIndex());
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
-        guess.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
-        guess.setAuthorName(request.getParameter("authorName"));
+        guess.setAuthorID(userInfo.getId());
+        guess.setAuthorName(userInfo.getName());
         guess.setTopic(request.getParameter("topic"));
         guess.setReference(request.getParameter("reference"));
         guess.setKeywords(request.getParameter("keywords"));
@@ -65,7 +65,6 @@ public class MGuessController {
         MicroGuess guess = new MicroGuess();
         guess.setId(Integer.parseInt(request.getParameter("id")));
 
-        guess.setAuthorName(request.getParameter("authorName"));
         guess.setTopic(request.getParameter("topic"));
         guess.setReference(request.getParameter("reference"));
         guess.setKeywords(request.getParameter("keywords"));
@@ -103,7 +102,8 @@ public class MGuessController {
 
         Map<String, Object> retMap = new HashMap();
         retMap.put("topic", guess.getTopic());
-        retMap.put("reference", guess.getReference());
+        String reference = guess.getReference();
+        retMap.put("reference", reference);
         retMap.put("keywords", guess.getKeywords());
         retMap.put("title", guess.getTitle());
         retMap.put("summary", guess.getSummary());

@@ -1,7 +1,7 @@
 package com.wzs.service.Imp;
 
 import com.wzs.bean.UserInfo;
-import com.wzs.mapper.UserInfoMap;
+import com.wzs.mapper.UserInfoMapper;
 import com.wzs.service.UserInfoService;
 import org.springframework.stereotype.Service;
 
@@ -11,32 +11,29 @@ import java.util.ArrayList;
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
     @Resource
-    private UserInfoMap userInfoMap;
+    private UserInfoMapper userInfoMapper;
 
     @Override
-    public UserInfo getUserInfo(long Id) {
-        return userInfoMap.findInfoById(Id);
+    public UserInfo getUserInfo(int Id) {
+        return userInfoMapper.findInfoById(Id);
     }
 
     @Override
     public boolean editUserInfo(UserInfo userInfo) {
-        return userInfoMap.editUserInfo(userInfo) > 0;
+        return userInfoMapper.editUserInfo(userInfo) > 0;
     }
 
     @Override
-    public long addUserInfo(UserInfo userInfo) {
-        /*if (userInfoMap.findInfoByEmail(userInfo.getEmail()) != null) {
-            return -1;
-        }*/
-        if (userInfoMap.getEmailCount(userInfo.getEmail()) != 0) {
+    public int addUserInfo(UserInfo userInfo) {
+        if (userInfoMapper.getEmailCount(userInfo.getEmail()) != 0) {
             return -1;
         }
-        userInfoMap.addUserInfo(userInfo);
+        userInfoMapper.addUserInfo(userInfo);
         return 1;
     }
 
     @Override
     public ArrayList<UserInfo> getAllInfos() {
-        return userInfoMap.getAllInfos();
+        return userInfoMapper.getAllInfos();
     }
 }

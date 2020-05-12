@@ -1,5 +1,6 @@
 package com.wzs.controller;
 
+import com.wzs.bean.Comment;
 import com.wzs.bean.MicroNotice;
 import com.wzs.service.MNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +30,22 @@ public class MNoticeController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getNotices", method = RequestMethod.GET)
-    public List<MicroNotice> queryMNotice(Map<String, Object> queryMap) {
-        return noticeService.queryMNotice(queryMap);
+    public List<MicroNotice> getNotices() {
+        Map<String, Object> queryMap = new HashMap<>();
+        List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
+        noticeList.sort(Comparator.comparing(MicroNotice::getTime));
+        return noticeList;
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/getSelfNotices", method = RequestMethod.GET)
+    public List<MicroNotice> getSelfNotices(HttpServletRequest request) {
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put("authorId",request.getParameter("id"));
+        List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
+        noticeList.sort(Comparator.comparing(MicroNotice::getTime));
+        return noticeList;
     }
 
     @CrossOrigin
@@ -39,7 +55,6 @@ public class MNoticeController {
         noticeService.deleteMNotice(id);
         return 0;
     }
-
 
     @CrossOrigin
     @ResponseBody

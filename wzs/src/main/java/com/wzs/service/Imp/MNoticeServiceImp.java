@@ -29,6 +29,11 @@ public class MNoticeServiceImp implements MNoticeService {
     }
 
     @Override
+    public MicroNotice getMNoticeById(int id) {
+        return noticeMapper.getMNoticeById(id);
+    }
+
+    @Override
     public boolean insertMNotice(MicroNotice notice) {
         return noticeMapper.insertMNotice(notice);
     }

@@ -2,6 +2,7 @@ package com.wzs.controller;
 
 import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroNotice;
+import com.wzs.bean.UserInfo;
 import com.wzs.service.MNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static com.wzs.bean.Type.*;
+import static com.wzs.bean.selfEnum.NoticeType.EVIDENCE;
 
 /**
  * @Description: TODO
@@ -35,13 +39,13 @@ public class MEvidController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/addMEvid", method = RequestMethod.POST)
-    public int insertMEvid(HttpServletRequest request , HttpSession session){
+    public int insertMEvid(HttpServletRequest request){
         MicroEvidence evid = new MicroEvidence();
-//        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
 
         evid.setType(EVIDENCE.getIndex());
-        evid.setAuthorID(Integer.parseInt(request.getParameter("authorId")));
-        evid.setAuthorName(request.getParameter("authorName"));
+        evid.setAuthorID(userInfo.getId());
+        evid.setAuthorName(userInfo.getName());
         evid.setTopic(request.getParameter("topic"));
         evid.setReference(request.getParameter("citedPaper"));
         evid.setKeywords(request.getParameter("keywords"));
@@ -60,7 +64,6 @@ public class MEvidController {
         MicroEvidence evid = new MicroEvidence();
         evid.setId(Integer.parseInt(request.getParameter("id")));
 
-        evid.setAuthorName(request.getParameter("authorName"));
         evid.setTopic(request.getParameter("topic"));
         evid.setReference(request.getParameter("reference"));
         evid.setKeywords(request.getParameter("keywords"));

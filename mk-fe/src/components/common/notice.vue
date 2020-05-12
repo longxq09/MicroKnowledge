@@ -2,18 +2,18 @@
   <div class="notice">
     <div class="noice_title">
       {{type_name}} | {{title}}
-      <el-button class="bottom_tag" @click="toDetail">详情</el-button>
+      <el-button class="bottom_tag" @click="toDetail"  v-if="!review">详情</el-button>
+      <el-button class="bottom_tag" v-if="user" @click="toModify">编辑</el-button>
+      <el-button class="bottom_tag" v-if="user" @click="toDelete">删除</el-button>
+      <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
     </div>
     <nobr style="font-weight: 600;margin-left: 10px;">{{authorName}}</nobr>
-    <el-tag key="tag" v-for="tag in keywordTag" class="keyword">{{tag}}</el-tag>
+    <el-tag :key="tag" v-for="tag in keywordTag" class="keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
-    <el-button class="bottom_tag">评论</el-button>
-    <el-button class="bottom_tag">收藏</el-button>
-    <el-button class="bottom_tag">点赞</el-button>
-    <el-button class="bottom_tag">关注作者</el-button>
-    <el-button class="bottom_tag">举报内容</el-button>
-    <el-button class="bottom_tag" v-if="user" @click="toModify">编辑</el-button>
-    <el-button class="bottom_tag" v-if="user" @click="toDelete">删除</el-button>
+    <el-button class="bottom_tag" v-if="toShow">收藏</el-button>
+    <el-button class="bottom_tag" v-if="toShow">点赞</el-button>
+    <el-button class="bottom_tag" v-if="toShow">关注作者</el-button>
+    <el-button class="bottom_tag" v-if="toShow">举报内容</el-button>
   </div>
 </template>
 
@@ -49,22 +49,44 @@
         type: Boolean,
         default: false
       },
+      review: {
+        type: Boolean,
+        default: false
+      },
     },
 
     data() {
       return {
         keywordTag: [],
         type_name: '',
+        toShow: true,
       }
     },
     methods: {
-      toModify() {
+      toReview() {
         this.$router.push({
-          path: '/modify_mevid/',
+          path: '/review/',
           query: {
             id: this.id
           }
         });
+      },
+      toModify() {
+        if (this.type == 1) {
+          this.$router.push({
+            path: '/modify_mevid/',
+            query: {
+              id: this.id
+            }
+          });
+        } else {
+          this.$router.push({
+            path: '/modify_mguess/',
+            query: {
+              id: this.id
+            }
+          });
+        }
       },
       toDetail() {
         this.$router.push({
@@ -101,6 +123,7 @@
       } else {
         this.type_name = "微猜想";
       }
+      this.toShow=!(this.user||this.review);
     },
   }
 </script>
@@ -134,7 +157,6 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     margin: 10px;
-    margin-bottom: 1px;
   }
 
   .keyword {
@@ -144,8 +166,8 @@
   }
 
   .bottom_tag {
-    margin: 10px;
-    margin-right: 0;
+    margin-left: 10px;
+    margin-bottom: 10px;
     line-height: 7px;
     height: 25px;
   }

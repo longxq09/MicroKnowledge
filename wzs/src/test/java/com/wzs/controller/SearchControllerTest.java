@@ -43,7 +43,7 @@ class SearchControllerTest {
             }
         }
         System.out.println(topicList);
-        int kind =1;
+        int kind =0;
         ArrayList<Integer> typeList = new ArrayList<>();
         if (kind == 1) {
             typeList.add(1);

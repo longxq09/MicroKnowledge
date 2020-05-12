@@ -8,7 +8,7 @@
 		    <span>关键字：</span>
 		    <el-input
 		      style="width: 30%; margin-right: 20px"
-		      v-model="content"
+		      v-model="dataForm.word"
 		      placeholder="请输入内容">
 		    </el-input>
 		    <span>类型：</span>
@@ -41,10 +41,19 @@
           style="width: 8%; float: right"
           type="primary"
           round
-          @click="getSearchResult">
+          @click="click">
           高级搜索
         </el-button>
       </div>
+      <p>找到{{resultNum}}条结果。</p>
+      <v-notice :key="value.id" v-for="(value,index) in searchResult"
+        v-bind:id="value.id"
+        v-bind:type="value.type"
+        v-bind:authorName="value.authorName"
+        v-bind:keywords="value.keywords"
+        v-bind:title="value.title"
+        v-bind:summary="value.summary">
+      </v-notice>
 		</el-main>
 		<v-footer></v-footer>
 	</el-container>
@@ -68,7 +77,9 @@ import vNotice from './common/Notice.vue';
         topics: Array,
         filterType: [],
         filterTopic: [],
-        content: ''
+        dataForm: {word: '', topic: '', kind: 0},
+        searchResult: Array,
+        resultNum: 0
       }
     },
 		components: {
@@ -77,12 +88,15 @@ import vNotice from './common/Notice.vue';
 			vNotice
 		},
 		mounted() {
-      this.getTopic();
-      this.content = this.$route.query.content
+		  this.getTopic();
+      this.getSearchResult()
+    },
+    watch: {
+      "$route": "getSearchResult"
     },
 		methods: {
 		  getTopic() {
-		    this.axios.get('/topic')
+		    this.axios.get('/topic/getTopicList')
           .then((res) => {
             this.topics = res.data
           })
@@ -90,14 +104,39 @@ import vNotice from './common/Notice.vue';
             console.log(error)
           })
 		  },
+		  click() {
+		    this.dataForm.kind = 0
+        if (this.filterType.length == 1) {
+          this.dataForm.kind = this.filterType[0] == '1' ? 1 : 2
+        }
+        this.dataForm.topic = ''
+        for (var i = 0; i < this.filterTopic.length; i++) {
+          this.dataForm.topic = this.dataForm.topic + this.filterTopic[i].toString() + "-"
+        }
+        this.dataForm.topic = this.dataForm.topic.slice(0, -1)
+		    this.$router.push({
+          query: {
+            word: this.dataForm.word,
+            kind: this.dataForm.kind,
+            topic: this.dataForm.topic
+          }
+        }).catch(err => {err})
+		  },
 		  getSearchResult() {
-		    var params = new URLSearchParams()
-		    params.append('word', this.content)
-		    params.append('kind', 0)
-		    params.append('topic', '')
-		    this.axios.get('/search', params)
+		    this.dataForm.word = this.$route.query.word
+        this.dataForm.kind = this.$route.query.kind
+        this.filterType = this.dataForm.kind == 1 ? [1] : this.dataForm.kind == 2 ? [2] : [1, 2]
+        this.dataForm.topic = this.$route.query.topic
+        this.filterTopic = []
+        if (this.dataForm.topic != '') {
+          var t = this.dataForm.topic.split('-')
+          for (var i = 0; i < t.length; i++)
+            this.filterTopic.push(parseInt(t[i]))
+        }
+		    this.axios.get('/search', {params: this.dataForm})
 		      .then((res) => {
-		        console.log(res.data)
+		        this.searchResult = res.data.notice
+		        this.resultNum = res.data.notice.length
 		      })
 		      .catch((error) => {
 		        console.log(error)
@@ -115,5 +154,6 @@ import vNotice from './common/Notice.vue';
   }
 
   .filter {
+    margin-bottom: 20px;
   }
 </style>

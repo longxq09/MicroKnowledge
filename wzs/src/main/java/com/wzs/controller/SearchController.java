@@ -34,11 +34,10 @@ public class SearchController {
     public @ResponseBody
     Object getSearch(HttpServletRequest request) {
         String word = request.getParameter("word");     //关键词
-        System.out.println(word);
         int kind = Integer.parseInt(request.getParameter("kind"));  // Evidence-Guess: 00,01,10,11
         String topic = request.getParameter("topic");     //id-id-id
         ArrayList<String> topicList = new ArrayList<>();
-        if (topic == null) {
+        if (topic.equals("")) {
             topicList.add("%");         //标签为空
         } else {
             String[] tmp = topic.split("-");

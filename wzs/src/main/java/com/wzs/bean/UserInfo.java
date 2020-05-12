@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class UserInfo implements Serializable {
 
-    private long id;
+    private int id;
     private String email;
     private String name;
     private String picture;     //头像url
@@ -20,11 +20,11 @@ public class UserInfo implements Serializable {
     private String contribution;            //贡献
 
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

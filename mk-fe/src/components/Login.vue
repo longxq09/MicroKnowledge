@@ -28,26 +28,24 @@
         var params = new URLSearchParams();
         params.append('email', this.dataForm.email);
         params.append('password',this.dataForm.password);
+        var remindTitle = '登陆失败'
+        var remindContent = '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧'
 				this.axios.post('/user/login', params)
           .then((res)=>{
-            var remindType = res.data.code == 0 ? 'success' : 'info';
-            var remindTitle = res.data.code == 0 ? '登陆成功' : '登陆失败';
-            var remindContent = res.data.code == 0 ? '欢迎来到微知！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
-            if (res.data.code==0){
-              this.$router.push("/user");
+            if (res.data.code == 0) {
+              remindTitle = '登陆成功'
+              remindContent = '欢迎来到微知！'
+              localStorage.setItem("accountId", res.data.id)
+              localStorage.setItem("email", this.dataForm.email)
+              this.$router.push("/homepage");
+            } else if (res.data.code == 2) {
+              remindContent = '未进行邮箱验证，请前往邮箱查看验证邮件！'
             }
 						this.$alert(remindContent, remindTitle, {
-              confirmButtonText: '确定',
-              callback: action => {
-                this.$message({
-                  type: remindType,
-                  message: remindTitle
-                });
-              }
+              confirmButtonText: '确定'
             });
           })
           .catch((res)=>{
-						this.loginFail = true;
             console.log(res.message);
           });
       },

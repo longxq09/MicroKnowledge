@@ -1,19 +1,19 @@
 <template>
   <el-container>
     <el-header>
-      <v-head v-bind:title="head_title"></v-head>
+      <v-head v-bind:title="head_title" v-bind:homepage=true v-bind:detail=true></v-head>
     </el-header>
     <el-main>
       <div class="noice_title">{{form.type_str}} | {{form.title}}</div>
       <nobr style="font-weight: 600;margin-left: 10px;">{{form.authorName}}</nobr>
       <nobr style="font-weight: 400;font-size: 15px;margin-left: 10px;">{{form.time}}</nobr>
-      <el-tag key="tag" v-for="tag in keyWordList" class="keyword">{{tag}}</el-tag>
+      <el-tag :key="tag" v-for="tag in keyWordList" class="keyword">{{tag}}</el-tag>
       <div style="margin: 10px;margin-top: 30px;margin-bottom: 30px;">{{form.text}}</div>
       <div class="bottom_text">引用
-        <nobr key="reference" v-for="reference in referenceList"> | {{reference}}</nobr>
+        <nobr :key="reference" v-for="reference in referenceList"> | {{reference}}</nobr>
       </div>
       <div class="bottom_text">分类
-        <nobr key='label' v-for="label in labelList"> | {{label}}</nobr>
+        <nobr :key='label' v-for="label in labelList"> | {{label}}</nobr>
       </div>
       <el-button class="bottom_tag">收藏</el-button>
       <el-button class="bottom_tag">点赞</el-button>
@@ -64,6 +64,7 @@
         refresh: true,
         radioValue: true,
         reply_num: 0,
+        user: true,
         form: {
           type_str: "微证据",
           title: '震惊！冯如杯要写不完了？！',
@@ -87,6 +88,32 @@
       this.getUserInfo();
     },
     methods: {
+      toModify() {
+        this.$router.push({
+          path: '/modify_mevid/',
+          query: {
+            id: this.id
+          }
+        });
+      },
+      toDelete() {
+        var params = new URLSearchParams();
+        params.append('id', this.id);
+        this.axios.post('/mNotice/deleteNotice', params)
+          .then((res) => {
+            var remindTitle = res.data === 0 ? '删除微证据成功' : '删除微证据失败';
+            var remindContent = res.data === 0 ? '删除微证据成功！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
+            this.$alert(remindContent, remindTitle, {
+              confirmButtonText: '确定'
+            });
+            if (res.data === 0) {
+              this.$router.push('/homepage');
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
       changFlag(a) {
         console.log("we catch the change!!!!!!!!!!!!!!!");
         this.refresh = false;
@@ -95,7 +122,6 @@
         this.axios.post('/comment/getCommentsOfNotice', params2)
           .then((res) => {
             this.exhibition = res.data;
-            // this.reply_num = this.reply_num + 1;
             this.reply_num = this.exhibition.length;
           })
           .catch((error) => {
@@ -169,7 +195,6 @@
               this.axios.post('/comment/getCommentsOfNotice', params2)
                 .then((res) => {
                   this.exhibition = res.data;
-                  // this.reply_num = this.reply_num + 1;
                   this.reply_num = this.exhibition.length;
                 })
                 .catch((error) => {

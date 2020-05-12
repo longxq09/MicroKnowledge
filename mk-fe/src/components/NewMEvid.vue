@@ -22,7 +22,7 @@
         </el-form-item>
 
         <el-form-item label="分类">
-          <el-checkbox v-for="(value,index) in labelList" key="value.topicName" @change="chooseItem(value.id)">{{value.topicName}}</el-checkbox>
+          <el-checkbox v-for="(value,index) in labelList" :key="value.topicName" @change="chooseItem(value.id)">{{value.topicName}}</el-checkbox>
         </el-form-item>
 
         <el-form-item label="主题">

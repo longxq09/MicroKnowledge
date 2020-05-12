@@ -1,22 +1,21 @@
-package com.wzs.bean;
+package com.wzs.bean.selfEnum;
 
 /**
  * @Description: TODO
  * @Author Wazak
- * @Date 2020/4/30 20:49
+ * @Date 2020/5/11 21:40
  */
-public enum Type {
-    EVIDENCE(1),
-    GUESS(2);
+public enum ReviewType {
+    YES(1),
+    NO(-1);
 
     private int index;
 
-    Type(int index){
+    ReviewType(int index){
         this.index = index;
     }
 
     public int getIndex(){
         return this.index;
     }
-
 }
