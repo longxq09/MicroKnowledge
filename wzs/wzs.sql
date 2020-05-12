@@ -388,8 +388,36 @@ CREATE TABLE `like` (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of comment
+-- Table structure for message
 -- ----------------------------
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT,
+  `userId` int(0) NULL DEFAULT NULL,
+  `type` int(0) NULL DEFAULT 0,
+  `fromUserId` int(0) NULL DEFAULT NULL,
+  `fromUserName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `relatedNoticeId` int(0) NULL DEFAULT NULL,
+  `relatedNoticeType` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `relatedNoticeTitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `time` datetime(0) NULL DEFAULT NULL,
+  `flag` int(0) NULL DEFAULT 1,
+  `detail` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of message
+-- ----------------------------
+INSERT INTO `message` VALUES (1, 1, 1, 2, 'Kenneth Frumkin', 1, '1', 'title1', '2020-05-01 20:42:45', 0, NULL);
+INSERT INTO `message` VALUES (2, 1, 2, 2, 'Kenneth Frumkin', 2, '2', 'title2', '2020-05-08 17:33:46', 0, NULL);
+INSERT INTO `message` VALUES (3, 2, 5, 1, 'Changqing Cheng', NULL, NULL, 'title3', '2020-05-08 17:33:45', 0, NULL);
+INSERT INTO `message` VALUES (4, 1, 4, 3, 'Jan Vandenbrande', 1, '1', 'title1', '2020-05-08 17:33:44', 0, '我评论了你');
+INSERT INTO `message` VALUES (5, 1, 4, 1, 'Changqing Cheng', 1, '1', 'title1', '2020-05-10 21:11:44', 0, '这是一条评论消息!');
+INSERT INTO `message` VALUES (6, 1, 5, 1, 'Changqing Cheng', 1, '1', 'title1', '2020-05-10 21:14:27', 0, '这是一条评论回复的消息');
+INSERT INTO `message` VALUES (7, 1, 6, 0, NULL, 1, '1', 'title', '2020-05-11 22:57:55', 0, NULL);
+INSERT INTO `message` VALUES (8, 1, 7, 0, NULL, 1, '1', 'title', '2020-05-11 23:01:51', 0, NULL);
+
 
 
 SET FOREIGN_KEY_CHECKS = 1;

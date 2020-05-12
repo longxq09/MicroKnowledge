@@ -38,13 +38,7 @@ public class FavoriteController {
         return mNoticeService.selectMNoticeByFavorite(favoriteList);
     }
 
-    //查看是否收藏
-    @CrossOrigin
-    @ResponseBody
-    @RequestMapping(value = "/checkFavorite", method = RequestMethod.GET)
-    public int checkFavorite(HttpServletRequest request) {
-        int userID = Integer.parseInt(request.getParameter("id"));
-        int noticeID = Integer.parseInt(request.getParameter("noticeID"));
+    private int findFavorite(int userID, int noticeID) {
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("userID", userID);
         queryMap.put("noticeID", noticeID);
@@ -54,6 +48,16 @@ public class FavoriteController {
         } else {
             return -1;
         }
+    }
+
+    //查看是否收藏
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/checkFavorite", method = RequestMethod.GET)
+    public int checkFavorite(HttpServletRequest request) {
+        int userID = Integer.parseInt(request.getParameter("id"));
+        int noticeID = Integer.parseInt(request.getParameter("noticeID"));
+        return findFavorite(userID, noticeID);
     }
 
 
@@ -74,15 +78,15 @@ public class FavoriteController {
         return noticeList;
     }
 
-    private void addFavoriteMessage(UserInfo userInfo,int noticeID){
+    private void addFavoriteMessage(UserInfo userInfo, int noticeID) {
         Message message = new Message();
         message.setType(MessageType.FAVORITE.getIndex());
         message.setFromUserId(userInfo.getId());
         message.setFromUserName(userInfo.getName());
         message.setRelatedNoticeId(noticeID);
-        Map<String,Object> queryMap = new HashMap<>();
-        queryMap.put("id",noticeID);
-        MicroNotice notice =  mNoticeService.queryMNotice(queryMap).get(0);
+        Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put("id", noticeID);
+        MicroNotice notice = mNoticeService.queryMNotice(queryMap).get(0);
         message.setRelatedNoticeTitle(notice.getTitle());
         message.setRelatedNoticeType(notice.getType());
         message.setUserId(notice.getAuthorID());
@@ -95,15 +99,19 @@ public class FavoriteController {
     @ResponseBody
     @RequestMapping(value = "/addFavorite", method = RequestMethod.POST)
     public int addFavorite(HttpServletRequest request) {
+        int userID = Integer.parseInt(request.getParameter("id"));
+        int noticeID = Integer.parseInt(request.getParameter("noticeID"));
+        if (findFavorite(userID, noticeID) == 0) {  //已经收藏
+            return -1;
+        }
         Favorite favorite = new Favorite();
-        int noticeID=Integer.parseInt(request.getParameter("noticeID"));
-        favorite.setUserID(Integer.parseInt(request.getParameter("id")));
+        favorite.setUserID(userID);
         favorite.setNoticeID(noticeID);
         favorite.setTime(new Date());
         favoriteService.insertFavorite(favorite);
 
         //message
-        addFavoriteMessage((UserInfo) request.getSession().getAttribute("userInfo"),noticeID);
+        addFavoriteMessage((UserInfo) request.getSession().getAttribute("userInfo"), noticeID);
         return 0;
     }
 
@@ -112,9 +120,15 @@ public class FavoriteController {
     @ResponseBody
     @RequestMapping(value = "/deleteFavorite", method = RequestMethod.POST)
     public int deleteFavorite(HttpServletRequest request) {
+        int userID = Integer.parseInt(request.getParameter("id"));
+        int noticeID = Integer.parseInt(request.getParameter("noticeID"));
+        if (findFavorite(userID, noticeID) == -1) { //未收藏
+            return -1;
+        }
         Favorite favorite = new Favorite();
-        favorite.setUserID(Integer.parseInt(request.getParameter("id")));
-        favorite.setNoticeID(Integer.parseInt(request.getParameter("noticeID")));
+        favorite.setUserID(userID);
+        favorite.setNoticeID(noticeID);
+
         favoriteService.deleteFavorite(favorite);
         return 0;
     }
