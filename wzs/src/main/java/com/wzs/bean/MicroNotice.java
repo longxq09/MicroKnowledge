@@ -2,6 +2,8 @@ package com.wzs.bean;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -22,6 +24,7 @@ public class MicroNotice {
 
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private Date time = null;
+    private String showTime = null;
     private int Judge = 0;
 
     public int getId() {
@@ -111,4 +114,14 @@ public class MicroNotice {
     public void setAuthorName(String authorName) {
         this.authorName = authorName;
     }
+
+    public String getShowTime() {
+        DateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分");
+        return format.format(time);
+    }
+
+    public void setShowTime(String showTime) {
+        this.showTime = showTime;
+    }
+
 }
