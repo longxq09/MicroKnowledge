@@ -41,7 +41,7 @@ public class CommentController {
     public List<Comment> getCommentsOfNotice(HttpServletRequest request) {
         int noticeId = Integer.parseInt(request.getParameter("noticeId"));
         List<Comment> commentList = commentService.selectCommentOfANotice(noticeId);
-        commentList.sort(Comparator.comparing(Comment::getTime));
+        commentList.sort(Comparator.comparing(Comment::getTime).reversed());
         return commentList;
     }
 

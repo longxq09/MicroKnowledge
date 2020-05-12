@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <v-head v-bind:title="head_title"></v-head>
+      <v-head v-bind:title="head_title" v-bind:homepage=true v-bind:detail=true></v-head>
     </el-header>
     <el-main>
       <div class="noice_title">{{form.type_str}} | {{form.title}}</div>

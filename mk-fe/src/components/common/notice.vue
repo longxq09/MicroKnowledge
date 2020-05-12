@@ -2,51 +2,18 @@
   <div class="notice">
     <div class="noice_title">
       {{type_name}} | {{title}}
-      <el-button class="bottom_tag" @click="toDetail">详情</el-button>
+      <el-button class="bottom_tag" @click="toDetail"  v-if="!review">详情</el-button>
+      <el-button class="bottom_tag" v-if="user" @click="toModify">编辑</el-button>
+      <el-button class="bottom_tag" v-if="user" @click="toDelete">删除</el-button>
+      <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
     </div>
     <nobr style="font-weight: 600;margin-left: 10px;">{{authorName}}</nobr>
     <el-tag :key="tag" v-for="tag in keywordTag" class="keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
-    <div style="display: inline-block; vertical-align: bottom">
-      <el-button v-if="like"
-                 icon="el-icon-sugar"
-                 type="primary"
-                 class="bottom_tag"
-                 @click="cancelLike">{{likeNum}}
-      </el-button>
-      <el-button v-else
-                 class="bottom_tag"
-                 icon="el-icon-sugar"
-                 @click="addLike">{{likeNum}}
-      </el-button>
-    </div>
-    <div style="display: inline-block; vertical-align: bottom">
-      <el-button v-if="favorite"
-                 icon="el-icon-star-on"
-                 type="primary"
-                 class="bottom_tag"
-                 @click="cancelFavorite">
-      </el-button>
-      <el-button v-else
-                 class="bottom_tag"
-                 icon="el-icon-star-off"
-                 @click="addFavorite">
-      </el-button>
-    </div>
-    <div style="display: inline-block">
-      <el-button v-if="follow"
-                 class="bottom_tag"
-                 type="primary"
-                 @click="cancelFollow">取消关注
-      </el-button>
-      <el-button v-else
-                 class="bottom_tag"
-                 @click="addFollow">关注作者
-      </el-button>
-    </div>
-    <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
-    <el-button class="bottom_tag" v-if="user" @click="toModify">编辑</el-button>
-    <el-button class="bottom_tag" v-if="user" @click="toDelete">删除</el-button>
+    <el-button class="bottom_tag" v-if="toShow">收藏</el-button>
+    <el-button class="bottom_tag" v-if="toShow">点赞</el-button>
+    <el-button class="bottom_tag" v-if="toShow">关注作者</el-button>
+    <el-button class="bottom_tag" v-if="toShow">举报内容</el-button>
   </div>
 </template>
 
@@ -56,15 +23,11 @@
     props: {
       id: {
         type: Number,
-        default: 0
+        default: 1
       },
       type: {
         type: Number,
         default: 1
-      },
-      authorId: {
-        type: Number,
-        default: 0
       },
       authorName: {
         type: String,
@@ -86,17 +49,17 @@
         type: Boolean,
         default: false
       },
+      review: {
+        type: Boolean,
+        default: false
+      },
     },
 
     data() {
       return {
         keywordTag: [],
         type_name: '',
-        review: true,
-        favorite: false,
-        follow: false,
-        like: false,
-        likeNum: 0
+        toShow: true,
       }
     },
     methods: {
@@ -108,16 +71,23 @@
           }
         });
       },
-
       toModify() {
-        this.$router.push({
-          path: '/modify_mevid/',
-          query: {
-            id: this.id
-          }
-        });
+        if (this.type == 1) {
+          this.$router.push({
+            path: '/modify_mevid/',
+            query: {
+              id: this.id
+            }
+          });
+        } else {
+          this.$router.push({
+            path: '/modify_mguess/',
+            query: {
+              id: this.id
+            }
+          });
+        }
       },
-
       toDetail() {
         this.$router.push({
           path: '/detail/',
@@ -144,156 +114,17 @@
           .catch((error) => {
             console.log(error);
           });
-      },
-
-      getNoticeInfo() {
-        this.getFavoriteInfo()
-        this.getFollowInfo()
-        this.getLikeInfo()
-      },
-
-      getFavoriteInfo() {
-        this.axios.get('/favorite/checkFavorite', {
-          params: {
-            id: localStorage.getItem("accountId"),
-            noticeID: this.id
-          }
-        })
-          .then((res) => {
-            if (res.data == 0) {
-              this.favorite = true
-            }
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
-
-      getFollowInfo() {
-        this.axios.get('/follow/checkFollow', {
-          params: {
-            id: localStorage.getItem("accountId"),
-            followingID: this.authorId
-          }
-        })
-          .then((res) => {
-            if (res.data == 0) {
-              this.follow = true
-            }
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
-
-      getLikeInfo() {
-        this.axios.get('/like/checkLikeState', {
-          params: {
-            id: localStorage.getItem("accountId"),
-            noticeId: this.id
-          }
-        })
-          .then((res) => {
-            if (res.data.isLike == 1) {
-              this.like = true
-            }
-            this.likeNum = res.data.like_num
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
-
-      addFavorite() {
-        var params = new URLSearchParams()
-        params.append('id', localStorage.getItem("accountId"))
-        params.append('noticeID', this.id)
-        this.axios.post('/favorite/addFavorite', params)
-          .then((res) => {
-            this.favorite = true
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
-
-      cancelFavorite() {
-        var params = new URLSearchParams()
-        params.append('id', localStorage.getItem("accountId"))
-        params.append('noticeID', this.id)
-        this.axios.post('/favorite/deleteFavorite', params)
-          .then((res) => {
-            this.favorite = false
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
-
-      addFollow() {
-        var params = new URLSearchParams()
-        params.append('id', localStorage.getItem("accountId"))
-        params.append('followingID', this.authorId)
-        this.axios.post('/follow/addFollow', params)
-          .then((res) => {
-            this.follow = true
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
-
-      cancelFollow() {
-        var params = new URLSearchParams()
-        params.append('id', localStorage.getItem("accountId"))
-        params.append('followingID', this.authorId)
-        this.axios.post('/follow/deleteFollow', params)
-          .then((res) => {
-            this.follow = false
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
-
-      addLike() {
-        var params = new URLSearchParams()
-        params.append('id', localStorage.getItem("accountId"))
-        params.append('noticeId', this.id)
-        this.axios.post('/like/likeThis', params)
-          .then((res) => {
-            this.like = true
-            this.likeNum += 1
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
-
-      cancelLike() {
-        var params = new URLSearchParams()
-        params.append('id', localStorage.getItem("accountId"))
-        params.append('noticeId', this.id)
-        this.axios.post('/like/cancelLike', params)
-          .then((res) => {
-            this.like = false
-            this.likeNum -= 1
-          })
-          .catch((error) => {
-            console.log(error)
-          })
       }
     },
-
     mounted() {
-      this.keywordTag = this.keywords.split('-')
+      this.keywordTag = this.keywords.split('-');
       if (this.type == 1) {
-        this.type_name = "微证据"
+        this.type_name = "微证据";
       } else {
-        this.type_name = "微猜想"
+        this.type_name = "微猜想";
       }
-      this.getNoticeInfo()
-    }
+      this.toShow=!(this.user||this.review);
+    },
   }
 </script>
 
@@ -326,7 +157,6 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     margin: 10px;
-    margin-bottom: 1px;
   }
 
   .keyword {
@@ -336,9 +166,9 @@
   }
 
   .bottom_tag {
-    margin: 12px;
-    margin-right: 0;
-    line-height: 8px;
-    height: 32px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    line-height: 7px;
+    height: 25px;
   }
 </style>

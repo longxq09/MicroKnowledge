@@ -22,6 +22,9 @@
     <el-badge class="button" v-if="homepage">
       <el-button @click="toNewMGuess">发布新猜想</el-button>
     </el-badge>
+    <el-badge class="button" v-if="detail">
+      <el-button @click="toHomePage">回到首页</el-button>
+    </el-badge>
     <el-badge class="button" v-if="user">
       <el-button @click="toHomePage">回到首页</el-button>
     </el-badge>
@@ -56,7 +59,11 @@
       user: {
         type: Boolean,
         default: false
-      }
+      },
+      detail: {
+        type: Boolean,
+        default: false
+      },
     },
     data() {
       return {

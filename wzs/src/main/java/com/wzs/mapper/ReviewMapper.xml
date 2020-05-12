@@ -6,12 +6,5 @@
         review
     </sql>
 
-    <sql id="BASE_COLUMN">
-        `id`, `authorId`, `type`, `passNum`, `againstNum`, `topic`, `citation`, `keywords`, `summary`, `time`, `title`
-    </sql>
 
-
-    <select id="getReviewingMicroPubs" resultType="com.wzs.bean.Review">
-        SELECT * FROM review
-    </select>
 </mapper>
