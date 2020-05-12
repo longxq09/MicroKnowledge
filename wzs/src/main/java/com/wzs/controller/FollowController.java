@@ -48,13 +48,7 @@ public class FollowController {
         return noticeList;
     }
 
-    //查看是否关注
-    @CrossOrigin
-    @ResponseBody
-    @RequestMapping(value = "/checkFollow", method = RequestMethod.GET)
-    public int checkFollow(HttpServletRequest request) {
-        int followerID = Integer.parseInt(request.getParameter("id"));
-        int followingID = Integer.parseInt(request.getParameter("followingID"));
+    private int findFollow(int followerID, int followingID) {
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("followerID", followerID);
         queryMap.put("followingID", followingID);
@@ -66,8 +60,18 @@ public class FollowController {
         }
     }
 
+    //查看是否关注
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/checkFollow", method = RequestMethod.GET)
+    public int checkFollow(HttpServletRequest request) {
+        int followerID = Integer.parseInt(request.getParameter("id"));
+        int followingID = Integer.parseInt(request.getParameter("followingID"));
+        return findFollow(followerID, followingID);
+    }
 
-    public List<Follow> getFollowing(int id) {
+
+    private List<Follow> getFollowing(int id) {
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("followerID", id);
         return followService.selectFollow(queryMap);
@@ -88,7 +92,7 @@ public class FollowController {
         return userInfoList;
     }
 
-    public List<Follow> getFollower(int id) {
+    private List<Follow> getFollower(int id) {
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("followingID", id);
         return followService.selectFollow(queryMap);
@@ -109,7 +113,7 @@ public class FollowController {
         return userInfoList;
     }
 
-    private void addFollowMessage(UserInfo userInfo,int followingID){
+    private void addFollowMessage(UserInfo userInfo, int followingID) {
         Message message = new Message();
         message.setUserId(followingID);
         message.setType(MessageType.FOLLOW.getIndex());
@@ -124,13 +128,17 @@ public class FollowController {
     @ResponseBody
     @RequestMapping(value = "/addFollow", method = RequestMethod.POST)
     public int addFollow(HttpServletRequest request) {
+        int followerID = Integer.parseInt(request.getParameter("id"));
+        int followingID = Integer.parseInt(request.getParameter("followingID"));
+        if (findFollow(followerID, followingID) == 0) {     //已经关注
+            return -1;
+        }
         Follow follow = new Follow();
-        int followingID=Integer.parseInt(request.getParameter("followingID"));
-        follow.setFollowerID(Integer.parseInt(request.getParameter("id")));
+        follow.setFollowerID(followerID);
         follow.setFollowingID(followingID);
         followService.insertFollow(follow);
         //message
-        addFollowMessage((UserInfo) request.getSession().getAttribute("userInfo"),followingID);
+        addFollowMessage((UserInfo) request.getSession().getAttribute("userInfo"), followingID);
         return 0;
     }
 
@@ -139,9 +147,14 @@ public class FollowController {
     @ResponseBody
     @RequestMapping(value = "/deleteFollow", method = RequestMethod.POST)
     public int deleteFollow(HttpServletRequest request) {
+        int followerID = Integer.parseInt(request.getParameter("id"));
+        int followingID = Integer.parseInt(request.getParameter("followingID"));
+        if (findFollow(followerID, followingID) == -1) {    //并没有关注
+            return -1;
+        }
         Follow follow = new Follow();
-        follow.setFollowerID(Integer.parseInt(request.getParameter("id")));
-        follow.setFollowingID(Integer.parseInt(request.getParameter("followingID")));
+        follow.setFollowerID(followerID);
+        follow.setFollowingID(followingID);
         followService.deleteFollow(follow);
         return 0;
     }
