@@ -56,7 +56,7 @@
     props: {
       id: {
         type: Number,
-        default: 1
+        default: 0
       },
       type: {
         type: Number,
@@ -197,7 +197,7 @@
             if (res.data.isLike == 1) {
               this.like = true
             }
-            this.like = res.data.like_num
+            this.likeNum = res.data.like_num
           })
           .catch((error) => {
             console.log(error)
