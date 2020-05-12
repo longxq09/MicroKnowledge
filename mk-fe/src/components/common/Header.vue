@@ -13,7 +13,7 @@
       icon="el-icon-search"
       @click="toSearch">
     </el-button>
-    <el-badge class="button" v-if="!home">
+    <el-badge class="button" v-if="accountId!=''">
       <el-button @click="logout">登出</el-button>
     </el-badge>
     <el-badge class="button" v-if="search">
@@ -81,6 +81,7 @@
     },
     data() {
       return {
+        accountId: localStorage.getItem("accountId"),
         searchContent: ''
       }
     },
