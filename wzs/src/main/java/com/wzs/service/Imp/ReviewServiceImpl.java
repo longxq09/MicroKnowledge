@@ -14,37 +14,32 @@ public class ReviewServiceImpl implements ReviewService {
     private ReviewMapper reviewMapper;
 
     @Override
-    public boolean addPassNum(int id, int type) {
-        return false;
+    public boolean addReview(int userId, int noticeId, int type) {
+        return reviewMapper.addReview(userId,noticeId,type);
     }
 
     @Override
-    public boolean subPassNum(int id, int type) {
-        return false;
+    public Review getUserReviewToNotice(int userId, int noticeId) {
+        return reviewMapper.getUserReviewToNotice(userId,noticeId);
     }
 
     @Override
-    public boolean addAgainstNum(int id, int type) {
-        return false;
+    public List<Review> getReviewsByNotice(int noticeId) {
+        return reviewMapper.getReviewsByNotice(noticeId);
     }
 
     @Override
-    public boolean subAgainstNum(int id, int type) {
-        return false;
+    public List<Review> updateReview(int userId, int noticeId, int type) {
+        return reviewMapper.updateReview(userId,noticeId,type);
     }
 
     @Override
-    public boolean delReviewingState(int id, int type) {
-        return false;
+    public boolean delUserReview(int userId, int noticeId) {
+        return reviewMapper.delUserReview(userId,noticeId);
     }
 
     @Override
-    public boolean insertNewMicroPubs(Review review) {
-        return false;
-    }
-
-    @Override
-    public List<Review> getReviewingMicroPubs() {
-        return null;
+    public boolean delReviewsByNotice(int noticeId) {
+        return reviewMapper.delReviewsByNotice(noticeId);
     }
 }

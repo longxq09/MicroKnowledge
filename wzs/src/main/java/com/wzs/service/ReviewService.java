@@ -6,18 +6,11 @@ import java.util.List;
 
 public interface ReviewService {
 
-    boolean addPassNum(int id, int type);
-
-    boolean subPassNum(int id, int type);
-
-    boolean addAgainstNum(int id, int type);
-
-    boolean subAgainstNum(int id, int type);
-
-    boolean delReviewingState(int id, int type);
-
-    boolean insertNewMicroPubs(Review review);
-
-    List<Review> getReviewingMicroPubs();
+    boolean addReview(int userId, int noticeId, int type);
+    Review getUserReviewToNotice(int userId, int noticeId);
+    List<Review> getReviewsByNotice(int noticeId);
+    List<Review> updateReview(int userId,int noticeId,int type);
+    boolean delUserReview(int userId,int noticeId);
+    boolean delReviewsByNotice(int noticeId);
 
 }

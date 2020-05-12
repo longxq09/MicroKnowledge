@@ -6,7 +6,7 @@
     <el-main>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="引用">
-          <el-checkbox v-for="(value,index) in referenceList" :key="value.evidName" @change="chooseItem(value.id,1)">{{value.evidName}}</el-checkbox>
+          <el-checkbox v-for="(value,index) in referenceList" :key="value.evidName" @change="chooseItem(value.id,1)">{{value.title}}</el-checkbox>
         </el-form-item>
 
         <el-form-item label="关键词">

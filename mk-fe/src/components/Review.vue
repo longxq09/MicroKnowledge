@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <v-head v-bind:title="head_title"></v-head>
+      <v-head v-bind:title="head_title" v-bind:homepage=true v-bind:detail=true></v-head>
     </el-header>
     <el-main>
       <div class="noice_title">{{form.type_str}} | {{form.title}}</div>
@@ -17,14 +17,14 @@
       </div>
       <div style="text-align: center;" v-if="need_review">
         <el-button class="review_button" @click="review(1)"> 通过 </el-button>
-        <el-button class="review_button" @click="review(2)">不通过</el-button>
+        <el-button class="review_button" @click="review(-1)">不通过</el-button>
       </div>
 
       <div style="text-align: center;" v-else>
-        <el-button class="review_choose" v-if="review_pass">通过<br>{{pass_num}}</el-button>
+        <el-button class="review_choose" v-if="review_pass" @click="cancle(1)">通过<br>{{pass_num}}</el-button>
         <el-button class="review_button" v-else> 通过<br>{{pass_num}} </el-button>
         <el-button class="review_button" v-if="review_pass">不通过<br>{{unpass_num}}</el-button>
-        <el-button class="review_choose" v-else>不通过<br>{{unpass_num}}</el-button>
+        <el-button class="review_choose" v-else @click="cancle(-1)">不通过<br>{{unpass_num}}</el-button>
 
       </div>
     </el-main>
@@ -43,6 +43,7 @@
         review_pass: true,
         pass_num: 1,
         unpass_num: 3,
+        review_type: 0,
         head_title: "微知 MicroKnowledge",
         referenceList: ['c系列丛书', '从入门到如图'],
         keyWordList: ['machine learning', 'python从入门到入土'],
@@ -96,23 +97,25 @@
         } catch (err) {
           console.log(err);
         }
-        
-        //我将传递给后端该登陆用户id和noticeid
-        //需要后端传递给我一个map
-        //里面参数为
-        //need_review:该用户是否评审过这条微公告，没评审need_review为true
-        //review_pass:如果该用户评审过，那么他的评审结果，通过为true，不通过为false
-        //pass_num:当前该微公告评审通过票数
-        //unpass_num:当前该微公告评审不通过票数
-        
+
         var params2 = new URLSearchParams();
         params2.append('userId', localStorage.getItem("accountId"));
         params2.append('noticeId', this.$route.query.id);
         try {
-          let res = await this.axios.post('一个获取评审情况的url的名字', params2);
+          let res = await this.axios.post('/review/userToReview', params2);
           console.log(res.data);
-          this.need_review = res.data.need_review;
-          this.review_pass = res.data.review_pass;
+          this.review_type = res.data.type;
+          if (this.review_type == 0) {
+            this.need_review = true;
+          }
+          if (this.review_type == 1) {
+            this.need_review = false;
+            this.review_pass = true;
+          }
+          if (this.review_type == -1) {
+            this.need_review = false;
+            this.review_pass = false;
+          }
           this.pass_num = res.data.pass_num;
           this.unpass_num = res.data.unpass_num;
         } catch (err) {
@@ -123,35 +126,39 @@
 
       review(type) {
         this.need_review = false;
-        if (type == 1) {
-          this.review_pass = true;
-          this.pass_num = this.pass_num + 1;
-        } else {
-          this.review_pass = false;
-          this.unpass_num = this.unpass_num + 1;
-        }
-        
+        this.review_pass = (type == 1);
+
         var params = new URLSearchParams();
         params.append('userId', localStorage.getItem("accountId"));
         params.append('noticeId', this.$route.query.id);
-        params.append('review_pass', this.review_pass);
-        this.axios.post('一个反馈该用户评审结果的url', params)
+        params.append('type', type);
+        this.axios.post('/review/doReview', params)
           .then((res) => {
-            // var remindType = res.data.code == 0 ? 'success' : 'info';
-            var remindTitle = res.data === 0 ? '评价微证据成功' : '评价微证据失败';
-            var remindContent = res.data === 0 ? '评价微证据成功！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
-            console.log("------------" + res.data);
-            this.$alert(remindContent, remindTitle, {
-              confirmButtonText: '确定'
-            });
-            if (res.data === 0) {
-              this.$router.push('/homepage');
-            }
+            this.pass_num = res.data.pass_num;
+            this.unpass_num = res.data.unpass_num;
+            this.review_type = res.data.type;
           })
           .catch((error) => {
             console.log(error);
           });
-      }
+      },
+      cancle(type) {
+        this.need_review = true;
+
+        var params = new URLSearchParams();
+        params.append('userId', localStorage.getItem("accountId"));
+        params.append('noticeId', this.$route.query.id);
+        params.append('type', 0);
+        this.axios.post('/review/doReview', params)
+          .then((res) => {
+            this.pass_num = res.data.pass_num;
+            this.unpass_num = res.data.unpass_num;
+            this.review_type = res.data.type;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
     }
 
   }

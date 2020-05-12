@@ -43,13 +43,19 @@
                 and `summary`=#{summary,jdbcType=VARCHAR}
             </if>
             <if test="time !=null and time !=''">
-                and `time`=#{time,}
+                and `time`=#{time}
             </if>
-            <if test="judge !=null and judge !=''">
+            <if test="judge !=null">
                 and `judge`=#{judge,jdbcType=INTEGER}
             </if>
         </where>
 
+    </select>
+
+    <select id="getMNoticeById" resultType="com.wzs.bean.MicroNotice" parameterType="java.lang.Integer">
+        SELECT *
+        from <include refid="BASE_TABLE"/>
+        where id = #{id,jdbcType=INTEGER}
     </select>
 
     <insert id="insertMNotice" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="com.wzs.bean.MicroNotice">
