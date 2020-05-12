@@ -8,6 +8,19 @@
     <el-tag :key="tag" v-for="tag in keywordTag" class="keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
     <div style="display: inline-block; vertical-align: bottom">
+      <el-button v-if="like"
+                 icon="el-icon-sugar"
+                 type="primary"
+                 class="bottom_tag"
+                 @click="cancelLike">{{likeNum}}
+      </el-button>
+      <el-button v-else
+                 class="bottom_tag"
+                 icon="el-icon-sugar"
+                 @click="addLike">{{likeNum}}
+      </el-button>
+    </div>
+    <div style="display: inline-block; vertical-align: bottom">
       <el-button v-if="favorite"
                  icon="el-icon-star-on"
                  type="primary"
@@ -20,7 +33,6 @@
                  @click="addFavorite">
       </el-button>
     </div>
-    <el-button class="bottom_tag">点赞</el-button>
     <div style="display: inline-block">
       <el-button v-if="follow"
                  class="bottom_tag"
@@ -32,7 +44,6 @@
                  @click="addFollow">关注作者
       </el-button>
     </div>
-    <el-button class="bottom_tag">举报内容</el-button>
     <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
     <el-button class="bottom_tag" v-if="user" @click="toModify">编辑</el-button>
     <el-button class="bottom_tag" v-if="user" @click="toDelete">删除</el-button>
@@ -45,7 +56,7 @@
     props: {
       id: {
         type: Number,
-        default: 1
+        default: 0
       },
       type: {
         type: Number,
@@ -84,6 +95,8 @@
         review: true,
         favorite: false,
         follow: false,
+        like: false,
+        likeNum: 0
       }
     },
     methods: {
@@ -136,6 +149,7 @@
       getNoticeInfo() {
         this.getFavoriteInfo()
         this.getFollowInfo()
+        this.getLikeInfo()
       },
 
       getFavoriteInfo() {
@@ -166,6 +180,24 @@
             if (res.data == 0) {
               this.follow = true
             }
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+
+      getLikeInfo() {
+        this.axios.get('/like/checkLikeState', {
+          params: {
+            id: localStorage.getItem("accountId"),
+            noticeId: this.id
+          }
+        })
+          .then((res) => {
+            if (res.data.isLike == 1) {
+              this.like = true
+            }
+            this.likeNum = res.data.like_num
           })
           .catch((error) => {
             console.log(error)
@@ -218,6 +250,34 @@
         this.axios.post('/follow/deleteFollow', params)
           .then((res) => {
             this.follow = false
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+
+      addLike() {
+        var params = new URLSearchParams()
+        params.append('id', localStorage.getItem("accountId"))
+        params.append('noticeId', this.id)
+        this.axios.post('/like/likeThis', params)
+          .then((res) => {
+            this.like = true
+            this.likeNum += 1
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+
+      cancelLike() {
+        var params = new URLSearchParams()
+        params.append('id', localStorage.getItem("accountId"))
+        params.append('noticeId', this.id)
+        this.axios.post('/like/cancelLike', params)
+          .then((res) => {
+            this.like = false
+            this.likeNum -= 1
           })
           .catch((error) => {
             console.log(error)

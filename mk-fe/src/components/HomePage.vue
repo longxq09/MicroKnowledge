@@ -6,7 +6,6 @@
     <el-main>
       <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
         <el-tab-pane label="推荐" name="first">
-          <v-notice v-bind:user=true></v-notice>
           <v-notice :key="value.id" v-for="(value,index) in exhibition"
             v-bind:id="value.id"
             v-bind:type="value.type"
@@ -67,7 +66,6 @@
         try {
           let res = await this.axios.get('/mNotice/getNotices', params);
           this.exhibition = res.data;
-          console.log(this.exhibition);
         } catch (err) {
           console.log(err);
         }
