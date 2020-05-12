@@ -119,7 +119,7 @@
         <foreach item="topicList" collection="list" separator="or" open="(" close=")" index="">
             topic like #{topicList, jdbcType=VARCHAR}
         </foreach>
-        and (judge= 0)
+        and (judge= 1)
     </select>
 
     <select id="completeQueryMNotice" resultType="com.wzs.bean.MicroNotice">
@@ -128,18 +128,25 @@
             topic like #{topicList, jdbcType=VARCHAR}
         </foreach>
         and (authorName like #{search.word} or summary like #{search.word} or keywords like #{search.word}
-        or title like #{search.word} ) and (judge= 0)
+        or title like #{search.word} ) and (judge= 1)
         and <foreach item="typeList" collection="search.typeList" separator="or" open="(" close=")" index="">
-        type = #{typeList, jdbcType=INTEGER}
+            `type` = #{typeList, jdbcType=INTEGER}
         </foreach>
     </select>
 
 
     <select id="selectMNoticeByAuthorList" resultType="com.wzs.bean.MicroNotice">
-        select * from micro_notice where
-        <foreach item="authorList" collection="list" separator="or" open="(" close=")" index="">
-            authorID = #{authorList, jdbcType=INTEGER}
-        </foreach>
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        from <include refid="BASE_TABLE"/>
+        <where>
+            <if test="search.typeList!= null and search.typeList.size()>0">
+                and <foreach item="typeList" collection="search.typeList" separator="or" open="(" close=")" index="">
+                    authorID =#{typeList, jdbcType=INTEGER}
+                </foreach>
+                and (judge= 1)
+            </if>
+        </where>
         ORDER BY `time` DESC
     </select>
 

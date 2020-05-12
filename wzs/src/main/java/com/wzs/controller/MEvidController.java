@@ -2,8 +2,10 @@ package com.wzs.controller;
 
 import com.wzs.bean.MicroEvidence;
 import com.wzs.bean.MicroNotice;
+import com.wzs.bean.Topic;
 import com.wzs.bean.UserInfo;
 import com.wzs.service.MNoticeService;
+import com.wzs.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -31,6 +34,8 @@ public class MEvidController {
 
     @Autowired
     private MNoticeService noticeService;
+    @Resource
+    private TopicService topicService;
 
     public List<MicroNotice> queryMEvid(Map<String,Object> queryMap){
         return noticeService.queryMNotice(queryMap);
@@ -46,7 +51,8 @@ public class MEvidController {
         evid.setType(EVIDENCE.getIndex());
         evid.setAuthorID(userInfo.getId());
         evid.setAuthorName(userInfo.getName());
-        evid.setTopic(request.getParameter("topic"));
+        String topic = request.getParameter("topic");
+        evid.setTopic("-"+topic+"-");
         evid.setReference(request.getParameter("citedPaper"));
         evid.setKeywords(request.getParameter("keywords"));
         evid.setTitle(request.getParameter("title"));
@@ -64,7 +70,8 @@ public class MEvidController {
         MicroEvidence evid = new MicroEvidence();
         evid.setId(Integer.parseInt(request.getParameter("id")));
 
-        evid.setTopic(request.getParameter("topic"));
+        String topic = request.getParameter("topic");
+        evid.setTopic("-"+topic+"-");
         evid.setReference(request.getParameter("reference"));
         evid.setKeywords(request.getParameter("keywords"));
         evid.setTitle(request.getParameter("title"));
@@ -94,7 +101,19 @@ public class MEvidController {
         retMap.put("keywords",evid.getKeywords());
         retMap.put("title",evid.getTitle());
         retMap.put("summary",evid.getSummary());
-        retMap.put("topic",evid.getTopic());
+
+        String topicStr = evid.getTopic();
+        String[] topicList = topicStr.split("-");
+        String topicNameStr = "";
+        for(String t : topicList){
+            if(t.isEmpty()){
+                continue;
+            }
+            Topic topic = topicService.getTopicById(Integer.parseInt(t));
+            topicNameStr = topicNameStr.concat(topic.getTopicName());
+            topicNameStr = topicNameStr.concat("-");
+        }
+        retMap.put("topic",topicNameStr.substring(0,topicNameStr.length()-1));
 
         return retMap;
     }

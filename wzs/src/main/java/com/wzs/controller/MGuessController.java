@@ -2,8 +2,10 @@ package com.wzs.controller;
 
 import com.wzs.bean.MicroGuess;
 import com.wzs.bean.MicroNotice;
+import com.wzs.bean.Topic;
 import com.wzs.bean.UserInfo;
 import com.wzs.service.MNoticeService;
+import com.wzs.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -28,6 +31,8 @@ public class MGuessController {
 
     @Autowired
     private MNoticeService noticeService;
+    @Resource
+    private TopicService topicService;
 
     //通过map查询
     public List<MicroNotice> queryMGuess(Map<String, Object> queryMap) {
@@ -46,7 +51,8 @@ public class MGuessController {
 //        mEvid.setAuthorID((Integer) session.getAttribute("authorId"));
         guess.setAuthorID(userInfo.getId());
         guess.setAuthorName(userInfo.getName());
-        guess.setTopic(request.getParameter("topic"));
+        String topic = request.getParameter("topic");
+        guess.setTopic("-"+topic+"-");
         guess.setReference(request.getParameter("reference"));
         guess.setKeywords(request.getParameter("keywords"));
         guess.setTitle(request.getParameter("title"));
@@ -65,7 +71,8 @@ public class MGuessController {
         MicroGuess guess = new MicroGuess();
         guess.setId(Integer.parseInt(request.getParameter("id")));
 
-        guess.setTopic(request.getParameter("topic"));
+        String topic = request.getParameter("topic");
+        guess.setTopic("-"+topic+"-");
         guess.setReference(request.getParameter("reference"));
         guess.setKeywords(request.getParameter("keywords"));
         guess.setTitle(request.getParameter("title"));
@@ -101,12 +108,23 @@ public class MGuessController {
         MicroNotice guess = list.get(0);
 
         Map<String, Object> retMap = new HashMap();
-        retMap.put("topic", guess.getTopic());
-        String reference = guess.getReference();
-        retMap.put("reference", reference);
+        retMap.put("reference", guess.getReference());
         retMap.put("keywords", guess.getKeywords());
         retMap.put("title", guess.getTitle());
         retMap.put("summary", guess.getSummary());
+
+        String topicStr = guess.getTopic();
+        String[] topicList = topicStr.split("-");
+        String topicNameStr = "";
+        for(String t : topicList){
+            if(t.isEmpty()){
+                continue;
+            }
+            Topic topic = topicService.getTopicById(Integer.parseInt(t));
+            topicNameStr = topicNameStr.concat(topic.getTopicName());
+            topicNameStr = topicNameStr.concat("-");
+        }
+        retMap.put("topic",topicNameStr.substring(0,topicNameStr.length()-1));
 
         return retMap;
     }
