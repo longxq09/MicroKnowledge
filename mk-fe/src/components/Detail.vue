@@ -16,13 +16,13 @@
         <nobr :key='label' v-for="label in labelList"> | {{label}}</nobr>
       </div>
 
-      <v-like v-bind:accountId="accountId" v-bind:id="this.$route.query.id">
+      <v-like v-bind:accountId="accountId" v-bind:id="id">
       </v-like>
 
-      <v-favorite v-bind:accountId="accountId" v-bind:id="this.$route.query.id">
+      <v-favorite v-bind:accountId="accountId" v-bind:id="id">
       </v-favorite>
 
-      <v-follow v-bind:accountId="accountId" v-bind:id="this.$route.query.id" v-bind:authorId="authorId">
+      <v-follow v-bind:accountId="accountId" v-bind:id="id" v-bind:authorId="authorId">
       </v-follow>
 
       <div class="comment_count">
@@ -72,6 +72,7 @@
         reply_num: 0,
         user: true,
         accountId: 0,
+        id:0,
         form: {
           type_str: "微证据",
           title: '震惊！冯如杯要写不完了？！',
@@ -96,6 +97,7 @@
     created() {
       console.log("init");
       this.accountId = localStorage.getItem("accountId");
+      this.id=this.$route.query.id;
       this.getUserInfo();
     },
     methods: {
