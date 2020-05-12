@@ -55,24 +55,26 @@
           })
       },
       addFollow() {
+        this.follow = true
         var params = new URLSearchParams()
         params.append('id', this.accountId)
         params.append('followingID', this.authorId)
         this.axios.post('/follow/addFollow', params)
           .then((res) => {
-            location.reload()
+            this.$router.go(0)
           })
           .catch((error) => {
             console.log(error)
           })
       },
       cancelFollow() {
+        this.follow = false
         var params = new URLSearchParams()
         params.append('id', this.accountId)
         params.append('followingID', this.authorId)
         this.axios.post('/follow/deleteFollow', params)
           .then((res) => {
-            location.reload()
+            this.$router.go(0)
           })
           .catch((error) => {
             console.log(error)
