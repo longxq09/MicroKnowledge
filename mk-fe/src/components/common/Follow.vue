@@ -60,12 +60,11 @@
         params.append('followingID', this.authorId)
         this.axios.post('/follow/addFollow', params)
           .then((res) => {
-            this.follow = true
+            location.reload()
           })
           .catch((error) => {
             console.log(error)
           })
-        location.reload()
       },
       cancelFollow() {
         var params = new URLSearchParams()
@@ -73,13 +72,11 @@
         params.append('followingID', this.authorId)
         this.axios.post('/follow/deleteFollow', params)
           .then((res) => {
-            console.log(this.id)
-            this.follow = false
+            location.reload()
           })
           .catch((error) => {
             console.log(error)
           })
-        location.reload()
       },
     }
   }
