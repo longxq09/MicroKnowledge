@@ -382,6 +382,9 @@ INSERT INTO `like_num` VALUES (6,0);
 INSERT INTO `like_num` VALUES (7,0);
 INSERT INTO `like_num` VALUES (8,0);
 INSERT INTO `like_num` VALUES (9,0);
+INSERT INTO `like_num` VALUES (10,0);
+INSERT INTO `like_num` VALUES (11,0);
+INSERT INTO `like_num` VALUES (12,0);
 
 DROP TABLE IF EXISTS `like`;
 CREATE TABLE `like` (

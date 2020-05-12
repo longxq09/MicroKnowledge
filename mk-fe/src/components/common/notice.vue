@@ -10,24 +10,41 @@
     <nobr style="font-weight: 600;margin-left: 10px;">{{authorName}}</nobr>
     <el-tag :key="tag" v-for="tag in keywordTag" class="keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
-    <el-button class="bottom_tag" v-if="toShow">收藏</el-button>
-    <el-button class="bottom_tag" v-if="toShow">点赞</el-button>
-    <el-button class="bottom_tag" v-if="toShow">关注作者</el-button>
-    <el-button class="bottom_tag" v-if="toShow">举报内容</el-button>
+    <v-like v-bind:accountId="accountId"
+            v-bind:id="id">
+    </v-like>
+    <v-favorite v-bind:accountId="accountId"
+                v-bind:id="id">
+    </v-favorite>
+    <v-follow v-bind:accountId="accountId"
+              v-bind:id="id"
+              v-bind:authorId="authorId">
+    </v-follow>
   </div>
 </template>
 
 <script>
+  import vFollow from './Follow.vue'
+  import vLike from './Like.vue'
+  import vFavorite from './Favorite'
   export default {
     name: "Notice",
     props: {
+      accountId: {
+        type: String,
+        default: localStorage.getItem("accountId")
+      },
       id: {
         type: Number,
-        default: 1
+        default: -1
       },
       type: {
         type: Number,
         default: 1
+      },
+      authorId: {
+        type: Number,
+        default: -1
       },
       authorName: {
         type: String,
@@ -61,6 +78,11 @@
         type_name: '',
         toShow: true,
       }
+    },
+    components: {
+      vFollow,
+      vLike,
+      vFavorite
     },
     methods: {
       toReview() {
@@ -96,7 +118,6 @@
           }
         });
       },
-
       toDelete() {
         var params = new URLSearchParams();
         params.append('id', this.id);
@@ -118,7 +139,7 @@
     },
     mounted() {
       this.keywordTag = this.keywords.split('-');
-      if (this.type == 1) {
+      if (this.type === 1) {
         this.type_name = "微证据";
       } else {
         this.type_name = "微猜想";
@@ -168,7 +189,7 @@
   .bottom_tag {
     margin-left: 10px;
     margin-bottom: 10px;
-    line-height: 7px;
-    height: 25px;
+    line-height: 8px;
+    height: 32px;
   }
 </style>
