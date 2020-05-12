@@ -7,29 +7,37 @@
       <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
         <el-tab-pane label="推荐" name="first">
           <v-notice :key="value.id" v-for="(value,index) in exhibition"
-            v-bind:id="value.id"
-            v-bind:type="value.type"
-            v-bind:authorId="value.authorID"
-            v-bind:authorName="value.authorName"
-            v-bind:keywords="value.keywords"
-            v-bind:title="value.title"
-            v-bind:summary="value.summary">
+                    v-bind:id="value.id"
+                    v-bind:type="value.type"
+                    v-bind:authorId="value.authorID"
+                    v-bind:authorName="value.authorName"
+                    v-bind:keywords="value.keywords"
+                    v-bind:title="value.title"
+                    v-bind:summary="value.summary">
           </v-notice>
         </el-tab-pane>
         <el-tab-pane label="关注" name="second">
+          <v-notice :key="value.id" v-for="(value,index) in followingState"
+                    v-bind:id="value.id"
+                    v-bind:type="value.type"
+                    v-bind:authorId="value.authorID"
+                    v-bind:authorName="value.authorName"
+                    v-bind:keywords="value.keywords"
+                    v-bind:title="value.title"
+                    v-bind:summary="value.summary">
+          </v-notice>
         </el-tab-pane>
         <el-tab-pane label="热榜" name="third">
         </el-tab-pane>
         <el-tab-pane label="评审" name="forth">
           <v-notice :key="value.id" v-for="(value,index) in review_exhibition"
-          v-bind:id="value.id"
-          v-bind:type="value.type"
-          v-bind:authorName="value.authorName"
-          v-bind:keywords="value.keywords"
-          v-bind:title="value.title"
-          v-bind:summary="value.summary"
-          v-bind:review=true
-          >
+                    v-bind:id="value.id"
+                    v-bind:type="value.type"
+                    v-bind:authorName="value.authorName"
+                    v-bind:keywords="value.keywords"
+                    v-bind:title="value.title"
+                    v-bind:summary="value.summary"
+                    v-bind:review=true>
           </v-notice>
         </el-tab-pane>
       </el-tabs>
@@ -47,9 +55,9 @@
     name: "HomePage",
     data() {
       return {
-        exhibition:Array,
-        review_exhibition:Array,
-        activeName:"first",
+        exhibition: Array,
+        followingState: Array,
+        activeName: "first",
       }
     },
 
@@ -57,11 +65,11 @@
       vHead,
       vFooter,
       vNotice,
-      vComment,
+      vComment
     },
     created() {
-      console.log("init");
-      this.getUserInfo();
+      this.getUserInfo()
+      this.getFollowingState()
     },
     methods: {
       async getUserInfo() {
@@ -75,11 +83,20 @@
         try {
           let res = await this.axios.get('/review/getReviewList', params);
           this.review_exhibition = res.data;
-          console.log(this.review_exhibition);
         } catch (err) {
           console.log(err);
         }
       },
+      getFollowingState() {
+        this.axios.get('/follow/getFollowingState', {
+          params: { id: localStorage.getItem("accountId")}
+        }).then((res) => {
+          this.followingState = res.data
+        })
+          .catch((error) => {
+            console.log(error)
+          });
+      }
     },
   }
 </script>
