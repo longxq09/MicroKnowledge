@@ -318,33 +318,13 @@ CREATE TABLE `comment`  (
 -- ----------------------------
 -- Records of comment
 -- ----------------------------
-INSERT INTO `comment` VALUES (1, 1, 1, 2, 'Tom', 0, NULL, 'abcdef', '2020-05-01 15:37:41');
-INSERT INTO `comment` VALUES (2, 2, 2, 3, 'Jerry', 0, NULL, '132435465789', '2020-05-01 15:37:41');
-INSERT INTO `comment` VALUES (3, 1, 1, 3, 'Jerry', 2, 'Tom', 'ljhjo123143', '2020-05-01 15:37:41');
-INSERT INTO `comment` VALUES (4, 1, 1, 2, 'Tom', 0, NULL, 'abcdef', '2020-05-01 15:37:40');
-INSERT INTO `comment` VALUES (5, 2, 2, 3, 'Jerry', 0, NULL, '132435465789', '2020-05-01 15:37:44');
-INSERT INTO `comment` VALUES (6, 1, 1, 3, 'Jerry', 2, 'Tom', 'ljhjo123143', '2020-05-01 15:37:44');
-INSERT INTO `comment` VALUES (7, 1, 1, 0, 'from', -1, '', '评论评论', '2020-05-06 16:08:03');
-INSERT INTO `comment` VALUES (8, 1, 1, 0, 'from', 2, 'Tom', '1234567890', '2020-05-06 16:10:51');
-INSERT INTO `comment` VALUES (9, 1, 1, 0, 'from', -1, '', 'nbnbnb', '2020-05-06 20:52:40');
-INSERT INTO `comment` VALUES (10, 1, 1, 0, 'from', -1, '', '测试noticeId', '2020-05-06 20:53:53');
-INSERT INTO `comment` VALUES (11, 1, 1, 0, 'from', -1, '', 'test add 1', '2020-05-06 20:55:30');
-INSERT INTO `comment` VALUES (12, 1, 1, 0, 'from', -1, '', 'test add 2', '2020-05-06 20:55:51');
-INSERT INTO `comment` VALUES (13, 1, 1, 0, 'from', 3, 'Jerry', 'test reply 1', '2020-05-06 20:56:38');
-INSERT INTO `comment` VALUES (14, 1, 1, 0, 'from', 0, 'from', '0987654321', '2020-05-06 20:58:11');
-INSERT INTO `comment` VALUES (15, 1, 1, 0, 'from', -1, '', '同步测试', '2020-05-06 21:00:25');
-INSERT INTO `comment` VALUES (16, 1, 1, 0, 'from', 0, 'from', '回复评论 同步测试', '2020-05-06 21:00:41');
-INSERT INTO `comment` VALUES (17, 1, 1, 0, 'from', -1, '', 'test 11111', '2020-05-06 21:05:09');
-INSERT INTO `comment` VALUES (18, 1, 1, 0, 'from', 0, 'from', '回复评论的同步测试', '2020-05-06 21:11:56');
-INSERT INTO `comment` VALUES (19, 1, 1, 0, 'from', 0, 'from', '回复的回复的回复', '2020-05-06 21:19:27');
-INSERT INTO `comment` VALUES (20, 1, 1, 0, 'from', 0, 'from', '回复的回复的回复的回复', '2020-05-06 21:21:31');
-INSERT INTO `comment` VALUES (21, 1, 1, 0, 'from', 0, 'from', '回复的回复的回复的回复的回复', '2020-05-06 21:22:42');
-INSERT INTO `comment` VALUES (22, 1, 1, 0, 'from', 0, 'from', '回复的回复的回复的回复的回复的回复', '2020-05-06 22:15:34');
-INSERT INTO `comment` VALUES (23, 1, 1, 0, 'from', 0, 'from', '回复的回复的回复的回复的回复的回复的回复！！！', '2020-05-06 22:16:53');
-INSERT INTO `comment` VALUES (24, 1, 1, 0, 'from', -1, '', '评论评论评论', '2020-05-06 22:17:03');
-INSERT INTO `comment` VALUES (25, 1, 1, 0, 'from', -1, '', 'test count', '2020-05-06 22:37:27');
-INSERT INTO `comment` VALUES (26, 1, 1, 0, 'from', -1, '', 'count change', '2020-05-06 22:38:54');
-INSERT INTO `comment` VALUES (27, 1, 1, 0, 'from', 0, 'from', 'reply count change', '2020-05-06 22:39:07');
+INSERT INTO `comment` VALUES (1, 1, 1, 2, 'Kenneth Frumkin', 0, NULL, 'great idea!', '2020-05-01 15:37:41');
+INSERT INTO `comment` VALUES (2, 2, 2, 3, 'Jan Vandenbrande', 0, NULL, 'I think this is a good idea', '2020-05-01 15:37:41');
+INSERT INTO `comment` VALUES (3, 1, 1, 3, 'Jan Vandenbrande', 2, 'Kenneth Frumkin', 'right!', '2020-05-01 15:37:41');
+INSERT INTO `comment` VALUES (4, 1, 1, 2, 'Kenneth Frumkin', 0, NULL, 'good', '2020-05-01 15:37:40');
+INSERT INTO `comment` VALUES (5, 2, 2, 3, 'Jan Vandenbrande', 0, NULL, 'welcome advice :)', '2020-05-01 15:37:44');
+INSERT INTO `comment` VALUES (6, 1, 1, 3, 'Jan Vandenbrande', 2, 'Kenneth Frumkin', 'This idea helped me a lot', '2020-05-01 15:37:44');
+
 
 -- ----------------------------
 -- Table structure for review
