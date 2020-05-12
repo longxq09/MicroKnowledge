@@ -344,29 +344,22 @@ INSERT INTO `comment` VALUES (26, 1, 1, 0, 'from', -1, '', 'count change', '2020
 INSERT INTO `comment` VALUES (27, 1, 1, 0, 'from', 0, 'from', 'reply count change', '2020-05-06 22:39:07');
 
 -- ----------------------------
--- Table structure for Review
--- ----------------------------
--- ----------------------------
--- type 0: evidence, 1: guess
+-- Table structure for review
 -- ----------------------------
 DROP TABLE IF EXISTS `review`;
-CREATE TABLE `review` (
-	`id` int(0) NOT NULL,
-    `authorId` int(0) NULL DEFAULT NULL,
-    `type` int (0) NULL default null,
-    `passNum` int(0) NULL default null,
-    `againstNum` int(0) NULL default null,
-    `topic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `citation` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-    `time` datetime(0) NULL DEFAULT NULL,
-    `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL
-)ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+CREATE TABLE `review`  (
+  `userId` int(0) NOT NULL,
+  `noticeId` int(0) NOT NULL,
+  `type` int(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`userId`, `noticeId`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
-INSERT INTO `review` VALUES (3, 1, 0, 0, 0, '计算机科学与技术', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 'title');
-INSERT INTO `review` VALUES (3, 1, 1, 0, 0, '计算机科学与技术', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 'title');
-INSERT INTO `review` VALUES (3, 1, 1, 0, 0, '计算机科学与技术', 'citation', 'A,B,C,D', 'summary', '2020-04-21 02:58:00', 'title');
+-- ----------------------------
+-- Records of review
+-- ----------------------------
+INSERT INTO `review` VALUES (1, 1, -1);
+INSERT INTO `review` VALUES (2, 1, 1);
+INSERT INTO `review` VALUES (3, 1, 1);
 
 -- ----------------------------
 -- Table structure for like
