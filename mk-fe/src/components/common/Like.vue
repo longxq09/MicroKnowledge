@@ -63,7 +63,6 @@
           .then((res) => {
             this.like = true
             this.likeNum += 1
-            console.log(this.id)
           })
           .catch((error) => {
             console.log(error)
