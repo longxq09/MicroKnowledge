@@ -51,3 +51,11 @@
     }
   }
 </script>
+<style scoped>
+  .remind {
+    display: inline-block;
+    font-size: 8px;
+    color: red;
+    text-decoration: underline;
+  }
+</style>

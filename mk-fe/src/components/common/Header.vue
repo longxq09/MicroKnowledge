@@ -13,6 +13,9 @@
       icon="el-icon-search"
       @click="search">
     </el-button>
+    <el-badge class="button" v-if="!home">
+      <el-button @click="logout">登出</el-button>
+    </el-badge>
     <el-badge class="button" v-if="homepage">
       <el-button @click="toUser">个人主页</el-button>
     </el-badge>
@@ -48,6 +51,10 @@
         type: String,
         default: '微知 MicroKnowledge'
       },
+      home: {
+        type: Boolean,
+        default: false,
+      },
       homepage: {
         type: Boolean,
         default: false
@@ -71,6 +78,22 @@
       }
     },
     methods: {
+      logout() {
+        this.axios.post('/user/logout')
+          .then((res)=>{
+            localStorage.setItem("accountId", "")
+            localStorage.setItem("email", "")
+            let remindTitle = res.data
+            let remindContent = '期待您的下一次访问！'
+            this.$alert(remindContent, remindTitle, {
+              confirmButtonText: '确定'
+            });
+            this.$router.push('/')
+          })
+          .catch((res)=>{
+            console.log(res.message);
+          });
+      },
       toHomePage() {
         this.$router.push('/homepage');
       },
