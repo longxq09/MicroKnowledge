@@ -69,10 +69,10 @@ public class UserInfoController {
     Object userInfoGet(HttpServletRequest request) {
         HashMap<String, String> res = new HashMap<>();
         int id = Integer.parseInt(request.getParameter("id"));
-        System.out.println(id);
+        //System.out.println(id);
         UserInfo info = userInfoService.getUserInfo(id);
-        res.put("sex", info.getSex());
         res.put("name", info.getName());
+        res.put("sex", info.getSex());
         res.put("address", info.getAddress());
         res.put("signature", info.getSignature());
         res.put("education", info.getEducation());

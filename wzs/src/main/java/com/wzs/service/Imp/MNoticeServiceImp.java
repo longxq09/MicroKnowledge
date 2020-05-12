@@ -60,7 +60,9 @@ public class MNoticeServiceImp implements MNoticeService {
 
     @Override
     public List<MicroNotice> selectMNoticeByAuthorList(ArrayList<Integer> authorList){
-        return noticeMapper.selectMNoticeByAuthorList(authorList);
+        SearchLimit searchLimit=new SearchLimit();
+        searchLimit.setTypeList(authorList);
+        return noticeMapper.selectMNoticeByAuthorList(searchLimit);
     }
 
     @Override

@@ -31,7 +31,7 @@ public interface MNoticeMapper {
 
     List<MicroNotice> completeQueryMNotice(@Param("search") SearchLimit search);
 
-    List<MicroNotice> selectMNoticeByAuthorList(ArrayList<Integer> authorList);
+    List<MicroNotice> selectMNoticeByAuthorList(@Param("search") SearchLimit search);
 
     List<MicroNotice> selectMNoticeByFavorite(List<Favorite> favorites);
 }
