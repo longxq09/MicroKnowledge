@@ -37,6 +37,7 @@ public class MNoticeController {
     @RequestMapping(value = "/getNotices", method = RequestMethod.GET)
     public List<MicroNotice> getNotices() {
         Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put("judge",1);
         List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
         noticeList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
         return noticeList;
@@ -69,21 +70,35 @@ public class MNoticeController {
         Map<String,Object> queryMap = new HashMap();
         queryMap.put("id",id);
         List<MicroNotice> list = noticeService.queryMNotice(queryMap);
-        MicroNotice evid = list.get(0);
+        MicroNotice notice = list.get(0);
 
         Map<String,Object> retMap = new HashMap();
-        retMap.put("noticeId",evid.getId());
-        retMap.put("type",evid.getType());
-        retMap.put("authorId",evid.getAuthorID());
-        retMap.put("authorName",evid.getAuthorName());
-        retMap.put("reference",evid.getReference());
-        retMap.put("keywords",evid.getKeywords());
-        retMap.put("title",evid.getTitle());
-        retMap.put("summary",evid.getSummary());
-        retMap.put("judge",evid.getJudge());
-        retMap.put("time",evid.getTime());
+        retMap.put("noticeId",notice.getId());
+        retMap.put("type",notice.getType());
+        retMap.put("authorId",notice.getAuthorID());
+        retMap.put("authorName",notice.getAuthorName());
+        retMap.put("keywords",notice.getKeywords());
+        retMap.put("title",notice.getTitle());
+        retMap.put("summary",notice.getSummary());
+        retMap.put("judge",notice.getJudge());
+        retMap.put("time",notice.getTime());
 
-        String topicStr = evid.getTopic();
+
+        String referStr = notice.getReference();
+        String[] referList = referStr.split("-");
+        String referTitleList = "";
+
+        for(String r : referList){
+            if(r.isEmpty()){
+                continue;
+            }
+            MicroNotice temp = noticeService.getMNoticeById(Integer.parseInt(r));
+            referTitleList = referTitleList.concat(temp.getTitle());
+            referTitleList = referTitleList.concat("-");
+        }
+        retMap.put("reference",referTitleList.substring(0,referTitleList.length()-1));
+
+        String topicStr = notice.getTopic();
         String[] topicList = topicStr.split("-");
         String topicNameStr = "";
         for(String t : topicList){
