@@ -1,7 +1,7 @@
 <template>
 	<el-container>
 		<el-header>
-			<v-head></v-head>
+			<v-head v-bind:search="true"></v-head>
 		</el-header>
 		<el-main>
 		  <div class="filter">

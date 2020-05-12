@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header>
-      <v-head :home="true"></v-head>
+      <v-head v-bind:home="true"></v-head>
     </el-header>
     <el-main>
       <div style="height: 400px">
