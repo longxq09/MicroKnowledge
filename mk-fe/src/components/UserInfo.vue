@@ -253,7 +253,6 @@
         params.append('newPassword', this.passwordForm.new)
         params.append('email', localStorage.getItem("email"))
         params.append('id', localStorage.getItem("accountId"))
-        print(this.passwordForm.old)
         this.axios.post('/user/rePassword', params)
           .then((res) => {
             var remindTitle = res.data.code == 0 ? '修改成功' : '修改失败';
