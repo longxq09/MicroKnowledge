@@ -36,9 +36,9 @@ CREATE TABLE `account`  (
 INSERT INTO `account` VALUES (1, 'wzs1@163.com', '740cf33d334637bf2b3d00433cea6ec3','',1);
 INSERT INTO `account` VALUES (2, 'wzs2@163.com', '0103b33cd3ddbf771af44b60418e0365','',1);
 INSERT INTO `account` VALUES (3, 'wzs3@163.com', 'a8d324fb901015bef22df9ae607c0e65','',1);
-INSERT INTO `account` VALUES (1, 'wzs4@163.com', '32db4b4d3d6d37bd0c02b1647645ab30','',1);
-INSERT INTO `account` VALUES (2, 'wzs5@163.com', '635282d5f184b759b5730351016a39ba','',1);
-INSERT INTO `account` VALUES (3, 'wzs6@163.com', 'bd717bd1e47d94bf67403dde69d54583','',1);
+INSERT INTO `account` VALUES (4, 'wzs4@163.com', '32db4b4d3d6d37bd0c02b1647645ab30','',1);
+INSERT INTO `account` VALUES (5, 'wzs5@163.com', '635282d5f184b759b5730351016a39ba','',1);
+INSERT INTO `account` VALUES (6, 'wzs6@163.com', 'bd717bd1e47d94bf67403dde69d54583','',1);
 -- ----------------------------
 -- Table structure for admin
 -- ----------------------------
@@ -377,6 +377,15 @@ CREATE TABLE `like_num`  (
   `num` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`noticeId`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+INSERT INTO `like_num` VALUES (1,0);
+INSERT INTO `like_num` VALUES (2,0);
+INSERT INTO `like_num` VALUES (3,0);
+INSERT INTO `like_num` VALUES (4,0);
+INSERT INTO `like_num` VALUES (5,0);
+INSERT INTO `like_num` VALUES (6,0);
+INSERT INTO `like_num` VALUES (7,0);
+INSERT INTO `like_num` VALUES (8,0);
+INSERT INTO `like_num` VALUES (9,0);
 
 DROP TABLE IF EXISTS `like`;
 CREATE TABLE `like` (

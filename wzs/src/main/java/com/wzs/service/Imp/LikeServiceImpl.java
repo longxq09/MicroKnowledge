@@ -34,14 +34,16 @@ public class LikeServiceImpl implements LikeService {
     public int addLike(int noticeId, int id) {
         likeMapper.addLike(noticeId,id);
         like_numMapper.addLikeNum(noticeId);
-        return like_numMapper.getLikeNum(noticeId);
+        return 0;
+//        return like_numMapper.getLikeNum(noticeId);
     }
 
     @Override
     public int delLike(int noticeId, int id) {
         likeMapper.delLike(noticeId,id);
         like_numMapper.subLikeNum(noticeId);
-        return like_numMapper.getLikeNum(noticeId);
+        return 0;
+//        return like_numMapper.getLikeNum(noticeId);
     }
 
 
