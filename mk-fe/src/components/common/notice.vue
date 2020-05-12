@@ -51,19 +51,19 @@
       },
       authorName: {
         type: String,
-        default: 'uc主编'
+        default: ''
       },
       keywords: {
         type: String,
-        default: 'machine learning-c++从入门到入土'
+        default: ''
       },
       title: {
         type: String,
-        default: '震惊！冯如杯要写不完了？！'
+        default: ''
       },
       summary: {
         type: String,
-        default: "冯如杯写不完是怎么回事呢？ 但事实就是这样， 小编也感到非常惊讶。这就是关于冯如杯写不完的事情了， 大家有什么想法呢， 欢迎在评论区告诉小编一起讨论哦！ 啦啦啦啦啦啦啦"
+        default: ""
       },
       user: {
         type: Boolean,
