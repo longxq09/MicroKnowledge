@@ -53,8 +53,21 @@
                     v-bind:user=true>
           </v-notice>
         </el-tab-pane>
+        <el-tab-pane label="我的发布" name="forth">
+          <v-notice :key="value.id"
+                    v-for="(value,index) in myNotice"
+                    v-bind:accountId="accountId"
+                    v-bind:id="value.id"
+                    v-bind:type="value.type"
+                    v-bind:authorName="value.authorName"
+                    v-bind:keywords="value.keywords"
+                    v-bind:title="value.title"
+                    v-bind:summary="value.summary"
+                    v-bind:user=true>
+          </v-notice>
+        </el-tab-pane>
         <el-tab-pane v-if="accountId==hostId"
-                     label="我的消息" name="forth">
+                     label="我的消息" name="fifth">
           <v-message :key="value.id" v-for="(value,index) in message_list"
                      v-bind:type="value.type"
                      v-bind:fromName="value.fromUserName"
@@ -90,6 +103,7 @@
         following: Array,
         follower: Array,
         favorite: Array,
+        myNotice: Array,
         message_list: Array
       };
     },
@@ -102,6 +116,7 @@
     },
     mounted() {
       this.getUserInfo()
+      this.getNotice()
       this.getFollow()
       this.getFavorite()
     },
@@ -123,10 +138,21 @@
         try {
           let res = await this.axios.post('/message/getMessages', params);
           this.message_list = res.data;
-          console.log(this.message_list);
         } catch (err) {
           console.log(err);
         }
+      },
+      getNotice() {
+        this.axios.get('/mNotice/getSelfNotices', {
+          params: {
+            id: this.accountId
+          }
+        }).then((res) => {
+          this.myNotice = res.data
+        })
+          .catch((error) => {
+            console.log(error)
+          })
       },
       getFollow() {
         this.axios.get('/follow/getFollowing', {

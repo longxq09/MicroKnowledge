@@ -48,7 +48,7 @@ public class MNoticeController {
     @RequestMapping(value = "/getSelfNotices", method = RequestMethod.GET)
     public List<MicroNotice> getSelfNotices(HttpServletRequest request) {
         Map<String, Object> queryMap = new HashMap<>();
-        queryMap.put("authorId",request.getParameter("id"));
+        queryMap.put("authorID",request.getParameter("id"));
         List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
         noticeList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
         return noticeList;
