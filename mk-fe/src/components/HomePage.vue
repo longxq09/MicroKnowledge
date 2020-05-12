@@ -56,6 +56,7 @@
     data() {
       return {
         exhibition: Array,
+        review_exhibition: Array,
         followingState: Array,
         activeName: "first",
       }
