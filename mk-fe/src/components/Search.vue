@@ -52,7 +52,8 @@
         v-bind:authorName="value.authorName"
         v-bind:keywords="value.keywords"
         v-bind:title="value.title"
-        v-bind:summary="value.summary">
+        v-bind:summary="value.summary"
+        v-bind:user="true">
       </v-notice>
 		</el-main>
 		<v-footer></v-footer>
