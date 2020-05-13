@@ -88,7 +88,7 @@ public class MNoticeController {
         retMap.put("title",notice.getTitle());
         retMap.put("summary",notice.getSummary());
         retMap.put("judge",notice.getJudge());
-        retMap.put("time",notice.getTime());
+        retMap.put("time",notice.getShowTime());
 
         if(notice.getType() == NoticeType.GUESS.getIndex()){
             String referStr = notice.getReference();

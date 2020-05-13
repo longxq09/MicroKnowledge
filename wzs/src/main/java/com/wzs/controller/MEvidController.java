@@ -102,18 +102,19 @@ public class MEvidController {
         retMap.put("title",evid.getTitle());
         retMap.put("summary",evid.getSummary());
 
-        String topicStr = evid.getTopic();
-        String[] topicList = topicStr.split("-");
-        String topicNameStr = "";
-        for(String t : topicList){
-            if(t.isEmpty()){
-                continue;
-            }
-            Topic topic = topicService.getTopicById(Integer.parseInt(t));
-            topicNameStr = topicNameStr.concat(topic.getTopicName());
-            topicNameStr = topicNameStr.concat("-");
-        }
-        retMap.put("topic",topicNameStr.substring(0,topicNameStr.length()-1));
+//        String topicStr = evid.getTopic();
+//        String[] topicList = topicStr.split("-");
+//        String topicNameStr = "";
+//        for(String t : topicList){
+//            if(t.isEmpty()){
+//                continue;
+//            }
+//            Topic topic = topicService.getTopicById(Integer.parseInt(t));
+//            topicNameStr = topicNameStr.concat(topic.getTopicName());
+//            topicNameStr = topicNameStr.concat("-");
+//        }
+//        retMap.put("topic",topicNameStr.substring(0,topicNameStr.length()-1));
+        retMap.put("topic",evid.getTopic());
 
         return retMap;
     }
