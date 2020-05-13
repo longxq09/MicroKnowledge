@@ -143,7 +143,7 @@ public class FollowController {
         followService.insertFollow(follow);
         System.out.println("follow success");
         //message
-        addFollowMessage((UserInfo) request.getSession().getAttribute("userInfo"), followingID);
+        // addFollowMessage((UserInfo) request.getSession().getAttribute("userInfo"), followingID);
         return 0;
     }
 

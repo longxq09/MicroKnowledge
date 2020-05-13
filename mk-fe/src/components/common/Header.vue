@@ -11,9 +11,9 @@
       style="display: inline"
       type="primary"
       icon="el-icon-search"
-      @click="search">
+      @click="toSearch">
     </el-button>
-    <el-badge class="button" v-if="!home">
+    <el-badge class="button" v-if="accountId!=''">
       <el-button @click="logout">登出</el-button>
     </el-badge>
     <el-badge class="button" v-if="search">
@@ -81,6 +81,7 @@
     },
     data() {
       return {
+        accountId: localStorage.getItem("accountId"),
         searchContent: ''
       }
     },
@@ -124,7 +125,7 @@
       toNewMGuess() {
         this.$router.push('/new_mguess');
       },
-      search() {
+      toSearch() {
         this.$router.push({
           path: '/search',
           query: {
@@ -144,7 +145,6 @@
     line-height: 1.5;
     width: 100%;
   }
-
   .title {
     color: #409EFF;
     text-align: left;
@@ -152,7 +152,6 @@
     font-weight: 800;
     display: inline-block;
   }
-
   .button {
     float: right;
     margin: 10px;
@@ -162,5 +161,4 @@
     float: right;
     margin-top: 5px;
   }
-
 </style>

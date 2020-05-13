@@ -1,17 +1,17 @@
 <template>
-	<el-container>
-		<el-header>
-			<v-head v-bind:search="true"></v-head>
-		</el-header>
-		<el-main>
-		  <div class="filter">
-		    <span>关键字：</span>
-		    <el-input
-		      style="width: 30%; margin-right: 20px"
-		      v-model="dataForm.word"
-		      placeholder="请输入内容">
-		    </el-input>
-		    <span>类型：</span>
+  <el-container>
+    <el-header>
+      <v-head v-bind:search="true"></v-head>
+    </el-header>
+    <el-main>
+      <div class="filter">
+        <span>关键字：</span>
+        <el-input
+          style="width: 30%; margin-right: 20px"
+          v-model="dataForm.word"
+          placeholder="请输入内容">
+        </el-input>
+        <span>类型：</span>
         <el-select
           style="width: 10%; margin-right: 20px"
           v-model="filterType"
@@ -47,22 +47,23 @@
       </div>
       <p>找到{{resultNum}}条结果。</p>
       <v-notice :key="value.id" v-for="(value,index) in searchResult"
-        v-bind:id="value.id"
-        v-bind:type="value.type"
-        v-bind:authorName="value.authorName"
-        v-bind:keywords="value.keywords"
-        v-bind:title="value.title"
-        v-bind:summary="value.summary">
+                v-bind:id="value.id"
+                v-bind:type="value.type"
+                v-bind:authorName="value.authorName"
+                v-bind:keywords="value.keywords"
+                v-bind:title="value.title"
+                v-bind:summary="value.summary"
+                v-bind:user="true">
       </v-notice>
-		</el-main>
-		<v-footer></v-footer>
-	</el-container>
+    </el-main>
+    <v-footer></v-footer>
+  </el-container>
 </template>
 
 <script>
-import vHead from './common/Header.vue';
-import vFooter from './common/Footer.vue';
-import vNotice from './common/Notice.vue';
+  import vHead from './common/Header.vue';
+  import vFooter from './common/Footer.vue';
+  import vNotice from './common/Notice.vue';
   export default {
     name: "Search",
     data() {
@@ -82,30 +83,30 @@ import vNotice from './common/Notice.vue';
         resultNum: 0
       }
     },
-		components: {
-			vHead,
-			vFooter,
-			vNotice
-		},
-		mounted() {
-		  this.getTopic();
+    components: {
+      vHead,
+      vFooter,
+      vNotice
+    },
+    mounted() {
+      this.getTopic();
       this.getSearchResult()
     },
     watch: {
       "$route": "getSearchResult"
     },
-		methods: {
-		  getTopic() {
-		    this.axios.get('/topic/getTopicList')
+    methods: {
+      getTopic() {
+        this.axios.get('/topic/getTopicList')
           .then((res) => {
             this.topics = res.data
           })
           .catch((error) => {
             console.log(error)
           })
-		  },
-		  click() {
-		    this.dataForm.kind = 0
+      },
+      click() {
+        this.dataForm.kind = 0
         if (this.filterType.length == 1) {
           this.dataForm.kind = this.filterType[0] == '1' ? 1 : 2
         }
@@ -114,16 +115,16 @@ import vNotice from './common/Notice.vue';
           this.dataForm.topic = this.dataForm.topic + this.filterTopic[i].toString() + "-"
         }
         this.dataForm.topic = this.dataForm.topic.slice(0, -1)
-		    this.$router.push({
+        this.$router.push({
           query: {
             word: this.dataForm.word,
             kind: this.dataForm.kind,
             topic: this.dataForm.topic
           }
         }).catch(err => {err})
-		  },
-		  getSearchResult() {
-		    this.dataForm.word = this.$route.query.word
+      },
+      getSearchResult() {
+        this.dataForm.word = this.$route.query.word
         this.dataForm.kind = this.$route.query.kind
         this.filterType = this.dataForm.kind == 1 ? [1] : this.dataForm.kind == 2 ? [2] : [1, 2]
         this.dataForm.topic = this.$route.query.topic
@@ -133,26 +134,23 @@ import vNotice from './common/Notice.vue';
           for (var i = 0; i < t.length; i++)
             this.filterTopic.push(parseInt(t[i]))
         }
-		    this.axios.get('/search', {params: this.dataForm})
-		      .then((res) => {
-		        this.searchResult = res.data.notice
-		        this.resultNum = res.data.notice.length
-		      })
-		      .catch((error) => {
-		        console.log(error)
-		      })
-		  }
+        this.axios.get('/search', {params: this.dataForm})
+          .then((res) => {
+            this.searchResult = res.data.notice
+            this.resultNum = res.data.notice.length
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      }
     }
-
   }
 </script>
 <style>
-
   .el-main {
     background-color: #F4F4F5;
     color: #333;
   }
-
   .filter {
     margin-bottom: 20px;
   }

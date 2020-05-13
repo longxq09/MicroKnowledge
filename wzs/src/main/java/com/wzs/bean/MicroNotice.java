@@ -27,6 +27,8 @@ public class MicroNotice {
     private String showTime = null;
     private int Judge = 0;
 
+    private double hot;
+
     public int getId() {
         return id;
     }
@@ -124,4 +126,11 @@ public class MicroNotice {
         this.showTime = showTime;
     }
 
+    public double getHot() {
+        return hot;
+    }
+
+    public void setHot(double hot) {
+        this.hot = hot;
+    }
 }

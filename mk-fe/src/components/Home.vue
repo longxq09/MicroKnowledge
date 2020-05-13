@@ -18,6 +18,7 @@
       <el-card style="width: 80%; margin: auto">
         <div slot="header" class="cardTitle">热榜</div>
         <div class="text item">
+          <v-hot v-bind:user="true"></v-hot>
         </div>
       </el-card>
     </el-main>
@@ -31,6 +32,7 @@
   import vNotice from './common/Notice.vue';
   import vLogin from './Login.vue';
   import vRegister from './Register.vue';
+  import vHot from './common/Hot.vue'
   export default {
     name: "Home",
     data() {
@@ -45,11 +47,11 @@
       vFooter,
       vNotice,
       vLogin,
-      vRegister
+      vRegister,
+      vHot
     },
     methods: {
     }
-
   }
 </script>
 
@@ -58,7 +60,6 @@
     background-color: #F4F4F5;
     color: #333;
   }
-
   .image {
     width: 20%;
     height: 60%;
@@ -67,7 +68,6 @@
     vertical-align: top;
     padding-top: 32px;
   }
-
   .cardTitle {
     font-size: 20px;
     text-align: center;

@@ -39,8 +39,8 @@
       </div>
       <div v-if="refresh">
         <v-comment :key="value.id" v-for="(value,index) in exhibition" v-bind:noticeId="value.noticeId" v-bind:authorId="value.authorId"
-          v-bind:fromId="value.fromId" v-bind:fromName="value.fromName" v-bind:toId="value.toId" v-bind:toName="value.toName"
-          v-bind:content="value.content" v-bind:time="value.disTime" @childFn="changFlag">
+                   v-bind:fromId="value.fromId" v-bind:fromName="value.fromName" v-bind:toId="value.toId" v-bind:toName="value.toName"
+                   v-bind:content="value.content" v-bind:time="value.disTime" @childFn="changFlag">
         </v-comment>
       </div>
     </el-main>
@@ -143,9 +143,9 @@
           this.keyWordList = this.form.keyWord.split('-');
           this.labelList = this.form.label.split('-');
           if (this.form.type == 1) {
-            this.type_str = "微证据";
+            this.form.type_str = "微证据";
           } else {
-            this.type_str = "微猜想";
+            this.form.type_str = "微猜想";
           }
         } catch (err) {
           console.log(err);

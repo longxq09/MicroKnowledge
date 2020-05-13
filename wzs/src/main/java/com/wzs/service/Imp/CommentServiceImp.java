@@ -33,4 +33,9 @@ public class CommentServiceImp implements CommentService {
     public List<Comment> selectCommentOfANotice(int noticeId) {
         return commentMapper.selectCommentByNoticeId(noticeId);
     }
+
+    @Override
+    public int getCommentNumByNoticeId(int noticeId) {
+        return commentMapper.getCommentNumByNoticeId(noticeId);
+    }
 }

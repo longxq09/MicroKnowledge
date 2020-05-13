@@ -28,6 +28,7 @@
           </v-notice>
         </el-tab-pane>
         <el-tab-pane label="热榜" name="third">
+          <v-hot></v-hot>
         </el-tab-pane>
         <el-tab-pane label="评审" name="forth">
           <v-notice :key="value.id" v-for="(value,index) in review_exhibition"
@@ -51,6 +52,7 @@
   import vFooter from './common/Footer.vue';
   import vNotice from './common/Notice.vue';
   import vComment from './common/Comment.vue';
+  import vHot from './common/Hot.vue'
   export default {
     name: "HomePage",
     data() {
@@ -66,7 +68,8 @@
       vHead,
       vFooter,
       vNotice,
-      vComment
+      vComment,
+      vHot
     },
     created() {
       this.getUserInfo()

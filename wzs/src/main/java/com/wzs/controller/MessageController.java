@@ -1,6 +1,5 @@
 package com.wzs.controller;
 
-import com.wzs.bean.Comment;
 import com.wzs.bean.Message;
 import com.wzs.bean.selfEnum.MessageType;
 import com.wzs.service.MessageService;
@@ -12,7 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: TODO
@@ -68,6 +70,21 @@ public class MessageController {
         });
         messageService.setFlagByUser(userId);   //改为已阅
         return messageList;
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/getUnReadNum", method = RequestMethod.POST)
+    public int getUnReadNum(HttpServletRequest request){
+        int unReadNum = 0;
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        List<Message> messages = messageService.selectMessageByUser(userId);
+        for(Message m : messages){
+            if(m.getFlag()==1){
+                unReadNum++;
+            }
+        }
+        return unReadNum;
     }
 
     @CrossOrigin

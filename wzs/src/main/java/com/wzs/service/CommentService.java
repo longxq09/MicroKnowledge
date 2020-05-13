@@ -14,4 +14,5 @@ public interface CommentService {
     List<Comment> queryComment(Map<String, Object> map);
     boolean insertComment(Comment comment);
     List<Comment> selectCommentOfANotice(int noticeId);
+    int getCommentNumByNoticeId(int noticeId);
 }

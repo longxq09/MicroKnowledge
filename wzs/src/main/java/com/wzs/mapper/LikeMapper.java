@@ -17,4 +17,6 @@ public interface LikeMapper {
     @Delete("delete from `like` where noticeId = #{noticeId} and id = #{id}")
     boolean delLike(int noticeId, int id);
 
+    @Select("SELECT COUNT(*) from `like` where  noticeId = #{noticeId}")
+    int getLikeNumByNoticeId(int noticeId);
 }

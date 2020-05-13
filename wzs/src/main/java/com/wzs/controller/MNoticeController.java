@@ -1,10 +1,11 @@
 package com.wzs.controller;
 
 import com.wzs.bean.Comment;
+import com.wzs.bean.Like;
 import com.wzs.bean.MicroNotice;
 import com.wzs.bean.Topic;
-import com.wzs.service.MNoticeService;
-import com.wzs.service.TopicService;
+import com.wzs.bean.selfEnum.NoticeType;
+import com.wzs.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,12 +32,19 @@ public class MNoticeController {
     private MNoticeService noticeService;
     @Resource
     private TopicService topicService;
+    @Resource
+    private CommentService commentService;
+    @Resource
+    private LikeService likeService;
+    @Resource
+    private FavoriteService favoriteService;
 
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getNotices", method = RequestMethod.GET)
     public List<MicroNotice> getNotices() {
         Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put("judge",1);
         List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
         noticeList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
         return noticeList;
@@ -47,7 +55,7 @@ public class MNoticeController {
     @RequestMapping(value = "/getSelfNotices", method = RequestMethod.GET)
     public List<MicroNotice> getSelfNotices(HttpServletRequest request) {
         Map<String, Object> queryMap = new HashMap<>();
-        queryMap.put("authorId",request.getParameter("id"));
+        queryMap.put("authorID",request.getParameter("id"));
         List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
         noticeList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
         return noticeList;
@@ -69,21 +77,37 @@ public class MNoticeController {
         Map<String,Object> queryMap = new HashMap();
         queryMap.put("id",id);
         List<MicroNotice> list = noticeService.queryMNotice(queryMap);
-        MicroNotice evid = list.get(0);
+        MicroNotice notice = list.get(0);
 
         Map<String,Object> retMap = new HashMap();
-        retMap.put("noticeId",evid.getId());
-        retMap.put("type",evid.getType());
-        retMap.put("authorId",evid.getAuthorID());
-        retMap.put("authorName",evid.getAuthorName());
-        retMap.put("reference",evid.getReference());
-        retMap.put("keywords",evid.getKeywords());
-        retMap.put("title",evid.getTitle());
-        retMap.put("summary",evid.getSummary());
-        retMap.put("judge",evid.getJudge());
-        retMap.put("time",evid.getTime());
+        retMap.put("noticeId",notice.getId());
+        retMap.put("type",notice.getType());
+        retMap.put("authorId",notice.getAuthorID());
+        retMap.put("authorName",notice.getAuthorName());
+        retMap.put("keywords",notice.getKeywords());
+        retMap.put("title",notice.getTitle());
+        retMap.put("summary",notice.getSummary());
+        retMap.put("judge",notice.getJudge());
+        retMap.put("time",notice.getTime());
 
-        String topicStr = evid.getTopic();
+        if(notice.getType() == NoticeType.GUESS.getIndex()){
+            String referStr = notice.getReference();
+            String[] referList = referStr.split("-");
+            String referTitleList = "";
+            for(String r : referList){
+                if(r.isEmpty()){
+                    continue;
+                }
+                MicroNotice temp = noticeService.getMNoticeById(Integer.parseInt(r));
+                referTitleList = referTitleList.concat(temp.getTitle());
+                referTitleList = referTitleList.concat("-");
+            }
+            retMap.put("reference",referTitleList.substring(0,referTitleList.length()-1));
+        } else {
+            retMap.put("reference",notice.getReference());
+        }
+
+        String topicStr = notice.getTopic();
         String[] topicList = topicStr.split("-");
         String topicNameStr = "";
         for(String t : topicList){
@@ -97,6 +121,23 @@ public class MNoticeController {
         retMap.put("topic",topicNameStr.substring(0,topicNameStr.length()-1));
 
         return retMap;
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/getHotTemp", method = RequestMethod.GET)
+    public List<MicroNotice> getHotTemp() {
+        Map<String, Object> queryMap = new HashMap<>();
+        List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
+        for(MicroNotice n :noticeList){
+            int likeCount = likeService.getLikeNumByNoticeId(n.getId());
+            int CommentCount = commentService.getCommentNumByNoticeId(n.getId());
+            int favouriteCount = favoriteService.getFavorNumByNoticeId(n.getId());
+            double hot = likeCount * 11.8 + CommentCount*21.5 + favouriteCount * 16.2;
+            n.setHot(hot);
+        }
+        noticeList.sort(Comparator.comparing(MicroNotice::getHot).reversed());
+        return noticeList;
     }
 
 }
