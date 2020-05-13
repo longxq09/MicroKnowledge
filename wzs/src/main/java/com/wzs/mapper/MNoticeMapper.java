@@ -21,7 +21,7 @@ public interface MNoticeMapper {
 
     MicroNotice getMNoticeById(int id);
 
-    boolean insertMNotice(MicroNotice Notice);
+    int insertMNotice(MicroNotice Notice);
 
     boolean updateMNotice(MicroNotice Notice);
 
