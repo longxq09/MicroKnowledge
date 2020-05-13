@@ -4,6 +4,8 @@ import com.wzs.bean.Favorite;
 import com.wzs.bean.MicroGuess;
 import com.wzs.bean.MicroNotice;
 import com.wzs.bean.SearchLimit;
+import com.wzs.mapper.LikeMapper;
+import com.wzs.mapper.Like_numMapper;
 import com.wzs.mapper.MNoticeMapper;
 import com.wzs.service.MNoticeService;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,12 @@ public class MNoticeServiceImp implements MNoticeService {
     @Resource
     private MNoticeMapper noticeMapper;
 
+    @Resource
+    private LikeMapper likeMapper;
+
+    @Resource
+    private Like_numMapper like_numMapper;
+
     @Override
     public List<MicroNotice> queryMNotice(Map<String, Object> map) {
         return noticeMapper.selectMNotice(map);
@@ -35,7 +43,10 @@ public class MNoticeServiceImp implements MNoticeService {
 
     @Override
     public boolean insertMNotice(MicroNotice notice) {
-        return noticeMapper.insertMNotice(notice);
+        int result = noticeMapper.insertMNotice(notice);
+
+        System.out.println("result: " + notice.getId());
+        return true;
     }
 
     @Override
@@ -45,6 +56,8 @@ public class MNoticeServiceImp implements MNoticeService {
 
     @Override
     public boolean deleteMNotice(int id) {
+        likeMapper.delLikeByNoticeId(id);
+        like_numMapper.deleLikeItem(id);
         return noticeMapper.deleteMNoticeById(id);
     }
 

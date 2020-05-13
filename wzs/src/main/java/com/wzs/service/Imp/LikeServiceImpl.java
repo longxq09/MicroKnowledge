@@ -21,6 +21,7 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public Map<String, Integer> checkLikeState(int noticeId, int id) {
         Map<String, Integer> res = new HashMap<>();
+        System.out.println("noticeId: " + noticeId);
         int num = like_numMapper.getLikeNum(noticeId);
         res.put("like_num",num);
         if (likeMapper.isContain(noticeId,id) != null)  {
