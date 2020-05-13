@@ -18,7 +18,7 @@
       <el-card style="width: 80%; margin: auto">
         <div slot="header" class="cardTitle">热榜</div>
         <div class="text item">
-          <v-hot></v-hot>
+          <v-hot v-bind:user="true"></v-hot>
         </div>
       </el-card>
     </el-main>
