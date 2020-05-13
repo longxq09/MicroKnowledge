@@ -2,16 +2,10 @@
   <div class="header">
     <div class="title">{{title}}</div>
     <div style="width:200px; display:inline-block; margin-left: 8px">
-      <el-input
-        v-model="searchContent"
-        placeholder="搜索关键字">
+      <el-input v-model="searchContent" placeholder="搜索关键字">
       </el-input>
     </div>
-    <el-button
-      style="display: inline"
-      type="primary"
-      icon="el-icon-search"
-      @click="toSearch">
+    <el-button style="display: inline" type="primary" icon="el-icon-search" @click="toSearch">
     </el-button>
     <el-badge class="button" v-if="accountId!=''">
       <el-button @click="logout">登出</el-button>
@@ -20,7 +14,11 @@
       <el-button @click="back">返回</el-button>
     </el-badge>
     <el-badge class="button" v-if="homepage">
-      <el-button @click="toUser">个人主页</el-button>
+      <el-button @click="toUser_1">个人主页</el-button>
+    </el-badge>
+    <el-badge class="button" v-if="homepage">
+      <el-button @click="toUser_4">我的消息</el-button>
+      <div class="notice" v-if="if_show_new">{{new_message}}</div>
     </el-badge>
     <el-badge class="button" v-if="homepage">
       <el-button @click="toNewMEvid">发布新证据</el-button>
@@ -82,13 +80,31 @@
     data() {
       return {
         accountId: localStorage.getItem("accountId"),
-        searchContent: ''
+        searchContent: '',
+        new_message: 0,
+        if_show_new: false,
       }
     },
+    mounted() {
+      this.getUserInfo();
+    },
     methods: {
+      async getUserInfo() {
+        var params = new URLSearchParams();
+        params.append('userId', this.accountId);
+        try {
+          let res = await this.axios.post('/message/getUnReadNum', params);
+          this.new_message = res.data;
+          if (this.new_message != 0) {
+            this.if_show_new = true;
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      },
       logout() {
         this.axios.post('/user/logout')
-          .then((res)=>{
+          .then((res) => {
             localStorage.setItem("accountId", "")
             localStorage.setItem("email", "")
             let remindTitle = res.data
@@ -98,21 +114,28 @@
             });
             this.$router.push('/')
           })
-          .catch((res)=>{
+          .catch((res) => {
             console.log(res.message);
           });
       },
       toHomePage() {
         this.$router.push('/homepage');
       },
-      toUser() {
+      toUser_1() {
         this.$router.push('/user');
       },
+      toUser_4() {
+        this.$router.push({
+          name: 'User',
+          params: {
+            activeName: "forth"
+          }
+        });
+      },
       back() {
-        if(localStorage.getItem("accountId") === "") {
+        if (localStorage.getItem("accountId") === "") {
           this.$router.push('/')
-        }
-        else {
+        } else {
           this.toHomePage()
         }
       },
@@ -157,11 +180,26 @@
   .button {
     float: right;
     margin: 10px;
+    position: relative;
   }
+
   .photo {
     display: inline-block;
     float: right;
     margin-top: 5px;
   }
 
+  .notice {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 10px;
+    color: #fff;
+    text-align: center;
+    background-color: #f00;
+    border-radius: 50%;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+  }
 </style>
