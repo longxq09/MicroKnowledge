@@ -10,4 +10,6 @@ public interface LikeService {
 
     int delLike(int noticeId,int id);
 
+    int getLikeNumByNoticeId(int noticeId);
+
 }

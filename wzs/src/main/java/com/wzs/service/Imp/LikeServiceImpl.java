@@ -51,5 +51,9 @@ public class LikeServiceImpl implements LikeService {
         return 0;
     }
 
+    @Override
+    public int getLikeNumByNoticeId(int noticeId) {
+        return likeMapper.getLikeNumByNoticeId(noticeId);
+    }
 
 }

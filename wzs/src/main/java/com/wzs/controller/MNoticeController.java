@@ -1,11 +1,11 @@
 package com.wzs.controller;
 
 import com.wzs.bean.Comment;
+import com.wzs.bean.Like;
 import com.wzs.bean.MicroNotice;
 import com.wzs.bean.Topic;
 import com.wzs.bean.selfEnum.NoticeType;
-import com.wzs.service.MNoticeService;
-import com.wzs.service.TopicService;
+import com.wzs.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,6 +32,12 @@ public class MNoticeController {
     private MNoticeService noticeService;
     @Resource
     private TopicService topicService;
+    @Resource
+    private CommentService commentService;
+    @Resource
+    private LikeService likeService;
+    @Resource
+    private FavoriteService favoriteService;
 
     @CrossOrigin
     @ResponseBody
@@ -123,7 +129,14 @@ public class MNoticeController {
     public List<MicroNotice> getHotTemp() {
         Map<String, Object> queryMap = new HashMap<>();
         List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
-        noticeList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
+        for(MicroNotice n :noticeList){
+            int likeCount = likeService.getLikeNumByNoticeId(n.getId());
+            int CommentCount = commentService.getCommentNumByNoticeId(n.getId());
+            int favouriteCount = favoriteService.getFavorNumByNoticeId(n.getId());
+            double hot = likeCount * 11.8 + CommentCount*21.5 + favouriteCount * 16.2;
+            n.setHot(hot);
+        }
+        noticeList.sort(Comparator.comparing(MicroNotice::getHot).reversed());
         return noticeList;
     }
 
