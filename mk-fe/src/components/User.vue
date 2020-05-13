@@ -17,7 +17,10 @@
               <div>{{value.name}}</div>
               <div>{{value.email}}</div>
             </div>
-            <v-follow v-if="accountId==hostId" style="float: right" v-bind:accountId="accountId" v-bind:authorId="value.id">
+            <v-follow v-if="accountId==hostId"
+                      style="float: right"
+                      v-bind:accountId="accountId"
+                      v-bind:authorId="value.id">
             </v-follow>
             <el-divider></el-divider>
           </div>
@@ -29,21 +32,50 @@
               <div>{{value.name}}</div>
               <div>{{value.email}}</div>
             </div>
-            <v-follow v-if="accountId==hostId" style="float: right" v-bind:accountId="accountId" v-bind:authorId="value.id">
+            <v-follow v-if="accountId==hostId"
+                      style="float: right"
+                      v-bind:accountId="accountId"
+                      v-bind:authorId="value.id">
             </v-follow>
             <el-divider></el-divider>
           </div>
         </el-tab-pane>
         <el-tab-pane label="收藏" name="third">
-          <v-notice :key="value.id" v-for="(value,index) in favorite" v-bind:accountId="accountId" v-bind:id="value.id"
-            v-bind:type="value.type" v-bind:authorName="value.authorName" v-bind:keywords="value.keywords" v-bind:title="value.title"
-            v-bind:summary="value.summary" v-bind:user=true>
+          <v-notice :key="value.id"
+                    v-for="(value,index) in favorite"
+                    v-bind:accountId="accountId"
+                    v-bind:id="value.id"
+                    v-bind:type="value.type"
+                    v-bind:authorName="value.authorName"
+                    v-bind:keywords="value.keywords"
+                    v-bind:title="value.title"
+                    v-bind:summary="value.summary"
+                    v-bind:user=true>
           </v-notice>
         </el-tab-pane>
-        <el-tab-pane v-if="accountId==hostId" label="我的消息" name="forth">
-          <v-message :key="value.id" v-for="(value,index) in message_list" v-bind:type="value.type" v-bind:fromName="value.fromUserName"
-            v-bind:relatedNoticeId="value.relatedNoticeId" v-bind:relatedNoticeTitle="value.relatedNoticeTitle"
-            v-bind:detail="value.detail" v-bind:time="value.disTime" v-bind:flag="value.flag">
+        <el-tab-pane label="我的发布" name="forth">
+          <v-notice :key="value.id"
+                    v-for="(value,index) in myNotice"
+                    v-bind:accountId="accountId"
+                    v-bind:id="value.id"
+                    v-bind:type="value.type"
+                    v-bind:authorName="value.authorName"
+                    v-bind:keywords="value.keywords"
+                    v-bind:title="value.title"
+                    v-bind:summary="value.summary"
+                    v-bind:user=true>
+          </v-notice>
+        </el-tab-pane>
+        <el-tab-pane v-if="accountId==hostId"
+                     label="我的消息" name="fifth">
+          <v-message :key="value.id" v-for="(value,index) in message_list"
+                     v-bind:type="value.type"
+                     v-bind:fromName="value.fromUserName"
+                     v-bind:relatedNoticeId="value.relatedNoticeId"
+                     v-bind:relatedNoticeTitle="value.relatedNoticeTitle"
+                     v-bind:detail="value.detail"
+                     v-bind:time="value.disTime"
+                     v-bind:flag="value.flag">
           </v-message>
         </el-tab-pane>
       </el-tabs>
@@ -71,6 +103,7 @@
         following: Array,
         follower: Array,
         favorite: Array,
+        myNotice: Array,
         message_list: Array
       };
     },
@@ -83,21 +116,19 @@
     },
     mounted() {
       this.getUserInfo()
+      this.getNotice()
       this.getFollow()
       this.getFavorite()
     },
     methods: {
       async getUserInfo() {
-        if (this.$route.params.activeName.length!=0) {
-          this.activeName = this.$route.params.activeName;
-        }
         this.axios.get('/user/info', {
-            params: {
-              id: this.accountId
-            }
-          }).then((res) => {
-            this.name = res.data.name
-          })
+          params: {
+            id: this.accountId
+          }
+        }).then((res) => {
+          this.name = res.data.name
+        })
           .catch((error) => {
             console.log(error)
           })
@@ -107,41 +138,52 @@
         try {
           let res = await this.axios.post('/message/getMessages', params);
           this.message_list = res.data;
-          console.log(this.message_list);
         } catch (err) {
           console.log(err);
         }
       },
+      getNotice() {
+        this.axios.get('/mNotice/getSelfNotices', {
+          params: {
+            id: this.accountId
+          }
+        }).then((res) => {
+          this.myNotice = res.data
+        })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
       getFollow() {
         this.axios.get('/follow/getFollowing', {
-            params: {
-              id: this.accountId
-            }
-          }).then((res) => {
-            this.following = res.data
-          })
+          params: {
+            id: this.accountId
+          }
+        }).then((res) => {
+          this.following = res.data
+        })
           .catch((error) => {
             console.log(error)
           })
         this.axios.get('/follow/getFollower', {
-            params: {
-              id: this.accountId
-            }
-          }).then((res) => {
-            this.follower = res.data
-          })
+          params: {
+            id: this.accountId
+          }
+        }).then((res) => {
+          this.follower = res.data
+        })
           .catch((error) => {
             console.log(error)
           })
       },
       getFavorite() {
         this.axios.get('/favorite/getFavoriteList', {
-            params: {
-              id: this.accountId
-            }
-          }).then((res) => {
-            this.favorite = res.data
-          })
+          params: {
+            id: this.accountId
+          }
+        }).then((res) => {
+          this.favorite = res.data
+        })
           .catch((error) => {
             console.log(error)
           })

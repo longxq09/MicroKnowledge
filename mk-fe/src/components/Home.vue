@@ -52,7 +52,6 @@
     },
     methods: {
     }
-
   }
 </script>
 
@@ -61,7 +60,6 @@
     background-color: #F4F4F5;
     color: #333;
   }
-
   .image {
     width: 20%;
     height: 60%;
@@ -70,7 +68,6 @@
     vertical-align: top;
     padding-top: 32px;
   }
-
   .cardTitle {
     font-size: 20px;
     text-align: center;
