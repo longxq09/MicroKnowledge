@@ -1,6 +1,5 @@
 package com.wzs.controller;
 
-import com.wzs.bean.Comment;
 import com.wzs.bean.Message;
 import com.wzs.bean.selfEnum.MessageType;
 import com.wzs.service.MessageService;
@@ -32,13 +31,7 @@ public class MessageController {
     public List<Message> getMessages(HttpServletRequest request){
         int userId = Integer.parseInt(request.getParameter("userId"));
         List<Message> messageList = messageService.selectMessageByUser(userId);
-        messageList.sort((m1, m2) -> {
-            if(m1.getFlag()==m1.getFlag()){
-                return m1.getTime().compareTo(m2.getTime());
-            } else {
-                return m1.getFlag() - m2.getFlag();
-            }
-        });
+        messageList.sort(Comparator.comparing(Message::getTime).reversed());
         messageService.setFlagByUser(userId);   //改为已阅
         return messageList;
     }
@@ -68,6 +61,21 @@ public class MessageController {
         });
         messageService.setFlagByUser(userId);   //改为已阅
         return messageList;
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/getUnReadNum", method = RequestMethod.POST)
+    public int getUnReadNum(HttpServletRequest request){
+        int unReadNum = 0;
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        List<Message> messages = messageService.selectMessageByUser(userId);
+        for(Message m : messages){
+            if(m.getFlag()==1){
+                unReadNum++;
+            }
+        }
+        return unReadNum;
     }
 
     @CrossOrigin

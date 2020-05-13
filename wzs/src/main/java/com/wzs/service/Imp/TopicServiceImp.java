@@ -26,6 +26,11 @@ public class TopicServiceImp implements TopicService {
     }
 
     @Override
+    public Topic getTopicById(int id) {
+        return topicMapper.getTopicById(id);
+    }
+
+    @Override
     public List<Topic> queryTopic(Map<String, Object> map) {
         return topicMapper.selectTopic(map);
     }

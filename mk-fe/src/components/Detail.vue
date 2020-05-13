@@ -9,18 +9,19 @@
       <nobr style="font-weight: 400;font-size: 15px;margin-left: 10px;">{{form.time}}</nobr>
       <el-tag :key="tag" v-for="tag in keyWordList" class="keyword">{{tag}}</el-tag>
       <div style="margin: 10px;margin-top: 30px;margin-bottom: 30px;">{{form.text}}</div>
-      <div class="bottom_text">引用
-        <nobr :key="reference" v-for="reference in referenceList"> | {{reference}}</nobr>
+      <div class="bottom_text">引用 : {{form.reference}}
       </div>
-      <div class="bottom_text">分类
-        <nobr :key='label' v-for="label in labelList"> | {{label}}</nobr>
+      <div class="bottom_text">分类 : {{form.label}}
       </div>
-      <el-button class="bottom_tag">收藏</el-button>
-      <el-button class="bottom_tag">点赞</el-button>
-      <el-button class="bottom_tag">关注作者</el-button>
-      <el-button class="bottom_tag">举报内容</el-button>
-      <el-button class="bottom_tag" v-if="user" @click="toModify">编辑</el-button>
-      <el-button class="bottom_tag" v-if="user" @click="toDelete">删除</el-button>
+
+      <v-like v-bind:accountId="accountId" v-bind:id="id">
+      </v-like>
+
+      <v-favorite v-bind:accountId="accountId" v-bind:id="id">
+      </v-favorite>
+
+      <v-follow v-bind:accountId="accountId" v-bind:id="id" v-bind:authorId="authorId">
+      </v-follow>
 
       <div class="comment_count">
         {{reply_num}}评论
@@ -35,11 +36,9 @@
         </div>
       </div>
       <div v-if="refresh">
-        <v-comment></v-comment>
-
         <v-comment :key="value.id" v-for="(value,index) in exhibition" v-bind:noticeId="value.noticeId" v-bind:authorId="value.authorId"
-          v-bind:fromId="value.fromId" v-bind:fromName="value.fromName" v-bind:toId="value.toId" v-bind:toName="value.toName"
-          v-bind:content="value.content" v-bind:time="value.disTime" @childFn="changFlag">
+                   v-bind:fromId="value.fromId" v-bind:fromName="value.fromName" v-bind:toId="value.toId" v-bind:toName="value.toName"
+                   v-bind:content="value.content" v-bind:time="value.disTime" @childFn="changFlag">
         </v-comment>
       </div>
     </el-main>
@@ -51,24 +50,29 @@
   import vHead from './common/Header.vue';
   import vFooter from './common/Footer.vue';
   import vComment from './common/Comment.vue';
+  import vFollow from './common/Follow.vue'
+  import vLike from './common/Like.vue'
+  import vFavorite from './common/Favorite'
   export default {
     name: "Detail",
     data() {
       return {
         head_title: "微知 MicroKnowledge",
-        referenceList: ['c系列丛书', '从入门到如图'],
-        keyWordList: ['machine learning', 'python从入门到入土'],
-        labelList: ['深度学习', 'hhh'],
+        referenceList: [],
+        keyWordList: [],
+        labelList: [],
         reply_text: '',
         exhibition: Array,
         refresh: true,
         radioValue: true,
         reply_num: 0,
         user: true,
+        accountId: 0,
+        id:0,
         form: {
           type_str: "微证据",
-          title: '震惊！冯如杯要写不完了？！',
-          text: '冯如杯写不完是怎么回事呢？冯如杯相信大家都很熟悉，但是冯如杯写不完是怎么回事呢，下面就让小编带大家一起了解吧。冯如杯写不完， 其实就是冯如杯就是憨憨， 大家可能会很惊讶冯如杯怎么会写不完呢？ 但事实就是这样， 小编也感到非常惊讶。这就是关于冯如杯写不完的事情了， 大家有什么想法呢， 欢迎在评论区告诉小编一起讨论哦！ 啦啦啦啦啦啦啦',
+          title: '震惊！还没加载出来？！',
+          text: '没加载出来是怎么回事呢？网页加载相信大家都很熟悉，但是没加载出来是怎么回事呢，下面就让小编带大家一起了解吧。其实加载不需要很久， 大家可能会很惊讶为什么没加载出来呢？ 但事实就是这样， 小编也感到非常惊讶。这就是关于没加载出来的事情， 大家有什么想法呢， 欢迎在评论区告诉小编一起讨论哦！',
           keyWord: '',
           label: '',
           reference: '',
@@ -82,38 +86,17 @@
       vHead,
       vFooter,
       vComment,
+      vFollow,
+      vLike,
+      vFavorite,
     },
     created() {
       console.log("init");
+      this.accountId = localStorage.getItem("accountId");
+      this.id=this.$route.query.id;
       this.getUserInfo();
     },
     methods: {
-      toModify() {
-        this.$router.push({
-          path: '/modify_mevid/',
-          query: {
-            id: this.id
-          }
-        });
-      },
-      toDelete() {
-        var params = new URLSearchParams();
-        params.append('id', this.id);
-        this.axios.post('/mNotice/deleteNotice', params)
-          .then((res) => {
-            var remindTitle = res.data === 0 ? '删除微证据成功' : '删除微证据失败';
-            var remindContent = res.data === 0 ? '删除微证据成功！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
-            this.$alert(remindContent, remindTitle, {
-              confirmButtonText: '确定'
-            });
-            if (res.data === 0) {
-              this.$router.push('/homepage');
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      },
       changFlag(a) {
         console.log("we catch the change!!!!!!!!!!!!!!!");
         this.refresh = false;
@@ -155,12 +138,14 @@
           this.form.time = res.data.time;
 
           this.referenceList = this.form.reference.split('-');
+          this.form.reference=this.referenceList.join(' | ')
           this.keyWordList = this.form.keyWord.split('-');
           this.labelList = this.form.label.split('-');
+          this.form.label=this.labelList.join(' | ');
           if (this.form.type == 1) {
-            this.type_str = "微证据";
+            this.form.type_str = "微证据";
           } else {
-            this.type_str = "微猜想";
+            this.form.type_str = "微猜想";
           }
         } catch (err) {
           console.log(err);

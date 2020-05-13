@@ -12,4 +12,6 @@ public interface FavoriteService {
     boolean insertFavorite(Favorite favorite);
 
     boolean deleteFavorite(Favorite favorite);
+
+    int getFavorNumByNoticeId(int noticeId);
 }

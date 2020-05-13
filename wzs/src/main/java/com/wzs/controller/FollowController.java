@@ -44,6 +44,9 @@ public class FollowController {
         for (Follow i : followList) {
             authorList.add(i.getFollowingID());
         }
+        if (authorList.size() == 0) {
+            return null;
+        }
         List<MicroNotice> noticeList = mNoticeService.selectMNoticeByAuthorList(authorList);
         return noticeList;
     }
@@ -131,14 +134,16 @@ public class FollowController {
         int followerID = Integer.parseInt(request.getParameter("id"));
         int followingID = Integer.parseInt(request.getParameter("followingID"));
         if (findFollow(followerID, followingID) == 0) {     //已经关注
+            System.out.println("follow fail");
             return -1;
         }
         Follow follow = new Follow();
         follow.setFollowerID(followerID);
         follow.setFollowingID(followingID);
         followService.insertFollow(follow);
+        System.out.println("follow success");
         //message
-        addFollowMessage((UserInfo) request.getSession().getAttribute("userInfo"), followingID);
+        // addFollowMessage((UserInfo) request.getSession().getAttribute("userInfo"), followingID);
         return 0;
     }
 
@@ -150,12 +155,14 @@ public class FollowController {
         int followerID = Integer.parseInt(request.getParameter("id"));
         int followingID = Integer.parseInt(request.getParameter("followingID"));
         if (findFollow(followerID, followingID) == -1) {    //并没有关注
+            System.out.println("fail");
             return -1;
         }
         Follow follow = new Follow();
         follow.setFollowerID(followerID);
         follow.setFollowingID(followingID);
         followService.deleteFollow(follow);
+        System.out.println("success");
         return 0;
     }
 

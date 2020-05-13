@@ -3,6 +3,7 @@ package com.wzs.mapper;
 import com.wzs.bean.Comment;
 import com.wzs.bean.Topic;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,6 @@ public interface CommentMapper {
     List<Comment> selectComment(Map<String, Object> map);
     boolean insertComment(Comment comment);
     List<Comment> selectCommentByNoticeId(int noticeId);
+    @Select("SELECT COUNT(*) from comment where noticeId = #{noticeId}")
+    int getCommentNumByNoticeId(int noticeId);
 }

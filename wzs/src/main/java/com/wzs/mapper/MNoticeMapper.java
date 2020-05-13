@@ -21,7 +21,7 @@ public interface MNoticeMapper {
 
     MicroNotice getMNoticeById(int id);
 
-    boolean insertMNotice(MicroNotice Notice);
+    int insertMNotice(MicroNotice Notice);
 
     boolean updateMNotice(MicroNotice Notice);
 
@@ -31,7 +31,7 @@ public interface MNoticeMapper {
 
     List<MicroNotice> completeQueryMNotice(@Param("search") SearchLimit search);
 
-    List<MicroNotice> selectMNoticeByAuthorList(ArrayList<Integer> authorList);
+    List<MicroNotice> selectMNoticeByAuthorList(@Param("search") SearchLimit search);
 
     List<MicroNotice> selectMNoticeByFavorite(List<Favorite> favorites);
 }
