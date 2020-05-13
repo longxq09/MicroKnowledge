@@ -4,26 +4,30 @@
       {{type_name}} | {{title}}
       <el-tag class="keyword" v-if="user">{{state}}</el-tag>
       <el-button class="bottom_tag" @click="toDetail"  v-if="!review">详情</el-button>
-      <el-button class="bottom_tag" v-if="modify" @click="toModify">编辑</el-button>
-      <el-button class="bottom_tag" v-if="modify" @click="toDelete">删除</el-button>
-      <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
+      <div v-if="login" style="display: inline-block">
+        <el-button class="bottom_tag" v-if="modify" @click="toModify">编辑</el-button>
+        <el-button class="bottom_tag" v-if="modify" @click="toDelete">删除</el-button>
+        <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
+      </div>
     </div>
     <nobr style="font-weight: 600;margin-left: 10px;">{{authorName}}</nobr>
     <el-tag :key="tag" v-for="tag in keywordTag" class="keyword" v-if="has_keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
-    <v-like v-bind:accountId="accountId"
-            v-bind:id="id"
-            v-if="toShow">
-    </v-like>
-    <v-favorite v-bind:accountId="accountId"
-                v-bind:id="id"
-                v-if="toShow">
-    </v-favorite>
-    <v-follow v-bind:accountId="accountId"
+    <div v-if="login">
+      <v-like v-bind:accountId="accountId"
               v-bind:id="id"
-              v-bind:authorId="authorId"
               v-if="toShow">
-    </v-follow>
+      </v-like>
+      <v-favorite v-bind:accountId="accountId"
+                  v-bind:id="id"
+                  v-if="toShow">
+      </v-favorite>
+      <v-follow v-bind:accountId="accountId"
+                v-bind:id="id"
+                v-bind:authorId="authorId"
+                v-if="toShow">
+      </v-follow>
+    </div>
   </div>
 </template>
 
@@ -93,6 +97,7 @@
         keywordTag: [],
         type_name: '',
         toShow: false,
+        login: false,
         has_keyword:true,
       }
     },
@@ -174,7 +179,8 @@
       } else {
         this.type_name = "微猜想";
       }
-      this.toShow= !(this.user||this.review);
+      this.login = localStorage.getItem("accountId")!=""
+      this.toShow= !(this.user||this.review)
       if(this.user){
         this.modify=(this.judge==0);
         if(this.judge==1){

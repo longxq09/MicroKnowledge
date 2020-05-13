@@ -94,6 +94,7 @@ public class MGuessController {
     private List<MicroNotice> getMEvidList() {
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("type",EVIDENCE.getIndex());
+        queryMap.put("judge",1);
         return noticeService.queryMNotice(queryMap);
     }
 

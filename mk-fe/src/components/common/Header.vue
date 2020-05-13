@@ -96,16 +96,18 @@
     },
     methods: {
       async getUserInfo() {
-        var params = new URLSearchParams();
-        params.append('userId', this.accountId);
-        try {
-          let res = await this.axios.post('/message/getUnReadNum', params);
-          this.new_message = res.data;
-          if (this.new_message != 0) {
-            this.if_show_new = this.homepage;
+        if (this.if_show_new) {
+          var params = new URLSearchParams();
+          params.append('userId', this.accountId);
+          try {
+            let res = await this.axios.post('/message/getUnReadNum', params);
+            this.new_message = res.data;
+            if (this.new_message != 0) {
+              this.if_show_new = this.homepage;
+            }
+          } catch (err) {
+            console.log(err);
           }
-        } catch (err) {
-          console.log(err);
         }
       },
       logout() {

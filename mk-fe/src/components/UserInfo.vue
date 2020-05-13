@@ -206,7 +206,7 @@
 
       submit() {
         var params = new URLSearchParams()
-        params.append('account', 'wzs01@163.com')
+        params.append('id', localStorage.getItem("accountId"))
         params.append('name', this.form.name)
         params.append('sex', this.form.sex)
         params.append('education', this.form.education)
