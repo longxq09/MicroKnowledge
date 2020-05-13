@@ -7,8 +7,7 @@
               v-bind:authorName="value.authorName"
               v-bind:keywords="value.keywords"
               v-bind:title="value.title"
-              v-bind:summary="value.summary"
-              v-bind:user="user">
+              v-bind:summary="value.summary">
     </v-notice>
   </div>
 </template>
