@@ -43,9 +43,7 @@ public class MNoticeServiceImp implements MNoticeService {
 
     @Override
     public boolean insertMNotice(MicroNotice notice) {
-        int result = noticeMapper.insertMNotice(notice);
-
-        System.out.println("result: " + notice.getId());
+        noticeMapper.insertMNotice(notice);
         return true;
     }
 

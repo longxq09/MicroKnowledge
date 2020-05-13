@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description: TODO
@@ -34,13 +31,7 @@ public class MessageController {
     public List<Message> getMessages(HttpServletRequest request){
         int userId = Integer.parseInt(request.getParameter("userId"));
         List<Message> messageList = messageService.selectMessageByUser(userId);
-        messageList.sort((m1, m2) -> {
-            if(m1.getFlag()==m1.getFlag()){
-                return m1.getTime().compareTo(m2.getTime());
-            } else {
-                return m1.getFlag() - m2.getFlag();
-            }
-        });
+        messageList.sort(Comparator.comparing(Message::getTime).reversed());
         messageService.setFlagByUser(userId);   //改为已阅
         return messageList;
     }

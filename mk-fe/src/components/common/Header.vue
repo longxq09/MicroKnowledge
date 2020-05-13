@@ -22,6 +22,10 @@
     <el-badge class="button" v-if="homepage">
       <el-button @click="toUser">个人主页</el-button>
     </el-badge>
+    <el-badge style="float: right;margin: 10px;position: relative;" v-if="homepage">
+      <el-button @click="toUser_message">我的消息</el-button>
+      <div class="red_dot" v-if="if_show_new">{{new_message}}</div>
+    </el-badge>
     <el-badge class="button" v-if="homepage">
       <el-button @click="toNewMEvid">发布新证据</el-button>
     </el-badge>
@@ -82,10 +86,28 @@
     data() {
       return {
         accountId: localStorage.getItem("accountId"),
-        searchContent: ''
+        searchContent: '',
+        new_message: 0,
+        if_show_new: false,
       }
     },
+    mounted() {
+      this.getUserInfo();
+    },
     methods: {
+      async getUserInfo() {
+        var params = new URLSearchParams();
+        params.append('userId', this.accountId);
+        try {
+          let res = await this.axios.post('/message/getUnReadNum', params);
+          this.new_message = res.data;
+          if (this.new_message != 0) {
+            this.if_show_new = this.homepage;
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      },
       logout() {
         this.axios.post('/user/logout')
           .then((res)=>{
@@ -107,6 +129,14 @@
       },
       toUser() {
         this.$router.push('/user');
+      },
+      toUser_message(){
+        this.$router.push({
+          name: 'User',
+          params: {
+            activeName: "fifth"
+          }
+        });
       },
       back() {
         if(localStorage.getItem("accountId") === "") {
@@ -160,5 +190,18 @@
     display: inline-block;
     float: right;
     margin-top: 5px;
+  }
+  .red_dot {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 10px;
+    color: #fff;
+    text-align: center;
+    background-color: #f00;
+    border-radius: 50%;
+    position: absolute;
+    right: -10px;
+    top: -10px;
   }
 </style>
