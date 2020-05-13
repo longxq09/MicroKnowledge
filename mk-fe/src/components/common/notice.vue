@@ -208,9 +208,9 @@
   .noice_title {
     color: #409EFF;
     text-align: left;
-    font-size: 20px;
-    font-weight: 500;
-    display: inline-block;
+    /*font-size: 20px;*/
+    /*font-weight: 500;*/
+    /*display: inline-block;*/
     margin: 10px;
     margin-bottom: 5px;
     width: 100%;
