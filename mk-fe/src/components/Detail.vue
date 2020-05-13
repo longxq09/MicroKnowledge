@@ -143,9 +143,9 @@
           this.keyWordList = this.form.keyWord.split('-');
           this.labelList = this.form.label.split('-');
           if (this.form.type == 1) {
-            this.type_str = "微证据";
+            this.form.type_str = "微证据";
           } else {
-            this.type_str = "微猜想";
+            this.form.type_str = "微猜想";
           }
         } catch (err) {
           console.log(err);
