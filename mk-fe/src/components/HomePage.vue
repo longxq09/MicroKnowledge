@@ -32,6 +32,7 @@
         </el-tab-pane>
         <el-tab-pane label="评审" name="forth">
           <v-notice :key="value.id" v-for="(value,index) in review_exhibition"
+                    v-if="accountId!=value.authorID"
                     v-bind:id="value.id"
                     v-bind:type="value.type"
                     v-bind:authorName="value.authorName"
@@ -61,6 +62,7 @@
         review_exhibition: Array,
         followingState: Array,
         activeName: "first",
+        accountId: 0,
       }
     },
 
@@ -77,6 +79,8 @@
     },
     methods: {
       async getUserInfo() {
+        this.accountId=Number(localStorage.getItem("accountId"));
+        console.log("====="+this.accountId);
         var params = new URLSearchParams();
         try {
           let res = await this.axios.get('/mNotice/getNotices', params);
@@ -87,6 +91,12 @@
         try {
           let res = await this.axios.get('/review/getReviewList', params);
           this.review_exhibition = res.data;
+
+          this.review_exhibition.forEach(item => {
+            item.ifShow = (this.accountId!=item.authorID);
+            console.log("authorId=="+item.authorID);
+            console.log("item.ifShow=="+item.ifShow);
+          });
         } catch (err) {
           console.log(err);
         }
