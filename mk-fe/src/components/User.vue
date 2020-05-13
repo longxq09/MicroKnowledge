@@ -122,6 +122,9 @@
     },
     methods: {
       async getUserInfo() {
+        if (this.$route.params.activeName.length!=0) {
+          this.activeName = this.$route.params.activeName;
+        }
         this.axios.get('/user/info', {
           params: {
             id: this.accountId
