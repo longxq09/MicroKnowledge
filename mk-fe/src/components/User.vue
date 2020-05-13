@@ -63,6 +63,7 @@
                     v-bind:keywords="value.keywords"
                     v-bind:title="value.title"
                     v-bind:summary="value.summary"
+                    v-bind:judge="value.judge"
                     v-bind:user=true>
           </v-notice>
         </el-tab-pane>
