@@ -7,7 +7,7 @@
       <el-tabs tab-position="left">
         <el-tab-pane label="账号管理">
           <el-form ref="form" :model="form" label-width="60px">
-            <el-form-item label="头像">
+            <el-form-item label="头像" style="display:none">
               <el-upload
                 class="avatar-uploader"
                 action=""
@@ -19,7 +19,7 @@
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
-            <el-form-item label="昵称">
+            <el-form-item label="昵称" style="width: 400px">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item>

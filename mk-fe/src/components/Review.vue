@@ -64,7 +64,6 @@
       vFooter
     },
     created() {
-      console.log("init");
       this.getUserInfo();
     },
     methods: {
@@ -73,7 +72,6 @@
         params.append('id', this.$route.query.id);
         try {
           let res = await this.axios.post('/mNotice/getNoticeById', params);
-          console.log(res.data);
           this.form.title = res.data.title;
           this.form.text = res.data.summary;
           this.form.keyWord = res.data.keywords;
@@ -103,7 +101,6 @@
         params2.append('noticeId', this.$route.query.id);
         try {
           let res = await this.axios.post('/review/userToReview', params2);
-          console.log(res.data);
           this.review_type = res.data.type;
           if (this.review_type == 0) {
             this.need_review = true;

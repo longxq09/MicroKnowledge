@@ -20,7 +20,7 @@
       <v-favorite v-bind:accountId="accountId" v-bind:id="id">
       </v-favorite>
 
-      <v-follow v-bind:accountId="accountId" v-bind:id="id" v-bind:authorId="authorId">
+      <v-follow v-bind:accountId="accountId" v-bind:id="id" v-bind:authorId="form.authorId">
       </v-follow>
 
       <div class="comment_count">
@@ -68,7 +68,7 @@
         reply_num: 0,
         user: true,
         accountId: 0,
-        id:0,
+        id: 0,
         form: {
           type_str: "微证据",
           title: '震惊！还没加载出来？！',
@@ -91,14 +91,12 @@
       vFavorite,
     },
     created() {
-      console.log("init");
       this.accountId = localStorage.getItem("accountId");
-      this.id=this.$route.query.id;
+      this.id = Number(this.$route.query.id)
       this.getUserInfo();
     },
     methods: {
       changFlag(a) {
-        console.log("we catch the change!!!!!!!!!!!!!!!");
         this.refresh = false;
         var params2 = new URLSearchParams();
         params2.append('noticeId', this.$route.query.id);
@@ -126,7 +124,6 @@
         params2.append('id', this.$route.query.id);
         try {
           let res = await this.axios.post('/mNotice/getNoticeById', params2);
-          console.log(res.data);
           this.form.title = res.data.title;
           this.form.text = res.data.summary;
           this.form.keyWord = res.data.keywords;
@@ -154,7 +151,6 @@
 
       submit_reply() {
         if (this.reply_text.length !== 0) {
-          console.log("reply_success");
           var params = new URLSearchParams();
           params.append('fromId', 1);
           params.append('toId', -1);
@@ -162,14 +158,10 @@
           params.append('content', this.reply_text);
           params.append('noticeId', this.$route.query.id);
           params.append('authorId', this.form.authorId);
-          //params.append('authorId', 1);
-
           this.axios.post('/comment/replyComment', params)
             .then((res) => {
-              // var remindType = res.data.code == 0 ? 'success' : 'info';
               var remindTitle = res.data === 0 ? '回复成功' : '回复失败';
               var remindContent = res.data === 0 ? '回复成功！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
-              console.log("------------" + res.data);
               this.$alert(remindContent, remindTitle, {
                 confirmButtonText: '确定'
               });
