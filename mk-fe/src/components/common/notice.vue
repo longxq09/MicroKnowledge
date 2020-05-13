@@ -180,7 +180,6 @@
         this.type_name = "微猜想";
       }
       this.login = localStorage.getItem("accountId")!=""
-      console.log(this.login)
       this.toShow= !(this.user||this.review)
       if(this.user){
         this.modify=(this.judge==0);
