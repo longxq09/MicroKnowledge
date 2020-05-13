@@ -4,18 +4,18 @@
       <v-head v-bind:user=true></v-head>
     </el-header>
     <el-main>
-      <div style="display: inline-block; width: 300px; margin-left: 8%; vertical-align: top">
-        <el-image class="image" :src="src"></el-image>
+      <el-image class="image" :src="src"></el-image>
+      <div style="display: inline-block; margin-top: 60px">
         <p>{{name}}</p>
         <p>{{email}}</p>
       </div>
-      <el-tabs v-model="activeName" style="display: inline-block; width: 600px; margin-left: 40px; margin-right: 8%">
+      <el-tabs v-model="activeName" style="width: 80%; margin-left: 12%">
         <el-tab-pane label="关注" name="first">
           <div class="follow" :key="index" v-for="(value,index) in following">
             <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
-            <div style="display: inline-block">
-              <div>{{value.name}}</div>
-              <div>{{value.email}}</div>
+            <div style="display: inline-block" >
+              <p @click="toOtherUser(value.id, value.name, value.email)">{{value.name}}</p>
+              <p @click="toOtherUser(value.id, value.name, value.email)">{{value.email}}</p>
             </div>
             <v-follow v-if="accountId==hostId"
                       style="float: right"
@@ -28,9 +28,9 @@
         <el-tab-pane label="粉丝" name="second">
           <div class="follow" :key="index" v-for="(value,index) in follower">
             <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
-            <div style="display: inline-block">
-              <div>{{value.name}}</div>
-              <div>{{value.email}}</div>
+            <div style="display: inline-block" >
+              <p @click="toOtherUser(value.id, value.name, value.email)">{{value.name}}</p>
+              <p @click="toOtherUser(value.id, value.name, value.email)">{{value.email}}</p>
             </div>
             <v-follow v-if="accountId==hostId"
                       style="float: right"
@@ -53,7 +53,7 @@
                     v-bind:user=true>
           </v-notice>
         </el-tab-pane>
-        <el-tab-pane label="我的发布" name="forth">
+        <el-tab-pane label="我的发布" v-if="accountId==hostId" name="forth">
           <v-notice :key="value.id"
                     v-for="(value,index) in myNotice"
                     v-bind:accountId="accountId"
@@ -98,7 +98,7 @@
         hostId: localStorage.getItem("accountId"),
         accountId: localStorage.getItem("accountId"),
         name: '',
-        email: '',
+        email: localStorage.getItem("email"),
         src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
         activeName: 'first',
         following: Array,
@@ -116,16 +116,26 @@
       vFollow
     },
     mounted() {
-      this.getUserInfo()
-      this.getNotice()
-      this.getFollow()
-      this.getFavorite()
+      this.initial()
+      if (this.$route.params.activeName.length != 0) {
+        this.activeName = this.$route.params.activeName;
+      }
     },
     methods: {
-      async getUserInfo() {
-        if (this.$route.params.activeName.length!=0) {
-          this.activeName = this.$route.params.activeName;
-        }
+      toOtherUser(id, name, email) {
+        this.accountId = String(id)
+        this.email = email
+        this.name = name
+        this.initial()
+      },
+      initial() {
+        this.getUserInfo()
+        this.getMessage()
+        this.getNotice()
+        this.getFollow()
+        this.getFavorite()
+      },
+      getUserInfo() {
         this.axios.get('/user/info', {
           params: {
             id: this.accountId
@@ -136,8 +146,9 @@
           .catch((error) => {
             console.log(error)
           })
-
-        var params = new URLSearchParams();
+      },
+      async getMessage() {
+        let params = new URLSearchParams();
         params.append('userId', this.accountId);
         try {
           let res = await this.axios.post('/message/getMessages', params);
@@ -204,8 +215,10 @@
   }
 
   .image {
+    display: inline-block;
+    width: 300px;
+    margin: 12px 4% 40px 12%;
     vertical-align: top;
-    margin: 0;
   }
 
   .follow {
