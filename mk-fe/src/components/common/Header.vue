@@ -85,6 +85,7 @@
     },
     data() {
       return {
+        accountId: localStorage.getItem("accountId"),
         searchContent: '',
         new_message: 0,
         if_show_new: false,
