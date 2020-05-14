@@ -1,13 +1,12 @@
 <template>
   <div>
-    <div v-for="topic in topicTags" :key="topic">
-      <el-tag>{{topic}}</el-tag>
+    <div v-for="index in str.split('-')" :key="index">
+      <el-tag>{{topics[parseInt(index)].topicName}}</el-tag>
     </div>
   </div>
 </template>
 
 <script>
-  import Vue from 'vue';
   export default {
     name: "ShowTopic",
     props: {
@@ -18,20 +17,17 @@
     },
     data() {
       return {
-        topicTags: []
+        topics: []
       }
     },
-    created() {
+    mounted() {
       this.getTopic()
     },
     methods: {
       getTopic() {
         this.axios.get('/topic/getTopicList')
           .then((res) => {
-            let tags = this.str.split('-')
-            for(let i = 0; i < tags.length; i++)
-              this.topicTags.push(res.data[parseInt(tags[i])].topicName)
-            this.$forceUpdate()
+            this.topics = res.data
           })
           .catch((error) => {
             console.log(error)
