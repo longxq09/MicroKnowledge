@@ -5,6 +5,7 @@ import com.wzs.bean.MicroNotice;
 import com.wzs.bean.SearchLimit;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,4 +35,7 @@ public interface MNoticeMapper {
     List<MicroNotice> selectMNoticeByAuthorList(@Param("search") SearchLimit search);
 
     List<MicroNotice> selectMNoticeByFavorite(List<Favorite> favorites);
+
+    @Update("update `micro_notice` set `authorName` = #{authorName} where `authorId` = #{authorId}")
+    boolean updateAuthorName(int authorId, String authorName);
 }
