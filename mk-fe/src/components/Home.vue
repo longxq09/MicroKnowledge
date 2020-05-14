@@ -30,8 +30,8 @@
   import vHead from './common/Header.vue';
   import vFooter from './common/Footer.vue';
   import vNotice from './common/Notice.vue';
-  import vLogin from './Login.vue';
-  import vRegister from './Register.vue';
+  import vLogin from './common/Login.vue';
+  import vRegister from './common/Register.vue';
   import vHot from './common/Hot.vue'
   export default {
     name: "Home",
