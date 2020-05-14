@@ -94,6 +94,7 @@ public class MGuessController {
     private List<MicroNotice> getMEvidList() {
         Map<String, Object> queryMap = new HashMap();
         queryMap.put("type",EVIDENCE.getIndex());
+        queryMap.put("judge",1);
         return noticeService.queryMNotice(queryMap);
     }
 
@@ -113,18 +114,19 @@ public class MGuessController {
         retMap.put("title", guess.getTitle());
         retMap.put("summary", guess.getSummary());
 
-        String topicStr = guess.getTopic();
-        String[] topicList = topicStr.split("-");
-        String topicNameStr = "";
-        for(String t : topicList){
-            if(t.isEmpty()){
-                continue;
-            }
-            Topic topic = topicService.getTopicById(Integer.parseInt(t));
-            topicNameStr = topicNameStr.concat(topic.getTopicName());
-            topicNameStr = topicNameStr.concat("-");
-        }
-        retMap.put("topic",topicNameStr.substring(0,topicNameStr.length()-1));
+//        String topicStr = guess.getTopic();
+//        String[] topicList = topicStr.split("-");
+//        String topicNameStr = "";
+//        for(String t : topicList){
+//            if(t.isEmpty()){
+//                continue;
+//            }
+//            Topic topic = topicService.getTopicById(Integer.parseInt(t));
+//            topicNameStr = topicNameStr.concat(topic.getTopicName());
+//            topicNameStr = topicNameStr.concat("-");
+//        }
+//        retMap.put("topic",topicNameStr.substring(0,topicNameStr.length()-1));
+        retMap.put("topic",guess.getTopic());
 
         return retMap;
     }

@@ -149,7 +149,7 @@
           this.form.label = this.labelChoose.join('-');
           var params = new URLSearchParams();
           params.append('topic', this.form.label);
-          params.append('citedPaper', this.form.reference);
+          params.append('reference', this.form.reference);
           params.append('keywords', this.form.keyWord);
           params.append('title', this.form.title);
           params.append('summary', this.form.text);

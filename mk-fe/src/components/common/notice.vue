@@ -2,27 +2,32 @@
   <div class="notice">
     <div class="noice_title">
       {{type_name}} | {{title}}
+      <el-tag class="keyword" v-if="user">{{state}}</el-tag>
       <el-button class="bottom_tag" @click="toDetail"  v-if="!review">详情</el-button>
-      <el-button class="bottom_tag" v-if="authorId==accountId" @click="toModify">编辑</el-button>
-      <el-button class="bottom_tag" v-if="authorId==accountId" @click="toDelete">删除</el-button>
-      <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
+      <div v-if="login" style="display: inline-block">
+        <el-button class="bottom_tag" v-if="modify" @click="toModify">编辑</el-button>
+        <el-button class="bottom_tag" v-if="modify" @click="toDelete">删除</el-button>
+        <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
+      </div>
     </div>
     <nobr style="font-weight: 600;margin-left: 10px;">{{authorName}}</nobr>
-    <el-tag :key="tag" v-for="tag in keywordTag" class="keyword">{{tag}}</el-tag>
+    <el-tag :key="tag" v-for="tag in keywordTag" class="keyword" v-if="has_keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
-    <v-like v-bind:accountId="accountId"
-            v-bind:id="id"
-            v-if="toShow">
-    </v-like>
-    <v-favorite v-bind:accountId="accountId"
-                v-bind:id="id"
-                v-if="toShow">
-    </v-favorite>
-    <v-follow v-bind:accountId="accountId"
+    <div v-if="login">
+      <v-like v-bind:accountId="accountId"
               v-bind:id="id"
-              v-bind:authorId="authorId"
               v-if="toShow">
-    </v-follow>
+      </v-like>
+      <v-favorite v-bind:accountId="accountId"
+                  v-bind:id="id"
+                  v-if="toShow">
+      </v-favorite>
+      <v-follow v-bind:accountId="accountId"
+                v-bind:id="id"
+                v-bind:authorId="authorId"
+                v-if="toShow">
+      </v-follow>
+    </div>
   </div>
 </template>
 
@@ -33,9 +38,17 @@
   export default {
     name: "Notice",
     props: {
+      state:{
+        type: String,
+        default : "评审中"
+      },
       accountId: {
         type: String,
         default: localStorage.getItem("accountId")
+      },
+      modify:{
+        type: Boolean,
+        default: false
       },
       id: {
         type: Number,
@@ -73,6 +86,10 @@
         type: Boolean,
         default: false
       },
+      judge:{
+        type: Number,
+        default: 0
+      }
     },
 
     data() {
@@ -80,6 +97,8 @@
         keywordTag: [],
         type_name: '',
         toShow: false,
+        login: false,
+        has_keyword:true,
       }
     },
     components: {
@@ -121,7 +140,17 @@
           }
         });
       },
-      toDelete() {
+      toDelete(){
+        this.$confirm('确认删除吗', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          }).then(() => {
+            this.sureDelete();
+          }).catch(() => {
+        });
+      },
+      sureDelete() {
         var params = new URLSearchParams();
         params.append('id', this.id);
         this.axios.post('/mNotice/deleteNotice', params)
@@ -142,12 +171,28 @@
     },
     mounted() {
       this.keywordTag = this.keywords.split('-');
+      if(this.keywords.length==0){
+        this.has_keyword=false;
+      }
       if (this.type === 1) {
         this.type_name = "微证据";
       } else {
         this.type_name = "微猜想";
       }
+      this.login = localStorage.getItem("accountId")!=""
       this.toShow= !(this.user||this.review)
+      if(this.user){
+        this.modify=(this.judge==0);
+        if(this.judge==1){
+          this.state="已通过";
+        }
+        else if(this.judge==0){
+          this.state="评审中";
+        }
+        else{
+          this.state="未通过";
+        }
+      }
     },
   }
 </script>
@@ -163,9 +208,9 @@
   .noice_title {
     color: #409EFF;
     text-align: left;
-    font-size: 20px;
-    font-weight: 500;
-    display: inline-block;
+    /*font-size: 20px;*/
+    /*font-weight: 500;*/
+    /*display: inline-block;*/
     margin: 10px;
     margin-bottom: 5px;
     width: 100%;
@@ -191,7 +236,7 @@
 
   .bottom_tag {
     margin-left: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     line-height: 8px;
     height: 32px;
   }

@@ -9,26 +9,25 @@
       <nobr style="font-weight: 400;font-size: 15px;margin-left: 10px;">{{form.time}}</nobr>
       <el-tag :key="tag" v-for="tag in keyWordList" class="keyword">{{tag}}</el-tag>
       <div style="margin: 10px;margin-top: 30px;margin-bottom: 30px;">{{form.text}}</div>
-      <div class="bottom_text">引用
-        <nobr :key="reference" v-for="reference in referenceList"> | {{reference}}</nobr>
+      <div class="bottom_text">引用 : {{form.reference}}
       </div>
-      <div class="bottom_text">分类
-        <nobr :key='label' v-for="label in labelList"> | {{label}}</nobr>
+      <div class="bottom_text">分类 : {{form.label}}
       </div>
 
-      <v-like v-bind:accountId="accountId" v-bind:id="id">
+      <v-like v-if="login" v-bind:accountId="accountId" v-bind:id="id">
       </v-like>
 
-      <v-favorite v-bind:accountId="accountId" v-bind:id="id">
+      <v-favorite v-if="login" v-bind:accountId="accountId" v-bind:id="id">
       </v-favorite>
 
-      <v-follow v-bind:accountId="accountId" v-bind:id="id" v-bind:authorId="authorId">
+      <v-follow v-if="login" v-bind:accountId="accountId" v-bind:id="id" v-bind:authorId="form.authorId">
       </v-follow>
 
       <div class="comment_count">
         {{reply_num}}评论
       </div>
-      <div style="border-bottom: 1px solid lightgrey;overflow:hidden;padding-top: 5px;padding-bottom: 20px;">
+      <div v-if="login"
+           style="border-bottom: 1px solid lightgrey;overflow:hidden;padding-top: 5px;padding-bottom: 20px;">
         <div class="comment_photo">
           <el-avatar>user</el-avatar>
         </div>
@@ -59,10 +58,11 @@
     name: "Detail",
     data() {
       return {
+        login: false,
         head_title: "微知 MicroKnowledge",
-        referenceList: ['c系列丛书', '从入门到如图'],
-        keyWordList: ['machine learning', 'python从入门到入土'],
-        labelList: ['深度学习', 'hhh'],
+        referenceList: [],
+        keyWordList: [],
+        labelList: [],
         reply_text: '',
         exhibition: Array,
         refresh: true,
@@ -70,11 +70,11 @@
         reply_num: 0,
         user: true,
         accountId: 0,
-        id:0,
+        id: 0,
         form: {
           type_str: "微证据",
-          title: '震惊！冯如杯要写不完了？！',
-          text: '冯如杯写不完是怎么回事呢？冯如杯相信大家都很熟悉，但是冯如杯写不完是怎么回事呢，下面就让小编带大家一起了解吧。冯如杯写不完， 其实就是冯如杯就是憨憨， 大家可能会很惊讶冯如杯怎么会写不完呢？ 但事实就是这样， 小编也感到非常惊讶。这就是关于冯如杯写不完的事情了， 大家有什么想法呢， 欢迎在评论区告诉小编一起讨论哦！ 啦啦啦啦啦啦啦',
+          title: '震惊！还没加载出来？！',
+          text: '没加载出来是怎么回事呢？网页加载相信大家都很熟悉，但是没加载出来是怎么回事呢，下面就让小编带大家一起了解吧。其实加载不需要很久， 大家可能会很惊讶为什么没加载出来呢？ 但事实就是这样， 小编也感到非常惊讶。这就是关于没加载出来的事情， 大家有什么想法呢， 欢迎在评论区告诉小编一起讨论哦！',
           keyWord: '',
           label: '',
           reference: '',
@@ -93,14 +93,13 @@
       vFavorite,
     },
     created() {
-      console.log("init");
-      this.accountId = localStorage.getItem("accountId");
-      this.id=this.$route.query.id;
+      this.accountId = localStorage.getItem("accountId")
+      this.login = this.accountId != ""
+      this.id = Number(this.$route.query.id)
       this.getUserInfo();
     },
     methods: {
       changFlag(a) {
-        console.log("we catch the change!!!!!!!!!!!!!!!");
         this.refresh = false;
         var params2 = new URLSearchParams();
         params2.append('noticeId', this.$route.query.id);
@@ -128,7 +127,6 @@
         params2.append('id', this.$route.query.id);
         try {
           let res = await this.axios.post('/mNotice/getNoticeById', params2);
-          console.log(res.data);
           this.form.title = res.data.title;
           this.form.text = res.data.summary;
           this.form.keyWord = res.data.keywords;
@@ -140,8 +138,10 @@
           this.form.time = res.data.time;
 
           this.referenceList = this.form.reference.split('-');
+          this.form.reference=this.referenceList.join(' | ')
           this.keyWordList = this.form.keyWord.split('-');
           this.labelList = this.form.label.split('-');
+          this.form.label=this.labelList.join(' | ');
           if (this.form.type == 1) {
             this.form.type_str = "微证据";
           } else {
@@ -154,7 +154,6 @@
 
       submit_reply() {
         if (this.reply_text.length !== 0) {
-          console.log("reply_success");
           var params = new URLSearchParams();
           params.append('fromId', 1);
           params.append('toId', -1);
@@ -162,14 +161,10 @@
           params.append('content', this.reply_text);
           params.append('noticeId', this.$route.query.id);
           params.append('authorId', this.form.authorId);
-          //params.append('authorId', 1);
-
           this.axios.post('/comment/replyComment', params)
             .then((res) => {
-              // var remindType = res.data.code == 0 ? 'success' : 'info';
               var remindTitle = res.data === 0 ? '回复成功' : '回复失败';
               var remindContent = res.data === 0 ? '回复成功！' : '好像哪里出了问题/(ㄒoㄒ)/~~再试一次吧';
-              console.log("------------" + res.data);
               this.$alert(remindContent, remindTitle, {
                 confirmButtonText: '确定'
               });
