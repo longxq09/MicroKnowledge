@@ -49,8 +49,7 @@
                     v-bind:authorName="value.authorName"
                     v-bind:keywords="value.keywords"
                     v-bind:title="value.title"
-                    v-bind:summary="value.summary"
-                    v-bind:user=true>
+                    v-bind:summary="value.summary">
           </v-notice>
         </el-tab-pane>
         <el-tab-pane label="我的发布" v-if="accountId==hostId" name="forth">
