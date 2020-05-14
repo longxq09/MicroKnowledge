@@ -60,7 +60,7 @@
             <el-form-item label="学术背景">
               <el-input v-model="form.education"></el-input>
             </el-form-item>
-            <el-form-item label="工作">
+            <el-form-item label="工作地">
               <el-input v-model="form.works"></el-input>
             </el-form-item>
             <el-form-item label="居住地">
