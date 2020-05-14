@@ -59,7 +59,8 @@ public class LoginServiceImpl implements LoginService {
             //本地运行可以使用 http://localhost:18088/
             String context = "亲爱的用户,您好！<br><br>" +
                     "欢迎注册微知识账号，请访问该链接，完成用户验证：<br> " +
-                    "<a href=\"http://114.115.151.39:18088/user/checkCode?code="+code+"\">账号注册链接"+"</a>"
+                    //"<a href=\"http://114.115.151.39:18088/user/checkCode?code="+code+"\">账号注册链接"+"</a>"
+                    "<a href=\"http://localhost:18088/user/checkCode?code="+code+"\">账号注册链接"+"</a>"
                     +"<br>若不是您本人的操作，请忽略该邮件，感谢您的配合~<br><br>"+"祝好，<br>微知识团队";
             //发送激活邮件
             mailService.sendMimeMail (account.getEmail(),subject,context);
