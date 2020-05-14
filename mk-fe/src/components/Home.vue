@@ -4,7 +4,7 @@
       <v-head v-bind:home="true"></v-head>
     </el-header>
     <el-main>
-      <div style="height: 400px">
+      <div style="margin-bottom: 32px">
         <el-image class="image" :src="url" :fit="fit"></el-image>
         <el-tabs v-model="activeName" style="display: inline-block; margin-left: 15%">
           <el-tab-pane label="登录" name="first">
