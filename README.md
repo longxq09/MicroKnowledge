@@ -103,8 +103,8 @@ String picture;     //头像url
 String sex;			//性别
 String address;		//地址
 String signature;   //个性签名
-String education;   //学历
-String works;        //工作信息，包括affiliation即工作单位
+String education;   //学术背景
+String works;        //工作地信息，比如工作单位
 String expertise;    //专业领域
 String interest;    	//偏好领域
 String introduction;       //简介
