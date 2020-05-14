@@ -13,36 +13,36 @@
       icon="el-icon-search"
       @click="toSearch">
     </el-button>
-    <el-badge class="button" v-if="login">
+    <el-badge class="button" v-if="accountId!=''">
       <el-button @click="logout">登出</el-button>
     </el-badge>
     <el-badge class="button" v-if="search">
       <el-button @click="back">返回</el-button>
     </el-badge>
-    <el-badge class="button" v-if="homepage&&login">
+    <el-badge class="button" v-if="homepage">
       <el-button @click="toUser">个人主页</el-button>
     </el-badge>
-    <el-badge style="float: right;margin: 10px;position: relative;" v-if="homepage&&login">
+    <el-badge style="float: right;margin: 10px;position: relative;" v-if="homepage">
       <el-button @click="toUser_message">我的消息</el-button>
       <div class="red_dot" v-if="if_show_new">{{new_message}}</div>
     </el-badge>
-    <el-badge class="button" v-if="homepage&&login">
+    <el-badge class="button" v-if="homepage">
       <el-button @click="toNewMEvid">发布新证据</el-button>
     </el-badge>
-    <el-badge class="button" v-if="homepage&&login">
+    <el-badge class="button" v-if="homepage">
       <el-button @click="toNewMGuess">发布新猜想</el-button>
     </el-badge>
-    <el-badge class="button" v-if="(user||detail)&&login">
+    <el-badge class="button" v-if="detail">
       <el-button @click="toHomePage">回到首页</el-button>
     </el-badge>
-    <el-badge class="button" v-if="user&&login">
+    <el-badge class="button" v-if="user">
+      <el-button @click="toHomePage">回到首页</el-button>
+    </el-badge>
+    <el-badge class="button" v-if="user">
       <el-button @click="toUserInfo">修改个人信息</el-button>
     </el-badge>
-    <el-badge class="button" v-if="userinfo&&login">
+    <el-badge class="button" v-if="userinfo">
       <el-button @click="toUser">回到个人主页</el-button>
-    </el-badge>
-    <el-badge class="button" v-if="!login">
-      <el-button @click="toLogin">登录</el-button>
     </el-badge>
     <div class="photo" v-if="user">
       <el-avatar> user </el-avatar>
@@ -85,19 +85,18 @@
     },
     data() {
       return {
+        accountId: localStorage.getItem("accountId"),
         searchContent: '',
         new_message: 0,
         if_show_new: false,
-        login: false,
       }
     },
     mounted() {
-      this.login = localStorage.getItem("accountId") != ""
       this.getUserInfo();
     },
     methods: {
       async getUserInfo() {
-        if (this.if_show_new) {
+        if (this.accountId!="") {
           var params = new URLSearchParams();
           params.append('userId', this.accountId);
           try {
@@ -110,9 +109,6 @@
             console.log(err);
           }
         }
-      },
-      toLogin() {
-        this.$router.push('/')
       },
       logout() {
         this.axios.post('/user/logout')
