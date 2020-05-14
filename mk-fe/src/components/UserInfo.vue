@@ -208,6 +208,7 @@
         var params = new URLSearchParams()
         params.append('id', localStorage.getItem("accountId"))
         params.append('name', this.form.name)
+        params.append('signature', this.form.signature)
         params.append('sex', this.form.sex)
         params.append('education', this.form.education)
         params.append('works', this.form.works)
