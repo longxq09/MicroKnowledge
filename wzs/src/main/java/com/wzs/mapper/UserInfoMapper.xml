@@ -30,7 +30,7 @@
             usr.id = notice.authorId
         set
             usr.name = #{name, jdbcType=VARCHAR},
-            usr.picture = #{picture, jdbcType=VARCHAR}
+            usr.picture = #{picture, jdbcType=VARCHAR},
             usr.sex = #{sex,jdbcType=VARCHAR},
             usr.address=#{address,jdbcType=VARCHAR},
             usr.signature=#{signature,jdbcType=VARCHAR},
