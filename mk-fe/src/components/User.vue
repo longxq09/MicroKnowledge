@@ -9,7 +9,7 @@
         <p>{{name}}</p>
         <p>{{email}}</p>
       </div>
-      <el-tabs v-model="activeName" style="width: 80%; margin-left: 12%">
+      <el-tabs v-model="activeName" style="width: 90%; margin-left: 4%">
         <el-tab-pane label="关注" name="first">
           <div class="follow" :key="index" v-for="(value,index) in following">
             <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
@@ -49,8 +49,7 @@
                     v-bind:authorName="value.authorName"
                     v-bind:keywords="value.keywords"
                     v-bind:title="value.title"
-                    v-bind:summary="value.summary"
-                    v-bind:user=true>
+                    v-bind:summary="value.summary">
           </v-notice>
         </el-tab-pane>
         <el-tab-pane label="我的发布" v-if="accountId==hostId" name="forth">

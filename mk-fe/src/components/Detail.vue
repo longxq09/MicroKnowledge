@@ -14,19 +14,20 @@
       <div class="bottom_text">分类 : {{form.label}}
       </div>
 
-      <v-like v-bind:accountId="accountId" v-bind:id="id">
+      <v-like v-if="login" v-bind:accountId="accountId" v-bind:id="id">
       </v-like>
 
-      <v-favorite v-bind:accountId="accountId" v-bind:id="id">
+      <v-favorite v-if="login" v-bind:accountId="accountId" v-bind:id="id">
       </v-favorite>
 
-      <v-follow v-bind:accountId="accountId" v-bind:id="id" v-bind:authorId="form.authorId">
+      <v-follow v-if="login" v-bind:accountId="accountId" v-bind:id="id" v-bind:authorId="form.authorId">
       </v-follow>
 
       <div class="comment_count">
         {{reply_num}}评论
       </div>
-      <div style="border-bottom: 1px solid lightgrey;overflow:hidden;padding-top: 5px;padding-bottom: 20px;">
+      <div v-if="login"
+           style="border-bottom: 1px solid lightgrey;overflow:hidden;padding-top: 5px;padding-bottom: 20px;">
         <div class="comment_photo">
           <el-avatar>user</el-avatar>
         </div>
@@ -57,6 +58,7 @@
     name: "Detail",
     data() {
       return {
+        login: false,
         head_title: "微知 MicroKnowledge",
         referenceList: [],
         keyWordList: [],
@@ -91,7 +93,8 @@
       vFavorite,
     },
     created() {
-      this.accountId = localStorage.getItem("accountId");
+      this.accountId = localStorage.getItem("accountId")
+      this.login = this.accountId != ""
       this.id = Number(this.$route.query.id)
       this.getUserInfo();
     },
