@@ -66,12 +66,12 @@ public class UserInfoController {
     @CrossOrigin
     @RequestMapping(value = "/user/info", method = RequestMethod.GET)
     public @ResponseBody
-    Object userInfoGet(HttpServletRequest request) {
-        HashMap<String, String> res = new HashMap<>();
+    UserInfo userInfoGet(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
         //System.out.println(id);
-        UserInfo info = userInfoService.getUserInfo(id);
-        res.put("name", info.getName());
+        UserInfo res = userInfoService.getUserInfo(id);
+        return res;
+        /*res.put("name", info.getName());
         res.put("sex", info.getSex());
         res.put("address", info.getAddress());
         res.put("signature", info.getSignature());
@@ -82,7 +82,7 @@ public class UserInfoController {
         res.put("expertise", info.getExpertise());  //专业领域, id-id-id
         res.put("interest", info.getInterest());     //偏好领域, id-id-id
         res.put("picture", info.getPicture());       //头像的url
-        return res;
+        */
     }
 
     @CrossOrigin
