@@ -95,7 +95,7 @@ public class UserInfoController {
         userInfo.setSex(request.getParameter("sex"));
         userInfo.setAddress(request.getParameter("address"));
         userInfo.setSignature(request.getParameter("signature"));
-        System.out.println(userInfo.getSignature());
+        //System.out.println(userInfo.getSignature());
         userInfo.setEducation(request.getParameter("education"));
         userInfo.setWorks(request.getParameter("works"));
         userInfo.setIntroduction(request.getParameter("introduction"));
