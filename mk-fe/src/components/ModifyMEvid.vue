@@ -35,8 +35,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="toHomepageSubmit">发布</el-button>
-          <el-button @click="toHomepageCancel">取消</el-button>
+          <el-button type="primary" @click="toHomepageSubmit">保存</el-button>
+          <el-button @click="toHomepageCancel">取消修改</el-button>
         </el-form-item>
       </el-form>
     </el-main>

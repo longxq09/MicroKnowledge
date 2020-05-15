@@ -130,8 +130,8 @@
         }
       },
       toHomepageSubmit() {
-        if (this.referenceTags.length == 0) {
-          this.$alert("请填写至少一个引用微证据", "引用微证据不能为空", {
+        if (this.referenceTags.length <= 1) {
+          this.$alert("请填写至少两个引用微证据", "引用微证据不能少于两个", {
             confirmButtonText: '确定'
           });
         } else if (this.keyWordTags.length == 0) {

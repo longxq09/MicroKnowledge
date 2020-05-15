@@ -30,8 +30,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="toHomepageSubmit">发布</el-button>
-          <el-button @click="toHomepageCancel">取消</el-button>
+          <el-button type="primary" @click="toHomepageSubmit">保存</el-button>
+          <el-button @click="toHomepageCancel">取消修改</el-button>
         </el-form-item>
       </el-form>
     </el-main>
@@ -164,8 +164,8 @@
         }
       },
       toHomepageSubmit() {
-        if (this.referenceTags.length == 0) {
-          this.$alert("请填写至少一个引用微证据", "引用微证据不能为空", {
+        if (this.referenceTags.length <= 1) {
+          this.$alert("请填写至少两个引用微证据", "引用微证据不能少于两个", {
             confirmButtonText: '确定'
           });
         } else if (this.keyWordTags.length == 0) {
