@@ -53,7 +53,7 @@ public class MEvidController {
         evid.setAuthorName(userInfo.getName());
         String topic = request.getParameter("topic");
         evid.setTopic("-"+topic+"-");
-        evid.setReference(request.getParameter("citedPaper"));
+        evid.setReference(request.getParameter("reference"));
         evid.setKeywords(request.getParameter("keywords"));
         evid.setTitle(request.getParameter("title"));
         evid.setSummary(request.getParameter("summary"));
