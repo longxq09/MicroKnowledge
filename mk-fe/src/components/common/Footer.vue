@@ -1,5 +1,5 @@
 <template>
-	<el-footer>copyright: Jiayi</el-footer>
+	<div>copyright: 微知</div>
 </template>
 
 <script>
@@ -9,10 +9,10 @@
 </script>
 
 <style>
-  
+
 	.el-footer {
 		text-align: center;
 		float: left;
 	}
-	
+
 </style>

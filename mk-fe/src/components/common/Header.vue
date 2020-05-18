@@ -26,12 +26,6 @@
       <el-button @click="toUser_message">我的消息</el-button>
       <div class="red_dot" v-if="if_show_new">{{new_message}}</div>
     </el-badge>
-    <el-badge class="button" v-if="homepage&&login">
-      <el-button @click="toNewMEvid">发布新证据</el-button>
-    </el-badge>
-    <el-badge class="button" v-if="homepage&&login">
-      <el-button @click="toNewMGuess">发布新猜想</el-button>
-    </el-badge>
     <el-badge class="button" v-if="(user||detail)&&login">
       <el-button @click="toHomePage">回到首页</el-button>
     </el-badge>
@@ -155,12 +149,6 @@
       },
       toUserInfo() {
         this.$router.push('/userinfo');
-      },
-      toNewMEvid() {
-        this.$router.push('/new_mevid');
-      },
-      toNewMGuess() {
-        this.$router.push('/new_mguess');
       },
       toSearch() {
         this.$router.push({

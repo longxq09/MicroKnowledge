@@ -1,46 +1,39 @@
 <template>
-  <el-container>
-    <el-header>
-      <div class="title">微知 MicroKnowledge | 微猜想发布</div>
-    </el-header>
-    <el-main>
-      <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="引用">
-          <el-checkbox v-for="(value,index) in referenceList" :key="value.evidName" @change="chooseItem(value.id,1)">{{value.title}}</el-checkbox>
-        </el-form-item>
+  <div>
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="引用">
+        <el-checkbox v-for="(value,index) in referenceList" :key="value.evidName" @change="chooseItem(value.id,1)">{{value.title}}</el-checkbox>
+      </el-form-item>
 
-        <el-form-item label="关键词">
-          <el-tag :key="tag" v-for="tag in keyWordTags" closable :disable-transitions="false" @close="handleClose(tag)">
-            {{tag}}
-          </el-tag>
-          <el-input v-model="keyWordValue" placeholder="Fill in your keyword as follows"></el-input>
-          <el-button class="button-new-tag" size="small" @click="addTag()">增加</el-button>
-        </el-form-item>
+      <el-form-item label="关键词">
+        <el-tag :key="tag" v-for="tag in keyWordTags" closable :disable-transitions="false" @close="handleClose(tag)">
+          {{tag}}
+        </el-tag>
+        <el-input v-model="keyWordValue" placeholder="Fill in your keyword as follows"></el-input>
+        <el-button class="button-new-tag" size="small" @click="addTag()">增加</el-button>
+      </el-form-item>
 
-        <el-form-item label="分类">
-          <el-checkbox v-for="(value,index) in labelList" key="value.topicName" @change="chooseItem(value.id,2)">{{value.topicName}}</el-checkbox>
-        </el-form-item>
+      <el-form-item label="分类">
+        <el-checkbox v-for="(value,index) in labelList" key="value.topicName" @change="chooseItem(value.id,2)">{{value.topicName}}</el-checkbox>
+      </el-form-item>
 
-        <el-form-item label="主题">
-          <el-input v-model="form.title"></el-input>
-        </el-form-item>
+      <el-form-item label="主题">
+        <el-input v-model="form.title"></el-input>
+      </el-form-item>
 
-        <el-form-item label="正文">
-          <el-input type="textarea" rows="10" v-model="form.text"></el-input>
-        </el-form-item>
+      <el-form-item label="正文">
+        <el-input type="textarea" rows="10" v-model="form.text"></el-input>
+      </el-form-item>
 
-        <el-form-item>
-          <el-button type="primary" @click="toHomepageSubmit">发布</el-button>
-          <el-button @click="toHomepageCancel">取消</el-button>
-        </el-form-item>
-      </el-form>
-    </el-main>
-    <v-footer></v-footer>
-  </el-container>
+      <el-form-item>
+        <el-button type="primary" @click="toHomepageSubmit">发布</el-button>
+        <el-button @click="toHomepageCancel">取消</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
-  import vFooter from './common/Footer.vue';
   export default {
     name: "NewMGuess",
     data() {
@@ -61,11 +54,7 @@
         },
       }
     },
-    components: {
-      vFooter
-    },
     created() {
-      console.log("init");
       this.getUserInfo();
     },
     methods: {

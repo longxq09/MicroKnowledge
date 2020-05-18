@@ -7,7 +7,7 @@
       <el-input type="text" v-model="dataForm.email" placeholder="请输入邮箱"></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="password">
-      <el-input type="password" v-model="dataForm.password" placeholder="请输入密码" ></el-input>
+      <el-input type="password" v-model="dataForm.password" placeholder="请输入密码"></el-input>
     </el-form-item>
     <el-form-item label="确认密码" prop="repeat">
       <el-input type="password" v-model="dataForm.repeat" autocomplete="off"></el-input>

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
+import Visitor from '@/components/Visitor'
 import User from '@/components/User'
 import UserInfo from '@/components/UserInfo'
 import NewMEvid from '@/components/NewMEvid.vue'
@@ -18,34 +18,52 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
+      name: 'Visitor',
+      component: Visitor,
+      meta: {
+        keepAlive: false
+      }
     },
     {
       path: '/user',
       name: 'User',
-      component: User
+      component: User,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/userinfo',
       name: 'UserInfo',
-      component: UserInfo
+      component: UserInfo,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/new_mevid',
       name: 'NewMEvid',
-      component: NewMEvid
+      component: NewMEvid,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/new_mguess',
       name: 'NewMGuess',
-      component: NewMGuess
+      component: NewMGuess,
+      meta: {
+        keepAlive: true
+      }
     },
 
     {
       path: '/homepage',
       name: 'HomePage',
-      component: HomePage
+      component: HomePage,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/modify_mevid',
@@ -60,7 +78,10 @@ export default new Router({
     {
       path: '/search',
       name: 'Search',
-      component: Search
+      component: Search,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/detail',
@@ -70,7 +91,10 @@ export default new Router({
     {
       path: '/review',
       name: 'Review',
-      component: Review
+      component: Review,
+      meta: {
+        keepAlive: true
+      }
     },
   ]
 })
