@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <el-container v-if="$route.meta.keepAlive">
-      <el-aside>
-        <v-menu></v-menu>
+      <el-aside style="width: 20%;">
+        <v-menu style="width: 99%;"></v-menu>
       </el-aside>
       <el-container>
         <el-header>
@@ -42,7 +42,7 @@
             jsonPath: '/static/live2dw/live2d-widget-model-koharu/assets/koharu.model.json'
           },
           display: {
-            position: 'left',
+            position: 'right',
             width: 150,
             height: 300
           },

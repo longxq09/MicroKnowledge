@@ -22,8 +22,8 @@
     <el-badge class="button" v-if="homepage&&login">
       <el-button @click="toUser">个人主页</el-button>
     </el-badge>
-    <el-badge style="float: right;margin: 10px;position: relative;" v-if="homepage&&login">
-      <el-button @click="toUser_message">我的消息</el-button>
+    <el-badge style="float: right;margin: 10px;position: relative;" v-if="logout">
+      <el-button class="el-icon-message-solid" @click="toUser_message" circle></el-button>
       <div class="red_dot" v-if="if_show_new">{{new_message}}</div>
     </el-badge>
     <el-badge class="button" v-if="(user||detail)&&login">
@@ -97,9 +97,10 @@
           params.append('userId', this.accountId);
           try {
             let res = await this.axios.post('/message/getUnReadNum', params);
+            console.log("getUnReadNum="+res.data);
             this.new_message = res.data;
             if (this.new_message != 0) {
-              this.if_show_new = this.homepage;
+              this.if_show_new = true;
             }
           } catch (err) {
             console.log(err);

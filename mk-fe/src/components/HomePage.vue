@@ -82,8 +82,6 @@
 
           this.review_exhibition.forEach(item => {
             item.ifShow = (this.accountId!=item.authorID);
-            console.log("authorId=="+item.authorID);
-            console.log("item.ifShow=="+item.ifShow);
           });
         } catch (err) {
           console.log(err);

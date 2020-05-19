@@ -61,7 +61,7 @@
         params.append('followingID', this.authorId)
         this.axios.post('/follow/addFollow', params)
           .then((res) => {
-            this.$router.go(0)
+            
           })
           .catch((error) => {
             console.log(error)
@@ -74,7 +74,7 @@
         params.append('followingID', this.authorId)
         this.axios.post('/follow/deleteFollow', params)
           .then((res) => {
-            this.$router.go(0)
+            
           })
           .catch((error) => {
             console.log(error)
