@@ -3,14 +3,14 @@
     <el-header>
       <v-head></v-head>
     </el-header>
-    <el-main class="note" :style="note" style="width: 100%; height: 100%;">
-      <el-card style="width: 60%; margin-right: 5%; margin-left: 7.5%;display: inline-block">
+    <el-main class="note" :style="note" style="width: 100%; height: 100%; padding: 0;">
+      <el-card class="hotCard">
         <div slot="header" class="cardTitle">热榜</div>
         <div class="text item">
           <v-hot v-bind:user="true"></v-hot>
         </div>
       </el-card>
-      <el-tabs v-model="activeName" style="width: 20%; display: inline-block; vertical-align: top">
+      <el-tabs v-model="activeName" class="isFixed">
         <el-tab-pane label="登录" name="first">
           <v-login></v-login>
         </el-tab-pane>
@@ -56,7 +56,8 @@
       vHot
     },
     methods: {
-    }
+    },
+
   }
 </script>
 
@@ -64,5 +65,17 @@
   .cardTitle {
     font-size: 20px;
     text-align: center;
+  }
+  .hotCard {
+    width: 60%;
+    margin: 40px 5% 40px 7.5%;
+    display: inline-block;
+  }
+  .isFixed {
+    width: 20%;
+    display: inline-block;
+    position:fixed;
+    top: 100px;
+    z-index:999;
   }
 </style>
