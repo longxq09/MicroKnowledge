@@ -20,6 +20,7 @@
       </v-favorite>
       <v-follow v-bind:accountId="accountId" v-bind:id="id" v-bind:authorId="authorId" v-if="toShow">
       </v-follow>
+      <el-button class="bottom_tag" v-if="toShow"@click="dialogTableVisible = true">评论</el-button>
       <el-button class="bottom_tag" v-if="modify" @click="toModify">编辑</el-button>
       <el-button class="bottom_tag" v-if="modify" @click="toDelete">删除</el-button>
       <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
