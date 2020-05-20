@@ -15,4 +15,5 @@ public interface CommentService {
     boolean insertComment(Comment comment);
     List<Comment> selectCommentOfANotice(int noticeId);
     int getCommentNumByNoticeId(int noticeId);
+    int getCommentNumByfromIdAndNoticeId(int fromId, int noticeId);
 }
