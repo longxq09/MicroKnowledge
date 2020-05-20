@@ -1,10 +1,10 @@
 <template>
   <el-card class="box-card">
-    <div slot="header" class="clearfix">
+    <div slot="header" class="clearfix" style="font-size: 20px;font-weight: 500;">
       <span>{{title}}</span>
     </div>
-    <div>
-      auther:{{authorName}}
+    <div style="font-weight: 800;">
+      {{authorName}}
     </div>
     <div>
       {{summary}}

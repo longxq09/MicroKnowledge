@@ -90,8 +90,7 @@
                    v-bind:relatedNoticeId="value.relatedNoticeId"
                    v-bind:relatedNoticeTitle="value.relatedNoticeTitle"
                    v-bind:detail="value.detail"
-                   v-bind:time="value.disTime"
-                   v-bind:flag="value.flag">
+                   v-bind:time="value.disTime">
         </v-message>
       </el-tab-pane>
     </el-tabs>

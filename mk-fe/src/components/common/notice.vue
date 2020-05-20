@@ -4,7 +4,7 @@
       {{type_name}} | <el-button type="text" @click="dialogTableVisible = true" style="font-size: 20px;">{{title}}</el-button>
 
       <el-dialog title="详情" :visible.sync="dialogTableVisible">
-        <v-detail v-bind:noticeId="id"></v-detail>
+        <v-detail v-bind:noticeId="id" v-bind:comment="comment"></v-detail>
       </el-dialog>
       <el-tag class="keyword" v-if="user">{{state}}</el-tag>
       <div v-if="login" style="display: inline-block">
@@ -20,6 +20,7 @@
       </v-favorite>
       <v-follow v-bind:accountId="accountId" v-bind:id="id" v-bind:authorId="authorId" v-if="toShow">
       </v-follow>
+      <el-button class="bottom_tag" v-if="toShow"@click="dialogTableVisible = true">评论</el-button>
       <el-button class="bottom_tag" v-if="modify" @click="toModify">编辑</el-button>
       <el-button class="bottom_tag" v-if="modify" @click="toDelete">删除</el-button>
       <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
@@ -94,7 +95,11 @@
       judge: {
         type: Number,
         default: 0
-      }
+      },
+      comment: {
+        type: Boolean,
+        default: true
+      },
     },
 
     data() {
@@ -111,7 +116,6 @@
         unpass_num:0,
         dialogTableVisible: false,
         dialogFormVisible: false,
-
       }
     },
     components: {
@@ -163,8 +167,10 @@
             this.state = "已通过";
           } else if (this.judge == 0) {
             this.state = "评审中";
+            this.comment=false;
           } else {
             this.state = "未通过";
+            this.comment=false;
           }
         }
       },

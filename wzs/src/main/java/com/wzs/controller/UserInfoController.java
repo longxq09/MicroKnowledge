@@ -68,7 +68,6 @@ public class UserInfoController {
     public @ResponseBody
     UserInfo userInfoGet(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        //System.out.println(id);
         UserInfo res = userInfoService.getUserInfo(id);
         return res;
         /*res.put("name", info.getName());

@@ -34,7 +34,8 @@
                 v-bind:keywords="value.keywords"
                 v-bind:title="value.title"
                 v-bind:summary="value.summary"
-                v-bind:review=true>
+                v-bind:review=true
+                v-bind:comment=false>
       </v-notice>
     </el-tab-pane>
   </el-tabs>
