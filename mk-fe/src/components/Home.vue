@@ -22,7 +22,8 @@
       vMenu
     },
     mounted() {
-      if (sessionStorage.getItem("accountId") === '') {
+      console.log(sessionStorage.getItem("accountId"))
+      if (sessionStorage.getItem("accountId") === '' || sessionStorage.getItem("accountId") === null) {
         this.$router.push('/')
       }
       let homeElement = document.getElementById("home")

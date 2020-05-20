@@ -56,7 +56,7 @@
       vHot
     },
     mounted() {
-      if (sessionStorage.getItem("accountId") !== '') {
+      if (sessionStorage.getItem("accountId") !== '' && sessionStorage.getItem("accountId") != null) {
         this.$router.push('/homepage')
       }
     }
