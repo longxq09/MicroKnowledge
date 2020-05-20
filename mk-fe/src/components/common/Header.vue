@@ -1,39 +1,27 @@
 <template>
   <div class="header">
     <div class="title">{{title}}</div>
-    <div style="width:200px; display:inline-block; margin-left: 8px">
-      <el-input
-        v-model="searchContent"
-        placeholder="搜索关键字">
-      </el-input>
+    <div class="searchBox">
+      <div style="width:200px; display: inline-block; margin-left: 8px">
+        <el-input
+          v-model="searchContent"
+          placeholder="搜索关键字">
+        </el-input>
+      </div>
+      <el-button
+        type="primary"
+        icon="el-icon-search"
+        @click="toSearch">
+      </el-button>
     </div>
-    <el-button
-      style="display: inline"
-      type="primary"
-      icon="el-icon-search"
-      @click="toSearch">
-    </el-button>
     <el-badge class="button" v-if="login">
       <el-button @click="logout">登出</el-button>
     </el-badge>
     <el-badge class="button" v-if="search">
       <el-button @click="back">返回</el-button>
     </el-badge>
-    <el-badge class="button" v-if="homepage&&login">
-      <el-button @click="toUser">个人主页</el-button>
-    </el-badge>
-    <el-badge style="float: right;margin: 10px;position: relative;" v-if="logout">
-      <el-button class="el-icon-message-solid" @click="toUser_message" circle></el-button>
-      <div class="red_dot" v-if="if_show_new">{{new_message}}</div>
-    </el-badge>
     <el-badge class="button" v-if="(user||detail)&&login">
       <el-button @click="toHomePage">回到首页</el-button>
-    </el-badge>
-    <el-badge class="button" v-if="user&&login">
-      <el-button @click="toUserInfo">修改个人信息</el-button>
-    </el-badge>
-    <el-badge class="button" v-if="userinfo&&login">
-      <el-button @click="toUser">回到个人主页</el-button>
     </el-badge>
     <el-badge class="button" v-if="!login">
       <el-button @click="toLogin">登录</el-button>
@@ -167,16 +155,25 @@
 
 <style>
   .header {
-    background-color: #FFFFFF;
+    position: fixed;
+    height: 60px;
+    background-color: #3f51b5;
+    color: white;
     line-height: 1.5;
     width: 100%;
+    z-index: 100;
   }
   .title {
-    color: #409EFF;
-    text-align: left;
-    font-size: 30px;
+    padding-top: 12px;
+    padding-left: 20px;
+    color: white;
+    font-size: 24px;
     font-weight: 800;
     display: inline-block;
+  }
+  .searchBox {
+    display: inline-block;
+    text-align: center;
   }
   .button {
     float: right;

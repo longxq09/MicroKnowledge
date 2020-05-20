@@ -7,6 +7,7 @@
 			<el-input type="password" v-model="dataForm.password" placeholder="请输入密码"></el-input>
 		</el-form-item>
 		<el-button @click="login">登录</el-button>
+
 	</el-form>
 </template>
 
@@ -21,6 +22,7 @@
           password: [{required: true, message: '密码不可为空', trigger: 'blur'}],
           email: [{required: true, message: '邮箱不可为空', trigger: 'blur'}],
         },
+
       }
     },
 		methods: {

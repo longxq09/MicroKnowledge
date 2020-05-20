@@ -1,0 +1,41 @@
+<template>
+  <div>
+    <v-head></v-head>
+    <v-menu style="display: inline-block"></v-menu>
+    <div id="home" style="position: fixed; top: 60px; height: 680px; width: 100%">
+      <router-view></router-view>
+    </div>
+  </div>
+</template>
+<script>
+  import vHead from './common/Header.vue';
+  import vMenu from './common/NavMenu.vue';
+  export default {
+    name: 'home',
+    data() {
+      return {
+        homeLeft: '80px'
+      }
+    },
+    components: {
+      vHead,
+      vMenu
+    },
+    mounted() {
+      let homeElement = document.getElementById("home")
+      let menuElement = document.getElementById("menu")
+      homeElement.style.left = menuElement.style.width
+      console.log(menuElement.style.width)
+      let elementResizeDetectorMaker = require("element-resize-detector");
+      let erd = elementResizeDetectorMaker()
+      erd.listenTo(menuElement, function (element) {
+        homeElement.style.left = element.style.width
+      })
+    },
+    methods: {
+      updateLeft() {
+        this.homeLeft = this.$refs.menu.style.width + 'px'
+      },
+    }
+  }
+</script>

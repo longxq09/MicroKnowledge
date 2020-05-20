@@ -181,19 +181,6 @@
 </script>
 
 <style>
-  .el-header {
-    background-color: #FFFFFF;
-    line-height: 1.5;
-  }
-
-  .title {
-    color: #409EFF;
-    text-align: left;
-    font-size: 30px;
-    font-weight: 800;
-    display: inline-block;
-  }
-
   .el-main {
     background-color: #F4F4F5;
     color: #333;

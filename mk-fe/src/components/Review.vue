@@ -149,18 +149,6 @@
 </script>
 
 <style>
-  .el-header {
-    background-color: #FFFFFF;
-    line-height: 1.5;
-  }
-
-  .el-main {
-    background-color: #F4F4F5;
-    color: #333;
-    padding-left: 15%;
-    padding-right: 25%;
-  }
-
   .noice_title {
     color: #409EFF;
     text-align: left;
