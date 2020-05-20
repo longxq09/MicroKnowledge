@@ -50,7 +50,8 @@
       }
     },
     mounted() {
-      this.login = sessionStorage.getItem("accountId") !== "" && sessionStorage.getItem("accountId") != null
+      this.login = sessionStorage.getItem("accountId") !== "" &&
+        sessionStorage.getItem("accountId") != null
       this.getUserInfo();
     },
     methods: {
@@ -100,6 +101,16 @@
             console.log(res.message);
           });
       },
+      toSearch() {
+        this.$router.push({
+          path: '/search',
+          query: {
+            word: this.searchContent,
+            kind: 0,
+            topic: ''
+          }
+        })
+      }
     }
   }
 </script>
