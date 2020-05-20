@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Description: TODO
@@ -38,6 +35,8 @@ public class MNoticeController {
     private LikeService likeService;
     @Resource
     private FavoriteService favoriteService;
+    @Resource
+    private ReviewService reviewService;
 
     @CrossOrigin
     @ResponseBody
@@ -66,7 +65,27 @@ public class MNoticeController {
     @RequestMapping(value = "/deleteNotice", method = RequestMethod.POST)
     public int deleteMEvid(int id){
         noticeService.deleteMNotice(id);
+        reviewService.delReviewsByNotice(id);
         return 0;
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/getReference", method = RequestMethod.POST)
+    public List<MicroNotice> getReference(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("id"));
+        MicroNotice notice = noticeService.getMNoticeById(id);
+        List<MicroNotice> evidList = new LinkedList<>();
+        String referStr = notice.getReference();
+        String[] referList = referStr.split("-");
+        for(String r : referList){
+            if(r.isEmpty()){
+                continue;
+            }
+            MicroNotice evid = noticeService.getMNoticeById(Integer.parseInt(r));
+            evidList.add(evid);
+        }
+        return evidList;
     }
 
     @CrossOrigin

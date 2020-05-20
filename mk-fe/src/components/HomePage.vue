@@ -1,56 +1,46 @@
 <template>
-  <el-container>
-    <el-header>
-      <v-head v-bind:homepage=true></v-head>
-    </el-header>
-    <el-main>
-      <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
-        <el-tab-pane label="推荐" name="first">
-          <v-notice :key="value.id" v-for="(value,index) in exhibition"
-                    v-bind:id="value.id"
-                    v-bind:type="value.type"
-                    v-bind:authorId="value.authorID"
-                    v-bind:authorName="value.authorName"
-                    v-bind:keywords="value.keywords"
-                    v-bind:title="value.title"
-                    v-bind:summary="value.summary">
-          </v-notice>
-        </el-tab-pane>
-        <el-tab-pane label="关注" name="second">
-          <v-notice :key="value.id" v-for="(value,index) in followingState"
-                    v-bind:id="value.id"
-                    v-bind:type="value.type"
-                    v-bind:authorId="value.authorID"
-                    v-bind:authorName="value.authorName"
-                    v-bind:keywords="value.keywords"
-                    v-bind:title="value.title"
-                    v-bind:summary="value.summary">
-          </v-notice>
-        </el-tab-pane>
-        <el-tab-pane label="热榜" name="third">
-          <v-hot></v-hot>
-        </el-tab-pane>
-        <el-tab-pane label="评审" name="forth">
-          <v-notice :key="value.id" v-for="(value,index) in review_exhibition"
-                    v-if="accountId!=value.authorID"
-                    v-bind:id="value.id"
-                    v-bind:type="value.type"
-                    v-bind:authorName="value.authorName"
-                    v-bind:keywords="value.keywords"
-                    v-bind:title="value.title"
-                    v-bind:summary="value.summary"
-                    v-bind:review=true>
-          </v-notice>
-        </el-tab-pane>
-      </el-tabs>
-    </el-main>
-    <v-footer></v-footer>
-  </el-container>
+  <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
+    <el-tab-pane label="推荐" name="first">
+      <v-notice :key="value.id" v-for="(value,index) in exhibition"
+                v-bind:id="value.id"
+                v-bind:type="value.type"
+                v-bind:authorId="value.authorID"
+                v-bind:authorName="value.authorName"
+                v-bind:keywords="value.keywords"
+                v-bind:title="value.title"
+                v-bind:summary="value.summary">
+      </v-notice>
+    </el-tab-pane>
+    <el-tab-pane label="关注" name="second">
+      <v-notice :key="value.id" v-for="(value,index) in followingState"
+                v-bind:id="value.id"
+                v-bind:type="value.type"
+                v-bind:authorId="value.authorID"
+                v-bind:authorName="value.authorName"
+                v-bind:keywords="value.keywords"
+                v-bind:title="value.title"
+                v-bind:summary="value.summary">
+      </v-notice>
+    </el-tab-pane>
+    <el-tab-pane label="热榜" name="third">
+      <v-hot></v-hot>
+    </el-tab-pane>
+    <el-tab-pane label="评审" name="forth">
+      <v-notice :key="value.id" v-for="(value,index) in review_exhibition"
+                v-if="accountId!=value.authorID"
+                v-bind:id="value.id"
+                v-bind:type="value.type"
+                v-bind:authorName="value.authorName"
+                v-bind:keywords="value.keywords"
+                v-bind:title="value.title"
+                v-bind:summary="value.summary"
+                v-bind:review=true>
+      </v-notice>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 
 <script>
-  import vHead from './common/Header.vue';
-  import vFooter from './common/Footer.vue';
   import vNotice from './common/Notice.vue';
   import vComment from './common/Comment.vue';
   import vHot from './common/Hot.vue'
@@ -67,8 +57,6 @@
     },
 
     components: {
-      vHead,
-      vFooter,
       vNotice,
       vComment,
       vHot
@@ -94,8 +82,6 @@
 
           this.review_exhibition.forEach(item => {
             item.ifShow = (this.accountId!=item.authorID);
-            console.log("authorId=="+item.authorID);
-            console.log("item.ifShow=="+item.ifShow);
           });
         } catch (err) {
           console.log(err);

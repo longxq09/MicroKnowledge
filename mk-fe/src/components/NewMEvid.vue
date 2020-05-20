@@ -1,32 +1,43 @@
 <template>
-  <el-container>
-    <el-header>
-      <div class="title">微知 MicroKnowledge | 微证据发布</div>
-    </el-header>
-    <el-main>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="引用论文">
+          <div>
           <el-tag :key="tag" v-for="tag in referenceTags" closable :disable-transitions="false" @close="handleClose(tag,1)">
             {{tag}}
           </el-tag>
-          <el-input type="textarea" rows="2" v-model="referenceValue" placeholder="Fill in your references as follows"></el-input>
+          </div>
+          <el-input v-model="referenceValue" placeholder="Fill in your references as follows" style="width: 90%;"></el-input>
           <el-button class="button-new-tag" size="small" @click="addTag(1)">增加</el-button>
         </el-form-item>
 
         <el-form-item label="关键词">
+          <div>
           <el-tag :key="tag" v-for="tag in keyWordTags" closable :disable-transitions="false" @close="handleClose(tag,2)">
             {{tag}}
           </el-tag>
-          <el-input v-model="keyWordValue" placeholder="Fill in your keyword as follows"></el-input>
+          </div>
+          <el-input v-model="keyWordValue" placeholder="Fill in your keyword as follows" style="width: 90%;" maxlength="10" show-word-limit ></el-input>
           <el-button class="button-new-tag" size="small" @click="addTag(2)">增加</el-button>
         </el-form-item>
 
         <el-form-item label="分类">
-          <el-checkbox v-for="(value,index) in labelList" :key="value.topicName" @change="chooseItem(value.id)">{{value.topicName}}</el-checkbox>
+              <el-select
+                filterable
+                style="display: block"
+                v-model="labelChoose"
+                multiple
+                value-key="id">
+                <el-option
+                  v-for="(value, index) in labelList"
+                  :key="value.id"
+                  :label="value.topicName"
+                  :value="value.id">
+                </el-option>
+              </el-select>
         </el-form-item>
 
         <el-form-item label="主题">
-          <el-input v-model="form.title"></el-input>
+          <el-input v-model="form.title" maxlength="30" show-word-limit></el-input>
         </el-form-item>
 
         <el-form-item label="正文">
@@ -38,13 +49,9 @@
           <el-button @click="toHomepageCancel">取消</el-button>
         </el-form-item>
       </el-form>
-    </el-main>
-    <v-footer></v-footer>
-  </el-container>
 </template>
 
 <script>
-  import vFooter from './common/Footer.vue';
   export default {
     name: "NewMEvid",
     data() {
@@ -63,9 +70,6 @@
           reference: ''
         },
       }
-    },
-    components: {
-      vFooter
     },
     created() {
       console.log("init");
@@ -112,15 +116,6 @@
           console.log(this.keyWordTags.join('-'))
         }
       },
-      chooseItem(id) {
-        console.log("id:" + id);
-        if (this.labelChoose.indexOf(id) == -1) {
-          this.labelChoose.push(id)
-        } else {
-          this.labelChoose.splice(this.labelChoose.indexOf(id), 1);
-        }
-        console.log("labelChoose:" + this.labelChoose);
-      },
       toHomepageSubmit() {
         if (this.referenceTags.length == 0) {
           this.$alert("请填写至少一个引用论文", "引用论文不能为空", {
@@ -143,7 +138,7 @@
             confirmButtonText: '确定'
           });
         } else {
-
+          console.log("this.referenceTags="+this.referenceTags);
           this.form.reference = this.referenceTags.join('-');
           this.form.keyWord = this.keyWordTags.join('-');
           this.form.label = this.labelChoose.join('-');

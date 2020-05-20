@@ -1,28 +1,49 @@
 <template>
-  <el-container>
-    <el-header>
-      <div class="title">微知 MicroKnowledge | 微猜想发布</div>
-    </el-header>
-    <el-main>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="引用">
-          <el-checkbox v-for="(value,index) in referenceList" :key="value.evidName" @change="chooseItem(value.id,1)">{{value.title}}</el-checkbox>
+              <el-select
+                filterable
+                style="display: block"
+                v-model="referenceTags"
+                multiple
+                value-key="id">
+                <el-option
+                  v-for="(value, index) in referenceList"
+                  :key="value.id"
+                  :label="value.title"
+                  :value="value.id">
+                </el-option>
+              </el-select>
         </el-form-item>
 
         <el-form-item label="关键词">
-          <el-tag :key="tag" v-for="tag in keyWordTags" closable :disable-transitions="false" @close="handleClose(tag)">
-            {{tag}}
-          </el-tag>
-          <el-input v-model="keyWordValue" placeholder="Fill in your keyword as follows"></el-input>
+          <div>
+            <el-tag :key="tag" v-for="tag in keyWordTags" closable :disable-transitions="false" @close="handleClose(tag)">
+              {{tag}}
+            </el-tag>
+          </div>
+          <el-input v-model="keyWordValue" maxlength="10" show-word-limit placeholder="Fill in your keyword as follows" style="width: 90%;"></el-input>
           <el-button class="button-new-tag" size="small" @click="addTag()">增加</el-button>
         </el-form-item>
 
         <el-form-item label="分类">
-          <el-checkbox v-for="(value,index) in labelList" key="value.topicName" @change="chooseItem(value.id,2)">{{value.topicName}}</el-checkbox>
+              <el-select
+                filterable
+                style="display: block"
+                v-model="labelChoose"
+                multiple
+                value-key="id">
+                <el-option
+                  v-for="(value, index) in labelList"
+                  :key="value.id"
+                  :label="value.topicName"
+                  :value="value.id">
+                </el-option>
+              </el-select>
         </el-form-item>
 
         <el-form-item label="主题">
-          <el-input v-model="form.title"></el-input>
+          <el-input v-model="form.title" maxlength="30" show-word-limit></el-input>
         </el-form-item>
 
         <el-form-item label="正文">
@@ -34,13 +55,9 @@
           <el-button @click="toHomepageCancel">取消</el-button>
         </el-form-item>
       </el-form>
-    </el-main>
-    <v-footer></v-footer>
-  </el-container>
 </template>
 
 <script>
-  import vFooter from './common/Footer.vue';
   export default {
     name: "NewMGuess",
     data() {
@@ -61,11 +78,7 @@
         },
       }
     },
-    components: {
-      vFooter
-    },
     created() {
-      console.log("init");
       this.getUserInfo();
     },
     methods: {
@@ -108,27 +121,6 @@
         console.log(this.keyWordTags.join('-'))
 
       },
-      chooseItem(id, type) {
-        if (type == 1) {
-          console.log("id:" + id);
-          if (this.referenceTags.indexOf(id) == -1) {
-            this.referenceTags.push(id)
-          } else {
-            this.referenceTags.splice(this.referenceTags.indexOf(id), 1);
-          }
-          console.log("referenceTags:" + this.referenceTags);
-
-        } else {
-          console.log("id:" + id);
-          if (this.labelChoose.indexOf(id) == -1) {
-            this.labelChoose.push(id)
-          } else {
-            this.labelChoose.splice(this.labelChoose.indexOf(id), 1);
-          }
-          console.log("labelChoose:" + this.labelChoose);
-
-        }
-      },
       toHomepageSubmit() {
         if (this.referenceTags.length <= 1) {
           this.$alert("请填写至少两个引用微证据", "引用微证据不能少于两个", {
@@ -155,7 +147,7 @@
           this.form.keyWord = this.keyWordTags.join('-');
           this.form.label = this.labelChoose.join('-');
           var params = new URLSearchParams();
-          params.append('topic', this.form.label);
+          params.append('topic',this.form.label);
           params.append('reference', this.form.reference);
           params.append('keywords', this.form.keyWord);
           params.append('title', this.form.title);

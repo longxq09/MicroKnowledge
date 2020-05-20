@@ -5,6 +5,7 @@ import com.wzs.bean.MicroNotice;
 import com.wzs.bean.Topic;
 import com.wzs.bean.UserInfo;
 import com.wzs.service.MNoticeService;
+import com.wzs.service.ReviewService;
 import com.wzs.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,8 @@ public class MGuessController {
     private MNoticeService noticeService;
     @Resource
     private TopicService topicService;
+    @Resource
+    private ReviewService reviewService;
 
     //通过map查询
     public List<MicroNotice> queryMGuess(Map<String, Object> queryMap) {
@@ -69,7 +72,8 @@ public class MGuessController {
     @RequestMapping(value = "/modifyMGuess", method = RequestMethod.POST)
     public int updateMGuess(HttpServletRequest request, HttpSession session) {
         MicroGuess guess = new MicroGuess();
-        guess.setId(Integer.parseInt(request.getParameter("id")));
+        int noticeId = Integer.parseInt(request.getParameter("id"));
+        guess.setId(noticeId);
 
         String topic = request.getParameter("topic");
         guess.setTopic("-"+topic+"-");
@@ -80,6 +84,7 @@ public class MGuessController {
         guess.setTime(new Date());
 
         noticeService.updateMNotice(guess);
+        reviewService.delReviewsByNotice(noticeId);
         return 0;
     }
 
