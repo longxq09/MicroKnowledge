@@ -22,6 +22,9 @@
       vMenu
     },
     mounted() {
+      if (sessionStorage.getItem("accountId") === '') {
+        this.$router.push('/')
+      }
       let homeElement = document.getElementById("home")
       let menuElement = document.getElementById("menu")
       homeElement.style.left = menuElement.style.width

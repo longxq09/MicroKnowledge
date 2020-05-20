@@ -55,7 +55,11 @@
       vRegister,
       vHot
     },
-
+    mounted() {
+      if (sessionStorage.getItem("accountId") !== '') {
+        this.$router.push('/homepage')
+      }
+    }
 
   }
 </script>
