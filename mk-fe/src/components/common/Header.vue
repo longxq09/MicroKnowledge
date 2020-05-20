@@ -50,7 +50,7 @@
       }
     },
     mounted() {
-      this.login = sessionStorage.getItem("accountId") !== ""
+      this.login = sessionStorage.getItem("accountId") !== "" && sessionStorage.getItem("accountId") != null
       this.getUserInfo();
     },
     methods: {
