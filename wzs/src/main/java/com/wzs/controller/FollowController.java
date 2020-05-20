@@ -141,9 +141,11 @@ public class FollowController {
         follow.setFollowerID(followerID);
         follow.setFollowingID(followingID);
         followService.insertFollow(follow);
-        System.out.println("follow success");
+        //System.out.println("follow success");
         //message
-        // addFollowMessage((UserInfo) request.getSession().getAttribute("userInfo"), followingID);
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        //System.out.println(userInfo);
+        addFollowMessage(userInfo, followingID);
         return 0;
     }
 
@@ -155,14 +157,14 @@ public class FollowController {
         int followerID = Integer.parseInt(request.getParameter("id"));
         int followingID = Integer.parseInt(request.getParameter("followingID"));
         if (findFollow(followerID, followingID) == -1) {    //并没有关注
-            System.out.println("fail");
+            // System.out.println("fail");
             return -1;
         }
         Follow follow = new Follow();
         follow.setFollowerID(followerID);
         follow.setFollowingID(followingID);
         followService.deleteFollow(follow);
-        System.out.println("success");
+        //System.out.println("success");
         return 0;
     }
 

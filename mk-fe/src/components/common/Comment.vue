@@ -25,7 +25,7 @@
       </div>
       <div class="comment_text">
         <el-input type="textarea" rows="2" style="width: 90%;" v-model="reply_text"></el-input>
-        <el-button type="primary" style="width: 9%; height: 51px;" @click="submit_reply">发表<br>评论</el-button>
+        <el-button type="primary" style="width: 9%; height: 51px;" @click="submit_reply">回复</el-button>
       </div>
     </div>
   </div>

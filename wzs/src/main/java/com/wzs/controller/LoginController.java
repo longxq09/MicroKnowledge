@@ -145,5 +145,67 @@ public class LoginController {
         return res;
     }
 
+    //  忘记密码时，发送邮件验证
+    @CrossOrigin
+    @RequestMapping(value = "/forgetPassword")
+    public @ResponseBody
+    Object forgetPassword(HttpServletRequest request) {
+        HashMap<String, String> res = new HashMap<>();
+        String email = request.getParameter("email");
+        Account account = loginService.findAccountByEmail(email);
+        if (account == null) {
+            res.put("code", "1");
+            res.put("message", "邮箱不存在！");
+            return res;
+        }
+        account.setActiveCode(getUUID());
+        account.setActiveStatus(0);
+        loginService.forgetPassword(account);
+        res.put("code", "0");
+        res.put("message", "ok");
+
+        return res;
+    }
+
+    //  校验激活码（忘记密码时）
+    @CrossOrigin
+    @RequestMapping(value = "/checkForgetCode")
+    public @ResponseBody
+    Object checkForgetCode(String code) {
+        HashMap<String, String> res = new HashMap<>();
+        Account user = loginService.findAccountByActiveCode(code);
+        //code正确，把用户状态修改status=1
+        if (user != null) {
+            user.setActiveStatus(1);
+            user.setActiveCode("");
+            loginService.updateAccount(user);
+            res.put("email", user.getEmail());
+            res.put("code", "0");
+            return res;
+        }
+        res.put("code", "1");
+        return res;
+    }
+
+    //  校验激活码后，重设密码（忘记密码）
+    @CrossOrigin
+    @RequestMapping(value = "/resetForget", method = RequestMethod.POST)
+    public @ResponseBody
+    Object resetForget(HttpServletRequest request) {
+        String newPassword = request.getParameter("newPassword");
+        String email = request.getParameter("email");
+        PasswordHelper helper = new PasswordHelper();
+        int id = loginService.findAccountByEmail(email).getId();
+        HashMap<String, String> res = new HashMap<>();
+        newPassword = helper.encryptByName(email, newPassword);
+        if (loginService.reUserPassword(id, newPassword)) {
+            res.put("code", "0");
+            res.put("message", "密码修改成功！");
+        } else {
+            res.put("code", "1");
+            res.put("message", "密码修改失败！");
+        }
+        return res;
+    }
 }
 

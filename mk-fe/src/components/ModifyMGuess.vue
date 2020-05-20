@@ -6,23 +6,50 @@
     <el-main>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="引用"  v-if="reset_reference">
-          <el-checkbox v-for="(value,index) in referenceList" v-model="value.checked" key="value.evidName" @change="chooseItem(value.id,1)">{{value.title}}</el-checkbox>
+
+                <el-select
+                  filterable
+                  style="display: block"
+                  v-model="referenceTags"
+                  multiple
+                  value-key="id">
+                  <el-option
+                    v-for="(value, index) in referenceList"
+                    :key="value.id"
+                    :label="value.title"
+                    :value="value.id">
+                  </el-option>
+                </el-select>
         </el-form-item>
 
         <el-form-item label="关键词">
-          <el-tag :key="tag" v-for="tag in keyWordTags" closable :disable-transitions="false" @close="handleClose(tag)">
-            {{tag}}
-          </el-tag>
-          <el-input v-model="keyWordValue" placeholder="Fill in your keyword as follows"></el-input>
+          <div>
+            <el-tag :key="tag" v-for="tag in keyWordTags" closable :disable-transitions="false" @close="handleClose(tag)">
+              {{tag}}
+            </el-tag>
+          </div>
+          <el-input v-model="keyWordValue" maxlength="10" show-word-limit placeholder="Fill in your keyword as follows" style="width: 90%;"></el-input>
           <el-button class="button-new-tag" size="small" @click="addTag()">增加</el-button>
         </el-form-item>
 
         <el-form-item label="分类" v-if="reset_label">
-          <el-checkbox v-for="(value,index) in labelList" v-model="value.checked" key="value.topicName" @change="chooseItem(value.id,2)">{{value.topicName}}</el-checkbox>
+              <el-select
+                filterable
+                style="display: block"
+                v-model="labelChoose"
+                multiple
+                value-key="id">
+                <el-option
+                  v-for="(value, index) in labelList"
+                  :key="value.id"
+                  :label="value.topicName"
+                  :value="value.id">
+                </el-option>
+              </el-select>
         </el-form-item>
 
         <el-form-item label="主题">
-          <el-input v-model="form.title"></el-input>
+          <el-input v-model="form.title"  maxlength="30" show-word-limit></el-input>
         </el-form-item>
 
         <el-form-item label="正文">
@@ -30,8 +57,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="toHomepageSubmit">发布</el-button>
-          <el-button @click="toHomepageCancel">取消</el-button>
+          <el-button type="primary" @click="toHomepageSubmit">保存</el-button>
+          <el-button @click="toHomepageCancel">取消修改</el-button>
         </el-form-item>
       </el-form>
     </el-main>
@@ -101,18 +128,16 @@
           this.form.keyWord = res.data.keywords;
           this.form.label = res.data.topic;
           this.form.reference = res.data.reference;
-          this.referenceTags = this.form.reference.split('-');
+          //this.referenceTags = this.form.reference.split('-');
           this.keyWordTags = this.form.keyWord.split('-');
-          this.labelChoose = this.form.label.split('-');
+          // this.labelChoose = this.form.label.split('-');
+          var tags = this.form.label.slice(1, -1).split('-')
+          for(var i = 0; i < tags.length; i++)
+            this.labelChoose.push(parseInt(tags[i]))
+          tags = this.form.reference.split('-')
+          for(var i = 0; i < tags.length; i++)
+            this.referenceTags.push(parseInt(tags[i]))
 
-          var temp = this.labelChoose;
-          this.labelList.forEach(item => {
-            item.checked = (temp.indexOf(item.id.toString()) !== -1);
-          });
-          temp = this.referenceTags;
-          this.referenceList.forEach(item => {
-            item.checked = (temp.indexOf(item.id.toString()) !== -1)
-          });
         } catch (err) {
           console.log(err);
         }
@@ -137,35 +162,9 @@
         console.log(this.keyWordTags.join('-'))
 
       },
-      chooseItem(id, type) {
-        var id_str = id.toString();
-        if (type == 1) {
-          console.log("id:" + id);
-          if (this.referenceTags.indexOf(id_str) == -1) {
-            this.referenceTags.push(id_str);
-          } else {
-            this.referenceTags.splice(this.referenceTags.indexOf(id_str), 1);
-          }
-          this.reset_reference=false;
-          this.reset_reference=true;
-          console.log("referenceTags:" + this.referenceTags);
-
-        } else {
-          console.log("id:" + id);
-          if (this.labelChoose.indexOf(id_str) == -1) {
-            this.labelChoose.push(id_str);
-          } else {
-            this.labelChoose.splice(this.labelChoose.indexOf(id_str), 1);
-          }
-          this.reset_label=false;
-          this.reset_label=true;
-          console.log("labelChoose:" + this.labelChoose);
-
-        }
-      },
       toHomepageSubmit() {
-        if (this.referenceTags.length == 0) {
-          this.$alert("请填写至少一个引用微证据", "引用微证据不能为空", {
+        if (this.referenceTags.length <= 1) {
+          this.$alert("请填写至少两个引用微证据", "引用微证据不能少于两个", {
             confirmButtonText: '确定'
           });
         } else if (this.keyWordTags.length == 0) {
@@ -189,7 +188,7 @@
           this.form.keyWord = this.keyWordTags.join('-');
           this.form.label = this.labelChoose.join('-');
           var params = new URLSearchParams();
-          params.append('topic', this.form.label);
+          params.append('topic',this.form.label);
           params.append('reference', this.form.reference);
           params.append('keywords', this.form.keyWord);
           params.append('title', this.form.title);
@@ -206,7 +205,12 @@
                 confirmButtonText: '确定'
               });
               if (res.data === 0) {
-                this.$router.push('/homepage');
+                this.$router.push({
+                  name: 'User',
+                   params: {
+                    activeName: "forth"
+                  }
+                });
               }
             })
             .catch((error) => {
@@ -215,8 +219,14 @@
         }
 
       },
+
       toHomepageCancel() {
-        this.$router.push('/homepage');
+        this.$router.push({
+          name: 'User',
+          params: {
+            activeName: "forth"
+          }
+        });
       }
     }
 

@@ -57,15 +57,10 @@
               <el-radio v-model="form.sex" label="male">男</el-radio>
               <el-radio v-model="form.sex" label="female">女</el-radio>
             </el-form-item>
-            <el-form-item label="教育经历">
-              <el-select v-model="form.education" placeholder="请选择">
-                <el-option label="高中及以下" value="高中及以下"></el-option>
-                <el-option label="本科" value="本科"></el-option>
-                <el-option label="硕士" value="硕士"></el-option>
-                <el-option label="博士" value="博士"></el-option>
-              </el-select>
+            <el-form-item label="学术背景">
+              <el-input v-model="form.education"></el-input>
             </el-form-item>
-            <el-form-item label="工作">
+            <el-form-item label="工作地">
               <el-input v-model="form.works"></el-input>
             </el-form-item>
             <el-form-item label="居住地">
@@ -208,6 +203,7 @@
         var params = new URLSearchParams()
         params.append('id', localStorage.getItem("accountId"))
         params.append('name', this.form.name)
+        params.append('signature', this.form.signature)
         params.append('sex', this.form.sex)
         params.append('education', this.form.education)
         params.append('works', this.form.works)

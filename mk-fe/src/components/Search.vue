@@ -1,62 +1,56 @@
 <template>
-  <el-container>
-    <el-header>
-      <v-head v-bind:search="true"></v-head>
-    </el-header>
-    <el-main>
-      <div class="filter">
-        <span>关键字：</span>
-        <el-input
-          style="width: 30%; margin-right: 20px"
-          v-model="dataForm.word"
-          placeholder="请输入内容">
-        </el-input>
-        <span>类型：</span>
-        <el-select
-          style="width: 10%; margin-right: 20px"
-          v-model="filterType"
-          multiple
-          placeholder="请选择">
-          <el-option
-            v-for="item in types"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <span>主题：</span>
-        <el-select
-          style="width: 30%"
-          v-model="filterTopic"
-          multiple
-          placeholder="请选择">
-          <el-option
-            v-for="(value, index) in topics"
-            :key="value.id"
-            :label="value.topicName"
-            :value="value.id">
-          </el-option>
-        </el-select>
-        <el-button
-          style="width: 8%; float: right"
-          type="primary"
-          round
-          @click="click">
-          高级搜索
-        </el-button>
-      </div>
-      <p>找到{{resultNum}}条结果。</p>
-      <v-notice :key="value.id" v-for="(value,index) in searchResult"
-                v-bind:id="value.id"
-                v-bind:type="value.type"
-                v-bind:authorName="value.authorName"
-                v-bind:keywords="value.keywords"
-                v-bind:title="value.title"
-                v-bind:summary="value.summary">
-      </v-notice>
-    </el-main>
-    <v-footer></v-footer>
-  </el-container>
+  <div>
+    <div class="filter">
+      <span>关键字：</span>
+      <el-input
+        style="width: 30%; margin-right: 20px"
+        v-model="dataForm.word"
+        placeholder="请输入内容">
+      </el-input>
+      <span>类型：</span>
+      <el-select
+        style="width: 10%; margin-right: 20px"
+        v-model="filterType"
+        multiple
+        placeholder="请选择">
+        <el-option
+          v-for="item in types"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <span>主题：</span>
+      <el-select
+        style="width: 30%"
+        v-model="filterTopic"
+        multiple
+        placeholder="请选择">
+        <el-option
+          v-for="(value, index) in topics"
+          :key="value.id"
+          :label="value.topicName"
+          :value="value.id">
+        </el-option>
+      </el-select>
+      <el-button
+        style="width: 8%; float: right"
+        type="primary"
+        round
+        @click="click">
+        高级搜索
+      </el-button>
+    </div>
+    <p>找到{{resultNum}}条结果。</p>
+    <v-notice :key="value.id" v-for="(value,index) in searchResult"
+              v-bind:id="value.id"
+              v-bind:type="value.type"
+              v-bind:authorName="value.authorName"
+              v-bind:keywords="value.keywords"
+              v-bind:title="value.title"
+              v-bind:summary="value.summary">
+    </v-notice>
+  </div>
 </template>
 
 <script>

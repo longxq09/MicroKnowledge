@@ -2,6 +2,7 @@ package com.wzs.mapper;
 
 import com.wzs.bean.Message;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -18,4 +19,7 @@ public interface MessageMapper {
     List<Message> selectMessage(Map<String,Object> queryMap);
     boolean setFlagById(int id);
     boolean setFlagByUser(int userId);
+
+    @Update("update `message` set `fromUserName` = #{fromUserName} where `fromUserId` = #{fromUserId}")
+    boolean updateFromUserName(int fromUserId, String fromUserName);
 }

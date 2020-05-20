@@ -22,15 +22,9 @@
     <el-badge class="button" v-if="homepage&&login">
       <el-button @click="toUser">个人主页</el-button>
     </el-badge>
-    <el-badge style="float: right;margin: 10px;position: relative;" v-if="homepage&&login">
-      <el-button @click="toUser_message">我的消息</el-button>
+    <el-badge style="float: right;margin: 10px;position: relative;" v-if="logout">
+      <el-button class="el-icon-message-solid" @click="toUser_message" circle></el-button>
       <div class="red_dot" v-if="if_show_new">{{new_message}}</div>
-    </el-badge>
-    <el-badge class="button" v-if="homepage&&login">
-      <el-button @click="toNewMEvid">发布新证据</el-button>
-    </el-badge>
-    <el-badge class="button" v-if="homepage&&login">
-      <el-button @click="toNewMGuess">发布新猜想</el-button>
     </el-badge>
     <el-badge class="button" v-if="(user||detail)&&login">
       <el-button @click="toHomePage">回到首页</el-button>
@@ -85,6 +79,7 @@
     },
     data() {
       return {
+        accountId: localStorage.getItem("accountId"),
         searchContent: '',
         new_message: 0,
         if_show_new: false,
@@ -97,14 +92,15 @@
     },
     methods: {
       async getUserInfo() {
-        if (this.if_show_new) {
+        if (this.accountId!="") {
           var params = new URLSearchParams();
           params.append('userId', this.accountId);
           try {
             let res = await this.axios.post('/message/getUnReadNum', params);
+            console.log("getUnReadNum="+res.data);
             this.new_message = res.data;
             if (this.new_message != 0) {
-              this.if_show_new = this.homepage;
+              this.if_show_new = true;
             }
           } catch (err) {
             console.log(err);
@@ -154,12 +150,6 @@
       },
       toUserInfo() {
         this.$router.push('/userinfo');
-      },
-      toNewMEvid() {
-        this.$router.push('/new_mevid');
-      },
-      toNewMGuess() {
-        this.$router.push('/new_mguess');
       },
       toSearch() {
         this.$router.push({

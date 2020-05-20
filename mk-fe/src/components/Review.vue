@@ -1,9 +1,5 @@
 <template>
-  <el-container>
-    <el-header>
-      <v-head v-bind:title="head_title" v-bind:homepage=true v-bind:detail=true></v-head>
-    </el-header>
-    <el-main>
+  <div>
       <div class="noice_title">{{form.type_str}} | {{form.title}}</div>
       <nobr style="font-weight: 600;margin-left: 10px;">{{form.authorName}}</nobr>
       <nobr style="font-weight: 400;font-size: 15px;margin-left: 10px;">{{form.time}}</nobr>
@@ -23,16 +19,11 @@
         <el-button class="review_button" v-else> 通过<br>{{pass_num}} </el-button>
         <el-button class="review_button" v-if="review_pass">不通过<br>{{unpass_num}}</el-button>
         <el-button class="review_choose" v-else @click="cancle(-1)">不通过<br>{{unpass_num}}</el-button>
-
       </div>
-    </el-main>
-    <v-footer></v-footer>
-  </el-container>
+  </div>
 </template>
 
 <script>
-  import vHead from './common/Header.vue';
-  import vFooter from './common/Footer.vue';
   export default {
     name: "Review",
     data() {
@@ -58,10 +49,6 @@
           type: 1,
         },
       }
-    },
-    components: {
-      vHead,
-      vFooter
     },
     created() {
       this.getUserInfo();

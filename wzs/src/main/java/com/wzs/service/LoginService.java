@@ -21,4 +21,8 @@ public interface LoginService {
     Account findAccountByActiveCode(String activeCode);
 
     boolean updateAccount(Account account);
+
+    boolean forgetPassword(Account account);
+
+
 }

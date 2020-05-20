@@ -6,28 +6,43 @@
     <el-main>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="引用论文">
+          <div>
           <el-tag :key="tag" v-for="tag in referenceTags" closable :disable-transitions="false" @close="handleClose(tag,1)">
             {{tag}}
           </el-tag>
-          <el-input type="textarea" rows="2" v-model="referenceValue" placeholder="Fill in your references as follows"></el-input>
+          </div>
+          <el-input v-model="referenceValue" placeholder="Fill in your references as follows" style="width: 90%;"></el-input>
           <el-button class="button-new-tag" size="small" @click="addTag(1)">增加</el-button>
         </el-form-item>
 
         <el-form-item label="关键词">
+          <div>
           <el-tag :key="tag" v-for="tag in keyWordTags" closable :disable-transitions="false" @close="handleClose(tag,2)">
             {{tag}}
           </el-tag>
-          <el-input v-model="keyWordValue" placeholder="Fill in your keyword as follows"></el-input>
+          </div>
+          <el-input v-model="keyWordValue" placeholder="Fill in your keyword as follows" style="width: 90%;" maxlength="10" show-word-limit ></el-input>
           <el-button class="button-new-tag" size="small" @click="addTag(2)">增加</el-button>
         </el-form-item>
 
         <el-form-item label="分类" v-if="reset">
-          <el-checkbox v-for="(value,index) in labelList" key="value.topicName" v-model ="value.checked"  @change="chooseItem(value.id)">{{value.topicName}}
-          </el-checkbox>
+              <el-select
+                filterable
+                style="display: block"
+                v-model="labelChoose"
+                multiple
+                value-key="id">
+                <el-option
+                  v-for="(value, index) in labelList"
+                  :key="value.id"
+                  :label="value.topicName"
+                  :value="value.id">
+                </el-option>
+              </el-select>
         </el-form-item>
 
         <el-form-item label="主题">
-          <el-input v-model="form.title"></el-input>
+          <el-input v-model="form.title" maxlength="30" show-word-limit></el-input>
         </el-form-item>
 
         <el-form-item label="正文">
@@ -35,8 +50,8 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" @click="toHomepageSubmit">发布</el-button>
-          <el-button @click="toHomepageCancel">取消</el-button>
+          <el-button type="primary" @click="toHomepageSubmit">保存</el-button>
+          <el-button @click="toHomepageCancel">取消修改</el-button>
         </el-form-item>
       </el-form>
     </el-main>
@@ -100,11 +115,9 @@
 
           this.referenceTags = this.form.reference.split('-');
           this.keyWordTags = this.form.keyWord.split('-');
-          this.labelChoose = this.form.label.split('-');
-          var temp = this.labelChoose;
-          this.labelList.forEach(item => {
-            item.checked = (temp.indexOf(item.id.toString()) !== -1);
-          });
+          var tags = this.form.label.slice(1, -1).split('-')
+          for(var i = 0; i < tags.length; i++)
+            this.labelChoose.push(parseInt(tags[i]))
         } catch (err) {
           console.log(err);
         }
@@ -196,7 +209,12 @@
                 confirmButtonText: '确定'
               });
               if (res.data === 0) {
-                this.$router.push('/homepage');
+                this.$router.push({
+                  name: 'User',
+                  params: {
+                    activeName: "forth"
+                  }
+                });
               }
             })
             .catch((error) => {
@@ -206,7 +224,12 @@
 
       },
       toHomepageCancel() {
-        this.$router.push('/homepage');
+        this.$router.push({
+          name: 'User',
+          params: {
+            activeName: "forth"
+          }
+        });
       }
     }
 
