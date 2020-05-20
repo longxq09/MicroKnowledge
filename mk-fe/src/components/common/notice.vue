@@ -4,7 +4,7 @@
       {{type_name}} | <el-button type="text" @click="dialogTableVisible = true" style="font-size: 20px;">{{title}}</el-button>
 
       <el-dialog title="详情" :visible.sync="dialogTableVisible">
-        <v-detail v-bind:noticeId="id"></v-detail>
+        <v-detail v-bind:noticeId="id" v-bind:comment="comment"></v-detail>
       </el-dialog>
       <el-tag class="keyword" v-if="user">{{state}}</el-tag>
       <div v-if="login" style="display: inline-block">
@@ -95,7 +95,11 @@
       judge: {
         type: Number,
         default: 0
-      }
+      },
+      comment: {
+        type: Boolean,
+        default: true
+      },
     },
 
     data() {
@@ -112,7 +116,6 @@
         unpass_num:0,
         dialogTableVisible: false,
         dialogFormVisible: false,
-
       }
     },
     components: {
@@ -164,8 +167,10 @@
             this.state = "已通过";
           } else if (this.judge == 0) {
             this.state = "评审中";
+            this.comment=false;
           } else {
             this.state = "未通过";
+            this.comment=false;
           }
         }
       },

@@ -14,9 +14,8 @@
       </div>
       <div v-if="if_has_notice" style="margin-bottom: 5px;">
           {{message_text1}}
-          【<router-link :to="{path: '/detail/',query: {id: relatedNoticeId}}">
-          {{relatedNoticeTitle}}
-          </router-link> 】{{message_text2}}
+          <el-button type="text" @click="dialogTableVisible = true" style="font-size: 15px;">
+          【{{relatedNoticeTitle}}】</el-button>{{message_text2}}
       </div>
       <div v-else style="margin-bottom: 5px;">
         {{message_text1}}
@@ -25,11 +24,16 @@
         {{detail}}
       </div>
       <p class="comment_content">{{content}}</p>
+
+      <el-dialog title="详情" :visible.sync="dialogTableVisible">
+        <v-detail v-bind:noticeId="relatedNoticeId"></v-detail>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
+  import vDetail from './Detail.vue'
   export default {
     name: "Massage",
     props: {
@@ -62,6 +66,9 @@
         default: false
       },
     },
+    components: {
+      vDetail
+    },
 
     data() {
       return {
@@ -69,6 +76,8 @@
         message_text2: '',
         if_has_notice: true,
         if_has_detail: false,
+        dialogTableVisible: false,
+        dialogFormVisible: false,
       }
     },
     methods: {

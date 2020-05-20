@@ -24,10 +24,10 @@
     <div class="bottom_text">分类 : {{form.label}}
     </div>
 
-    <div class="comment_count">
+    <div class="comment_count" v-if="comment">
       {{reply_num}}评论
     </div>
-    <div v-if="login" style="border-bottom: 1px solid lightgrey;overflow:hidden;padding-top: 5px;padding-bottom: 20px;">
+    <div v-if="login&&comment" style="border-bottom: 1px solid lightgrey;overflow:hidden;padding-top: 5px;padding-bottom: 20px;" >
       <div class="comment_photo">
         <el-avatar>user</el-avatar>
       </div>
@@ -36,7 +36,7 @@
         <el-button type="primary" style="width: 9%; height: 51px;" @click="submit_reply">发表<br>评论</el-button>
       </div>
     </div>
-    <div v-if="refresh">
+    <div v-if="refresh&&comment">
       <v-comment :key="value.id" v-for="(value,index) in exhibition" v-bind:noticeId="value.noticeId" v-bind:authorId="value.authorId"
         v-bind:fromId="value.fromId" v-bind:fromName="value.fromName" v-bind:toId="value.toId" v-bind:toName="value.toName"
         v-bind:content="value.content" v-bind:time="value.disTime" @childFn="changFlag">
@@ -54,6 +54,10 @@
       noticeId: {
         type: Number,
         default: 0
+      },
+      comment: {
+        type: Boolean,
+        default: true
       },
     },
     data() {
