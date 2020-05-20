@@ -44,8 +44,8 @@
         } else if (value.length < 6) {
           callback(new Error('密码长度至少6位'))
         } else {
-          if (this.dataForm.repeat !== '') {
-            this.$refs.dataForm.validateField('repeat')
+          if (this.forgetForm.repeat !== '') {
+            this.$refs.forgetForm.validateField('repeat')
           }
           callback()
         }
@@ -53,7 +53,7 @@
       var validateRepeat = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'))
-        } else if (value != this.dataForm.password) {
+        } else if (value != this.forgetForm.password) {
           callback(new Error('两次输入密码不一致'))
         } else {
           callback()
