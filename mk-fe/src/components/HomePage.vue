@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
+  <el-tabs v-model="activeName" class="tabs">
     <el-tab-pane label="推荐" name="first">
       <v-notice :key="value.id" v-for="(value,index) in exhibition"
                 v-bind:id="value.id"
@@ -103,8 +103,10 @@
 </script>
 
 <style>
-  .el-main {
-    background-color: #F4F4F5;
-    color: #333;
+  .tabs {
+    width: 700px;
+    margin-top: 20px;
+    margin-left: 15%;
+    margin-right: 15%;
   }
 </style>

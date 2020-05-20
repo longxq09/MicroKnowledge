@@ -291,7 +291,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, .24), 0 0 6px rgba(0, 0, 0, .10);
     padding-top: 7px;
     padding-bottom: 7px;
-    margin-bottom: 10px;
+    margin: 4px 4px 8px 4px;
     background-color: white;
   }
 
