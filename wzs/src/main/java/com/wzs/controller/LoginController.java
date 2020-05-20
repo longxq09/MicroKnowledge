@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -147,7 +146,7 @@ public class LoginController {
 
     //  忘记密码时，发送邮件验证
     @CrossOrigin
-    @RequestMapping(value = "/forgetPassword")
+    @RequestMapping(value = "/forgetPassword", method = RequestMethod.POST)
     public @ResponseBody
     Object forgetPassword(HttpServletRequest request) {
         HashMap<String, String> res = new HashMap<>();
@@ -158,7 +157,20 @@ public class LoginController {
             res.put("message", "邮箱不存在！");
             return res;
         }
-        account.setActiveCode(getUUID());
+
+        String[] beforeShuffle = new String[]{"2", "3", "4", "5", "6", "7",
+                "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+                "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
+                "W", "X", "Y", "Z"};
+        List list = Arrays.asList(beforeShuffle);
+        Collections.shuffle(list);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i));
+        }
+        String afterShuffle = sb.toString();
+        String result = afterShuffle.substring(5, 9);       //四位随机字母数字
+        account.setActiveCode(result);
         account.setActiveStatus(0);
         loginService.forgetPassword(account);
         res.put("code", "0");
@@ -169,21 +181,21 @@ public class LoginController {
 
     //  校验激活码（忘记密码时）
     @CrossOrigin
-    @RequestMapping(value = "/checkForgetCode")
+    @RequestMapping(value = "/checkForgetCode", method = RequestMethod.POST)
     public @ResponseBody
-    Object checkForgetCode(String code) {
+    Object checkForgetCode(HttpServletRequest request) {
         HashMap<String, String> res = new HashMap<>();
-        Account user = loginService.findAccountByActiveCode(code);
-        //code正确，把用户状态修改status=1
-        if (user != null) {
-            user.setActiveStatus(1);
+        String email = request.getParameter("email");
+        String code = request.getParameter("code");
+        Account user = loginService.findAccountByEmail(email);
+        if (user.getActiveCode().equals(code)) {
+            user.setActiveStatus(1);    //code正确，把用户状态修改status=1
             user.setActiveCode("");
             loginService.updateAccount(user);
-            res.put("email", user.getEmail());
             res.put("code", "0");
-            return res;
+        } else {
+            res.put("code", "1");
         }
-        res.put("code", "1");
         return res;
     }
 

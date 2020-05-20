@@ -72,12 +72,9 @@ public class UserInfoController {
         return res;
         /*res.put("name", info.getName());
         res.put("sex", info.getSex());
-        res.put("address", info.getAddress());
         res.put("signature", info.getSignature());
         res.put("education", info.getEducation());
         res.put("works", info.getWorks());
-        res.put("introduction", info.getIntroduction());
-        res.put("contribution", info.getContribution());
         res.put("expertise", info.getExpertise());  //专业领域, id-id-id
         res.put("interest", info.getInterest());     //偏好领域, id-id-id
         res.put("picture", info.getPicture());       //头像的url
@@ -92,13 +89,9 @@ public class UserInfoController {
         userInfo.setId(Integer.parseInt(request.getParameter("id")));
         userInfo.setName(request.getParameter("name"));
         userInfo.setSex(request.getParameter("sex"));
-        userInfo.setAddress(request.getParameter("address"));
         userInfo.setSignature(request.getParameter("signature"));
-        //System.out.println(userInfo.getSignature());
         userInfo.setEducation(request.getParameter("education"));
         userInfo.setWorks(request.getParameter("works"));
-        userInfo.setIntroduction(request.getParameter("introduction"));
-        userInfo.setContribution(request.getParameter("contribution"));
         userInfo.setExpertise(request.getParameter("expertise"));
         userInfo.setInterest(request.getParameter("interest"));
         userInfo.setPicture(request.getParameter("picture"));

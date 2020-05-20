@@ -1,15 +1,6 @@
 # MicroKnowledge
 SE work
 
-`前后端已经串联功能`：
-
-- 用户登录
-- 用户注册
-- 个人信息
-- 搜索
-
-
-
 `暂时操作步骤`：
 
 - idea打开wzs，添加wzs和mk-fe两个module
@@ -73,6 +64,10 @@ time，评论时间用于排序
 /logout 退出登录
 /login 登录
 /rePassword	修改密码
+
+/forgetPassword  忘记密码时，发送邮件验证
+/checkForgetCode 校验激活码（忘记密码时）
+/resetForget  校验激活码后，重设密码（忘记密码时）
 ```
 
 }
@@ -101,14 +96,12 @@ String email;	//邮箱
 String name;	//姓名
 String picture;     //头像url
 String sex;			//性别
-String address;		//地址
 String signature;   //个性签名
 String education;   //学术背景
 String works;        //工作地信息，比如工作单位
 String expertise;    //专业领域
 String interest;    	//偏好领域
-String introduction;       //简介
-String contribution;      //贡献
+
 ```
 
 

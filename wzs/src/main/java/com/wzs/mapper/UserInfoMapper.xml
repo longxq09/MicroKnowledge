@@ -6,7 +6,7 @@
     </sql>
 
     <sql id="BASE_COLUMN">
-        id,email,`name`,picture,sex,address,signature,education,works,expertise,interest,introduction,contribution
+        id,email,`name`,picture,sex,signature,education,works,expertise,interest
     </sql>
 
     <select id="findInfoById" resultType="com.wzs.bean.UserInfo" parameterType="int">
@@ -33,9 +33,7 @@
             <if test="sex !=null">
                 sex=#{sex,jdbcType=VARCHAR},
             </if>
-            <if test="address !=null">
-                address=#{address,jdbcType=VARCHAR},
-            </if>
+
             <if test="signature !=null">
                 signature=#{signature,jdbcType=VARCHAR},
             </if>
@@ -51,20 +49,15 @@
             <if test="interest !=null">
                 interest=#{interest,jdbcType=VARCHAR},
             </if>
-            <if test="introduction !=null">
-                introduction=#{introduction},
-            </if>
-            <if test="contribution !=null">
-                contribution=#{contribution},
-            </if>
+
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
 
     <insert id="addUserInfo" parameterType="com.wzs.bean.UserInfo">
         insert into user_info values
-        (null,#{email},#{name},#{picture},#{sex},#{address},#{signature},#{education},#{works},
-        #{expertise},#{interest},#{introduction},#{contribution})
+        (null,#{email},#{name},#{picture},#{sex},#{signature},#{education},#{works},
+        #{expertise},#{interest})
     </insert>
 
     <select id="getAllInfos" resultType="com.wzs.bean.UserInfo">
