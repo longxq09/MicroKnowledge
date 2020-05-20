@@ -31,11 +31,6 @@
       erd.listenTo(menuElement, function (element) {
         homeElement.style.left = element.style.width
       })
-    },
-    methods: {
-      updateLeft() {
-        this.homeLeft = this.$refs.menu.style.width + 'px'
-      },
     }
   }
 </script>
