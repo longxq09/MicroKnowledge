@@ -38,4 +38,9 @@ public class CommentServiceImp implements CommentService {
     public int getCommentNumByNoticeId(int noticeId) {
         return commentMapper.getCommentNumByNoticeId(noticeId);
     }
+
+    @Override
+    public int getCommentNumByfromIdAndNoticeId(int fromId, int noticeId) {
+        return commentMapper.getCommentNumByfromIdAndNoticeId(fromId,noticeId);
+    }
 }

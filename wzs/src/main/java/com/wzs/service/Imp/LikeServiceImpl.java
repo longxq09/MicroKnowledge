@@ -1,5 +1,6 @@
 package com.wzs.service.Imp;
 
+import com.wzs.bean.Like;
 import com.wzs.mapper.LikeMapper;
 import com.wzs.mapper.Like_numMapper;
 import com.wzs.service.LikeService;
@@ -56,6 +57,12 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public int getLikeNumByNoticeId(int noticeId) {
         return likeMapper.getLikeNumByNoticeId(noticeId);
+    }
+
+    @Override
+    public boolean checkLike(int noticeId, int id) {
+        Like like = likeMapper.checkLike(noticeId,id);
+        return  like != null;
     }
 
 }

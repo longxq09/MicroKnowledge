@@ -12,4 +12,6 @@ public interface LikeService {
 
     int getLikeNumByNoticeId(int noticeId);
 
+    boolean checkLike(int noticeId, int id);
+
 }

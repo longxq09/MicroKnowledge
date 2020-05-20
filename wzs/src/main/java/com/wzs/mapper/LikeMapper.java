@@ -1,5 +1,6 @@
 package com.wzs.mapper;
 
+import com.wzs.bean.Like;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,4 +23,8 @@ public interface LikeMapper {
 
     @Select("SELECT COUNT(*) from `like` where  noticeId = #{noticeId}")
     int getLikeNumByNoticeId(int noticeId);
+
+    @Select("select * from `like` where `noticeId` = #{noticeId} and `id` = #{id}")
+    Like checkLike(int noticeId, int id);
+
 }

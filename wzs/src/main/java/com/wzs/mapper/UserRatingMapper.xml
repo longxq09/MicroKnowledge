@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wzs.mapper.UserRatingMapper" >
+
+    <sql id="BASE_TABLE">
+        user_rating
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        `userId`,`noticeId`,`score`
+    </sql>
+
+    <select id="selectUserRating" resultType="com.wzs.bean.UserRating" parameterType="java.util.Map">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        from <include refid="BASE_TABLE"/>
+        <where>
+            <if test="userId !=null and userId !=''">
+                and userId=#{userId,jdbcType=INTEGER}
+            </if>
+            <if test="noticeId !=null and noticeId !=''">
+                and `noticeId`=#{noticeId,jdbcType=INTEGER}
+            </if>
+            <if test="score !=null and score !=''">
+                and score=#{score,jdbcType=INTEGER}
+            </if>
+        </where>
+
+    </select>
+
+    <insert id="insertUserRating" parameterType="com.wzs.bean.UserRating">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            userId,noticeId,score
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            #{userId, jdbcType=INTEGER},
+            #{noticeId, jdbcType=INTEGER},
+            #{score, jdbcType=INTEGER},
+        </trim>
+    </insert>
+
+    <select id="getUserRatingByNoticeId" resultType="com.wzs.bean.UserRating" parameterType="java.lang.Integer" >
+        select * from <include refid="BASE_TABLE"/>
+        where noticeId = #{noticeId,jdbcType=INTEGER}
+    </select>
+
+</mapper>
