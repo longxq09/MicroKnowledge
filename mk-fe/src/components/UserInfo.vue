@@ -184,7 +184,7 @@
             console.log(error)
           })
 		    this.axios.get('/user/info', {
-		      params: { id: localStorage.getItem("accountId")}
+		      params: { id: sessionStorage.getItem("accountId")}
 		    }).then((res) => {
             this.form = res.data
             var tags = res.data.interest.split('-')
@@ -201,7 +201,7 @@
 
       submit() {
         var params = new URLSearchParams()
-        params.append('id', localStorage.getItem("accountId"))
+        params.append('id', sessionStorage.getItem("accountId"))
         params.append('name', this.form.name)
         params.append('signature', this.form.signature)
         params.append('sex', this.form.sex)
@@ -247,8 +247,8 @@
         var params = new URLSearchParams()
         params.append('oldPassword', this.passwordForm.old)
         params.append('newPassword', this.passwordForm.new)
-        params.append('email', localStorage.getItem("email"))
-        params.append('id', localStorage.getItem("accountId"))
+        params.append('email', sessionStorage.getItem("email"))
+        params.append('id', sessionStorage.getItem("accountId"))
         this.axios.post('/user/rePassword', params)
           .then((res) => {
             var remindTitle = res.data.code == 0 ? '修改成功' : '修改失败';
@@ -284,7 +284,7 @@
 
       uploadImage(image) {
 		    var params = new URLSearchParams()
-        params.append("id", localStorage.getItem("accountId"))
+        params.append("id", sessionStorage.getItem("accountId"))
         params.append("imgStr", image.file)
         this.axios.post('/user/picUpload', params)
           .then((res) => {

@@ -68,7 +68,7 @@
     },
     methods: {
       async getUserInfo() {
-        this.accountId=Number(localStorage.getItem("accountId"));
+        this.accountId=Number(sessionStorage.getItem("accountId"));
         console.log("====="+this.accountId);
         var params = new URLSearchParams();
         try {
@@ -90,7 +90,7 @@
       },
       getFollowingState() {
         this.axios.get('/follow/getFollowingState', {
-          params: { id: localStorage.getItem("accountId")}
+          params: { id: sessionStorage.getItem("accountId")}
         }).then((res) => {
           this.followingState = res.data
         })

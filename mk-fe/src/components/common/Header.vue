@@ -67,7 +67,7 @@
     },
     data() {
       return {
-        accountId: localStorage.getItem("accountId"),
+        accountId: sessionStorage.getItem("accountId"),
         searchContent: '',
         new_message: 0,
         if_show_new: false,
@@ -75,7 +75,7 @@
       }
     },
     mounted() {
-      this.login = localStorage.getItem("accountId") != ""
+      this.login = sessionStorage.getItem("accountId") !== ""
       this.getUserInfo();
     },
     methods: {
@@ -101,8 +101,8 @@
       logout() {
         this.axios.post('/user/logout')
           .then((res)=>{
-            localStorage.setItem("accountId", "")
-            localStorage.setItem("email", "")
+            sessionStorage.setItem("accountId", "")
+            sessionStorage.setItem("email", "")
             let remindTitle = res.data
             let remindContent = '期待您的下一次访问！'
             this.$alert(remindContent, remindTitle, {
@@ -129,7 +129,7 @@
         });
       },
       back() {
-        if(localStorage.getItem("accountId") === "") {
+        if(sessionStorage.getItem("accountId") === "") {
           this.$router.push('/')
         }
         else {

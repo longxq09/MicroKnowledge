@@ -109,8 +109,8 @@
     name: "User",
     data() {
       return {
-        hostId: localStorage.getItem("accountId"),
-        accountId: localStorage.getItem("accountId"),
+        hostId: sessionStorage.getItem("accountId"),
+        accountId: sessionStorage.getItem("accountId"),
         src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
         activeName: 'first',
         following: Array,

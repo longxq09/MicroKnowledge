@@ -18,7 +18,7 @@
     props: {
       accountId: {
         type: String,
-        default: localStorage.getItem("accountId")
+        default: sessionStorage.getItem("accountId")
       },
       id: {
         type: Number,
@@ -61,7 +61,7 @@
         params.append('followingID', this.authorId)
         this.axios.post('/follow/addFollow', params)
           .then((res) => {
-            
+
           })
           .catch((error) => {
             console.log(error)
@@ -74,7 +74,7 @@
         params.append('followingID', this.authorId)
         this.axios.post('/follow/deleteFollow', params)
           .then((res) => {
-            
+
           })
           .catch((error) => {
             console.log(error)

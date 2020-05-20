@@ -96,7 +96,7 @@
       vReference
     },
     created() {
-      this.accountId = localStorage.getItem("accountId")
+      this.accountId = sessionStorage.getItem("accountId")
       this.login = this.accountId != ""
       this.id = Number(this.noticeId)
       this.getUserInfo();

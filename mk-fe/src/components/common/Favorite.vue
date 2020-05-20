@@ -20,7 +20,7 @@
     props: {
       accountId: {
         type: String,
-        default: localStorage.getItem("accountId")
+        default: sessionStorage.getItem("accountId")
       },
       id: {
         type: Number,

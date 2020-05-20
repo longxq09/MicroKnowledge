@@ -178,8 +178,8 @@
                 title: '登陆成功',
                 message: h('i', { style: 'color: teal'}, '欢迎来到微知！')
               });
-              localStorage.setItem("accountId", res.data.id)
-              localStorage.setItem("email", this.dataForm.email)
+              sessionStorage.setItem("accountId", res.data.id)
+              sessionStorage.setItem("email", this.dataForm.email)
               this.$router.push("/homepage");
             } else {
               let remindTitle = '登陆失败'

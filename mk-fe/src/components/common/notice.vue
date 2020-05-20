@@ -50,7 +50,7 @@
       },
       accountId: {
         type: String,
-        default: localStorage.getItem("accountId")
+        default: sessionStorage.getItem("accountId")
       },
       modify: {
         type: Boolean,
@@ -127,7 +127,7 @@
     methods: {
       async getReviewInfo(){
         var params2 = new URLSearchParams();
-        params2.append('userId', localStorage.getItem("accountId"));
+        params2.append('userId', sessionStorage.getItem("accountId"));
         params2.append('noticeId', this.id);
         try {
           let res = await this.axios.post('/review/userToReview', params2);
@@ -159,7 +159,7 @@
         } else {
           this.type_name = "微猜想";
         }
-        this.login = localStorage.getItem("accountId") != ""
+        this.login = sessionStorage.getItem("accountId") != ""
         this.toShow = !(this.user || this.review)
         if (this.user) {
           this.modify = (this.judge == 0);
@@ -240,7 +240,7 @@
         this.review_pass = (type == 1);
 
         var params = new URLSearchParams();
-        params.append('userId', localStorage.getItem("accountId"));
+        params.append('userId', sessionStorage.getItem("accountId"));
         params.append('noticeId', this.id);
         params.append('type', type);
         this.axios.post('/review/doReview', params)
@@ -257,7 +257,7 @@
         this.need_review = true;
 
         var params = new URLSearchParams();
-        params.append('userId', localStorage.getItem("accountId"));
+        params.append('userId', sessionStorage.getItem("accountId"));
         params.append('noticeId', this.id);
         params.append('type', 0);
         this.axios.post('/review/doReview', params)
