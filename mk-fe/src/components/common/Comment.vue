@@ -11,7 +11,7 @@
         <nobr style="color: grey;" v-else="is_return">
           {{fromName}}
         </nobr>
-        <el-button @click="reply" class="reply_button">回复</el-button>
+        <el-button @click="reply" class="reply_button" v-if="login">回复</el-button>
         <nobr style="float: right;color: grey;">
           {{time}}
         </nobr>
@@ -75,6 +75,7 @@
         if_reply: false,
         is_return: false,
         reply_watch: true,
+        login: false,
       }
     },
     methods: {
@@ -114,6 +115,8 @@
     },
     mounted() {
       this.is_return = (this.toId !== -1);
+      this.login = sessionStorage.getItem("accountId") !== "" &&
+        sessionStorage.getItem("accountId") != null
     },
     watch: {
       "reply_watch": function(newValue, oldValue) {

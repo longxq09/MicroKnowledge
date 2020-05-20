@@ -160,7 +160,9 @@
           this.type_name = "微猜想";
         }
         this.login = sessionStorage.getItem("accountId") != ""
-        this.toShow = !(this.user || this.review)
+        this.toShow = !(this.user || this.review);
+        this.toShow = this.toShow &&  sessionStorage.getItem("accountId") !== "" &&
+  sessionStorage.getItem("accountId") != null
         if (this.user) {
           this.modify = (this.judge == 0);
           if (this.judge == 1) {

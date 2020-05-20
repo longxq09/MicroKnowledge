@@ -97,7 +97,8 @@
     },
     created() {
       this.accountId = sessionStorage.getItem("accountId")
-      this.login = this.accountId != ""
+      this.login = sessionStorage.getItem("accountId") !== "" &&
+        sessionStorage.getItem("accountId") != null
       this.id = Number(this.noticeId)
       this.getUserInfo();
     },
