@@ -74,7 +74,7 @@
     width: 20%;
     display: inline-block;
     position:fixed;
-    top: 100px;
+    top: 84px;
     z-index: 100;
   }
 </style>
