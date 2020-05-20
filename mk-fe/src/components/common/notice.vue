@@ -1,7 +1,7 @@
 <template>
   <div class="notice">
     <div class="noice_title">
-      {{type_name}} | <el-button type="text" @click="dialogTableVisible = true">{{title}}</el-button>
+      {{type_name}} | <el-button type="text" @click="dialogTableVisible = true" style="font-size: 20px;">{{title}}</el-button>
 
       <el-dialog title="详情" :visible.sync="dialogTableVisible">
         <v-detail v-bind:noticeId="id"></v-detail>
