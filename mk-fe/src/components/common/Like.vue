@@ -16,12 +16,8 @@
 
 <script>
   export default {
-    name: "Favorite",
+    name: "Like",
     props: {
-      accountId: {
-        type: String,
-        default: sessionStorage.getItem("accountId")
-      },
       id: {
         type: Number,
         default: 0
@@ -30,10 +26,12 @@
     data() {
       return {
         like: false,
-        likeNum: 0
+        likeNum: 0,
+        accountId: sessionStorage.getItem("accountId")
       }
     },
     mounted() {
+      this.accountId = sessionStorage.getItem("accountId")
       this.getLikeInfo()
     },
     methods: {
@@ -47,6 +45,8 @@
           .then((res) => {
             if (res.data.isLike === 1) {
               this.like = true
+            } else {
+              this.like = false
             }
             this.likeNum = res.data.like_num
           })

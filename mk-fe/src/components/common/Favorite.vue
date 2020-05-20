@@ -18,10 +18,6 @@
   export default {
     name: "Favorite",
     props: {
-      accountId: {
-        type: String,
-        default: sessionStorage.getItem("accountId")
-      },
       id: {
         type: Number,
         default: 0
@@ -30,9 +26,11 @@
     data() {
       return {
         favorite: false,
+        accountId: sessionStorage.getItem("accountId")
       }
     },
     mounted() {
+      this.accountId = sessionStorage.getItem("accountId")
       this.getFavoriteInfo()
     },
     methods: {
@@ -46,6 +44,8 @@
           .then((res) => {
             if (res.data == 0) {
               this.favorite = true
+            } else {
+              this.favorite = false
             }
           })
           .catch((error) => {
