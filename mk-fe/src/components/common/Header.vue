@@ -14,21 +14,18 @@
         @click="toSearch">
       </el-button>
     </div>
-    <el-badge class="button" v-if="login">
-      <el-button @click="logout">登出</el-button>
+    <el-dropdown v-if="login" @command="handleDropdown" class="dropdown">
+      <el-avatar shape="square" :size="34" :src="avator"></el-avatar>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item></el-dropdown-item>
+        <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+        <el-dropdown-item command="editUserInfo">修改个人信息</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
+    <el-badge style="float: right;margin: 10px;position: relative;" v-if="login">
+      <el-button class="el-icon-message-solid" @click="toUserMessage" circle></el-button>
+      <div class="red_dot" v-if="if_show_new">{{new_message}}</div>
     </el-badge>
-    <el-badge class="button" v-if="search">
-      <el-button @click="back">返回</el-button>
-    </el-badge>
-    <el-badge class="button" v-if="(user||detail)&&login">
-      <el-button @click="toHomePage">回到首页</el-button>
-    </el-badge>
-    <el-badge class="button" v-if="!login">
-      <el-button @click="toLogin">登录</el-button>
-    </el-badge>
-    <div class="photo" v-if="user">
-      <el-avatar> user </el-avatar>
-    </div>
   </div>
 </template>
 
@@ -40,38 +37,16 @@
         type: String,
         default: '微知 MicroKnowledge'
       },
-      home: {
-        type: Boolean,
-        default: false,
-      },
-      search: {
-        type: Boolean,
-        default: false,
-      },
-      homepage: {
-        type: Boolean,
-        default: false
-      },
-      userinfo: {
-        type: Boolean,
-        default: false
-      },
-      user: {
-        type: Boolean,
-        default: false
-      },
-      detail: {
-        type: Boolean,
-        default: false
-      },
     },
     data() {
       return {
-        accountId: sessionStorage.getItem("accountId"),
         searchContent: '',
         new_message: 0,
         if_show_new: false,
         login: false,
+        avator: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3810033319,3262616285&fm=26&gp=0.jpg',
+        male_pic: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2644999504,2046739651&fm=26&gp=0.jpg',
+        female_pic: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
       }
     },
     mounted() {
@@ -80,12 +55,11 @@
     },
     methods: {
       async getUserInfo() {
-        if (this.accountId!="") {
+        if (this.accountId !== "") {
           var params = new URLSearchParams();
           params.append('userId', this.accountId);
           try {
             let res = await this.axios.post('/message/getUnReadNum', params);
-            console.log("getUnReadNum="+res.data);
             this.new_message = res.data;
             if (this.new_message != 0) {
               this.if_show_new = true;
@@ -95,8 +69,20 @@
           }
         }
       },
-      toLogin() {
-        this.$router.push('/')
+      toUserMessage(){
+        this.$router.push({
+          name: 'User',
+          params: {
+            activeName: "fifth"
+          }
+        });
+      },
+      handleDropdown(command) {
+        if (command === "logout") {
+          this.logout()
+        } else if (command == "editUserInfo") {
+          this.$router.push('/userinfo')
+        }
       },
       logout() {
         this.axios.post('/user/logout')
@@ -114,41 +100,6 @@
             console.log(res.message);
           });
       },
-      toHomePage() {
-        this.$router.push('/homepage');
-      },
-      toUser() {
-        this.$router.push('/user');
-      },
-      toUser_message(){
-        this.$router.push({
-          name: 'User',
-          params: {
-            activeName: "fifth"
-          }
-        });
-      },
-      back() {
-        if(sessionStorage.getItem("accountId") === "") {
-          this.$router.push('/')
-        }
-        else {
-          this.toHomePage()
-        }
-      },
-      toUserInfo() {
-        this.$router.push('/userinfo');
-      },
-      toSearch() {
-        this.$router.push({
-          path: '/search',
-          query: {
-            word: this.searchContent,
-            kind: 0,
-            topic: ''
-          }
-        })
-      }
     }
   }
 </script>
@@ -175,14 +126,11 @@
     display: inline-block;
     text-align: center;
   }
-  .button {
+  .dropdown {
     float: right;
-    margin: 10px;
-  }
-  .photo {
-    display: inline-block;
-    float: right;
-    margin-top: 5px;
+    margin-right: 40px;
+    margin-top: 10px;
+    position: relative;
   }
   .red_dot {
     width: 20px;
