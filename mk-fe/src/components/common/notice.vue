@@ -10,7 +10,11 @@
       <div v-if="login" style="display: inline-block">
       </div>
     </div>
-    <v-user-name v-bind:button="authorName" v-bind:id="authorId" v-bind:show="'author'"></v-user-name>
+    <v-user-name v-bind:button="authorName"
+                 v-bind:id="authorId"
+                 v-bind:show="'author'"
+                 :key="new Date().getTime()">
+    </v-user-name>
     <el-tag :key="tag" v-for="tag in keywordTag" class="keyword" v-if="has_keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
     <div v-if="login">
