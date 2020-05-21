@@ -10,14 +10,11 @@ public class UserInfo implements Serializable {
     private String name;
     private String picture;     //头像url
     private String sex;
-    private String address;
     private String signature;   //个性签名
     private String education;   //学历
     private String works;        //工作信息，包括affiliation即工作单位
     private String expertise;    //专业领域
     private String interest;    //偏好领域
-    private String introduction;            //简介
-    private String contribution;            //贡献
 
 
     public void setId(int id) {
@@ -50,14 +47,6 @@ public class UserInfo implements Serializable {
 
     public void setSex(String sex) {
         this.sex = sex;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getSignature() {
@@ -98,22 +87,6 @@ public class UserInfo implements Serializable {
 
     public void setInterest(String interest) {
         this.interest = interest;
-    }
-
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
-    }
-
-    public String getContribution() {
-        return contribution;
-    }
-
-    public void setContribution(String contribution) {
-        this.contribution = contribution;
     }
 
     public String getPicture() {

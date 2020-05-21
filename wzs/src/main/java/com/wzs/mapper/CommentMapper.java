@@ -21,6 +21,9 @@ public interface CommentMapper {
     List<Comment> selectCommentByNoticeId(int noticeId);
     @Select("SELECT COUNT(*) from comment where noticeId = #{noticeId}")
     int getCommentNumByNoticeId(int noticeId);
+    @Select("SELECT COUNT(*) from comment where fromId = #{fromId} and noticeId = #{noticeId}")
+    int getCommentNumByfromIdAndNoticeId(int fromId, int noticeId);
+
 
     @Update("update `comment` set `fromName` = #{fromName} where `fromId` = #{fromId}")
     boolean updateFromName(int fromId, String fromName);

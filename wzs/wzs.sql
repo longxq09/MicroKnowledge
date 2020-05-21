@@ -360,25 +360,22 @@ CREATE TABLE `user_info`  (
   `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `picture` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `sex` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `address` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `signature` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `education` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `works` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `expertise` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `interest` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `introduction` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `contribution` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (1, 'wzs1@163.com', 'Changqing Cheng', '', 'male', 'NY', 'fighting!', 'SSIE at BU', 'SUNY Binghamton', '23-24-29', '21-30-40', '', '');
-INSERT INTO `user_info` VALUES (2, 'wzs2@163.com', 'Kenneth Frumkin', '', 'male', 'Philadelphia Pennsylvania Area', 'work hard!', 'PhD, MD; Emergency Physician: Military Medicine; Physiological Psychologist', 'Naval Medical Center, Portsmouth, Virginia', '23-24-29', '21-30-40', '', '');
-INSERT INTO `user_info` VALUES (3, 'wzs3@163.com', 'Jan Vandenbrande', '', 'male', 'Arlington, VA', 'fighting!', 'SSIE at BU', 'DARPA/DSO', '30-38', '21-24', '', '');
-INSERT INTO `user_info` VALUES (4, 'wzs4@163.com', 'Matt Mihelic, MD', '', 'male', 'Graduate School of Medicine', 'work hard!', 'Associate Professor', 'University of Tennessee', '23-24-29', '21-30-40', '', '');
-INSERT INTO `user_info` VALUES (5, 'wzs5@163.com', 'Xiao Liu', '', 'female', 'Fayetteville, Arkansas', 'fighting!', 'Assistant Professor at University of Arkansas; Former Research Scientist at IBM T.J. Watson.', 'Industrial Engineering, University of Arkansas', '30-23-40', '21-34-36-24', '', '');
-INSERT INTO `user_info` VALUES (6, 'wzs6@163.com', 'Diane Stevens', '', 'male', 'Northern California', 'work hard!', 'Decades of involvement in the humanities, the arts, public service, and science.', 'UCLA, San Francisco State University', '15-52-56-59-61-63', '3-15-19-20', '', '');
+INSERT INTO `user_info` VALUES (1, 'wzs1@163.com', 'Changqing Cheng', '', 'male',  'fighting!', 'SSIE at BU', 'SUNY Binghamton', '23-24-29', '21-30-40');
+INSERT INTO `user_info` VALUES (2, 'wzs2@163.com', 'Kenneth Frumkin', '', 'male',  'work hard!', 'PhD, MD; Emergency Physician: Military Medicine; Physiological Psychologist', 'Naval Medical Center, Portsmouth, Virginia', '23-24-29', '21-30-40');
+INSERT INTO `user_info` VALUES (3, 'wzs3@163.com', 'Jan Vandenbrande', '', 'male',  'fighting!', 'SSIE at BU', 'DARPA/DSO', '30-38', '21-24');
+INSERT INTO `user_info` VALUES (4, 'wzs4@163.com', 'Matt Mihelic, MD', '', 'male',  'work hard!', 'Associate Professor', 'University of Tennessee', '23-24-29', '21-30-40');
+INSERT INTO `user_info` VALUES (5, 'wzs5@163.com', 'Xiao Liu', '', 'female', 'fighting!', 'Assistant Professor at University of Arkansas; Former Research Scientist at IBM T.J. Watson.', 'Industrial Engineering, University of Arkansas', '30-23-40', '21-34-36-24');
+INSERT INTO `user_info` VALUES (6, 'wzs6@163.com', 'Diane Stevens', '', 'male', 'work hard!', 'Decades of involvement in the humanities, the arts, public service, and science.', 'UCLA, San Francisco State University', '15-52-56-59-61-63', '3-15-19-20');
 
 SET FOREIGN_KEY_CHECKS = 1;

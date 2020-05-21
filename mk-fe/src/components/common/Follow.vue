@@ -5,7 +5,7 @@
                type="primary"
                @click="cancelFollow">取消关注
     </el-button>
-    <el-button v-else
+    <el-button v-if="!follow"
                class="bottom_tag"
                @click="addFollow">关注作者
     </el-button>
@@ -16,10 +16,6 @@
   export default {
     name: "Follow",
     props: {
-      accountId: {
-        type: String,
-        default: localStorage.getItem("accountId")
-      },
       id: {
         type: Number,
         default: 0
@@ -32,9 +28,11 @@
     data() {
       return {
         follow: false,
+        accountId: sessionStorage.getItem("accountId")
       }
     },
     mounted() {
+      this.accountId = sessionStorage.getItem("accountId")
       this.getFollowInfo()
     },
     methods: {
@@ -48,6 +46,8 @@
           .then((res) => {
             if (res.data == 0) {
               this.follow = true
+            } else {
+              this.follow = false
             }
           })
           .catch((error) => {
@@ -61,7 +61,7 @@
         params.append('followingID', this.authorId)
         this.axios.post('/follow/addFollow', params)
           .then((res) => {
-            
+            this.$router.go(0)
           })
           .catch((error) => {
             console.log(error)
@@ -74,7 +74,7 @@
         params.append('followingID', this.authorId)
         this.axios.post('/follow/deleteFollow', params)
           .then((res) => {
-            
+            this.$router.go(0)
           })
           .catch((error) => {
             console.log(error)

@@ -5,6 +5,7 @@ import com.wzs.bean.MicroNotice;
 import com.wzs.bean.Topic;
 import com.wzs.bean.UserInfo;
 import com.wzs.service.MNoticeService;
+import com.wzs.service.ReviewService;
 import com.wzs.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,8 @@ public class MEvidController {
     private MNoticeService noticeService;
     @Resource
     private TopicService topicService;
+    @Resource
+    private ReviewService reviewService;
 
     public List<MicroNotice> queryMEvid(Map<String,Object> queryMap){
         return noticeService.queryMNotice(queryMap);
@@ -68,7 +71,8 @@ public class MEvidController {
     @RequestMapping(value = "/modifyMEvid", method = RequestMethod.POST)
     public int updateMEvid(HttpServletRequest request , HttpSession session){
         MicroEvidence evid = new MicroEvidence();
-        evid.setId(Integer.parseInt(request.getParameter("id")));
+        int noticeId = Integer.parseInt(request.getParameter("id"));
+        evid.setId(noticeId);
 
         String topic = request.getParameter("topic");
         evid.setTopic("-"+topic+"-");
@@ -79,6 +83,7 @@ public class MEvidController {
         evid.setTime(new Date());
 
         noticeService.updateMNotice(evid);
+        reviewService.delReviewsByNotice(noticeId);
         return 0;
     }
 

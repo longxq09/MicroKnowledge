@@ -1,9 +1,6 @@
 package com.wzs.controller;
 
-import com.wzs.bean.Comment;
-import com.wzs.bean.Like;
-import com.wzs.bean.MicroNotice;
-import com.wzs.bean.Topic;
+import com.wzs.bean.*;
 import com.wzs.bean.selfEnum.NoticeType;
 import com.wzs.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @Description: TODO
@@ -38,6 +33,10 @@ public class MNoticeController {
     private LikeService likeService;
     @Resource
     private FavoriteService favoriteService;
+    @Resource
+    private ReviewService reviewService;
+    @Resource
+    private UserRatingService userRatingService;
 
     @CrossOrigin
     @ResponseBody
@@ -66,7 +65,28 @@ public class MNoticeController {
     @RequestMapping(value = "/deleteNotice", method = RequestMethod.POST)
     public int deleteMEvid(int id){
         noticeService.deleteMNotice(id);
+        reviewService.delReviewsByNotice(id);
+        userRatingService.deleteUserRatingByNoticeId(id);
         return 0;
+    }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/getReference", method = RequestMethod.POST)
+    public List<MicroNotice> getReference(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("id"));
+        MicroNotice notice = noticeService.getMNoticeById(id);
+        List<MicroNotice> evidList = new LinkedList<>();
+        String referStr = notice.getReference();
+        String[] referList = referStr.split("-");
+        for(String r : referList){
+            if(r.isEmpty()){
+                continue;
+            }
+            MicroNotice evid = noticeService.getMNoticeById(Integer.parseInt(r));
+            evidList.add(evid);
+        }
+        return evidList;
     }
 
     @CrossOrigin
@@ -129,11 +149,14 @@ public class MNoticeController {
     public List<MicroNotice> getHotTemp() {
         Map<String, Object> queryMap = new HashMap<>();
         List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
+        Date nowTime = new Date();
         for(MicroNotice n :noticeList){
+            Date ntime = n.getTime();
+            int disHour = (int) (nowTime.getTime() - ntime.getTime())/ (1000 * 60 * 60 * 24);
             int likeCount = likeService.getLikeNumByNoticeId(n.getId());
             int CommentCount = commentService.getCommentNumByNoticeId(n.getId());
             int favouriteCount = favoriteService.getFavorNumByNoticeId(n.getId());
-            double hot = likeCount * 11.8 + CommentCount*21.5 + favouriteCount * 16.2;
+            double hot = (likeCount * 0.7 + CommentCount*0.3 + favouriteCount)*1000 / Math.pow(disHour+2,1.2);
             n.setHot(hot);
         }
         noticeList.sort(Comparator.comparing(MicroNotice::getHot).reversed());

@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="activeName" style="margin-left: 15%;margin-right: 15%;">
+  <el-tabs v-model="activeName" class="tabs">
     <el-tab-pane label="推荐" name="first">
       <v-notice :key="value.id" v-for="(value,index) in exhibition"
                 v-bind:id="value.id"
@@ -34,7 +34,8 @@
                 v-bind:keywords="value.keywords"
                 v-bind:title="value.title"
                 v-bind:summary="value.summary"
-                v-bind:review=true>
+                v-bind:review=true
+                v-bind:comment=false>
       </v-notice>
     </el-tab-pane>
   </el-tabs>
@@ -67,7 +68,7 @@
     },
     methods: {
       async getUserInfo() {
-        this.accountId=Number(localStorage.getItem("accountId"));
+        this.accountId=Number(sessionStorage.getItem("accountId"));
         console.log("====="+this.accountId);
         var params = new URLSearchParams();
         try {
@@ -89,7 +90,7 @@
       },
       getFollowingState() {
         this.axios.get('/follow/getFollowingState', {
-          params: { id: localStorage.getItem("accountId")}
+          params: { id: sessionStorage.getItem("accountId")}
         }).then((res) => {
           this.followingState = res.data
         })
@@ -102,8 +103,10 @@
 </script>
 
 <style>
-  .el-main {
-    background-color: #F4F4F5;
-    color: #333;
+  .tabs {
+    width: 700px;
+    margin-top: 20px;
+    margin-left: 15%;
+    margin-right: 15%;
   }
 </style>

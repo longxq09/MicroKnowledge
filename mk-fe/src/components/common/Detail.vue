@@ -5,26 +5,29 @@
       <font style="font-weight: 600;margin-left: 10px;">{{form.authorName}}</font>
       <font style="font-weight: 400;font-size: 15px;margin-left: 10px;">{{form.time}}</font>
     </div>
-    <el-tag :key="tag" v-for="tag in keyWordList" class="keyword">{{tag}}</el-tag>
+    <el-tag :key="tag" v-for="tag in keyWordList" class="keyword" v-if="has_keyword">{{tag}}</el-tag>
     <div style="margin: 10px;margin-top: 30px;margin-bottom: 30px;width: 100%;white-space:normal;display:block;">{{form.text}}</div>
-    <div class="bottom_text">引用 : {{form.reference}}
+    <div class="bottom_text" v-if="!guess">引用 : {{form.reference}}
+    </div>
+    <div v-else class="bottom_text">引用 :
+      <el-popover placement="right" width="400" trigger="click"
+       :key="value.id"
+       v-for="(value,index) in guessReference"
+       >
+        <v-reference
+       v-bind:title="value.title"
+       v-bind:authorName="value.authorName"
+       v-bind:summary="value.summary"></v-reference>
+        <el-button type="text" slot="reference" class="reference">{{value.title}}</el-button>
+      </el-popover>
     </div>
     <div class="bottom_text">分类 : {{form.label}}
     </div>
 
-    <v-like v-if="login" v-bind:accountId="accountId" v-bind:id="noticeId">
-    </v-like>
-
-    <v-favorite v-if="login" v-bind:accountId="accountId" v-bind:id="noticeId">
-    </v-favorite>
-
-    <v-follow v-if="login" v-bind:accountId="accountId" v-bind:id="noticeId" v-bind:authorId="form.authorId">
-    </v-follow>
-
-    <div class="comment_count">
+    <div class="comment_count" v-if="comment">
       {{reply_num}}评论
     </div>
-    <div v-if="login" style="border-bottom: 1px solid lightgrey;overflow:hidden;padding-top: 5px;padding-bottom: 20px;">
+    <div v-if="login&&comment" style="border-bottom: 1px solid lightgrey;overflow:hidden;padding-top: 5px;padding-bottom: 20px;" >
       <div class="comment_photo">
         <el-avatar>user</el-avatar>
       </div>
@@ -33,7 +36,7 @@
         <el-button type="primary" style="width: 9%; height: 51px;" @click="submit_reply">发表<br>评论</el-button>
       </div>
     </div>
-    <div v-if="refresh">
+    <div v-if="refresh&&comment">
       <v-comment :key="value.id" v-for="(value,index) in exhibition" v-bind:noticeId="value.noticeId" v-bind:authorId="value.authorId"
         v-bind:fromId="value.fromId" v-bind:fromName="value.fromName" v-bind:toId="value.toId" v-bind:toName="value.toName"
         v-bind:content="value.content" v-bind:time="value.disTime" @childFn="changFlag">
@@ -44,15 +47,17 @@
 
 <script>
   import vComment from './Comment.vue';
-  import vFollow from './Follow.vue'
-  import vLike from './Like.vue'
-  import vFavorite from './Favorite'
+  import vReference from './Reference.vue';
   export default {
     name: "Detail",
     props: {
       noticeId: {
         type: Number,
         default: 0
+      },
+      comment: {
+        type: Boolean,
+        default: true
       },
     },
     data() {
@@ -70,6 +75,8 @@
         user: true,
         accountId: 0,
         id: 0,
+        guess: false,
+        guessReference: Array,
         form: {
           type_str: "微证据",
           title: '震惊！还没加载出来？！',
@@ -80,18 +87,18 @@
           authorName: 'uc主编',
           authorId: 0,
           type: 1,
+          has_keyword: true,
         },
       }
     },
     components: {
       vComment,
-      vFollow,
-      vLike,
-      vFavorite,
+      vReference
     },
     created() {
-      this.accountId = localStorage.getItem("accountId")
-      this.login = this.accountId != ""
+      this.accountId = sessionStorage.getItem("accountId")
+      this.login = sessionStorage.getItem("accountId") !== "" &&
+        sessionStorage.getItem("accountId") != null
       this.id = Number(this.noticeId)
       this.getUserInfo();
     },
@@ -143,6 +150,20 @@
             this.form.type_str = "微证据";
           } else {
             this.form.type_str = "微猜想";
+            this.guess = true;
+
+            var params3 = new URLSearchParams()
+            params3.append('id', this.noticeId)
+            this.axios.post('/mNotice/getReference', params3)
+              .then((res) => {
+                this.guessReference = res.data;
+              })
+              .catch((error) => {
+                console.log(error)
+              })
+          }
+          if (this.form.keyWord.length == 0) {
+            this.has_keyword = false;
           }
         } catch (err) {
           console.log(err);
@@ -192,18 +213,6 @@
 </script>
 
 <style>
-  .el-header {
-    background-color: #FFFFFF;
-    line-height: 1.5;
-  }
-
-  .el-main {
-    background-color: #F4F4F5;
-    color: #333;
-    padding-left: 15%;
-    padding-right: 25%;
-  }
-
   .noice_title {
     color: #409EFF;
     text-align: left;
@@ -229,8 +238,8 @@
     margin-left: 10px;
     color: slategrey;
     font-size: 15px;
-    white-space:normal;
-    display:block;
+    white-space: normal;
+    display: block;
   }
 
   .review_button {
@@ -248,11 +257,11 @@
     border: 1px solid #C6E2FF;
   }
 
-  .bottom_tag {
-    margin: 10px;
-    margin-right: 0;
+  .reference {
     line-height: 7px;
     height: 25px;
+    margin-left: 5px;
+    color: slategrey;font-size: 15px;
   }
 
   .comment_count {

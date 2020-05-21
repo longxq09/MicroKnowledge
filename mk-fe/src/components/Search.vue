@@ -140,10 +140,6 @@
   }
 </script>
 <style>
-  .el-main {
-    background-color: #F4F4F5;
-    color: #333;
-  }
   .filter {
     margin-bottom: 20px;
   }

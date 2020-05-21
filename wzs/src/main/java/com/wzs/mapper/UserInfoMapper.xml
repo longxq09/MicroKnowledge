@@ -6,7 +6,7 @@
     </sql>
 
     <sql id="BASE_COLUMN">
-        id,email,`name`,picture,sex,address,signature,education,works,expertise,interest,introduction,contribution
+        id,email,`name`,picture,sex,signature,education,works,expertise,interest
     </sql>
 
     <select id="findInfoById" resultType="com.wzs.bean.UserInfo" parameterType="int">
@@ -56,8 +56,8 @@
 
     <insert id="addUserInfo" parameterType="com.wzs.bean.UserInfo">
         insert into user_info values
-        (null,#{email},#{name},#{picture},#{sex},#{address},#{signature},#{education},#{works},
-        #{expertise},#{interest},#{introduction},#{contribution})
+        (null,#{email},#{name},#{picture},#{sex},#{signature},#{education},#{works},
+        #{expertise},#{interest})
     </insert>
 
     <select id="getAllInfos" resultType="com.wzs.bean.UserInfo">

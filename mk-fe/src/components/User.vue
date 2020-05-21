@@ -90,8 +90,7 @@
                    v-bind:relatedNoticeId="value.relatedNoticeId"
                    v-bind:relatedNoticeTitle="value.relatedNoticeTitle"
                    v-bind:detail="value.detail"
-                   v-bind:time="value.disTime"
-                   v-bind:flag="value.flag">
+                   v-bind:time="value.disTime">
         </v-message>
       </el-tab-pane>
     </el-tabs>
@@ -110,8 +109,8 @@
     name: "User",
     data() {
       return {
-        hostId: localStorage.getItem("accountId"),
-        accountId: localStorage.getItem("accountId"),
+        hostId: sessionStorage.getItem("accountId"),
+        accountId: sessionStorage.getItem("accountId"),
         src: 'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg',
         activeName: 'first',
         following: Array,

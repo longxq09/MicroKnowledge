@@ -1,10 +1,10 @@
 <template>
   <div class="notice">
     <div class="noice_title">
-      {{type_name}} | <el-button type="text" @click="dialogTableVisible = true">{{title}}</el-button>
+      {{type_name}} | <el-button type="text" @click="dialogTableVisible = true" style="font-size: 20px;">{{title}}</el-button>
 
       <el-dialog title="详情" :visible.sync="dialogTableVisible">
-        <v-detail v-bind:noticeId="id"></v-detail>
+        <v-detail v-bind:noticeId="id" v-bind:comment="comment"></v-detail>
       </el-dialog>
       <el-tag class="keyword" v-if="user">{{state}}</el-tag>
       <div v-if="login" style="display: inline-block">
@@ -20,6 +20,7 @@
       </v-favorite>
       <v-follow v-bind:accountId="accountId" v-bind:id="id" v-bind:authorId="authorId" v-if="toShow">
       </v-follow>
+      <el-button class="bottom_tag" v-if="toShow"@click="dialogTableVisible = true">评论</el-button>
       <el-button class="bottom_tag" v-if="modify" @click="toModify">编辑</el-button>
       <el-button class="bottom_tag" v-if="modify" @click="toDelete">删除</el-button>
       <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
@@ -49,7 +50,7 @@
       },
       accountId: {
         type: String,
-        default: localStorage.getItem("accountId")
+        default: sessionStorage.getItem("accountId")
       },
       modify: {
         type: Boolean,
@@ -94,7 +95,11 @@
       judge: {
         type: Number,
         default: 0
-      }
+      },
+      comment: {
+        type: Boolean,
+        default: true
+      },
     },
 
     data() {
@@ -111,7 +116,6 @@
         unpass_num:0,
         dialogTableVisible: false,
         dialogFormVisible: false,
-
       }
     },
     components: {
@@ -123,7 +127,7 @@
     methods: {
       async getReviewInfo(){
         var params2 = new URLSearchParams();
-        params2.append('userId', localStorage.getItem("accountId"));
+        params2.append('userId', sessionStorage.getItem("accountId"));
         params2.append('noticeId', this.id);
         try {
           let res = await this.axios.post('/review/userToReview', params2);
@@ -155,16 +159,20 @@
         } else {
           this.type_name = "微猜想";
         }
-        this.login = localStorage.getItem("accountId") != ""
-        this.toShow = !(this.user || this.review)
+        this.login = sessionStorage.getItem("accountId") != ""
+        this.toShow = !(this.user || this.review);
+        this.toShow = this.toShow &&  sessionStorage.getItem("accountId") !== "" &&
+  sessionStorage.getItem("accountId") != null
         if (this.user) {
           this.modify = (this.judge == 0);
           if (this.judge == 1) {
             this.state = "已通过";
           } else if (this.judge == 0) {
             this.state = "评审中";
+            this.comment=false;
           } else {
             this.state = "未通过";
+            this.comment=false;
           }
         }
       },
@@ -234,7 +242,7 @@
         this.review_pass = (type == 1);
 
         var params = new URLSearchParams();
-        params.append('userId', localStorage.getItem("accountId"));
+        params.append('userId', sessionStorage.getItem("accountId"));
         params.append('noticeId', this.id);
         params.append('type', type);
         this.axios.post('/review/doReview', params)
@@ -251,7 +259,7 @@
         this.need_review = true;
 
         var params = new URLSearchParams();
-        params.append('userId', localStorage.getItem("accountId"));
+        params.append('userId', sessionStorage.getItem("accountId"));
         params.append('noticeId', this.id);
         params.append('type', 0);
         this.axios.post('/review/doReview', params)
@@ -283,7 +291,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, .24), 0 0 6px rgba(0, 0, 0, .10);
     padding-top: 7px;
     padding-bottom: 7px;
-    margin-bottom: 10px;
+    margin: 4px 4px 8px 4px;
     background-color: white;
   }
 

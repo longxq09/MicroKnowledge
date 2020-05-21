@@ -1,115 +1,100 @@
 <template>
-	<el-container>
-		<el-header>
-			<v-head v-bind:title="title"  v-bind:userinfo=true></v-head>
-		</el-header>
-		<el-main>
-      <el-tabs tab-position="left">
-        <el-tab-pane label="账号管理">
-          <el-form ref="form" :model="form" label-width="60px">
-            <el-form-item label="头像" style="display:none">
-              <el-upload
-                class="avatar-uploader"
-                action=""
-                :show-file-list="false"
-                :auto-upload="true"
-                :http-request="uploadImage"
-                :before-upload="beforeImageUpload">
-                <img v-if="form.picture" :src="form.picture" class="avatar">
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload>
-            </el-form-item>
-            <el-form-item label="昵称" style="width: 400px">
-              <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="submit">立即更新</el-button>
-              <el-button @click="cancel">取消</el-button>
-            </el-form-item>
-          </el-form>
-        </el-tab-pane>
-        <el-tab-pane label="安全管理">
-          <el-form :model="passwordForm" status-icon
-                   :rules="rules" ref="passwordForm"
-                   label-width="100px"
-                   class="passwordForm">
-            <el-form-item label="旧密码" prop="old">
-              <el-input type="password" v-model="passwordForm.old" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="新密码" prop="new">
-              <el-input type="password" v-model="passwordForm.new" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="repeat">
-              <el-input type="password" v-model="passwordForm.repeat" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="rePassword">提交</el-button>
-              <el-button @click="cancel">取消</el-button>
-            </el-form-item>
-          </el-form>
-        </el-tab-pane>
-        <el-tab-pane label="信息管理">
-          <el-form ref="form" :model="form" label-width="80px">
-            <el-form-item label="个性签名">
-              <el-input type="textarea" v-model="form.signature"></el-input>
-            </el-form-item>
-            <el-form-item label="性别">
-              <el-radio v-model="form.sex" label="male">男</el-radio>
-              <el-radio v-model="form.sex" label="female">女</el-radio>
-            </el-form-item>
-            <el-form-item label="学术背景">
-              <el-input v-model="form.education"></el-input>
-            </el-form-item>
-            <el-form-item label="工作地">
-              <el-input v-model="form.works"></el-input>
-            </el-form-item>
-            <el-form-item label="居住地">
-              <el-input type="textarea" v-model="form.address"></el-input>
-            </el-form-item>
-            <el-form-item label="自我介绍">
-              <el-input type="textarea" v-model="form.introduction"></el-input>
-            </el-form-item>
-            <el-form-item label="突出贡献">
-              <el-input type="textarea" v-model="form.contribution"></el-input>
-            </el-form-item>
-            <el-form-item label="专业领域">
-              <el-select
-                style="display: block"
-                v-model="expertiseTags"
-                multiple
-                value-key="id">
-                <el-option
-                  v-for="(value, index) in topics"
-                  :key="value.id"
-                  :label="value.topicName"
-                  :value="value.id">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="兴趣领域">
-              <el-select
-                style="display: block"
-                v-model="interestTags"
-                multiple
-                value-key="id">
-                <el-option
-                  v-for="(value, index) in topics"
-                  :key="value.id"
-                  :label="value.topicName"
-                  :value="value.id">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="submit">立即更新</el-button>
-              <el-button @click="cancel">取消</el-button>
-            </el-form-item>
-          </el-form>
-        </el-tab-pane>
-      </el-tabs>
-    </el-main>
-    <v-footer></v-footer>
-  </el-container>
+	<div style="margin-top: 40px; margin-left: 10%; margin-right: 15%;">
+    <el-tabs tab-position="left" style="width: 900px">
+      <el-tab-pane label="账号管理">
+        <el-form ref="form" :model="form" label-width="100px">
+          <el-form-item label="头像" style="display:none">
+            <el-upload
+              class="avatar-uploader"
+              action=""
+              :show-file-list="false"
+              :auto-upload="true"
+              :http-request="uploadImage"
+              :before-upload="beforeImageUpload">
+              <img v-if="form.picture" :src="form.picture" class="avatar">
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="昵称">
+            <el-input v-model="form.name" style="width: 200px"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submit">立即更新</el-button>
+            <el-button @click="cancel">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="安全管理">
+        <el-form :model="passwordForm" status-icon
+                 :rules="rules" ref="passwordForm"
+                 label-width="100px"
+                 class="passwordForm">
+          <el-form-item label="旧密码" prop="old">
+            <el-input type="password" v-model="passwordForm.old" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="新密码" prop="new">
+            <el-input type="password" v-model="passwordForm.new" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" prop="repeat">
+            <el-input type="password" v-model="passwordForm.repeat" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="rePassword">立即更新</el-button>
+            <el-button @click="cancel">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="信息管理">
+        <el-form ref="form" :model="form" label-width="80px">
+          <el-form-item label="个性签名">
+            <el-input type="textarea" v-model="form.signature"></el-input>
+          </el-form-item>
+          <el-form-item label="性别">
+            <el-radio v-model="form.sex" label="male">男</el-radio>
+            <el-radio v-model="form.sex" label="female">女</el-radio>
+          </el-form-item>
+          <el-form-item label="学术背景">
+            <el-input v-model="form.education"></el-input>
+          </el-form-item>
+          <el-form-item label="工作地">
+            <el-input v-model="form.works"></el-input>
+          </el-form-item>
+          <el-form-item label="专业领域">
+            <el-select
+              style="display: block"
+              v-model="expertiseTags"
+              multiple
+              value-key="id">
+              <el-option
+                v-for="(value, index) in topics"
+                :key="value.id"
+                :label="value.topicName"
+                :value="value.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="兴趣领域">
+            <el-select
+              style="display: block"
+              v-model="interestTags"
+              multiple
+              value-key="id">
+              <el-option
+                v-for="(value, index) in topics"
+                :key="value.id"
+                :label="value.topicName"
+                :value="value.id">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submit">立即更新</el-button>
+            <el-button @click="cancel">取消</el-button>
+          </el-form-item>
+        </el-form>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script>
@@ -184,14 +169,14 @@
             console.log(error)
           })
 		    this.axios.get('/user/info', {
-		      params: { id: localStorage.getItem("accountId")}
+		      params: { id: sessionStorage.getItem("accountId")}
 		    }).then((res) => {
             this.form = res.data
-            var tags = res.data.interest.split('-')
-            for(var i = 0; i < tags.length; i++)
+            let tags = res.data.interest.split('-')
+            for(let i = 0; i < tags.length; i++)
               this.interestTags.push(parseInt(tags[i]))
             tags = res.data.expertise.split('-')
-            for(var i = 0; i < tags.length; i++)
+            for(let i = 0; i < tags.length; i++)
               this.expertiseTags.push(parseInt(tags[i]))
           })
           .catch((error) => {
@@ -201,15 +186,12 @@
 
       submit() {
         var params = new URLSearchParams()
-        params.append('id', localStorage.getItem("accountId"))
+        params.append('id', sessionStorage.getItem("accountId"))
         params.append('name', this.form.name)
         params.append('signature', this.form.signature)
         params.append('sex', this.form.sex)
         params.append('education', this.form.education)
         params.append('works', this.form.works)
-        params.append('address', this.form.address)
-        params.append('introduction', this.form.introduction)
-        params.append('contribution', this.form.contribution)
         params.append('interest', this.getInterest())
         params.append('expertise', this.getExpertise())
         params.append('picture', this.form.picture)
@@ -247,8 +229,8 @@
         var params = new URLSearchParams()
         params.append('oldPassword', this.passwordForm.old)
         params.append('newPassword', this.passwordForm.new)
-        params.append('email', localStorage.getItem("email"))
-        params.append('id', localStorage.getItem("accountId"))
+        params.append('email', sessionStorage.getItem("email"))
+        params.append('id', sessionStorage.getItem("accountId"))
         this.axios.post('/user/rePassword', params)
           .then((res) => {
             var remindTitle = res.data.code == 0 ? '修改成功' : '修改失败';
@@ -284,7 +266,7 @@
 
       uploadImage(image) {
 		    var params = new URLSearchParams()
-        params.append("id", localStorage.getItem("accountId"))
+        params.append("id", sessionStorage.getItem("accountId"))
         params.append("imgStr", image.file)
         this.axios.post('/user/picUpload', params)
           .then((res) => {
@@ -302,17 +284,13 @@
 </script>
 
 <style>
-  .el-main {
-    background-color: #F4F4F5;
-    color: #333;
-  }
   .avatar-uploader .el-upload {
       border: 1px dashed #d9d9d9;
       border-radius: 6px;
       cursor: pointer;
       position: relative;
       overflow: hidden;
-    }
+  }
   .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
   }
@@ -324,6 +302,7 @@
     line-height: 178px;
     text-align: center;
   }
+
   .avatar {
       width: 178px;
       height: 178px;

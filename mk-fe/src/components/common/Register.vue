@@ -1,16 +1,16 @@
 <template>
-	<el-form :model="dataForm" :rules="rules">
+	<el-form :model="dataForm" :rules="rules" autocomplete="off">
     <el-form-item label="昵称" prop="name">
-      <el-input type="text" v-model="dataForm.name" placeholder="请输入昵称"></el-input>
+      <el-input type="text" v-model="dataForm.name"></el-input>
     </el-form-item>
     <el-form-item label="邮箱" prop="email">
-      <el-input type="text" v-model="dataForm.email" placeholder="请输入邮箱"></el-input>
+      <el-input type="text" v-model="dataForm.email"></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="password">
-      <el-input type="password" v-model="dataForm.password" placeholder="请输入密码"></el-input>
+      <el-input type="password" v-model="dataForm.password"></el-input>
     </el-form-item>
     <el-form-item label="确认密码" prop="repeat">
-      <el-input type="password" v-model="dataForm.repeat" autocomplete="off"></el-input>
+      <el-input type="password" v-model="dataForm.repeat"></el-input>
     </el-form-item>
     <el-button @click="register">注册</el-button>
     <div class="remind">将对您的邮箱进行验证</div>
@@ -54,7 +54,23 @@
     },
 		methods: {
       register () {
-        var params = new URLSearchParams();
+        if (this.dataForm.password.length < 6) {
+          let remindTitle = '密码长度过短！'
+          let remindContent = '密码长度最少6位，请重新输入！'
+          this.$alert(remindContent, remindTitle, {
+            confirmButtonText: '确定'
+          });
+          return
+        }
+        if (this.dataForm.password !== this.dataForm.repeat) {
+          let remindTitle = '确认密码出错！'
+          let remindContent = '两次密码输入不一致，请重新输入！'
+          this.$alert(remindContent, remindTitle, {
+            confirmButtonText: '确定'
+          });
+          return
+        }
+        let params = new URLSearchParams();
         params.append('name', this.dataForm.name);
         params.append('email', this.dataForm.email);
         params.append('password',this.dataForm.password);
