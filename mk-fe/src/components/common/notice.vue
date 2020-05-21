@@ -1,7 +1,7 @@
 <template>
   <div class="notice">
     <div class="noice_title">
-      {{type_name}} | <el-button type="text" @click="dialogTableVisible = true" style="font-size: 20px;">{{title}}</el-button>
+      <el-button type="text" @click="dialogTableVisible = true" class="aaa" style="font-size: 20px;">{{type_name}} | {{title}} </el-button>
 
       <el-dialog title="详情" :visible.sync="dialogTableVisible">
         <v-detail v-bind:noticeId="id" v-bind:comment="comment"></v-detail>
@@ -23,7 +23,6 @@
       <el-button class="bottom_tag" v-if="toShow"@click="dialogTableVisible = true">评论</el-button>
       <el-button class="bottom_tag" v-if="modify" @click="toModify">编辑</el-button>
       <el-button class="bottom_tag" v-if="modify" @click="toDelete">删除</el-button>
-      <el-button class="bottom_tag" v-if="review" @click="toReview">评审</el-button>
 
         <el-button class="bottom_tag" @click="reviewResult(1)"  v-if="need_review&&review"> 通过 </el-button>
         <el-button class="bottom_tag" @click="reviewResult(-1)"  v-if="need_review&&review">不通过</el-button>
@@ -176,14 +175,6 @@
           }
         }
       },
-      toReview() {
-        this.$router.push({
-          path: '/review/',
-          query: {
-            id: this.id
-          }
-        });
-      },
       toModify() {
         if (this.type == 1) {
           this.$router.push({
@@ -283,6 +274,7 @@
 </script>
 
 <style>
+  .aaa:hover,.aaa:active {text-decoration:underline;}
   .notice {
     /* border: 1px solid #409EFF; */
     width: 99%;
@@ -292,13 +284,12 @@
     padding-top: 7px;
     padding-bottom: 7px;
     margin: 4px 4px 8px 4px;
-    background-color: white;
+    background-color: #f4f8ff;
   }
 
   .noice_title {
     color: #409EFF;
     text-align: left;
-    font-size: 20px;
     /*font-weight: 500;*/
     /*display: inline-block;*/
     margin: 10px;
