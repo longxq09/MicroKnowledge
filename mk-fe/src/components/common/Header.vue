@@ -44,6 +44,7 @@
         new_message: 0,
         if_show_new: false,
         login: false,
+        accountId: sessionStorage.getItem("accountId"),
         avator: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3810033319,3262616285&fm=26&gp=0.jpg',
         male_pic: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2644999504,2046739651&fm=26&gp=0.jpg',
         female_pic: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
@@ -56,8 +57,8 @@
     },
     methods: {
       async getUserInfo() {
-        if (this.accountId !== "") {
-          var params = new URLSearchParams();
+        if (this.login) {
+          let params = new URLSearchParams();
           params.append('userId', this.accountId);
           try {
             let res = await this.axios.post('/message/getUnReadNum', params);
