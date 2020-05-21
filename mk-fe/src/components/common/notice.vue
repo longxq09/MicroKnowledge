@@ -10,7 +10,7 @@
       <div v-if="login" style="display: inline-block">
       </div>
     </div>
-    <nobr style="font-weight: 600;margin-left: 10px;">{{authorName}}</nobr>
+    <v-user-name v-bind:button="authorName" v-bind:id="authorId" v-bind:show="'author'"></v-user-name>
     <el-tag :key="tag" v-for="tag in keywordTag" class="keyword" v-if="has_keyword">{{tag}}</el-tag>
     <div class="main_text">{{summary}}</div>
     <div v-if="login">
@@ -40,6 +40,7 @@
   import vLike from './Like.vue'
   import vFavorite from './Favorite'
   import vDetail from './Detail.vue'
+  import vUserName from './UserName'
   export default {
     name: "Notice",
     props: {
@@ -121,7 +122,8 @@
       vFollow,
       vLike,
       vFavorite,
-      vDetail
+      vDetail,
+      vUserName
     },
     methods: {
       async getReviewInfo(){
@@ -256,7 +258,7 @@
             console.log(error);
           });
       },
-      
+
       checkCancle(type){
         this.$confirm('确认取消评价吗', '提示', {
           confirmButtonText: '我确定',

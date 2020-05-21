@@ -2,7 +2,11 @@
   <div>
     <div class="noice_title">{{form.type_str}} | {{form.title}}</div>
     <div>
-      <font style="font-weight: 600;margin-left: 10px;">{{form.authorName}}</font>
+      <v-user-name :show="'detail'"
+                   :id="form.authorId"
+                   :button="form.authorName"
+                   :key="new Date().getTime()">
+      </v-user-name>
       <font style="font-weight: 400;font-size: 15px;margin-left: 10px;">{{form.time}}</font>
     </div>
     <el-tag :key="tag" v-for="tag in keyWordList" class="keyword" v-if="has_keyword">{{tag}}</el-tag>
@@ -48,6 +52,7 @@
 <script>
   import vComment from './Comment.vue';
   import vReference from './Reference.vue';
+  import vUserName from './UserName'
   export default {
     name: "Detail",
     props: {
@@ -93,7 +98,8 @@
     },
     components: {
       vComment,
-      vReference
+      vReference,
+      vUserName
     },
     created() {
       this.accountId = sessionStorage.getItem("accountId")

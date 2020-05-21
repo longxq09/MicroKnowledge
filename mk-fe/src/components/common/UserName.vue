@@ -10,10 +10,21 @@
                class="userEmail"
                @click="dialogVisible = true">{{title}}
     </el-button>
+    <el-button v-if="show==='author'"
+               type="text"
+               class="author"
+               @click="dialogVisible = true">{{title}}
+    </el-button>
+    <el-button v-if="show==='detail'"
+               type="text"
+               class="detail"
+               @click="dialogVisible = true">{{title}}
+    </el-button>
     <el-dialog
       title="用户信息"
       :visible.sync="dialogVisible"
-      width="400px">
+      width="400px"
+      :append-to-body="true">
       <div style="margin-bottom: 20px">
         <v-user-info-board v-bind:id="accountId"></v-user-info-board>
       </div>
@@ -77,5 +88,15 @@
   .userEmail {
     font-size: medium;
     padding-bottom: 4px;
+  }
+  .author {
+    font-size: medium;
+    font-weight: 600;
+    margin-left: 10px;
+  }
+  .detail {
+    font-size: small;
+    font-weight: 600;
+    margin-left: 10px;
   }
 </style>
