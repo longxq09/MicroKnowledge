@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div style="width: 900px; margin-top: 40px; margin-left: 10%;">
     <el-image class="image" :src="src"></el-image>
-    <div style="display: inline-block; margin-top: 12px; margin-bottom: 20px">
+    <div style="display: inline-block; margin-top: 12px; margin-bottom: 20px; width: 400px">
       <div>
         <i class="el-icon-s-custom"> {{userInfo.name}}</i>
         <i v-if="userInfo.sex=='male'" class="el-icon-male"></i>
@@ -25,13 +25,24 @@
         <show-topic v-bind:str="userInfo.expertise"></show-topic>
       </div>
     </div>
-    <el-tabs v-model="activeName" style="width: 90%; margin-left: 4%">
+    <el-tabs v-model="activeName" style="width: 90%; margin-left: 8%; margin-bottom: 80px">
       <el-tab-pane label="关注" name="first">
         <div class="follow" :key="index" v-for="(value,index) in following">
           <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
           <div style="display: inline-block" >
-            <p @click="toOtherUser(value.id, value.name, value.email)">{{value.name}}</p>
-            <p @click="toOtherUser(value.id, value.name, value.email)">{{value.email}}</p>
+            <div>
+              <el-button type="text"
+                         class="userName"
+                         @click="toOtherUser(value.id, value.name, value.email)">{{value.name}}
+              </el-button>
+            </div>
+            <div>
+              邮箱：
+              <el-button type="text"
+                         class="userEmail"
+                         @click="toOtherUser(value.id, value.name, value.email)">{{value.email}}
+              </el-button>
+            </div>
           </div>
           <v-follow v-if="accountId==hostId"
                     style="float: right"
@@ -44,9 +55,20 @@
       <el-tab-pane label="粉丝" name="second">
         <div class="follow" :key="index" v-for="(value,index) in follower">
           <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
-          <div style="display: inline-block" >
-            <p @click="toOtherUser(value.id, value.name, value.email)">{{value.name}}</p>
-            <p @click="toOtherUser(value.id, value.name, value.email)">{{value.email}}</p>
+          <div style="display: inline-block">
+            <div>
+              <el-button type="text"
+                         class="userName"
+                         @click="toOtherUser(value.id, value.name, value.email)">{{value.name}}
+              </el-button>
+            </div>
+            <div>
+              邮箱：
+              <el-button type="text"
+                         class="userEmail"
+                         @click="toOtherUser(value.id, value.name, value.email)">{{value.email}}
+              </el-button>
+            </div>
           </div>
           <v-follow v-if="accountId==hostId"
                     style="float: right"
@@ -105,6 +127,7 @@
   import vFollow from './common/Follow.vue';
   import vShowTopic from './common/ShowTopic.vue';
   import ShowTopic from "./common/ShowTopic";
+  import merge from 'webpack-merge'
   export default {
     name: "User",
     data() {
@@ -131,15 +154,40 @@
       vShowTopic
     },
     created() {
-      this.initial()
-      if (this.$route.params.activeName.length != 0) {
+      if (this.$route.query.accountId) {
+        this.accountId = this.$route.query.accountId;
+      }
+      if (this.$route.params.activeName !== undefined) {
         this.activeName = this.$route.params.activeName;
       }
     },
+    mounted() {
+      this.initial()
+    },
+    watch: {
+      $route() {
+        if (this.$route.query.accountId) {
+          this.accountId = this.$route.query.accountId
+        }
+        if (this.$route.params.activeName) {
+          this.activeName = this.$route.params.activeName
+        }
+      },
+      accountId() {
+        this.initial()
+      },
+    },
     methods: {
       toOtherUser(id) {
-        this.accountId = String(id)
-        this.initial()
+        this.$router.push({
+          name: 'User',
+          query: {
+            accountId: id
+          },
+          params: {
+            activeName: this.activeName
+          }
+        })
       },
       initial() {
         this.getUserInfo()
@@ -222,11 +270,16 @@
 </script>
 
 <style scoped>
-  .el-main {
-    background-color: #F4F4F5;
-    color: #333;
+  .userName {
+    font-size: large;
+    font-weight: bold;
+    padding-bottom: 4px;
   }
 
+  .userEmail {
+    font-size: medium;
+    padding-bottom: 4px;
+  }
   .image {
     display: inline-block;
     width: 300px;

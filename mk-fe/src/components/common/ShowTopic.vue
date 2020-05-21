@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="index in str.split('-')" :key="index">
-      <el-tag>{{topics[parseInt(index)].topicName}}</el-tag>
+      <el-tag v-if="topics[parseInt(index)]!==undefined">{{topics[parseInt(index)].topicName}}</el-tag>
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@
         topics: []
       }
     },
-    mounted() {
+    created() {
       this.getTopic()
     },
     methods: {
