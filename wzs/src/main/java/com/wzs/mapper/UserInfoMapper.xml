@@ -22,27 +22,36 @@
     </select>
 
     <update id="editUserInfo" parameterType="com.wzs.bean.UserInfo" >
-        update
-            user_info usr
-        left join
-            micro_notice notice
-        on
-            usr.id = notice.authorId
-        set
-            usr.name = #{name, jdbcType=VARCHAR},
-            usr.picture = #{picture, jdbcType=VARCHAR},
-            usr.sex = #{sex,jdbcType=VARCHAR},
-            usr.address=#{address,jdbcType=VARCHAR},
-            usr.signature=#{signature,jdbcType=VARCHAR},
-            usr.education=#{education,jdbcType=VARCHAR},
-            usr.works=#{works,jdbcType=VARCHAR},
-            usr.expertise=#{expertise,jdbcType=VARCHAR},
-            usr.interest=#{interest,jdbcType=VARCHAR},
-            usr.introduction=#{introduction},
-            usr.contribution=#{contribution},
-            notice.authorName = #{name, jdbcType=VARCHAR}
-        where
-            usr.id = #{id,jdbcType=INTEGER}
+        update <include refid="BASE_TABLE"/>
+        <set>
+            <if test="name !=null">
+                `name`=#{name,jdbcType=VARCHAR},
+            </if>
+            <if test="picture !=null">
+                picture=#{picture,jdbcType=VARCHAR},
+            </if>
+            <if test="sex !=null">
+                sex=#{sex,jdbcType=VARCHAR},
+            </if>
+
+            <if test="signature !=null">
+                signature=#{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="education !=null">
+                education=#{education,jdbcType=VARCHAR},
+            </if>
+            <if test="works !=null">
+                works=#{works,jdbcType=VARCHAR},
+            </if>
+            <if test="expertise !=null">
+                expertise=#{expertise,jdbcType=VARCHAR},
+            </if>
+            <if test="interest !=null">
+                interest=#{interest,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where id = #{id,jdbcType=INTEGER}
     </update>
 
     <insert id="addUserInfo" parameterType="com.wzs.bean.UserInfo">
