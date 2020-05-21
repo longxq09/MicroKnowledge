@@ -10,6 +10,12 @@ import ModifyMEvid from '@/components/ModifyMEvid.vue'
 import ModifyMGuess from '@/components/ModifyMGuess'
 import Search from '@/components/Search'
 import Review from '@/components/Review.vue'
+import VueRouter from 'vue-router'
+
+const routerPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error=> error)
+}
 
 Vue.use(Router)
 
@@ -67,12 +73,18 @@ export default new Router({
     {
       path: '/modify_mevid',
       name: 'ModifyMEvid',
-      component: ModifyMEvid
+      component: ModifyMEvid,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/modify_mguess',
       name: 'ModifyMGuess',
-      component: ModifyMGuess
+      component: ModifyMGuess,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/search',
