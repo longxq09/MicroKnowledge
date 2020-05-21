@@ -2,47 +2,21 @@
   <div style="width: 900px; margin-top: 40px; margin-left: 10%;">
     <el-image class="image" :src="src"></el-image>
     <div style="display: inline-block; margin-top: 12px; margin-bottom: 20px; width: 400px">
-      <div>
-        <i class="el-icon-s-custom"> {{userInfo.name}}</i>
-        <i v-if="userInfo.sex=='male'" class="el-icon-male"></i>
-        <i v-if="userInfo.sex=='female'" class="el-icon-female"></i>
-      </div>
-      <div>
-        <i class="el-icon-s-promotion"> {{userInfo.email}}</i>
-      </div>
-      <div>
-        <i class="el-icon-school"> {{userInfo.education}}</i>
-      </div>
-      <div>
-        <i class="el-icon-office-building"> {{userInfo.works}}</i>
-      </div>
-      <div>
-        <i class="el-icon-sugar"> interest</i>
-        <show-topic v-bind:str="userInfo.interest"></show-topic>
-      </div>
-      <div>
-        <i class="el-icon-medal"> expertise</i>
-        <show-topic v-bind:str="userInfo.expertise"></show-topic>
-      </div>
+      <v-user-info-board v-bind:id="accountId"></v-user-info-board>
     </div>
     <el-tabs v-model="activeName" style="width: 90%; margin-left: 8%; margin-bottom: 80px">
       <el-tab-pane label="关注" name="first">
-        <div class="follow" :key="index" v-for="(value,index) in following">
+        <div class="follow" v-for="(value,index) in following" :key="new Date().getTime()">
           <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
           <div style="display: inline-block" >
-            <div>
-              <el-button type="text"
-                         class="userName"
-                         @click="toOtherUser(value.id, value.name, value.email)">{{value.name}}
-              </el-button>
-            </div>
-            <div>
-              邮箱：
-              <el-button type="text"
-                         class="userEmail"
-                         @click="toOtherUser(value.id, value.name, value.email)">{{value.email}}
-              </el-button>
-            </div>
+            <v-user-name :id="value.id.toString()"
+                         :show="'name'"
+                         :button="value.name">
+            </v-user-name>
+            <v-user-name :id="value.id.toString()"
+                         :show="'email'"
+                         :button="value.email">
+            </v-user-name>
           </div>
           <v-follow v-if="accountId==hostId"
                     style="float: right"
@@ -53,22 +27,17 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="粉丝" name="second">
-        <div class="follow" :key="index" v-for="(value,index) in follower">
+        <div class="follow" v-for="(value,index) in follower" :key="new Date().getTime()">
           <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
           <div style="display: inline-block">
-            <div>
-              <el-button type="text"
-                         class="userName"
-                         @click="toOtherUser(value.id, value.name, value.email)">{{value.name}}
-              </el-button>
-            </div>
-            <div>
-              邮箱：
-              <el-button type="text"
-                         class="userEmail"
-                         @click="toOtherUser(value.id, value.name, value.email)">{{value.email}}
-              </el-button>
-            </div>
+            <v-user-name :id="value.id.toString()"
+                         :show="'name'"
+                         :button="value.name">
+            </v-user-name>
+            <v-user-name :id="value.id.toString()"
+                         :show="'email'"
+                         :button="value.email">
+            </v-user-name>
           </div>
           <v-follow v-if="accountId==hostId"
                     style="float: right"
@@ -79,7 +48,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="收藏" name="third">
-        <v-notice :key="value.id"
+        <v-notice :key="new Date().getTime()"
                   v-for="(value,index) in favorite"
                   v-bind:accountId="accountId"
                   v-bind:id="value.id"
@@ -126,7 +95,8 @@
   import vMessage from './common/Message.vue';
   import vFollow from './common/Follow.vue';
   import vShowTopic from './common/ShowTopic.vue';
-  import ShowTopic from "./common/ShowTopic";
+  import vUserName from './common/UserName'
+  import vUserInfoBoard from './common/UserInfoBoard'
   export default {
     name: "User",
     data() {
@@ -139,18 +109,18 @@
         follower: Array,
         favorite: Array,
         myNotice: Array,
-        message_list: Array,
-        userInfo: {}
+        message_list: Array
       };
     },
     components: {
-      ShowTopic,
       vHead,
       vFooter,
       vNotice,
       vMessage,
       vFollow,
-      vShowTopic
+      vShowTopic,
+      vUserName,
+      vUserInfoBoard
     },
     created() {
       if (this.$route.query.accountId) {
@@ -179,35 +149,11 @@
       },
     },
     methods: {
-      toOtherUser(id) {
-        this.$router.push({
-          name: 'User',
-          query: {
-            accountId: id
-          },
-          params: {
-            activeName: this.activeName
-          }
-        })
-      },
       initial() {
-        this.getUserInfo()
         this.getMessage()
         this.getNotice()
         this.getFollow()
         this.getFavorite()
-      },
-      getUserInfo() {
-        this.axios.get('/user/info', {
-          params: {
-            id: this.accountId
-          }
-        }).then((res) => {
-          this.userInfo = res.data
-        })
-          .catch((error) => {
-            console.log(error)
-          })
       },
       async getMessage() {
         let params = new URLSearchParams();
@@ -271,16 +217,6 @@
 </script>
 
 <style scoped>
-  .userName {
-    font-size: large;
-    font-weight: bold;
-    padding-bottom: 4px;
-  }
-
-  .userEmail {
-    font-size: medium;
-    padding-bottom: 4px;
-  }
   .image {
     display: inline-block;
     width: 300px;
