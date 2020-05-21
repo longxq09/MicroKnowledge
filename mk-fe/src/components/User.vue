@@ -127,7 +127,6 @@
   import vFollow from './common/Follow.vue';
   import vShowTopic from './common/ShowTopic.vue';
   import ShowTopic from "./common/ShowTopic";
-  import merge from 'webpack-merge'
   export default {
     name: "User",
     data() {
@@ -168,6 +167,8 @@
       $route() {
         if (this.$route.query.accountId) {
           this.accountId = this.$route.query.accountId
+        } else {
+          this.accountId = sessionStorage.getItem("accountId")
         }
         if (this.$route.params.activeName) {
           this.activeName = this.$route.params.activeName
