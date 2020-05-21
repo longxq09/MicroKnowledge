@@ -148,6 +148,7 @@ public class MNoticeController {
     @RequestMapping(value = "/getHotTemp", method = RequestMethod.GET)
     public List<MicroNotice> getHotTemp() {
         Map<String, Object> queryMap = new HashMap<>();
+        queryMap.put("judge",1);
         List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
         Date nowTime = new Date();
         for(MicroNotice n :noticeList){
