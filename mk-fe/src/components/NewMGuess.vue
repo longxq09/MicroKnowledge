@@ -6,7 +6,8 @@
                 style="display: block"
                 v-model="referenceTags"
                 multiple
-                value-key="id">
+                value-key="id"
+                placeholder="只能从您已收藏的微证据中选择哦">
                 <el-option
                   v-for="(value, index) in referenceList"
                   :key="value.id"
@@ -93,7 +94,9 @@
             console.log(error);
           });
 
-        this.axios.get('/mGuess/getMEvid', params)
+
+        params.append('userId', sessionStorage.getItem("accountId"));
+        this.axios.post('/mGuess/getMEvid', params)
           .then((res) => {
             console.log(res.data);
             this.referenceList = res.data;
@@ -189,6 +192,7 @@
   .el-form-item {
     margin-right: 20%;
     margin-top: 30px;
+    width: 900px;
   }
 
   .el-tag {

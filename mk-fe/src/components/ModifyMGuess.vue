@@ -1,9 +1,4 @@
 <template>
-  <el-container>
-    <el-header>
-      <v-head v-bind:title="title"></v-head>
-    </el-header>
-    <el-main>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="引用"  v-if="reset_reference">
 
@@ -12,7 +7,8 @@
                   style="display: block"
                   v-model="referenceTags"
                   multiple
-                  value-key="id">
+                  value-key="id"
+                  placeholder="只能从您已收藏的微证据中选择哦">
                   <el-option
                     v-for="(value, index) in referenceList"
                     :key="value.id"
@@ -61,14 +57,9 @@
           <el-button @click="toHomepageCancel">取消修改</el-button>
         </el-form-item>
       </el-form>
-    </el-main>
-    <v-footer></v-footer>
-  </el-container>
 </template>
 
 <script>
-  import vHead from './common/Header.vue';
-  import vFooter from './common/Footer.vue';
   export default {
     name: "ModifyMGuess",
     data() {
@@ -92,10 +83,6 @@
         },
       }
     },
-    components: {
-      vHead,
-      vFooter
-    },
     created() {
       console.log("init");
       this.getUserInfo();
@@ -111,8 +98,10 @@
         } catch (err) {
           console.log(err);
         }
+
+        params.append('userId', sessionStorage.getItem("accountId"));
         try {
-          let res = await this.axios.get('/mGuess/getMEvid', params);
+          let res = await this.axios.post('/mGuess/getMEvid', params);
           console.log(res.data);
           this.referenceList = res.data;
         } catch (err) {
@@ -234,10 +223,6 @@
 </script>
 
 <style>
-  .el-header {
-    background-color: #FFFFFF;
-    line-height: 1.5;
-  }
 
   .title {
     color: #409EFF;
@@ -255,6 +240,7 @@
   .el-form-item {
     margin-right: 20%;
     margin-top: 30px;
+    width: 900px;
   }
 
   .el-tag {

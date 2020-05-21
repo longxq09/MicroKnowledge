@@ -180,6 +180,7 @@
   .el-form-item {
     margin-right: 20%;
     margin-top: 30px;
+    width: 900px;
   }
 
   .el-tag {
