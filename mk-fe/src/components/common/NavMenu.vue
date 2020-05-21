@@ -17,7 +17,7 @@
                    @click="changeCollapse">
         </el-button>
       </div>
-      <el-menu-item index="homepage">
+      <el-menu-item index="/homepage">
         <i class="el-icon-s-home"></i>
         <span>首页</span>
       </el-menu-item>
@@ -27,11 +27,11 @@
           <span>发布</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="new_mevid">发布微证据</el-menu-item>
-          <el-menu-item index="new_mguess">发布微猜想</el-menu-item>
+          <el-menu-item index="/new_mevid">发布微证据</el-menu-item>
+          <el-menu-item index="/new_mguess">发布微猜想</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="user">
+      <el-menu-item index="/user">
         <i class="el-icon-user"></i>
         <span slot="title">个人主页</span>
       </el-menu-item>

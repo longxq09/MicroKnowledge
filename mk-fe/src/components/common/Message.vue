@@ -1,5 +1,14 @@
 <template>
-  <div style="border-bottom: 1px solid lightgrey;overflow:hidden;padding-top: 5px;">
+  <div style="
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .24), 0 0 6px rgba(0, 0, 0, .10);
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-bottom: 10px;
+    overflow:hidden;
+    width: 99%;
+    padding-right: 5px;
+    background-color: #f0f8ff;">
     <div class="comment_photo">
       <el-avatar>user</el-avatar>
     </div>
@@ -23,7 +32,6 @@
       <div v-if="if_has_detail" style="background-color:white; width: 98%;;color: #409EFF;border: 1px solid #C6E2FF;padding: 5px;">
         {{detail}}
       </div>
-      <p class="comment_content">{{content}}</p>
 
       <el-dialog title="详情" :visible.sync="dialogTableVisible">
         <v-detail v-bind:noticeId="relatedNoticeId"></v-detail>
@@ -118,13 +126,6 @@
     vertical-align: top;
     display: inline-block;
     margin-top: 10px;
-  }
-
-  .comment_content {
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 15px;
-    white-space: pre-wrap;
   }
 
   .reply_button {

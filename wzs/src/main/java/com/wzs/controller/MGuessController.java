@@ -1,9 +1,7 @@
 package com.wzs.controller;
 
-import com.wzs.bean.MicroGuess;
-import com.wzs.bean.MicroNotice;
-import com.wzs.bean.Topic;
-import com.wzs.bean.UserInfo;
+import com.wzs.bean.*;
+import com.wzs.service.FavoriteService;
 import com.wzs.service.MNoticeService;
 import com.wzs.service.ReviewService;
 import com.wzs.service.TopicService;
@@ -36,6 +34,8 @@ public class MGuessController {
     private TopicService topicService;
     @Resource
     private ReviewService reviewService;
+    @Resource
+    private FavoriteService favoriteService;
 
     //通过map查询
     public List<MicroNotice> queryMGuess(Map<String, Object> queryMap) {
@@ -96,11 +96,21 @@ public class MGuessController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getMEvid", method = RequestMethod.GET)
-    private List<MicroNotice> getMEvidList() {
-        Map<String, Object> queryMap = new HashMap();
-        queryMap.put("type",EVIDENCE.getIndex());
-        queryMap.put("judge",1);
-        return noticeService.queryMNotice(queryMap);
+    private List<MicroNotice> getMEvidList(HttpServletRequest request) {
+//        Map<String, Object> queryMap = new HashMap();
+//        queryMap.put("type",EVIDENCE.getIndex());
+//        queryMap.put("judge",1);
+//        List<MicroNotice> allValidEvidList = noticeService.queryMNotice(queryMap);
+        List<MicroNotice> retList = new LinkedList<>();
+        Map<String, Object> fMap = new HashMap();
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        fMap.put("userID",userId);
+        List<Favorite> favoriteList = favoriteService.selectFavorite(fMap);
+        for(Favorite f : favoriteList){
+            MicroNotice m = noticeService.getMNoticeById(f.getNoticeID());
+            retList.add(m);
+        }
+        return retList;
     }
 
     @CrossOrigin

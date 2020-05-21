@@ -42,7 +42,8 @@
           backgroundSize: "cover",
           minHeight: '680px',
           position: 'absolute',
-          top: '60px'
+          top: '60px',
+          width: '100%',
         },
         height: ''
       }
