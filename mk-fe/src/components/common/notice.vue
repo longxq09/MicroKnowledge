@@ -24,13 +24,13 @@
       <el-button class="bottom_tag" v-if="modify" @click="toModify">编辑</el-button>
       <el-button class="bottom_tag" v-if="modify" @click="toDelete">删除</el-button>
 
-        <el-button class="bottom_tag" @click="reviewResult(1)"  v-if="need_review&&review"> 通过 </el-button>
-        <el-button class="bottom_tag" @click="reviewResult(-1)"  v-if="need_review&&review">不通过</el-button>
+        <el-button class="bottom_tag" @click="checkReviewResult(1)"  v-if="need_review&&review"> 通过 </el-button>
+        <el-button class="bottom_tag" @click="checkReviewResult(-1)"  v-if="need_review&&review">不通过</el-button>
 
-        <el-button class="bottom_tag" type="primary" v-if="review_pass&&!need_review&&review" @click="cancle(1)">通过{{pass_num}}</el-button>
+        <el-button class="bottom_tag" type="primary" v-if="review_pass&&!need_review&&review" @click="checkCancle(1)">通过{{pass_num}}</el-button>
         <el-button class="bottom_tag" type="info" v-if="!review_pass&&!need_review&&review"> 通过{{pass_num}} </el-button>
         <el-button class="bottom_tag" type="info" v-if="review_pass&&!need_review&&review">不通过{{unpass_num}}</el-button>
-        <el-button class="bottom_tag" type="primary" v-if="!review_pass&&!need_review&&review" @click="cancle(-1)">不通过{{unpass_num}}</el-button>
+        <el-button class="bottom_tag" type="primary" v-if="!review_pass&&!need_review&&review" @click="checkCancle(-1)">不通过{{unpass_num}}</el-button>
     </div>
   </div>
 </template>
@@ -228,6 +228,16 @@
           });
       },
 
+      checkReviewResult(type){
+        this.$confirm('确认给予该评价吗', '提示', {
+          confirmButtonText: '我确定',
+          cancelButtonText: '再想想',
+          type: 'warning',
+        }).then(() => {
+          this.reviewResult(type);
+        }).catch(() => {});
+      },
+
       reviewResult(type) {
         this.need_review = false;
         this.review_pass = (type == 1);
@@ -245,6 +255,16 @@
           .catch((error) => {
             console.log(error);
           });
+      },
+      
+      checkCancle(type){
+        this.$confirm('确认取消评价吗', '提示', {
+          confirmButtonText: '我确定',
+          cancelButtonText: '再想想',
+          type: 'warning',
+        }).then(() => {
+          this.cancle(type);
+        }).catch(() => {});
       },
       cancle(type) {
         this.need_review = true;

@@ -18,7 +18,7 @@
        v-bind:title="value.title"
        v-bind:authorName="value.authorName"
        v-bind:summary="value.summary"></v-reference>
-        <el-button type="text" slot="reference" class="reference">{{value.title}}</el-button>
+        <el-button slot="reference" class="reference">{{value.title}}</el-button>
       </el-popover>
     </div>
     <div class="bottom_text">分类 : {{form.label}}
@@ -261,7 +261,10 @@
     line-height: 7px;
     height: 25px;
     margin-left: 5px;
-    color: slategrey;font-size: 15px;
+    color: slategrey;
+    font-size: 15px;
+    line-height: 6px;
+    height: 23px;
   }
 
   .comment_count {
