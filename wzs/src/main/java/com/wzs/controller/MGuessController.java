@@ -95,7 +95,7 @@ public class MGuessController {
 
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/getMEvid", method = RequestMethod.GET)
+    @RequestMapping(value = "/getMEvid", method = RequestMethod.POST)
     private List<MicroNotice> getMEvidList(HttpServletRequest request) {
 //        Map<String, Object> queryMap = new HashMap();
 //        queryMap.put("type",EVIDENCE.getIndex());
