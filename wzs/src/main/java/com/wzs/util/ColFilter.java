@@ -29,6 +29,7 @@ public class ColFilter {
 //        dataSource.setPassword("haojiwei");
         dataSource.setPassword("123456");
         dataSource.setDatabaseName("wzs");
+        dataSource.setServerTimezone("GMT+8");
     }
 
     public static void collaborative_Filtering(int userId, int itemId) throws TasteException {
