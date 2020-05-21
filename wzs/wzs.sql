@@ -378,4 +378,32 @@ INSERT INTO `user_info` VALUES (4, 'wzs4@163.com', 'Matt Mihelic, MD', '', 'male
 INSERT INTO `user_info` VALUES (5, 'wzs5@163.com', 'Xiao Liu', '', 'female', 'fighting!', 'Assistant Professor at University of Arkansas; Former Research Scientist at IBM T.J. Watson.', 'Industrial Engineering, University of Arkansas', '30-23-40', '21-34-36-24');
 INSERT INTO `user_info` VALUES (6, 'wzs6@163.com', 'Diane Stevens', '', 'male', 'work hard!', 'Decades of involvement in the humanities, the arts, public service, and science.', 'UCLA, San Francisco State University', '15-52-56-59-61-63', '3-15-19-20');
 
+DROP TABLE IF EXISTS `user_rating`;
+CREATE TABLE `user_rating`  (
+  `userId` int(0) NOT NULL,
+  `noticeId` int(0) NOT NULL,
+  `score` int(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`userId`, `noticeId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_rating
+-- ----------------------------
+INSERT INTO `user_rating` VALUES (1, 1, 5);
+INSERT INTO `user_rating` VALUES (1, 2, 5);
+INSERT INTO `user_rating` VALUES (1, 3, 0);
+INSERT INTO `user_rating` VALUES (1, 4, 0);
+INSERT INTO `user_rating` VALUES (1, 5, 0);
+INSERT INTO `user_rating` VALUES (1, 6, 2);
+INSERT INTO `user_rating` VALUES (1, 7, 7);
+INSERT INTO `user_rating` VALUES (1, 8, 8);
+INSERT INTO `user_rating` VALUES (1, 9, 2);
+INSERT INTO `user_rating` VALUES (1, 10, 0);
+INSERT INTO `user_rating` VALUES (1, 11, 0);
+INSERT INTO `user_rating` VALUES (1, 12, 0);
+INSERT INTO `user_rating` VALUES (1, 13, 0);
+INSERT INTO `user_rating` VALUES (1, 14, 0);
+INSERT INTO `user_rating` VALUES (1, 17, 0);
+INSERT INTO `user_rating` VALUES (1, 18, 0);
+
 SET FOREIGN_KEY_CHECKS = 1;
