@@ -69,7 +69,6 @@
     methods: {
       async getUserInfo() {
         this.accountId=Number(sessionStorage.getItem("accountId"));
-        console.log("====="+this.accountId);
         var params = new URLSearchParams();
         try {
           let res = await this.axios.get('/mNotice/getNotices', params);

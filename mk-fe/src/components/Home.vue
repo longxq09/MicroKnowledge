@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-head></v-head>
+    <v-head :key="new Date().getTime()"></v-head>
     <v-menu style="display: inline-block"></v-menu>
     <div id="home" style="position: absolute; top: 60px;">
       <router-view></router-view>
