@@ -14,6 +14,7 @@
         @click="toSearch">
       </el-button>
     </div>
+    <el-button v-if="!login" style="float: right; margin: 14px;" @click="backToVisitor">登录</el-button>
     <el-dropdown v-if="login" @command="handleDropdown" class="dropdown">
       <el-avatar shape="square" :size="34" :src="avator"></el-avatar>
       <el-dropdown-menu slot="dropdown">
@@ -103,14 +104,29 @@
           });
       },
       toSearch() {
-        this.$router.push({
-          path: '/search',
-          query: {
-            word: this.searchContent,
-            kind: 0,
-            topic: ''
-          }
-        })
+        if (this.login) {
+          this.$router.push({
+            path: '/search',
+            query: {
+              word: this.searchContent,
+              kind: 0,
+              topic: ''
+            }
+          })
+        }
+        else {
+          this.$router.push({
+            path: '/visitor_search',
+            query: {
+              word: this.searchContent,
+              kind: 0,
+              topic: ''
+            }
+          })
+        }
+      },
+      backToVisitor() {
+        this.$router.push('/')
       }
     }
   }
