@@ -3,6 +3,7 @@
     <el-menu
       style="height: 100%;"
       router
+      :default-active="$route.path"
       :collapse="isCollapse"
       active-text-color="#ffd04b">
       <div style="text-align: right">
@@ -19,7 +20,7 @@
       </div>
       <el-menu-item index="/homepage">
         <i class="el-icon-s-home"></i>
-        <span>首页</span>
+        <span slot="title">首页</span>
       </el-menu-item>
       <el-submenu index="add">
         <template slot="title">
