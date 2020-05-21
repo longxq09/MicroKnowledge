@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div style="margin: 40px 0 40px 80px; width: 900px">
     <div class="filter">
       <span>关键字：</span>
       <el-input
-        style="width: 30%; margin-right: 20px"
+        style="width: 180px; margin-right: 16px"
         v-model="dataForm.word"
         placeholder="请输入内容">
       </el-input>
       <span>类型：</span>
       <el-select
-        style="width: 10%; margin-right: 20px"
+        style="width: 200px; margin-right: 16px"
         v-model="filterType"
         multiple
         placeholder="请选择">
@@ -20,9 +20,9 @@
           :value="item.value">
         </el-option>
       </el-select>
-      <span>主题：</span>
+      <span>分类：</span>
       <el-select
-        style="width: 30%"
+        style="width: 200px"
         v-model="filterTopic"
         multiple
         placeholder="请选择">
@@ -34,7 +34,7 @@
         </el-option>
       </el-select>
       <el-button
-        style="width: 8%; float: right"
+        style="width: 80px; float: right; text-align: center"
         type="primary"
         round
         @click="click">

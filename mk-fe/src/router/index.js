@@ -9,6 +9,7 @@ import HomePage from '@/components/HomePage.vue'
 import ModifyMEvid from '@/components/ModifyMEvid.vue'
 import ModifyMGuess from '@/components/ModifyMGuess'
 import Search from '@/components/Search'
+import VisitorSearch from "../components/VisitorSearch";
 import Review from '@/components/Review.vue'
 import VueRouter from 'vue-router'
 
@@ -92,6 +93,14 @@ export default new Router({
       component: Search,
       meta: {
         keepAlive: true
+      }
+    },
+    {
+      path: '/visitor_search',
+      name: 'VisitorSearch',
+      component: VisitorSearch,
+      meta: {
+        keepAlive: false
       }
     },
     {
