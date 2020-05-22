@@ -27,7 +27,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="粉丝" name="second">
-        <div class="follow" v-for="(value,index) in follower" :key="new Date().getTime()">
+        <div class="follow" v-for="(value,index) in follower" :key="value.name">
           <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
           <div style="display: inline-block">
             <v-user-name :id="value.id.toString()"
@@ -39,7 +39,7 @@
                          :button="value.email">
             </v-user-name>
           </div>
-          <v-follow v-if="accountId==hostId"
+          <v-follow v-if="accountId===hostId"
                     style="float: right"
                     v-bind:accountId="accountId"
                     v-bind:authorId="value.id">
@@ -60,7 +60,7 @@
                   v-bind:summary="value.summary">
         </v-notice>
       </el-tab-pane>
-      <el-tab-pane label="我的发布" v-if="accountId==hostId" name="forth">
+      <el-tab-pane label="我的发布" v-if="accountId===hostId" name="forth">
         <v-notice :key="value.id"
                   v-for="(value,index) in myNotice"
                   v-bind:accountId="accountId"
@@ -75,7 +75,7 @@
                   v-bind:user=true>
         </v-notice>
       </el-tab-pane>
-      <el-tab-pane v-if="accountId==hostId"
+      <el-tab-pane v-if="accountId===hostId"
                    label="我的消息" name="fifth">
         <v-message :key="value.id" v-for="(value,index) in message_list"
                    v-bind:type="value.type"
@@ -91,8 +91,6 @@
 </template>
 
 <script>
-  import vHead from './common/Header.vue';
-  import vFooter from './common/Footer.vue';
   import vNotice from './common/Notice.vue';
   import vMessage from './common/Message.vue';
   import vFollow from './common/Follow.vue';
@@ -115,8 +113,6 @@
       };
     },
     components: {
-      vHead,
-      vFooter,
       vNotice,
       vMessage,
       vFollow,

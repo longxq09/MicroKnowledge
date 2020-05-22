@@ -223,20 +223,6 @@
 </script>
 
 <style>
-
-  .title {
-    color: #409EFF;
-    text-align: left;
-    font-size: 30px;
-    font-weight: 800;
-    display: inline-block;
-  }
-
-  .el-main {
-    background-color: #F4F4F5;
-    color: #333;
-  }
-
   .el-form-item {
     margin-right: 20%;
     margin-top: 30px;
