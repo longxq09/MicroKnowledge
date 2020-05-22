@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 40px 0 40px 80px; width: 900px">
+  <div style="margin: 40px 0 40px 80px; width: 940px">
     <div class="filter">
       <span>关键字：</span>
       <el-input
@@ -22,7 +22,7 @@
       </el-select>
       <span>分类：</span>
       <el-select
-        style="width: 200px"
+        style="width: 250px"
         v-model="filterTopic"
         multiple
         placeholder="请选择">
