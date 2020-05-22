@@ -78,12 +78,14 @@
     components: {
       vNotice
     },
-    mounted() {
+    created() {
       this.getTopic();
       this.getSearchResult()
     },
     watch: {
-      "$route": "getSearchResult"
+      $route() {
+        this.getSearchResult()
+      },
     },
     methods: {
       getTopic() {
@@ -118,10 +120,9 @@
         this.dataForm.kind = this.$route.query.kind
         this.filterType = this.dataForm.kind === 1 ? [1] : this.dataForm.kind === 2 ? [2] : [1, 2]
         this.dataForm.topic = this.$route.query.topic
-        this.filterTopic = []
         if (this.dataForm.topic !== '') {
-          var t = this.dataForm.topic.split('-')
-          for (var i = 0; i < t.length; i++)
+          let t = this.dataForm.topic.split('-')
+          for (let i = 0; i < t.length; i++)
             this.filterTopic.push(parseInt(t[i]))
         }
         this.axios.get('/search', {params: this.dataForm})
