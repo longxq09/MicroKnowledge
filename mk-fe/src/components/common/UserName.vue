@@ -69,12 +69,22 @@
     methods: {
       toOtherUser() {
         this.dialogVisible = false
-        this.$router.push({
-          name: 'User',
-          query: {
-            accountId: this.accountId
-          }
-        })
+        if (sessionStorage.getItem("accountId")!=null &&
+          sessionStorage.getItem("accountId")!=='') {
+          this.$router.push({
+            name: 'User',
+            query: {
+              accountId: this.accountId
+            }
+          })
+        } else {
+          this.$message({
+            showClose: true,
+            message: '未登录！请在登陆后查看！',
+            type: 'error'
+          });
+        }
+
       },
     }
   }
