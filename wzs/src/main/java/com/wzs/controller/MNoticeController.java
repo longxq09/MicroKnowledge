@@ -147,10 +147,11 @@ public class MNoticeController {
                 continue;
             }
             topicNewList.append(t);
+            topicNewList.append("-");
 //            Topic topic = topicService.getTopicById(Integer.parseInt(t));
 //            topicList.add(topic);
         }
-        retMap.put("topic",topicNewList);
+        retMap.put("topic",topicNewList.substring(0,topicNewList.length()-1));
 //        retMap.put("topic",topicList);
 
         return retMap;
