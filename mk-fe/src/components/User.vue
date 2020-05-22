@@ -6,7 +6,7 @@
     </div>
     <el-tabs v-model="activeName" style="width: 90%; margin-left: 8%; margin-bottom: 80px">
       <el-tab-pane label="关注" name="first">
-        <div class="follow" v-for="(value,index) in following" :key="new Date().getTime()">
+        <div class="follow" v-for="(value,index) in following" :key="value.name">
           <el-avatar style="display: inline-block">{{value.name}}</el-avatar>
           <div style="display: inline-block" >
             <v-user-name :id="value.id.toString()"
@@ -48,7 +48,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="收藏" name="third">
-        <v-notice :key="new Date().getTime()"
+        <v-notice :key="value.id"
                   v-for="(value,index) in favorite"
                   v-bind:accountId="accountId"
                   v-bind:id="value.id"
