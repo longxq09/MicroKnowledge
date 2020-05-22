@@ -16,16 +16,16 @@
       </el-steps>
       <el-form :model="forgetForm" :rules="forgetRules" autocomplete="off">
         <el-form-item v-if="active==0" label="邮箱" prop="email">
-          <el-input type="text" v-model="forgetForm.email"></el-input>
+          <el-input style="width: 300px" type="text" v-model="forgetForm.email"></el-input>
         </el-form-item>
         <el-form-item v-if="active==1" label="验证码" prop="code">
-          <el-input type="text" v-model="forgetForm.code"></el-input>
+          <el-input style="width: 300px" type="text" v-model="forgetForm.code"></el-input>
         </el-form-item>
         <el-form-item v-if="active==2" label="新密码" prop="password">
-          <el-input type="password" v-model="forgetForm.password"></el-input>
+          <el-input style="width: 300px" type="password" v-model="forgetForm.password"></el-input>
         </el-form-item>
         <el-form-item v-if="active==2" label="确认密码" prop="repeat">
-          <el-input type="password" v-model="forgetForm.repeat"></el-input>
+          <el-input style="width: 300px" type="password" v-model="forgetForm.repeat"></el-input>
         </el-form-item>
       </el-form>
       <el-button style="margin-top: 12px;" @click="next" v-if="active<2">下一步</el-button>

@@ -1,50 +1,57 @@
 <template>
-  <el-tabs v-model="activeName" class="tabs">
-    <el-tab-pane label="推荐" name="first">
-      <v-notice :key="value.id" v-for="(value,index) in exhibition"
-                v-bind:id="value.id"
-                v-bind:type="value.type"
-                v-bind:authorId="value.authorID"
-                v-bind:authorName="value.authorName"
-                v-bind:keywords="value.keywords"
-                v-bind:title="value.title"
-                v-bind:summary="value.summary">
-      </v-notice>
-    </el-tab-pane>
-    <el-tab-pane label="关注" name="second">
-      <v-notice :key="value.id" v-for="(value,index) in followingState"
-                v-bind:id="value.id"
-                v-bind:type="value.type"
-                v-bind:authorId="value.authorID"
-                v-bind:authorName="value.authorName"
-                v-bind:keywords="value.keywords"
-                v-bind:title="value.title"
-                v-bind:summary="value.summary">
-      </v-notice>
-    </el-tab-pane>
-    <el-tab-pane label="热榜" name="third">
-      <v-hot></v-hot>
-    </el-tab-pane>
-    <el-tab-pane label="评审" name="forth">
-      <v-notice :key="value.id" v-for="(value,index) in review_exhibition"
-                v-if="accountId!=value.authorID"
-                v-bind:id="value.id"
-                v-bind:type="value.type"
-                v-bind:authorName="value.authorName"
-                v-bind:keywords="value.keywords"
-                v-bind:title="value.title"
-                v-bind:summary="value.summary"
-                v-bind:review=true
-                v-bind:comment=false>
-      </v-notice>
-    </el-tab-pane>
-  </el-tabs>
+  <div>
+    <el-tabs v-model="activeName" class="tabs">
+      <el-tab-pane label="推荐" name="first">
+        <v-notice :key="value.id" v-for="(value,index) in exhibition"
+                  v-bind:id="value.id"
+                  v-bind:type="value.type"
+                  v-bind:authorId="value.authorID"
+                  v-bind:authorName="value.authorName"
+                  v-bind:keywords="value.keywords"
+                  v-bind:title="value.title"
+                  v-bind:summary="value.summary">
+        </v-notice>
+      </el-tab-pane>
+      <el-tab-pane label="关注" name="second">
+        <v-notice :key="value.id" v-for="(value,index) in followingState"
+                  v-bind:id="value.id"
+                  v-bind:type="value.type"
+                  v-bind:authorId="value.authorID"
+                  v-bind:authorName="value.authorName"
+                  v-bind:keywords="value.keywords"
+                  v-bind:title="value.title"
+                  v-bind:summary="value.summary">
+        </v-notice>
+      </el-tab-pane>
+      <el-tab-pane label="热榜" name="third">
+        <v-hot></v-hot>
+      </el-tab-pane>
+      <el-tab-pane label="评审" name="forth">
+        <v-notice :key="value.id" v-for="(value,index) in review_exhibition"
+                  v-if="accountId!=value.authorID"
+                  v-bind:id="value.id"
+                  v-bind:type="value.type"
+                  v-bind:authorName="value.authorName"
+                  v-bind:keywords="value.keywords"
+                  v-bind:title="value.title"
+                  v-bind:summary="value.summary"
+                  v-bind:review=true
+                  v-bind:comment=false>
+        </v-notice>
+      </el-tab-pane>
+    </el-tabs>
+    <el-card class="cloud">
+      <span slot="header">标签云</span>
+      <v-topic-cloud></v-topic-cloud>
+    </el-card>
+  </div>
 </template>
 
 <script>
   import vNotice from './common/Notice.vue';
   import vComment from './common/Comment.vue';
   import vHot from './common/Hot.vue'
+  import vTopicCloud from './common/TopicCloud'
   export default {
     name: "HomePage",
     data() {
@@ -60,7 +67,8 @@
     components: {
       vNotice,
       vComment,
-      vHot
+      vHot,
+      vTopicCloud
     },
     created() {
       this.getUserInfo()
@@ -103,9 +111,17 @@
 
 <style>
   .tabs {
+    display: inline-block;
     width: 700px;
     margin-top: 20px;
-    margin-left: 15%;
-    margin-right: 15%;
+    margin-left: 80px;
+    margin-bottom: 40px;
+  }
+  .cloud {
+    width: 300px;
+    display: inline-block;
+    margin-top: 60px;
+    margin-left: 20px;
+    vertical-align: top
   }
 </style>
