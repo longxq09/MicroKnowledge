@@ -110,6 +110,7 @@ public class MNoticeController {
         retMap.put("judge",notice.getJudge());
         retMap.put("time",notice.getShowTime());
 
+
         if(notice.getType() == NoticeType.GUESS.getIndex()){
 //            String referStr = notice.getReference();
 //            String[] referList = referStr.split("-");
@@ -140,14 +141,17 @@ public class MNoticeController {
         List<Topic> topicList = new LinkedList<>();
         String topicStr = notice.getTopic();
         String[] topicIdList = topicStr.split("-");
+        StringBuilder topicNewList = new StringBuilder();
         for(String t : topicIdList){
             if(t.isEmpty()){
                 continue;
             }
-            Topic topic = topicService.getTopicById(Integer.parseInt(t));
-            topicList.add(topic);
+            topicNewList.append(t);
+//            Topic topic = topicService.getTopicById(Integer.parseInt(t));
+//            topicList.add(topic);
         }
-        retMap.put("topic",topicList);
+        retMap.put("topic",topicNewList);
+//        retMap.put("topic",topicList);
 
         return retMap;
     }
