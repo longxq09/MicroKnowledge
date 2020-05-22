@@ -46,6 +46,7 @@
               v-bind:id="value.id"
               v-bind:type="value.type"
               v-bind:authorName="value.authorName"
+              v-bind:authorId="value.authorID"
               v-bind:keywords="value.keywords"
               v-bind:title="value.title"
               v-bind:summary="value.summary">
