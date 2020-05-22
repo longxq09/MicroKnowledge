@@ -1,8 +1,11 @@
 <template>
   <div>
-    <div v-for="index in str.split('-')" :key="index">
-      <el-tag v-if="topics[parseInt(index)]!==undefined">{{topics[parseInt(index)].topicName}}</el-tag>
-    </div>
+    <el-tag v-for="index in str.split('-')"
+            :key="index"
+            v-if="topics[parseInt(index)]!==undefined"
+            type="success"
+            style="margin: 4px">{{topics[parseInt(index)].topicName}}
+    </el-tag>
   </div>
 </template>
 
