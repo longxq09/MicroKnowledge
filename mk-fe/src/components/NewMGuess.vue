@@ -184,10 +184,6 @@
 </script>
 
 <style>
-  .el-main {
-    background-color: #F4F4F5;
-    color: #333;
-  }
 
   .el-form-item {
     margin-right: 20%;
