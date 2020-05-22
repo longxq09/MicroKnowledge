@@ -110,35 +110,49 @@ public class MNoticeController {
         retMap.put("judge",notice.getJudge());
         retMap.put("time",notice.getShowTime());
 
+
         if(notice.getType() == NoticeType.GUESS.getIndex()){
+//            String referStr = notice.getReference();
+//            String[] referList = referStr.split("-");
+//            String referTitleList = "";
+//            for(String r : referList){
+//                if(r.isEmpty()){
+//                    continue;
+//                }
+//                MicroNotice temp = noticeService.getMNoticeById(Integer.parseInt(r));
+//                referTitleList = referTitleList.concat(temp.getTitle());
+//                referTitleList = referTitleList.concat("-");
+//            }
+//            retMap.put("reference",referTitleList.substring(0,referTitleList.length()-1));
+            retMap.put("reference",notice.getReference());
+        } else {
+            List<String> refList = new LinkedList<>();
             String referStr = notice.getReference();
             String[] referList = referStr.split("-");
-            String referTitleList = "";
             for(String r : referList){
                 if(r.isEmpty()){
                     continue;
                 }
-                MicroNotice temp = noticeService.getMNoticeById(Integer.parseInt(r));
-                referTitleList = referTitleList.concat(temp.getTitle());
-                referTitleList = referTitleList.concat("-");
+                refList.add(r);
             }
-            retMap.put("reference",referTitleList.substring(0,referTitleList.length()-1));
-        } else {
-            retMap.put("reference",notice.getReference());
+            retMap.put("reference",refList);
         }
 
+        List<Topic> topicList = new LinkedList<>();
         String topicStr = notice.getTopic();
-        String[] topicList = topicStr.split("-");
-        String topicNameStr = "";
-        for(String t : topicList){
+        String[] topicIdList = topicStr.split("-");
+        StringBuilder topicNewList = new StringBuilder();
+        for(String t : topicIdList){
             if(t.isEmpty()){
                 continue;
             }
-            Topic topic = topicService.getTopicById(Integer.parseInt(t));
-            topicNameStr = topicNameStr.concat(topic.getTopicName());
-            topicNameStr = topicNameStr.concat("-");
+            topicNewList.append(t);
+            topicNewList.append("-");
+//            Topic topic = topicService.getTopicById(Integer.parseInt(t));
+//            topicList.add(topic);
         }
-        retMap.put("topic",topicNameStr.substring(0,topicNameStr.length()-1));
+        retMap.put("topic",topicNewList.substring(0,topicNewList.length()-1));
+//        retMap.put("topic",topicList);
 
         return retMap;
     }
