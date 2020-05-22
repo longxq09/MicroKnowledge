@@ -11,7 +11,7 @@
       </div>
     </div>
     <v-user-name v-bind:button="authorName"
-                 v-bind:id="authorId"
+                 v-bind:id="authorId.toString()"
                  v-bind:show="'author'"
                  :key="new Date().getTime()">
     </v-user-name>

@@ -55,8 +55,6 @@
 </template>
 
 <script>
-  import vHead from './common/Header.vue';
-  import vFooter from './common/Footer.vue';
   import vNotice from './common/Notice.vue';
   export default {
     name: "Search",
@@ -78,8 +76,6 @@
       }
     },
     components: {
-      vHead,
-      vFooter,
       vNotice
     },
     mounted() {
@@ -101,8 +97,8 @@
       },
       click() {
         this.dataForm.kind = 0
-        if (this.filterType.length == 1) {
-          this.dataForm.kind = this.filterType[0] == '1' ? 1 : 2
+        if (this.filterType.length === 1) {
+          this.dataForm.kind = this.filterType[0] === '1' ? 1 : 2
         }
         this.dataForm.topic = ''
         for (var i = 0; i < this.filterTopic.length; i++) {
@@ -120,10 +116,10 @@
       getSearchResult() {
         this.dataForm.word = this.$route.query.word
         this.dataForm.kind = this.$route.query.kind
-        this.filterType = this.dataForm.kind == 1 ? [1] : this.dataForm.kind == 2 ? [2] : [1, 2]
+        this.filterType = this.dataForm.kind === 1 ? [1] : this.dataForm.kind === 2 ? [2] : [1, 2]
         this.dataForm.topic = this.$route.query.topic
         this.filterTopic = []
-        if (this.dataForm.topic != '') {
+        if (this.dataForm.topic !== '') {
           var t = this.dataForm.topic.split('-')
           for (var i = 0; i < t.length; i++)
             this.filterTopic.push(parseInt(t[i]))
