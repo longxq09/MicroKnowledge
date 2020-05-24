@@ -5,6 +5,7 @@
         <v-notice :key="value.id" v-for="(value,index) in exhibition"
                   v-bind:id="value.id"
                   v-bind:type="value.type"
+                  v-bind:topics="value.topic"
                   v-bind:authorId="value.authorID"
                   v-bind:authorName="value.authorName"
                   v-bind:keywords="value.keywords"

@@ -15,7 +15,12 @@
                  v-bind:show="'author'"
                  :key="new Date().getTime()">
     </v-user-name>
-    <el-tag :key="tag" v-for="tag in keywordTag" class="keyword" v-if="has_keyword">{{tag}}</el-tag>
+    <v-show-topic v-bind:str="topics" style="margin-left: 6px"></v-show-topic>
+    <div v-if="has_keyword" style="margin-left: 10px; margin-top: 4px">
+      <div v-for="tag in keywordTag" class="keyword">
+        {{tag}}
+      </div>
+    </div>
     <div class="main_text">{{summary}}</div>
     <div v-if="login">
       <v-like v-bind:accountId="accountId" v-bind:id="id" v-if="toShow">
@@ -45,6 +50,7 @@
   import vFavorite from './Favorite'
   import vDetail from './Detail.vue'
   import vUserName from './UserName'
+  import vShowTopic from './ShowTopic'
   export default {
     name: "Notice",
     props: {
@@ -104,6 +110,10 @@
         type: Boolean,
         default: true
       },
+      topics: {
+        type: String,
+        default: ''
+      }
     },
 
     data() {
@@ -127,7 +137,8 @@
       vLike,
       vFavorite,
       vDetail,
-      vUserName
+      vUserName,
+      vShowTopic
     },
     methods: {
       async getReviewInfo(){
@@ -156,7 +167,7 @@
       },
       init() {
         this.keywordTag = this.keywords.split('-');
-        if (this.keywords.length == 0) {
+        if (this.keywords.length === 0) {
           this.has_keyword = false;
         }
         if (this.type === 1) {
@@ -164,7 +175,7 @@
         } else {
           this.type_name = "微猜想";
         }
-        this.login = sessionStorage.getItem("accountId") != ""
+        this.login = sessionStorage.getItem("accountId") !== ""
         this.toShow = !(this.user || this.review);
         this.toShow = this.toShow &&  sessionStorage.getItem("accountId") !== "" &&
   sessionStorage.getItem("accountId") != null
@@ -333,10 +344,10 @@
   }
 
   .keyword {
-    margin-left: 10px;
-    border-radius: 30px;
-    height: 23px;
-    margin-bottom: 3px;
+    text-decoration: underline;
+    display: inline-block;
+    font-style:italic;
+    margin-right: 8px;
   }
 
   .bottom_tag {
