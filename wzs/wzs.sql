@@ -385,7 +385,7 @@ CREATE TABLE `user_rating`  (
   `noticeId` int(0) NOT NULL,
   `score` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`userId`, `noticeId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_rating
