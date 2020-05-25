@@ -10,8 +10,17 @@
       <div v-if="login" style="display: inline-block">
       </div>
     </div>
-    <nobr style="font-weight: 600;margin-left: 10px;">{{authorName}}</nobr>
-    <el-tag :key="tag" v-for="tag in keywordTag" class="keyword" v-if="has_keyword">{{tag}}</el-tag>
+    <v-user-name v-bind:button="authorName"
+                 v-bind:id="authorId.toString()"
+                 v-bind:show="'author'"
+                 :key="new Date().getTime()">
+    </v-user-name>
+    <v-show-topic v-bind:str="topics" style="margin-left: 6px"></v-show-topic>
+    <div v-if="has_keyword" style="margin-left: 10px; margin-top: 4px">
+      <div v-for="tag in keywordTag" class="keyword">
+        {{tag}}
+      </div>
+    </div>
     <div class="main_text">{{summary}}</div>
     <div v-if="login">
       <v-like v-bind:accountId="accountId" v-bind:id="id" v-if="toShow">
@@ -24,13 +33,13 @@
       <el-button class="bottom_tag" v-if="modify" @click="toModify">编辑</el-button>
       <el-button class="bottom_tag" v-if="modify" @click="toDelete">删除</el-button>
 
-        <el-button class="bottom_tag" @click="reviewResult(1)"  v-if="need_review&&review"> 通过 </el-button>
-        <el-button class="bottom_tag" @click="reviewResult(-1)"  v-if="need_review&&review">不通过</el-button>
+        <el-button class="bottom_tag" @click="checkReviewResult(1)"  v-if="need_review&&review"> 通过 </el-button>
+        <el-button class="bottom_tag" @click="checkReviewResult(-1)"  v-if="need_review&&review">不通过</el-button>
 
-        <el-button class="bottom_tag" type="primary" v-if="review_pass&&!need_review&&review" @click="cancle(1)">通过{{pass_num}}</el-button>
+        <el-button class="bottom_tag" type="primary" v-if="review_pass&&!need_review&&review" @click="checkCancle(1)">通过{{pass_num}}</el-button>
         <el-button class="bottom_tag" type="info" v-if="!review_pass&&!need_review&&review"> 通过{{pass_num}} </el-button>
         <el-button class="bottom_tag" type="info" v-if="review_pass&&!need_review&&review">不通过{{unpass_num}}</el-button>
-        <el-button class="bottom_tag" type="primary" v-if="!review_pass&&!need_review&&review" @click="cancle(-1)">不通过{{unpass_num}}</el-button>
+        <el-button class="bottom_tag" type="primary" v-if="!review_pass&&!need_review&&review" @click="checkCancle(-1)">不通过{{unpass_num}}</el-button>
     </div>
   </div>
 </template>
@@ -40,6 +49,8 @@
   import vLike from './Like.vue'
   import vFavorite from './Favorite'
   import vDetail from './Detail.vue'
+  import vUserName from './UserName'
+  import vShowTopic from './ShowTopic'
   export default {
     name: "Notice",
     props: {
@@ -99,6 +110,10 @@
         type: Boolean,
         default: true
       },
+      topics: {
+        type: String,
+        default: ''
+      }
     },
 
     data() {
@@ -121,7 +136,9 @@
       vFollow,
       vLike,
       vFavorite,
-      vDetail
+      vDetail,
+      vUserName,
+      vShowTopic
     },
     methods: {
       async getReviewInfo(){
@@ -150,7 +167,7 @@
       },
       init() {
         this.keywordTag = this.keywords.split('-');
-        if (this.keywords.length == 0) {
+        if (this.keywords.length === 0) {
           this.has_keyword = false;
         }
         if (this.type === 1) {
@@ -158,7 +175,7 @@
         } else {
           this.type_name = "微猜想";
         }
-        this.login = sessionStorage.getItem("accountId") != ""
+        this.login = sessionStorage.getItem("accountId") !== ""
         this.toShow = !(this.user || this.review);
         this.toShow = this.toShow &&  sessionStorage.getItem("accountId") !== "" &&
   sessionStorage.getItem("accountId") != null
@@ -228,6 +245,16 @@
           });
       },
 
+      checkReviewResult(type){
+        this.$confirm('确认给予该评价吗', '提示', {
+          confirmButtonText: '我确定',
+          cancelButtonText: '再想想',
+          type: 'warning',
+        }).then(() => {
+          this.reviewResult(type);
+        }).catch(() => {});
+      },
+
       reviewResult(type) {
         this.need_review = false;
         this.review_pass = (type == 1);
@@ -245,6 +272,16 @@
           .catch((error) => {
             console.log(error);
           });
+      },
+
+      checkCancle(type){
+        this.$confirm('确认取消评价吗', '提示', {
+          confirmButtonText: '我确定',
+          cancelButtonText: '再想想',
+          type: 'warning',
+        }).then(() => {
+          this.cancle(type);
+        }).catch(() => {});
       },
       cancle(type) {
         this.need_review = true;
@@ -307,10 +344,10 @@
   }
 
   .keyword {
-    margin-left: 10px;
-    border-radius: 30px;
-    height: 23px;
-    margin-bottom: 3px;
+    text-decoration: underline;
+    display: inline-block;
+    font-style:italic;
+    margin-right: 8px;
   }
 
   .bottom_tag {

@@ -22,7 +22,6 @@
 
 <script>
   import vHead from './common/Header.vue';
-  import vFooter from './common/Footer.vue';
   import vNotice from './common/Notice.vue';
   import vLogin from './common/Login.vue';
   import vRegister from './common/Register.vue';
@@ -50,7 +49,6 @@
     },
     components: {
       vHead,
-      vFooter,
       vNotice,
       vLogin,
       vRegister,

@@ -1,9 +1,4 @@
 <template>
-  <el-container>
-    <el-header>
-      <v-head v-bind:title="title"></v-head>
-    </el-header>
-    <el-main>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="引用论文">
           <div>
@@ -54,14 +49,9 @@
           <el-button @click="toHomepageCancel">取消修改</el-button>
         </el-form-item>
       </el-form>
-    </el-main>
-    <v-footer></v-footer>
-  </el-container>
 </template>
 
 <script>
-  import vHead from './common/Header.vue';
-  import vFooter from './common/Footer.vue';
   export default {
     name: "NewMEvid",
     data() {
@@ -82,10 +72,6 @@
           reference: ''
         },
       }
-    },
-    components: {
-      vHead,
-      vFooter
     },
     created() {
       console.log("init");
@@ -237,27 +223,10 @@
 </script>
 
 <style>
-  .el-header {
-    background-color: #FFFFFF;
-    line-height: 1.5;
-  }
-
-  .title {
-    color: #409EFF;
-    text-align: left;
-    font-size: 30px;
-    font-weight: 800;
-    display: inline-block;
-  }
-
-  .el-main {
-    background-color: #F4F4F5;
-    color: #333;
-  }
-
   .el-form-item {
     margin-right: 20%;
     margin-top: 30px;
+    width: 900px;
   }
 
   .el-tag {

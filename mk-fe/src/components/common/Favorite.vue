@@ -54,12 +54,20 @@
       },
 
       addFavorite() {
+        this.favorite = true
         var params = new URLSearchParams()
         params.append('id', this.accountId)
         params.append('noticeID', this.id)
         this.axios.post('/favorite/addFavorite', params)
           .then((res) => {
-            this.favorite = true
+            if (res.data === 0) {
+              this.$message({
+                message: '收藏成功',
+                type: 'success'
+              });
+            } else {
+              this.$message.error('收藏失败');
+            }
           })
           .catch((error) => {
             console.log(error)
@@ -67,12 +75,20 @@
       },
 
       cancelFavorite() {
+        this.favorite = false
         var params = new URLSearchParams()
         params.append('id', this.accountId)
         params.append('noticeID', this.id)
         this.axios.post('/favorite/deleteFavorite', params)
           .then((res) => {
-            this.favorite = false
+            if (res.data === 0) {
+              this.$message({
+                message: '取消成功',
+                type: 'success'
+              });
+            } else {
+              this.$message.error('取消失败');
+            }
           })
           .catch((error) => {
             console.log(error)

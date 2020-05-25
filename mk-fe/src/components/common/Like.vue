@@ -56,13 +56,21 @@
       },
 
       addLike() {
+        this.like = true
         var params = new URLSearchParams()
         params.append('id', this.accountId)
         params.append('noticeId', this.id)
         this.axios.post('/like/likeThis', params)
           .then((res) => {
-            this.like = true
-            this.likeNum += 1
+            if (res.data === 0) {
+              this.likeNum += 1
+              this.$message({
+                message: '点赞成功',
+                type: 'success'
+              });
+            } else {
+              this.$message.error('点赞失败');
+            }
           })
           .catch((error) => {
             console.log(error)
@@ -70,13 +78,21 @@
       },
 
       cancelLike() {
+        this.like = false
         var params = new URLSearchParams()
         params.append('id', this.accountId)
         params.append('noticeId', this.id)
         this.axios.post('/like/cancelLike', params)
           .then((res) => {
-            this.like = false
-            this.likeNum -= 1
+            if (res.data === 0) {
+              this.likeNum -= 1
+              this.$message({
+                message: '取消成功',
+                type: 'success'
+              });
+            } else {
+              this.$message.error('取消失败');
+            }
           })
           .catch((error) => {
             console.log(error)

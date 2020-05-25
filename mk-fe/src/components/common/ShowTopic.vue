@@ -1,8 +1,16 @@
 <template>
   <div>
-    <div v-for="index in str.split('-')" :key="index">
-      <el-tag v-if="topics[parseInt(index)]!==undefined">{{topics[parseInt(index)].topicName}}</el-tag>
-    </div>
+    <el-button v-for="index in str.split('-')"
+               :key="index"
+               v-if="topics[parseInt(index)]!==undefined"
+               @click="toSearch(index)"
+               type="success"
+               plain
+               round
+               size="mini"
+               style="margin: 4px">{{topics[parseInt(index)].topicName}}
+    </el-button>
+
   </div>
 </template>
 
@@ -32,6 +40,16 @@
           .catch((error) => {
             console.log(error)
           })
+      },
+      toSearch(index) {
+        this.$router.push({
+          path: '/search',
+          query: {
+            word: '',
+            kind: 0,
+            topic: index,
+          }
+        })
       }
     }
   }

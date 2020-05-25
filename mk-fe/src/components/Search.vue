@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 40px 0 40px 80px; width: 900px">
+  <div style="margin: 40px 0 40px 80px; width: 940px">
     <div class="filter">
       <span>关键字：</span>
       <el-input
@@ -22,7 +22,7 @@
       </el-select>
       <span>分类：</span>
       <el-select
-        style="width: 200px"
+        style="width: 250px"
         v-model="filterTopic"
         multiple
         placeholder="请选择">
@@ -46,6 +46,7 @@
               v-bind:id="value.id"
               v-bind:type="value.type"
               v-bind:authorName="value.authorName"
+              v-bind:authorId="value.authorID"
               v-bind:keywords="value.keywords"
               v-bind:title="value.title"
               v-bind:summary="value.summary">
@@ -54,8 +55,6 @@
 </template>
 
 <script>
-  import vHead from './common/Header.vue';
-  import vFooter from './common/Footer.vue';
   import vNotice from './common/Notice.vue';
   export default {
     name: "Search",
@@ -77,16 +76,16 @@
       }
     },
     components: {
-      vHead,
-      vFooter,
       vNotice
     },
-    mounted() {
+    created() {
       this.getTopic();
       this.getSearchResult()
     },
     watch: {
-      "$route": "getSearchResult"
+      $route() {
+        this.getSearchResult()
+      },
     },
     methods: {
       getTopic() {
@@ -100,8 +99,8 @@
       },
       click() {
         this.dataForm.kind = 0
-        if (this.filterType.length == 1) {
-          this.dataForm.kind = this.filterType[0] == '1' ? 1 : 2
+        if (this.filterType.length === 1) {
+          this.dataForm.kind = this.filterType[0] === '1' ? 1 : 2
         }
         this.dataForm.topic = ''
         for (var i = 0; i < this.filterTopic.length; i++) {
@@ -119,12 +118,11 @@
       getSearchResult() {
         this.dataForm.word = this.$route.query.word
         this.dataForm.kind = this.$route.query.kind
-        this.filterType = this.dataForm.kind == 1 ? [1] : this.dataForm.kind == 2 ? [2] : [1, 2]
+        this.filterType = this.dataForm.kind === 1 ? [1] : this.dataForm.kind === 2 ? [2] : [1, 2]
         this.dataForm.topic = this.$route.query.topic
-        this.filterTopic = []
-        if (this.dataForm.topic != '') {
-          var t = this.dataForm.topic.split('-')
-          for (var i = 0; i < t.length; i++)
+        if (this.dataForm.topic !== '') {
+          let t = this.dataForm.topic.split('-')
+          for (let i = 0; i < t.length; i++)
             this.filterTopic.push(parseInt(t[i]))
         }
         this.axios.get('/search', {params: this.dataForm})

@@ -178,7 +178,7 @@ Message结构
 
 ​	userId	用户id表示给谁得消息，前端一定要传入
 
-​	type	消息类型，目前有关注(1),点赞(2),收藏(3),评论(4),回复(5),评审通过(6),评审未通过(7),全局(8)
+​	type	消息类型，目前有关注(1),点赞(2),收藏(3),评论(4),回复(5),评审通过(6),评审未通过(7),用户反馈(8),管理员回复(9),全局(10)
 
 ​	from相关，表示消息产生方(谁的操作)，包括fromUserId，fromUserName，
 
@@ -201,15 +201,20 @@ Message结构
 /selectMessages 传入用户id，消息type和flag，条件查询消息，不查询的话，type和flag设置为-1
 /getCount 获得某用户的未读消息数量和各类消息数量 0代表未读消息数量，其他与Type对应
 /haveReadALL 传入用户id，该用户未读消息全部标记为已读
-/followMessage  用户被关注通知，至少传入from相关信息
-/likeMessage	微公告被点赞触发通知，至少传入from和reletedNotice相关信息
-/favoriteMessage 微公告被收藏触发通知，至少传入from和reletedNotice相关信息
-/commentMessage	微公告被评论触发通知，至少传入from和reletedNotice相关信息
-/replyMessage  评论被回复触发通知，至少传入from和reletedNotice相关信息
-/passMessage	微公告评审通过触发通知，至少reletedNotice相关信息
-/failMessage 微公告评审未通过通知，至少reletedNotice相关信息
-/broadcast	为管理员公告预留
+/feedback	用户提出反馈，传入用户id和反馈内容detail
+/adminReply	管理员回复用户，传入要回复的用户id和回复内容detail
+/broadcast	为管理员公告，detail字段为发布广播的内容
+/getAdminMessage	管理员获取反馈信息列表	get方法
+/setFinish		管理员标记已处理，set flag = 0
 ```
 
 }
+
+Topic管理，增加以下方法
+
+```
+/topic/addTopic			新增topic，传入topicName
+/topic/updateTopic		新增修改topic，传入id和修改后的topicName
+/topic/deleteTopic		删除topic，flag = 0
+```
 

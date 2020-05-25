@@ -61,7 +61,15 @@
         params.append('followingID', this.authorId)
         this.axios.post('/follow/addFollow', params)
           .then((res) => {
-            this.$router.go(0)
+            if (res.data === 0) {
+              this.$router.go(0)
+              this.$message({
+                message: '关注成功',
+                type: 'success'
+              });
+            } else {
+              this.$message.error('关注失败');
+            }
           })
           .catch((error) => {
             console.log(error)
@@ -74,7 +82,15 @@
         params.append('followingID', this.authorId)
         this.axios.post('/follow/deleteFollow', params)
           .then((res) => {
-            this.$router.go(0)
+            if (res.data === 0) {
+              this.$router.go(0)
+              this.$message({
+                message: '取消成功',
+                type: 'success'
+              });
+            } else {
+              this.$message.error('取消失败');
+            }
           })
           .catch((error) => {
             console.log(error)

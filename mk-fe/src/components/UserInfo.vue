@@ -98,8 +98,6 @@
 </template>
 
 <script>
-  import vHead from './common/Header.vue';
-  import vFooter from './common/Footer.vue';
   export default {
     name: "User",
     data() {
@@ -153,8 +151,6 @@
       }
     },
 		components: {
-			vHead,
-			vFooter
 		},
 		mounted() {
 		  this.getUserInfo();
