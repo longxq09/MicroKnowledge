@@ -34,19 +34,35 @@ public class TopicController {
     @RequestMapping(value = "/topic/getTopicList", method = RequestMethod.GET)
     public List<Topic> queryTopic(HttpServletRequest request){
         Map<String,Object> queryMap = new HashMap();
+        queryMap.put("flag",1);
         return topicService.queryTopic(queryMap);
     }
 
-    public int insertTopic(Topic Topic) {
-        topicService.insertTopic(Topic);
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/topic/addTopic", method = RequestMethod.POST)
+    public int addTopic(HttpServletRequest request) {
+        Topic topic = new Topic();
+        topic.setTopicName(request.getParameter("topicName"));
+        topic.setFlag(1);
+        topicService.insertTopic(topic);
         return 0;
     }
 
-    public int updateTopic(Topic Topic) {
-        topicService.updateTopic(Topic);
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/topic/updateTopic", method = RequestMethod.POST)
+    public int updateTopic(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Topic topic = topicService.getTopicById(id);
+        topic.setTopicName(request.getParameter("topicName"));
+        topicService.updateTopic(topic);
         return 0;
     }
 
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/topic/deleteTopic", method = RequestMethod.POST)
     public boolean deleteTopic(int id) {
         return topicService.deleteTopic(id);
     }
