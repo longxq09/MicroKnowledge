@@ -13,9 +13,9 @@ public enum MessageType {
     REPLY(5),       //评论被回复      xxx 回复了您
     PASS(6),        //微公告通过评审   您的xxx(title)微公告通过评审
     FAIL(7),        //微公告评审失败   您的xxx(title)微公告评审失败
-    FEEDBACK(8),
-    ADMIN(9),   //管理员公告，全局通知
-    BROAD(10);
+    FEEDBACK(8),    //用户反馈
+    ADMIN(9),       //管理员回复
+    BROAD(10);      //管理员公告，全局通知
 
     private int index;
     MessageType(int index){
