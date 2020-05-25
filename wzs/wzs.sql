@@ -228,6 +228,7 @@ CREATE TABLE `micro_notice`  (
   `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `time` datetime(0) NULL DEFAULT NULL,
   `judge` int(0) NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
@@ -236,18 +237,18 @@ CREATE TABLE `micro_notice`  (
 -- ----------------------------
 -- Records of micro_notice
 -- ----------------------------
-INSERT INTO `micro_notice` VALUES (1, 1, 5, 'Xiao Liu', '-21-', 'Liu, X., Gopal, V., and Kalagnanam, J. (2018), \"\"A Spatio-Temporal Modeling Framework for Weather Radar Image Data in Tropical Southeast Asia\"\",  Annals of Applied Statistics, 12(1), 378–407.', 'partial differential equations-spatio temporal model-uncertainty quantification-statistical learning', 'Weather Radar Image Data', 'Leveraging both data-driven approaches and physics knowledge for modeling and uncertainty quantification of spatio-temporal data arising from a generic class of convection-diffusion processes.', '2019-08-14 13:35:02', 1);
-INSERT INTO `micro_notice` VALUES (2, 1, 3, 'Jan Vandenbrande', '-21-30-22-', 'Keyes et al., Multiphysics Simulations: Challenges and Opportunities, International Journal of High Performance Computing Applications.', 'modeling multi physics-multi scale-simulation', 'Multiphysics Simulations', 'Comprehensive survey paper on the difficulties (effort, limitations, accuracy) of building multi-physics simulators.', '2019-08-17 17:35:02', 1);
-INSERT INTO `micro_notice` VALUES (3, 1, 6, 'Diane Stevens', '-23-', 'Crawford, Chris. “Inside Look at Using Telemedicine During COVID-19 Pandemic.” AAFP Home, American Academy of Family Physicians (AAFP), 23 Mar. 2020, www.aafp.org/news/health-of-the-public/20200323covidtelehealth.html.', '', 'Telehealth', 'Telehealth has become a useful tool to provide health care during the coronavirus crisis. Converting to telemedicine has the benefit of not worrying about adequate test kits or N95 masks or other PPE.', '2020-04-17 12:40:02', 1);
-INSERT INTO `micro_notice` VALUES (4, 1, 4, 'Matt Mihelic, MD', '-23-', 'Center for Medicare and Medicaid Services, “Physicians and Other Clinicians: CMS Flexibilities to Fight COVID-19”, April 29, 2020.', '', 'COVID 19', 'The US Federal Government is recognizing the need for telehealth and is responding with an unprecedented array of temporary regulatory waivers and new rules that will enable telemedicine.', '2020-05-05 13:35:02', 1);
-INSERT INTO `micro_notice` VALUES (5, 1, 1, 'Changqing Cheng', '-2-3-', 'Madden KS, Boehm GW, Lee SC, Grota LJ, Cohen N, Ader R. One-trial conditioning of the antibody response to hen egg lysozyme in rats. J Neuroimmunol. 2001;113:236-239.', 'rats-protein antigen', 'Protein antigen', 'In rats, after a single pairing of a novel taste with a protein antigen, the taste alone could elicit an IgG antibody response.', '2020-05-07 13:35:02', 0);
-INSERT INTO `micro_notice` VALUES (6, 1, 2, 'Kenneth Frumkin', '-11-12-', 'Frumkin, K: Behavioral Conditioning, the Placebo Effect, and Emergency Department Pain Management. J. Emerg Med, 2020; in press. Version accepted for publication (MSWord), April 2020', '', 'The immune system', 'Review of behavioral conditioning of the immune system and drug effects. Benign taste stimuli paired with immunoactive or pharmacologic agents, when administered alone, elicit the same response.', '2020-05-08 13:35:02', 1);
-INSERT INTO `micro_notice` VALUES (7, 2, 1, 'Changqing Cheng', '-22-23-', '1-2', 'Complex systems', 'Complex systems', 'While complex systems generally exhibit multi-scale and multi-physics behaviors, machine learning can make the tedious simulation realistic.', '2020-04-26 13:35:02', 1);
-INSERT INTO `micro_notice` VALUES (8, 2, 1, 'Changqing Cheng', '-2-3-', '3-4', '', 'Remote culture telemedicine', 'How will issues such as credentialing, privacy, payment, liability, and regulation be addressed in remote culture telemedicine?', '2020-05-09 13:35:02', 1);
-INSERT INTO `micro_notice` VALUES (9, 2, 2, 'Kenneth Frumkin', '-2-3-', '5-6', '', 'COVID', 'Can pairing a unique taste with COVID vaccine create a safe, cheap, conditioned stimulus to boost immunity? Could warfighters carry such conditioned immunity boosters downrange in the event of tactical exposure to biological agents?', '2020-05-09 13:35:02', 1);
-INSERT INTO `micro_notice` VALUES (10, 1, 2, 'Kenneth Frumkin', '-0-11-13-26-', 'Cohen, V., et al. (2015). \"\"Development of an opioid reduction protocol in an emergency department.\"\" Am J Health Syst Pharm 72(23): 2080-2086.', 'pain-pain management-non opioids-combat-injury-analgesia-multimodal-certa', 'CERTA', 'In a 2015 proof-of-concept study, emergency patients with pain were successfully treated with an opioid-sparing protocol based on principles of channel enzyme receptor–targeted analgesia (CERTA).', '2018-10-26 13:35:02', 0);
-INSERT INTO `micro_notice` VALUES (11, 1, 3, 'Jan Vandenbrande', '-21-30-22-', 'Michopoulos, Farhat, Fish, \"\"Modeling and Simulation of Multiphysics Systems\"\", Trans. of the ASME, Vol 5.', 'modeling multi physics-multi scale-simulation', 'Multi physics systems', 'Survey paper describing challenges in multi-physics systems.', '2019-08-17 19:25:02', 0);
-INSERT INTO `micro_notice` VALUES (12, 1, 3, 'Jan Vandenbrande', '-1-12-14-27-', 'Cohen, V., et al. (2015). \"\"Development of an opioid reduction protocol in an emergency department. Am J Health Syst Pharm 72(23): 2080-2086.', 'pain-pain management-non opioids-combat-injury-analgesia-multimodal-certa', 'CERTA', 'In a 2015 proof-of-concept study, emergency patients with pain were successfully treated with an opioid-sparing protocol based on principles of channel enzyme receptor–targeted analgesia (CERTA).', '2018-10-26 11:32:02', -1);
+-- INSERT INTO `micro_notice` VALUES (1, 1, 5, 'Xiao Liu', '21', 'Liu, X., Gopal, V., and Kalagnanam, J. (2018), \"\"A Spatio-Temporal Modeling Framework for Weather Radar Image Data in Tropical Southeast Asia\"\",  Annals of Applied Statistics, 12(1), 378–407.', 'partial differential equations-spatio temporal model-uncertainty quantification-statistical learning', 'Weather Radar Image Data', 'Leveraging both data-driven approaches and physics knowledge for modeling and uncertainty quantification of spatio-temporal data arising from a generic class of convection-diffusion processes.', '', '2019-08-14 13:35:02', 1);
+-- INSERT INTO `micro_notice` VALUES (2, 1, 3, 'Jan Vandenbrande', '21-30-22', 'Keyes et al., Multiphysics Simulations: Challenges and Opportunities, International Journal of High Performance Computing Applications.', 'modeling multi physics-multi scale-simulation', 'Multiphysics Simulations', 'Comprehensive survey paper on the difficulties (effort, limitations, accuracy) of building multi-physics simulators.', '', '2019-08-17 17:35:02', 1);
+-- INSERT INTO `micro_notice` VALUES (3, 1, 6, 'Diane Stevens', '23', 'Crawford, Chris. “Inside Look at Using Telemedicine During COVID-19 Pandemic.” AAFP Home, American Academy of Family Physicians (AAFP), 23 Mar. 2020, www.aafp.org/news/health-of-the-public/20200323covidtelehealth.html.', '', 'Telehealth', 'Telehealth has become a useful tool to provide health care during the coronavirus crisis. Converting to telemedicine has the benefit of not worrying about adequate test kits or N95 masks or other PPE.', '', '2020-04-17 12:40:02', 1);
+-- INSERT INTO `micro_notice` VALUES (4, 1, 4, 'Matt Mihelic, MD', '23', 'Center for Medicare and Medicaid Services, “Physicians and Other Clinicians: CMS Flexibilities to Fight COVID-19”, April 29, 2020.', '', 'COVID 19', 'The US Federal Government is recognizing the need for telehealth and is responding with an unprecedented array of temporary regulatory waivers and new rules that will enable telemedicine.', '', '2020-05-05 13:35:02', 1);
+-- INSERT INTO `micro_notice` VALUES (5, 1, 1, 'Changqing Cheng', '2-3', 'Madden KS, Boehm GW, Lee SC, Grota LJ, Cohen N, Ader R. One-trial conditioning of the antibody response to hen egg lysozyme in rats. J Neuroimmunol. 2001;113:236-239.', 'rats-protein antigen', 'Protein antigen', 'In rats, after a single pairing of a novel taste with a protein antigen, the taste alone could elicit an IgG antibody response.', '', '2020-05-07 13:35:02', 0);
+-- INSERT INTO `micro_notice` VALUES (6, 1, 2, 'Kenneth Frumkin', '11-12', 'Frumkin, K: Behavioral Conditioning, the Placebo Effect, and Emergency Department Pain Management. J. Emerg Med, 2020; in press. Version accepted for publication (MSWord), April 2020', '', 'The immune system', 'Review of behavioral conditioning of the immune system and drug effects. Benign taste stimuli paired with immunoactive or pharmacologic agents, when administered alone, elicit the same response.', '', '2020-05-08 13:35:02', 1);
+-- INSERT INTO `micro_notice` VALUES (7, 2, 1, 'Changqing Cheng', '22-23', '1-2', 'Complex systems', 'Complex systems', 'While complex systems generally exhibit multi-scale and multi-physics behaviors, machine learning can make the tedious simulation realistic.', '', '2020-04-26 13:35:02', 1);
+-- INSERT INTO `micro_notice` VALUES (8, 2, 1, 'Changqing Cheng', '2-3', '3-4', '', 'Remote culture telemedicine', 'How will issues such as credentialing, privacy, payment, liability, and regulation be addressed in remote culture telemedicine?', '', '2020-05-09 13:35:02', 1);
+-- INSERT INTO `micro_notice` VALUES (9, 2, 2, 'Kenneth Frumkin', '2-3', '5-6', '', 'COVID', 'Can pairing a unique taste with COVID vaccine create a safe, cheap, conditioned stimulus to boost immunity? Could warfighters carry such conditioned immunity boosters downrange in the event of tactical exposure to biological agents?', '', '2020-05-09 13:35:02', 1);
+-- INSERT INTO `micro_notice` VALUES (10, 1, 2, 'Kenneth Frumkin', '0-11-13-26', 'Cohen, V., et al. (2015). \"\"Development of an opioid reduction protocol in an emergency department.\"\" Am J Health Syst Pharm 72(23): 2080-2086.', 'pain-pain management-non opioids-combat-injury-analgesia-multimodal-certa', 'CERTA', 'In a 2015 proof-of-concept study, emergency patients with pain were successfully treated with an opioid-sparing protocol based on principles of channel enzyme receptor–targeted analgesia (CERTA).', '','2018-10-26 13:35:02', 0);
+-- INSERT INTO `micro_notice` VALUES (11, 1, 3, 'Jan Vandenbrande', '21-30-22', 'Michopoulos, Farhat, Fish, \"\"Modeling and Simulation of Multiphysics Systems\"\", Trans. of the ASME, Vol 5.', 'modeling multi physics-multi scale-simulation', 'Multi physics systems', 'Survey paper describing challenges in multi-physics systems.', '', '2019-08-17 19:25:02', 0);
+-- INSERT INTO `micro_notice` VALUES (12, 1, 3, 'Jan Vandenbrande', '1-12-14-27', 'Cohen, V., et al. (2015). \"\"Development of an opioid reduction protocol in an emergency department. Am J Health Syst Pharm 72(23): 2080-2086.', 'pain-pain management-non opioids-combat-injury-analgesia-multimodal-certa', 'CERTA', 'In a 2015 proof-of-concept study, emergency patients with pain were successfully treated with an opioid-sparing protocol based on principles of channel enzyme receptor–targeted analgesia (CERTA).', '', '2018-10-26 11:32:02', -1);
 
 -- ----------------------------
 -- Table structure for review
@@ -377,5 +378,33 @@ INSERT INTO `user_info` VALUES (3, 'wzs3@163.com', 'Jan Vandenbrande', '', 'male
 INSERT INTO `user_info` VALUES (4, 'wzs4@163.com', 'Matt Mihelic, MD', '', 'male',  'work hard!', 'Associate Professor', 'University of Tennessee', '23-24-29', '21-30-40');
 INSERT INTO `user_info` VALUES (5, 'wzs5@163.com', 'Xiao Liu', '', 'female', 'fighting!', 'Assistant Professor at University of Arkansas; Former Research Scientist at IBM T.J. Watson.', 'Industrial Engineering, University of Arkansas', '30-23-40', '21-34-36-24');
 INSERT INTO `user_info` VALUES (6, 'wzs6@163.com', 'Diane Stevens', '', 'male', 'work hard!', 'Decades of involvement in the humanities, the arts, public service, and science.', 'UCLA, San Francisco State University', '15-52-56-59-61-63', '3-15-19-20');
+
+DROP TABLE IF EXISTS `user_rating`;
+CREATE TABLE `user_rating`  (
+  `userId` int(0) NOT NULL,
+  `noticeId` int(0) NOT NULL,
+  `score` int(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`userId`, `noticeId`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_rating
+-- ----------------------------
+INSERT INTO `user_rating` VALUES (1, 1, 5);
+INSERT INTO `user_rating` VALUES (1, 2, 5);
+INSERT INTO `user_rating` VALUES (1, 3, 0);
+INSERT INTO `user_rating` VALUES (1, 4, 0);
+INSERT INTO `user_rating` VALUES (1, 5, 0);
+INSERT INTO `user_rating` VALUES (1, 6, 2);
+INSERT INTO `user_rating` VALUES (1, 7, 7);
+INSERT INTO `user_rating` VALUES (1, 8, 8);
+INSERT INTO `user_rating` VALUES (1, 9, 2);
+INSERT INTO `user_rating` VALUES (1, 10, 0);
+INSERT INTO `user_rating` VALUES (1, 11, 0);
+INSERT INTO `user_rating` VALUES (1, 12, 0);
+INSERT INTO `user_rating` VALUES (1, 13, 0);
+INSERT INTO `user_rating` VALUES (1, 14, 0);
+INSERT INTO `user_rating` VALUES (1, 17, 0);
+INSERT INTO `user_rating` VALUES (1, 18, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

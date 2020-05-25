@@ -3,31 +3,31 @@
     <div class="noice_title">{{form.type_str}} | {{form.title}}</div>
     <div>
       <v-user-name :show="'detail'"
-                   :id="form.authorId"
+                   :id="form.authorId.toString()"
                    :button="form.authorName"
                    :key="new Date().getTime()">
       </v-user-name>
       <font style="font-weight: 400;font-size: 15px;margin-left: 10px;">{{form.time}}</font>
     </div>
+    <div style="margin-top: 4px">
+      <v-show-topic v-bind:str="form.label"></v-show-topic>
+    </div>
+
     <el-tag :key="tag" v-for="tag in keyWordList" class="keyword" v-if="has_keyword">{{tag}}</el-tag>
     <div style="margin: 10px;margin-top: 30px;margin-bottom: 30px;width: 100%;white-space:normal;display:block;">{{form.text}}</div>
     <div class="bottom_text" v-if="!guess">引用 : {{form.reference}}
     </div>
     <div v-else class="bottom_text">引用 :
       <el-popover placement="right" width="400" trigger="click"
-       :key="value.id"
-       v-for="(value,index) in guessReference"
-       >
-        <v-reference
-       v-bind:title="value.title"
-       v-bind:authorName="value.authorName"
-       v-bind:summary="value.summary"></v-reference>
+                  :key="value.id"
+                  v-for="(value,index) in guessReference">
+        <v-reference v-bind:title="value.title"
+                     v-bind:authorName="value.authorName"
+                     v-bind:summary="value.summary">
+        </v-reference>
         <el-button slot="reference" class="reference">{{value.title}}</el-button>
       </el-popover>
     </div>
-    <div class="bottom_text">分类 : {{form.label}}
-    </div>
-
     <div class="comment_count" v-if="comment">
       {{reply_num}}评论
     </div>
@@ -53,6 +53,7 @@
   import vComment from './Comment.vue';
   import vReference from './Reference.vue';
   import vUserName from './UserName'
+  import vShowTopic from './ShowTopic'
   export default {
     name: "Detail",
     props: {
@@ -99,7 +100,8 @@
     components: {
       vComment,
       vReference,
-      vUserName
+      vUserName,
+      vShowTopic
     },
     created() {
       this.accountId = sessionStorage.getItem("accountId")
