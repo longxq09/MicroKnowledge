@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <vHome v-if="$route.meta.keepAlive"></vHome>
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <v-admin v-if="$route.meta.admin"></v-admin>
+    <vHome v-if="$route.meta.user"></vHome>
+    <router-view v-if="$route.meta.visitor"></router-view>
   </div>
 </template>
 <script>
   import vHome from './components/Home.vue'
+  import vAdmin from './components/AdminHome'
   export default {
     name:'app',
     components: {
-      vHome
+      vHome,
+      vAdmin
     },
     created() {
       setTimeout(() => {

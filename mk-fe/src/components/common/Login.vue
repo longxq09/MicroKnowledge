@@ -77,7 +77,7 @@
         },
       }
     },
-		methods: {
+    methods: {
       next() {
         if (this.active == 0) {
           this.checkEmail()
@@ -172,7 +172,7 @@
         params.append('password',this.dataForm.password);
 				this.axios.post('/user/login', params)
           .then((res)=>{
-            if (res.data.code == 0) {
+            if (res.data.code === 0) {
               const h = this.$createElement;
               this.$notify({
                 title: '登陆成功',
@@ -181,15 +181,41 @@
               sessionStorage.setItem("accountId", res.data.id)
               sessionStorage.setItem("email", this.dataForm.email)
               this.$router.push("/homepage");
-            } else {
+            } else if(res.data.code === 1 || res.data.code === 2){
               let remindTitle = '登陆失败'
               let remindContent = '账号或密码错误'
-              if (res.data.code == 2) {
+              if (res.data.code === 2) {
                 remindContent = '未进行邮箱验证，请前往邮箱查看验证邮件！'
               }
               this.$alert(remindContent, remindTitle, {
                 confirmButtonText: '确定'
               });
+            } else {
+              sessionStorage.setItem("accountId", res.data.id)
+              sessionStorage.setItem("email", this.dataForm.email)
+              this.$confirm('检测到您是管理员，是否进入管理页面', '界面选择', {
+                distinguishCancelAndClose: true,
+                confirmButtonText: '是，进入管理界面',
+                cancelButtonText: '否，进入用户界面'
+              })
+                .then(() => {
+                  this.$router.push('/admin')
+                  const h = this.$createElement;
+                  this.$notify({
+                    title: '登陆成功',
+                    message: h('i', { style: 'color: teal'}, '欢迎来到微知管理界面！')
+                  });
+                })
+                .catch(action => {
+                  if (action === 'cancel') {
+                    this.$router.push("/homepage");
+                    const h = this.$createElement;
+                    this.$notify({
+                      title: '登陆成功',
+                      message: h('i', { style: 'color: teal'}, '欢迎来到微知！')
+                    });
+                  }
+                });
             }
           })
           .catch((res)=>{

@@ -1,16 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Visitor from '@/components/Visitor'
-import User from '@/components/User'
-import UserInfo from '@/components/UserInfo'
-import NewMEvid from '@/components/NewMEvid.vue'
-import NewMGuess from '@/components/NewMGuess.vue'
-import HomePage from '@/components/HomePage.vue'
-import ModifyMEvid from '@/components/ModifyMEvid.vue'
-import ModifyMGuess from '@/components/ModifyMGuess'
-import Search from '@/components/Search'
+import Visitor from '../components/Visitor'
+import User from '../components/User'
+import UserInfo from '../components/UserInfo'
+import NewMEvid from '../components/NewMEvid.vue'
+import NewMGuess from '../components/NewMGuess.vue'
+import HomePage from '../components/HomePage.vue'
+import ModifyMEvid from '../components/ModifyMEvid.vue'
+import ModifyMGuess from '../components/ModifyMGuess'
+import Search from '../components/Search'
 import VisitorSearch from "../components/VisitorSearch";
-import Review from '@/components/Review.vue'
+import Review from '../components/Review.vue'
+import AdminHomePage from '../components/AdminHomePage'
+import TopicManage from '../components/TopicManage'
 import VueRouter from 'vue-router'
 
 const routerPush = VueRouter.prototype.push
@@ -27,7 +29,7 @@ export default new Router({
       name: 'Visitor',
       component: Visitor,
       meta: {
-        keepAlive: false
+        visitor: true
       }
     },
     {
@@ -35,7 +37,7 @@ export default new Router({
       name: 'User',
       component: User,
       meta: {
-        keepAlive: true
+        user: true
       }
     },
     {
@@ -43,7 +45,7 @@ export default new Router({
       name: 'UserInfo',
       component: UserInfo,
       meta: {
-        keepAlive: true
+        user: true
       }
     },
     {
@@ -51,7 +53,7 @@ export default new Router({
       name: 'NewMEvid',
       component: NewMEvid,
       meta: {
-        keepAlive: true
+        user: true
       }
     },
     {
@@ -59,7 +61,7 @@ export default new Router({
       name: 'NewMGuess',
       component: NewMGuess,
       meta: {
-        keepAlive: true
+        user: true
       }
     },
 
@@ -68,7 +70,7 @@ export default new Router({
       name: 'HomePage',
       component: HomePage,
       meta: {
-        keepAlive: true
+        user: true
       }
     },
     {
@@ -76,7 +78,7 @@ export default new Router({
       name: 'ModifyMEvid',
       component: ModifyMEvid,
       meta: {
-        keepAlive: true
+        user: true
       }
     },
     {
@@ -84,7 +86,7 @@ export default new Router({
       name: 'ModifyMGuess',
       component: ModifyMGuess,
       meta: {
-        keepAlive: true
+        user: true
       }
     },
     {
@@ -92,7 +94,7 @@ export default new Router({
       name: 'Search',
       component: Search,
       meta: {
-        keepAlive: true
+        user: true
       }
     },
     {
@@ -100,7 +102,7 @@ export default new Router({
       name: 'VisitorSearch',
       component: VisitorSearch,
       meta: {
-        keepAlive: false
+        visitor: true
       }
     },
     {
@@ -108,8 +110,24 @@ export default new Router({
       name: 'Review',
       component: Review,
       meta: {
-        keepAlive: true
+        user: true
       }
     },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: AdminHomePage,
+      meta: {
+        admin: true
+      }
+    },
+    {
+      path: '/admin/topic',
+      name: 'TopicManage',
+      component: TopicManage,
+      meta: {
+        admin: true
+      }
+    }
   ]
 })
