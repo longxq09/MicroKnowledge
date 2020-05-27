@@ -124,33 +124,6 @@ public class LoginController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/reAdminPassword", method = RequestMethod.POST)
-    public @ResponseBody
-    Object reAdminPassword(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String newPassword = request.getParameter("newPassword");
-        String email = request.getParameter("email");
-        PasswordHelper helper = new PasswordHelper();
-        String oldPassword = helper.encryptByName(email, request.getParameter("oldPassword"));
-        String password = loginService.getAdminPassword(id);
-        HashMap<String, String> res = new HashMap<>();
-        if (password.equals(oldPassword)) {
-            newPassword = helper.encryptByName(email, newPassword);
-            if (loginService.resetAdminPassword(id, newPassword)) {
-                res.put("code", "0");
-                res.put("message", "密码修改成功！");
-            } else {
-                res.put("code", "1");
-                res.put("message", "密码修改失败！");
-            }
-        } else {
-            res.put("code", "2");
-            res.put("message", "旧密码错误！");
-        }
-        return res;
-    }
-
-    @CrossOrigin
     @RequestMapping(value = "/rePassword", method = RequestMethod.POST)
     public @ResponseBody
     Object reUserPassword(HttpServletRequest request) {
@@ -160,10 +133,19 @@ public class LoginController {
         String email = request.getParameter("email");
         PasswordHelper helper = new PasswordHelper();
         oldPassword = helper.encryptByName(email, oldPassword);
-        String password = loginService.getUserPassword(id);
+        newPassword = helper.encryptByName(email, newPassword);
+        boolean isUser = loginService.hasMatchUserByEmail(email, oldPassword);
+        boolean isAdmin = loginService.hasMatchAdminByEmail(email, oldPassword);
         HashMap<String, String> res = new HashMap<>();
-        if (password.equals(oldPassword)) {
-            newPassword = helper.encryptByName(email, newPassword);
+        if (isAdmin) {
+            if (loginService.resetAdminPassword(id, newPassword)) {
+                res.put("code", "0");
+                res.put("message", "密码修改成功！");
+            } else {
+                res.put("code", "1");
+                res.put("message", "密码修改失败！");
+            }
+        } else if (isUser) {
             if (loginService.reUserPassword(id, newPassword)) {
                 res.put("code", "0");
                 res.put("message", "密码修改成功！");
