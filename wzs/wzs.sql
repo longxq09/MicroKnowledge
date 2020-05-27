@@ -20,25 +20,25 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for account
 -- ----------------------------
-DROP TABLE IF EXISTS `account`;
-CREATE TABLE `account`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT,
-  `email` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `password` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `activeCode` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `activeStatus` int(0) NULL DEFAULT 0,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+-- DROP TABLE IF EXISTS `account`;
+-- CREATE TABLE `account`  (
+--   `id` int(0) NOT NULL AUTO_INCREMENT,
+--   `email` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+--   `password` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+--   `activeCode` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `activeStatus` int(0) NULL DEFAULT 0,
+--   PRIMARY KEY (`id`) USING BTREE
+-- ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of account
 -- ----------------------------
-INSERT INTO `account` VALUES (1, 'wzs1@163.com', '740cf33d334637bf2b3d00433cea6ec3', '', 1);
-INSERT INTO `account` VALUES (2, 'wzs2@163.com', '0103b33cd3ddbf771af44b60418e0365', '', 1);
-INSERT INTO `account` VALUES (3, 'wzs3@163.com', 'a8d324fb901015bef22df9ae607c0e65', '', 1);
-INSERT INTO `account` VALUES (4, 'wzs4@163.com', '32db4b4d3d6d37bd0c02b1647645ab30', '', 1);
-INSERT INTO `account` VALUES (5, 'wzs5@163.com', '635282d5f184b759b5730351016a39ba', '', 1);
-INSERT INTO `account` VALUES (6, 'wzs6@163.com', 'bd717bd1e47d94bf67403dde69d54583', '', 1);
+-- INSERT INTO `account` VALUES (1, 'wzs1@163.com', '740cf33d334637bf2b3d00433cea6ec3', '', 1);
+-- INSERT INTO `account` VALUES (2, 'wzs2@163.com', '0103b33cd3ddbf771af44b60418e0365', '', 1);
+-- INSERT INTO `account` VALUES (3, 'wzs3@163.com', 'a8d324fb901015bef22df9ae607c0e65', '', 1);
+-- INSERT INTO `account` VALUES (4, 'wzs4@163.com', '32db4b4d3d6d37bd0c02b1647645ab30', '', 1);
+-- INSERT INTO `account` VALUES (5, 'wzs5@163.com', '635282d5f184b759b5730351016a39ba', '', 1);
+-- INSERT INTO `account` VALUES (6, 'wzs6@163.com', 'bd717bd1e47d94bf67403dde69d54583', '', 1);
 
 -- ----------------------------
 -- Table structure for admin
@@ -354,30 +354,30 @@ INSERT INTO `topic` VALUES (67, '其他', 1);
 -- ----------------------------
 -- Table structure for user_info
 -- ----------------------------
-DROP TABLE IF EXISTS `user_info`;
-CREATE TABLE `user_info`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT,
-  `email` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `picture` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `sex` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `signature` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `education` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `works` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `expertise` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `interest` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+-- DROP TABLE IF EXISTS `user_info`;
+-- CREATE TABLE `user_info`  (
+--   `id` int(0) NOT NULL AUTO_INCREMENT,
+--   `email` varchar(33) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+--   `name` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+--   `picture` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `sex` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `signature` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `education` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `works` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `expertise` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `interest` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   PRIMARY KEY (`id`) USING BTREE
+-- ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES (1, 'wzs1@163.com', 'Changqing Cheng', '', 'male',  'fighting!', 'SSIE at BU', 'SUNY Binghamton', '23-24-29', '21-30-40');
-INSERT INTO `user_info` VALUES (2, 'wzs2@163.com', 'Kenneth Frumkin', '', 'male',  'work hard!', 'PhD, MD; Emergency Physician: Military Medicine; Physiological Psychologist', 'Naval Medical Center, Portsmouth, Virginia', '23-24-29', '21-30-40');
-INSERT INTO `user_info` VALUES (3, 'wzs3@163.com', 'Jan Vandenbrande', '', 'male',  'fighting!', 'SSIE at BU', 'DARPA/DSO', '30-38', '21-24');
-INSERT INTO `user_info` VALUES (4, 'wzs4@163.com', 'Matt Mihelic, MD', '', 'male',  'work hard!', 'Associate Professor', 'University of Tennessee', '23-24-29', '21-30-40');
-INSERT INTO `user_info` VALUES (5, 'wzs5@163.com', 'Xiao Liu', '', 'female', 'fighting!', 'Assistant Professor at University of Arkansas; Former Research Scientist at IBM T.J. Watson.', 'Industrial Engineering, University of Arkansas', '30-23-40', '21-34-36-24');
-INSERT INTO `user_info` VALUES (6, 'wzs6@163.com', 'Diane Stevens', '', 'male', 'work hard!', 'Decades of involvement in the humanities, the arts, public service, and science.', 'UCLA, San Francisco State University', '15-52-56-59-61-63', '3-15-19-20');
+-- INSERT INTO `user_info` VALUES (1, 'wzs1@163.com', 'Changqing Cheng', '', 'male',  'fighting!', 'SSIE at BU', 'SUNY Binghamton', '23-24-29', '21-30-40');
+-- INSERT INTO `user_info` VALUES (2, 'wzs2@163.com', 'Kenneth Frumkin', '', 'male',  'work hard!', 'PhD, MD; Emergency Physician: Military Medicine; Physiological Psychologist', 'Naval Medical Center, Portsmouth, Virginia', '23-24-29', '21-30-40');
+-- INSERT INTO `user_info` VALUES (3, 'wzs3@163.com', 'Jan Vandenbrande', '', 'male',  'fighting!', 'SSIE at BU', 'DARPA/DSO', '30-38', '21-24');
+-- INSERT INTO `user_info` VALUES (4, 'wzs4@163.com', 'Matt Mihelic, MD', '', 'male',  'work hard!', 'Associate Professor', 'University of Tennessee', '23-24-29', '21-30-40');
+-- INSERT INTO `user_info` VALUES (5, 'wzs5@163.com', 'Xiao Liu', '', 'female', 'fighting!', 'Assistant Professor at University of Arkansas; Former Research Scientist at IBM T.J. Watson.', 'Industrial Engineering, University of Arkansas', '30-23-40', '21-34-36-24');
+-- INSERT INTO `user_info` VALUES (6, 'wzs6@163.com', 'Diane Stevens', '', 'male', 'work hard!', 'Decades of involvement in the humanities, the arts, public service, and science.', 'UCLA, San Francisco State University', '15-52-56-59-61-63', '3-15-19-20');
 
 DROP TABLE IF EXISTS `user_rating`;
 CREATE TABLE `user_rating`  (
@@ -385,7 +385,7 @@ CREATE TABLE `user_rating`  (
   `noticeId` int(0) NOT NULL,
   `score` int(0) NULL DEFAULT NULL,
   PRIMARY KEY (`userId`, `noticeId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_rating
