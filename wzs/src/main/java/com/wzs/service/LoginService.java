@@ -1,6 +1,7 @@
 package com.wzs.service;
 
 import com.wzs.bean.Account;
+import com.wzs.bean.Admin;
 
 
 public interface LoginService {
@@ -24,5 +25,13 @@ public interface LoginService {
 
     boolean forgetPassword(Account account);
 
+    //admin
+    boolean hasMatchAdminByEmail(String email, String password);
+
+    Admin findAdminByEmail(String email);
+
+    boolean resetAdminPassword(int id, String newPassword);
+
+    String getAdminPassword(int id);
 
 }

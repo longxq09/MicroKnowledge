@@ -11,9 +11,6 @@ public interface AccountMapper {
 
     int getEmailMatchCount(final String email, final String password);
 
-    int getAdminMatch(final String email, final String password);
-
-
     Account findAccountById(final int id);
 
     Account findAccountByEmail(final String email);

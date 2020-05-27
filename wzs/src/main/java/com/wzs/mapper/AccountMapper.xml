@@ -9,10 +9,6 @@
         select count(*) from account where
         email = #{email} and password = #{password}
     </select>
-    <select id="getAdminMatch" resultType="int">
-        select count(*) from admin where
-        email = #{email} and password = #{password}
-    </select>
 
     <select id="findAccountById" resultType="com.wzs.bean.Account" parameterType="int">
         select * from account where id = #{id}

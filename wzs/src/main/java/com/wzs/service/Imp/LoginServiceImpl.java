@@ -1,7 +1,9 @@
 package com.wzs.service.Imp;
 
 import com.wzs.bean.Account;
+import com.wzs.bean.Admin;
 import com.wzs.mapper.AccountMapper;
+import com.wzs.mapper.AdminMapper;
 import com.wzs.service.LoginService;
 import com.wzs.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,11 @@ public class LoginServiceImpl implements LoginService {
 
     @Resource
     private AccountMapper accountMapper;
+
+
+    @Resource
+    private AdminMapper adminMapper;
+
 
     @Autowired
     private MailService mailService;
@@ -86,10 +93,30 @@ public class LoginServiceImpl implements LoginService {
 
         String context = "亲爱的用户,您好！<br><br>" +
                 "欢迎使用忘记密码服务，验证码如下：<br>" + code +
-                 "<br>若不是您本人的操作，请忽略该邮件，感谢您的配合~<br><br>" + "祝好，<br>微知识团队";
+                "<br>若不是您本人的操作，请忽略该邮件，感谢您的配合~<br><br>" + "祝好，<br>微知识团队";
         //发送激活邮件
         mailService.sendMimeMail(account.getEmail(), subject, context);
         return true;
+    }
+
+    @Override
+    public boolean hasMatchAdminByEmail(String email, String password) {
+        return adminMapper.getAdminMatch(email, password) > 0;
+    }
+
+    @Override
+    public Admin findAdminByEmail(String email) {
+        return adminMapper.findAdminByEmail(email);
+    }
+
+    @Override
+    public boolean resetAdminPassword(int id, String newPassword) {
+        return adminMapper.resetAdminPassword(id, newPassword) > 0;
+    }
+
+    @Override
+    public String getAdminPassword(int id) {
+        return adminMapper.getAdminPassword(id);
     }
 }
 

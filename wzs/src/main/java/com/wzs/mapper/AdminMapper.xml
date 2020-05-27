@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzs.mapper.AdminMapper">
+
+    <select id="getAdminMatch" resultType="int">
+        select count(*) from admin where
+        email = #{email} and password = #{password}
+    </select>
+
+    <select id="findAdminByEmail" resultType="com.wzs.bean.Admin">
+        select * from admin where email = #{email}
+    </select>
+
+    <update id="resetAdminPassword">
+        update admin set password = #{password}
+        where admin_id = #{id}
+    </update>
+
+    <select id="getAdminPassword" resultType="String" parameterType="int">
+        select password from admin where admin_id = #{id}
+    </select>
+
+
+</mapper>

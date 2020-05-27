@@ -1,6 +1,7 @@
 package com.wzs.controller;
 
 import com.wzs.bean.Account;
+import com.wzs.bean.Admin;
 import com.wzs.bean.PasswordHelper;
 import com.wzs.bean.UserInfo;
 import com.wzs.service.LoginService;
@@ -95,9 +96,15 @@ public class LoginController {
         PasswordHelper helper = new PasswordHelper();
         password = helper.encryptByName(email, password);   //加密
         boolean isUser = loginService.hasMatchUserByEmail(email, password);
-        // boolean isAdmin = loginService.hasMatchAdmin(email, password);
+        boolean isAdmin = loginService.hasMatchAdminByEmail(email, password);
         HashMap<String, String> res = new HashMap<>();
-        if (isUser) {
+        if (isAdmin) {
+            Admin admin = loginService.findAdminByEmail(email);
+            request.getSession().setAttribute("admin", admin);
+            res.put("id", "" + admin.getId());
+            res.put("code", "3");
+            res.put("message", "管理员登陆成功！");
+        } else if (isUser) {
             Account account = loginService.findAccountByEmail(email);
             if (account.getActiveStatus() == 0) {
                 res.put("code", "2");
@@ -112,6 +119,33 @@ public class LoginController {
         } else {
             res.put("code", "1");
             res.put("message", "账号或密码错误！");
+        }
+        return res;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/reAdminPassword", method = RequestMethod.POST)
+    public @ResponseBody
+    Object reAdminPassword(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String newPassword = request.getParameter("newPassword");
+        String email = request.getParameter("email");
+        PasswordHelper helper = new PasswordHelper();
+        String oldPassword = helper.encryptByName(email, request.getParameter("oldPassword"));
+        String password = loginService.getAdminPassword(id);
+        HashMap<String, String> res = new HashMap<>();
+        if (password.equals(oldPassword)) {
+            newPassword = helper.encryptByName(email, newPassword);
+            if (loginService.resetAdminPassword(id, newPassword)) {
+                res.put("code", "0");
+                res.put("message", "密码修改成功！");
+            } else {
+                res.put("code", "1");
+                res.put("message", "密码修改失败！");
+            }
+        } else {
+            res.put("code", "2");
+            res.put("message", "旧密码错误！");
         }
         return res;
     }
