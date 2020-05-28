@@ -63,6 +63,9 @@
             <if test="topicName !=null">
                 topicName=#{topicName,jdbcType=VARCHAR},
             </if>
+            <if test="flag !=null">
+                flag=#{flag,jdbcType=INTEGER},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
