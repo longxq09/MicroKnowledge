@@ -27,4 +27,6 @@ public interface TopicMapper {
     int updateTopic(Topic topic);
 
     boolean deleteTopicById(int id);
+
+    boolean actTopicById(int id);
 }

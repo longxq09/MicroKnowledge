@@ -74,5 +74,12 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
+    <delete id="actTopicById" parameterType="java.lang.Integer">
+        update
+        <include refid="BASE_TABLE"/>
+        set flag=1
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
 
 </mapper>

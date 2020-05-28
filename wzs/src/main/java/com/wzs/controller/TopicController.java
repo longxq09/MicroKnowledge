@@ -40,6 +40,15 @@ public class TopicController {
 
     @CrossOrigin
     @ResponseBody
+    @RequestMapping(value = "/topic/getInvalidTopic", method = RequestMethod.GET)
+    public List<Topic> getInvalidTopic(HttpServletRequest request){
+        Map<String,Object> queryMap = new HashMap();
+        queryMap.put("flag",0);
+        return topicService.queryTopic(queryMap);
+    }
+
+    @CrossOrigin
+    @ResponseBody
     @RequestMapping(value = "/topic/addTopic", method = RequestMethod.POST)
     public int addTopic(HttpServletRequest request) {
         Topic topic = new Topic();
@@ -66,4 +75,12 @@ public class TopicController {
     public boolean deleteTopic(int id) {
         return topicService.deleteTopic(id);
     }
+
+    @CrossOrigin
+    @ResponseBody
+    @RequestMapping(value = "/topic/activateTopic", method = RequestMethod.POST)
+    public boolean activateTopic(int id) {
+        return topicService.actTopic(id);
+    }
+
 }

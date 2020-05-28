@@ -24,4 +24,6 @@ public interface TopicService {
     int updateTopic(Topic topic);
 
     boolean deleteTopic(int id);
+
+    boolean actTopic(int id);
 }

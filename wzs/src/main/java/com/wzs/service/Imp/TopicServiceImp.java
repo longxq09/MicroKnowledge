@@ -49,4 +49,9 @@ public class TopicServiceImp implements TopicService {
     public boolean deleteTopic(int id) {
         return topicMapper.deleteTopicById(id);
     }
+
+    @Override
+    public boolean actTopic(int id) {
+        return topicMapper.actTopicById(id);
+    }
 }
