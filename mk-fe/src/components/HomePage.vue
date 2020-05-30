@@ -2,7 +2,8 @@
   <div>
     <el-tabs v-model="activeName" class="tabs">
       <el-tab-pane label="推荐" name="first">
-        <v-notice :key="value.id" v-for="(value,index) in exhibition"
+        <v-page v-bind:display="exhibition"></v-page>
+        <!-- <v-notice :key="value.id" v-for="(value,index) in exhibition"
                   v-bind:id="value.id"
                   v-bind:type="value.type"
                   v-bind:topics="value.topic"
@@ -11,10 +12,11 @@
                   v-bind:keywords="value.keywords"
                   v-bind:title="value.title"
                   v-bind:summary="value.summary">
-        </v-notice>
+        </v-notice> -->
       </el-tab-pane>
       <el-tab-pane label="关注" name="second">
-        <v-notice :key="value.id" v-for="(value,index) in followingState"
+        <v-page v-bind:display="followingState"></v-page>
+        <!-- <v-notice :key="value.id" v-for="(value,index) in followingState"
                   v-bind:id="value.id"
                   v-bind:type="value.type"
                   v-bind:authorId="value.authorID"
@@ -22,23 +24,13 @@
                   v-bind:keywords="value.keywords"
                   v-bind:title="value.title"
                   v-bind:summary="value.summary">
-        </v-notice>
+        </v-notice> -->
       </el-tab-pane>
       <el-tab-pane label="热榜" name="third">
         <v-hot></v-hot>
       </el-tab-pane>
       <el-tab-pane label="评审" name="forth">
-        <v-notice :key="value.id" v-for="(value,index) in review_exhibition"
-                  v-if="accountId!=value.authorID"
-                  v-bind:id="value.id"
-                  v-bind:type="value.type"
-                  v-bind:authorName="value.authorName"
-                  v-bind:keywords="value.keywords"
-                  v-bind:title="value.title"
-                  v-bind:summary="value.summary"
-                  v-bind:review=true
-                  v-bind:comment=false>
-        </v-notice>
+        <v-page v-bind:display=review_exhibition v-bind:review=true v-bind:comment=false></v-page>
       </el-tab-pane>
     </el-tabs>
     <el-card class="cloud">
@@ -53,15 +45,20 @@
   import vComment from './common/Comment.vue';
   import vHot from './common/Hot.vue'
   import vTopicCloud from './common/TopicCloud'
+  import vPage from './common/Page.vue'
   export default {
     name: "HomePage",
     data() {
       return {
+        count: 2,
         exhibition: Array,
+        display:Array,
         review_exhibition: Array,
         followingState: Array,
         activeName: "first",
         accountId: 0,
+        dis:true,
+        total:0,
       }
     },
 
@@ -69,7 +66,8 @@
       vNotice,
       vComment,
       vHot,
-      vTopicCloud
+      vTopicCloud,
+      vPage
     },
     created() {
       this.getUserInfo()
@@ -92,6 +90,10 @@
           this.review_exhibition.forEach(item => {
             item.ifShow = (this.accountId!=item.authorID);
           });
+          console.log(this.review_exhibition);
+
+          this.display=this.review_exhibition.slice(0,this.count);
+          console.log(this.display);
         } catch (err) {
           console.log(err);
         }

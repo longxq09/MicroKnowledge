@@ -11,6 +11,7 @@ import ModifyMGuess from '../components/ModifyMGuess'
 import Search from '../components/Search'
 import VisitorSearch from "../components/VisitorSearch";
 import Review from '../components/Review.vue'
+import Feedback from '../components/Feedback.vue'
 import AdminHomePage from '../components/AdminHomePage'
 import TopicManage from '../components/TopicManage'
 import VueRouter from 'vue-router'
@@ -109,6 +110,14 @@ export default new Router({
       path: '/review',
       name: 'Review',
       component: Review,
+      meta: {
+        user: true
+      }
+    },
+    {
+      path: '/feedback',
+      name: 'Feedback',
+      component: Feedback,
       meta: {
         user: true
       }

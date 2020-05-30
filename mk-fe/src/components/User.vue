@@ -48,7 +48,8 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="收藏" name="third">
-        <v-notice :key="value.id"
+        <v-page v-bind:display="favorite"></v-page>
+        <!-- <v-notice :key="value.id"
                   v-for="(value,index) in favorite"
                   v-bind:accountId="accountId"
                   v-bind:id="value.id"
@@ -57,11 +58,12 @@
                   v-bind:authorId="value.authorID"
                   v-bind:keywords="value.keywords"
                   v-bind:title="value.title"
-                  v-bind:summary="value.summary">
+                  v-bind:summary="value.summary"> -->
         </v-notice>
       </el-tab-pane>
       <el-tab-pane label="我的发布" v-if="accountId===hostId" name="forth">
-        <v-notice :key="value.id"
+        <v-page v-bind:display="myNotice" v-bind:user=true></v-page>
+        <!-- <v-notice :key="value.id"
                   v-for="(value,index) in myNotice"
                   v-bind:accountId="accountId"
                   v-bind:id="value.id"
@@ -73,7 +75,7 @@
                   v-bind:summary="value.summary"
                   v-bind:judge="value.judge"
                   v-bind:user=true>
-        </v-notice>
+        </v-notice> -->
       </el-tab-pane>
       <el-tab-pane v-if="accountId===hostId"
                    label="我的消息" name="fifth">
@@ -97,6 +99,7 @@
   import vShowTopic from './common/ShowTopic.vue';
   import vUserName from './common/UserName'
   import vUserInfoBoard from './common/UserInfoBoard'
+  import vPage from './common/Page.vue'
   export default {
     name: "User",
     data() {
@@ -118,7 +121,8 @@
       vFollow,
       vShowTopic,
       vUserName,
-      vUserInfoBoard
+      vUserInfoBoard,
+      vPage
     },
     created() {
       if (this.$route.query.accountId) {

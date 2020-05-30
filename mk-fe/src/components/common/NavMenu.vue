@@ -36,6 +36,10 @@
         <i class="el-icon-user"></i>
         <span slot="title">个人主页</span>
       </el-menu-item>
+      <el-menu-item index="/feedback">
+        <i class="el-icon-chat-line-square"></i>
+        <span slot="title">用户反馈</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
