@@ -101,7 +101,8 @@ public class FavoriteController {
     public int addFavorite(HttpServletRequest request) {
         int userID = Integer.parseInt(request.getParameter("id"));
         int noticeID = Integer.parseInt(request.getParameter("noticeID"));
-        if (findFavorite(userID, noticeID) == 0) {  //已经收藏
+        UserInfo token = (UserInfo) request.getSession().getAttribute("userInfo");
+        if (token == null || token.getId() != userID || findFavorite(userID, noticeID) == 0) {  //用户不对或已经收藏
             return -1;
         }
         Favorite favorite = new Favorite();
@@ -121,6 +122,10 @@ public class FavoriteController {
     @RequestMapping(value = "/deleteFavorite", method = RequestMethod.POST)
     public int deleteFavorite(HttpServletRequest request) {
         int userID = Integer.parseInt(request.getParameter("id"));
+        UserInfo token = (UserInfo) request.getSession().getAttribute("userInfo");
+        if (token == null || token.getId() != userID) {  //用户不对
+            return -1;
+        }
         int noticeID = Integer.parseInt(request.getParameter("noticeID"));
         if (findFavorite(userID, noticeID) == -1) { //未收藏
             return -1;

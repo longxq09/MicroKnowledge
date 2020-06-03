@@ -28,7 +28,7 @@ public class UserInfoController {
     @ResponseBody
     @RequestMapping(value = "/user/picUpload", method = RequestMethod.POST)
     public Object picUpload(HttpServletRequest request) {
-        String imgStr =request.getParameter("imgStr");
+        String imgStr = request.getParameter("imgStr");
         int id = Integer.parseInt(request.getParameter("id"));
         String rootPath = "/root";   //图片存放根路径
         String sonPath = "/user_pic/";  //图片存放根目录下的子目录
@@ -85,8 +85,16 @@ public class UserInfoController {
     @RequestMapping(value = "/user/info", method = RequestMethod.POST)
     public @ResponseBody
     Object userInfoEdit(HttpServletRequest request) {
+        HashMap<String, String> res = new HashMap<>();
+        UserInfo token = (UserInfo) request.getSession().getAttribute("userInfo");
+        int id = Integer.parseInt(request.getParameter("id"));
+        if (token == null || token.getId() != id) {
+            res.put("code", "500");
+            res.put("message", "信息修改失败！");
+            return res;
+        }
         UserInfo userInfo = new UserInfo();
-        userInfo.setId(Integer.parseInt(request.getParameter("id")));
+        userInfo.setId(id);
         userInfo.setName(request.getParameter("name"));
         userInfo.setSex(request.getParameter("sex"));
         userInfo.setSignature(request.getParameter("signature"));
@@ -96,7 +104,6 @@ public class UserInfoController {
         userInfo.setInterest(request.getParameter("interest"));
         userInfo.setPicture(request.getParameter("picture"));
 
-        HashMap<String, String> res = new HashMap<>();
         if (userInfoService.editUserInfo(userInfo)) {
 //            Account accountNew = loginService.findAccountById(account.getId());
             request.getSession().setAttribute("userInfo", userInfo);
