@@ -187,7 +187,7 @@ public class LoginController {
         String afterShuffle = sb.toString();
         String result = afterShuffle.substring(5, 9);       //四位随机字母数字
         account.setActiveCode(result);
-        account.setActiveStatus(0);
+        //account.setActiveStatus(0);
         loginService.forgetPassword(account);
         res.put("code", "0");
         res.put("message", "ok");
