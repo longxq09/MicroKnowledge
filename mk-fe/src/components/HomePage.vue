@@ -1,7 +1,8 @@
 <template>
   <div>
-    <el-tabs v-model="activeName" class="tabs">
-      <el-tab-pane label="推荐" name="first">
+    <el-tabs v-model="activeName" class="tabs"
+             @tab-click="getData">
+      <el-tab-pane label="推荐" name="first" style="width: 100%">
         <v-page v-bind:display="exhibition"></v-page>
         <!-- <v-notice :key="value.id" v-for="(value,index) in exhibition"
                   v-bind:id="value.id"
@@ -27,7 +28,7 @@
         </v-notice> -->
       </el-tab-pane>
       <el-tab-pane label="热榜" name="third">
-        <v-hot></v-hot>
+        <v-page v-bind:display="hotNotices"></v-page>
       </el-tab-pane>
       <el-tab-pane label="评审" name="forth">
         <v-page v-bind:display=review_exhibition v-bind:review=true v-bind:comment=false></v-page>
@@ -46,19 +47,18 @@
   import vHot from './common/Hot.vue'
   import vTopicCloud from './common/TopicCloud'
   import vPage from './common/Page.vue'
+  import { Loading } from 'element-ui';
   export default {
     name: "HomePage",
     data() {
       return {
-        count: 2,
         exhibition: Array,
-        display:Array,
         review_exhibition: Array,
         followingState: Array,
+        hotNotices: Array,
         activeName: "first",
         accountId: 0,
-        dis:true,
-        total:0,
+        total:0
       }
     },
 
@@ -70,44 +70,78 @@
       vPage
     },
     created() {
-      this.getUserInfo()
-      this.getFollowingState()
+      this.accountId = Number(sessionStorage.getItem("accountId"));
+    },
+    mounted() {
+      console.log("mounted")
+      this.getNotices()
+      this.getReviewList()
     },
     methods: {
-      async getUserInfo() {
-        this.accountId=Number(sessionStorage.getItem("accountId"));
-        var params = new URLSearchParams();
-        try {
-          let res = await this.axios.get('/mNotice/getNotices', params);
-          this.exhibition = res.data;
-        } catch (err) {
-          console.log(err);
-        }
-        try {
-          let res = await this.axios.get('/review/getReviewList', params);
-          this.review_exhibition = res.data;
-
-          this.review_exhibition.forEach(item => {
-            item.ifShow = (this.accountId!=item.authorID);
-          });
-          console.log(this.review_exhibition);
-
-          this.display=this.review_exhibition.slice(0,this.count);
-          console.log(this.display);
-        } catch (err) {
-          console.log(err);
+      getData(tab) {
+        if(tab.name === "first") {
+          this.getNotices()
+        } else if(tab.name === "second") {
+          this.getFollowingState()
+        } else if (tab.name === "third") {
+          this.getHotNotices()
         }
       },
+      getReviewList() {
+        this.axios.get('/review/getReviewList')
+          .then((res) => {
+            this.review_exhibition = res.data;
+            this.review_exhibition.forEach(item => {
+              item.ifShow = (this.accountId !== item.authorID);
+            })
+            console.log(this.review_exhibition)
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      },
       getFollowingState() {
+        let loadingInstance =  Loading.service({
+          text: '正在加载中...',
+        });
         this.axios.get('/follow/getFollowingState', {
-          params: { id: sessionStorage.getItem("accountId")}
+          params: { id: this.accountId}
         }).then((res) => {
           this.followingState = res.data
+          loadingInstance.close();
         })
           .catch((error) => {
             console.log(error)
           });
-      }
+      },
+      getNotices() {
+        let loadingInstance =  Loading.service({
+          text: '正在加载中...',
+        });
+        let noticeParams = new URLSearchParams();
+        noticeParams.append('accountId', this.accountId);
+        this.axios.get('/mNotice/getNotices', { params: noticeParams})
+          .then((res) => {
+            this.exhibition = res.data;
+            loadingInstance.close();
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+      getHotNotices() {
+        let loadingInstance =  Loading.service({
+          text: '正在加载中...',
+        });
+        this.axios.get('/mNotice/getHotTemp')
+          .then((res) => {
+            this.hotNotices = res.data
+            loadingInstance.close();
+          })
+          .catch((error) => {
+            console.log(error)
+          });
+      },
     },
   }
 </script>
