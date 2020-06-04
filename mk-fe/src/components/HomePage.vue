@@ -75,11 +75,13 @@
     },
     methods: {
       async getUserInfo() {
-        this.accountId=Number(sessionStorage.getItem("accountId"));
+        this.accountId = Number(sessionStorage.getItem("accountId"));
         var params = new URLSearchParams();
         try {
+          params.append('accountId', this.accountId);
           let res = await this.axios.get('/mNotice/getNotices', params);
           this.exhibition = res.data;
+          console.log(this.exhibition)
         } catch (err) {
           console.log(err);
         }
