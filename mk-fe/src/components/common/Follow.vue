@@ -62,7 +62,6 @@
         this.axios.post('/follow/addFollow', params)
           .then((res) => {
             if (res.data === 0) {
-              this.$router.go(0)
               this.$message({
                 message: '关注成功',
                 type: 'success'
@@ -83,7 +82,6 @@
         this.axios.post('/follow/deleteFollow', params)
           .then((res) => {
             if (res.data === 0) {
-              this.$router.go(0)
               this.$message({
                 message: '取消成功',
                 type: 'success'
