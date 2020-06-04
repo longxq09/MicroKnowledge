@@ -2,7 +2,7 @@ package com.wzs.util;
 
 public class Similarity {
 
-    private static int dim = 10;
+    public static int dim = 10;
 
     public static double calCosineSimilarity(int[] arr1,int[] arr2) {
         double molecular = 0;

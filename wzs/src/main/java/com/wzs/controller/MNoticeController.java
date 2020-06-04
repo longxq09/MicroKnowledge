@@ -3,6 +3,7 @@ package com.wzs.controller;
 import com.wzs.bean.*;
 import com.wzs.bean.selfEnum.NoticeType;
 import com.wzs.service.*;
+import com.wzs.util.Similarity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -37,16 +38,119 @@ public class MNoticeController {
     private ReviewService reviewService;
     @Resource
     private UserRatingService userRatingService;
+    @Resource
+    private UserInfoService userInfoService;
 
+    private int round = 0;
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getNotices", method = RequestMethod.GET)
     public List<MicroNotice> getNotices() {
+
+        round = (round + 1) % 3;
+
+//        int userId = Integer.parseInt(request.getParameter("accountId"));
+        List<MicroNotice> resList = new ArrayList<>();
+        if (round == 0) { // 专业领域topic, round == 0
+//            UserInfo userInfo = userInfoService.getUserInfo(userId);
+            UserInfo userInfo = userInfoService.getUserInfo(1);
+
+            String expertiseStr = userInfo.getExpertise();
+            String interest = userInfo.getInterest();
+
+            List<String> res = new ArrayList<>();
+            if (expertiseStr != null) {
+                res.addAll(Arrays.asList(expertiseStr.split("-")));
+            }
+            if (interest != null) {
+                res.addAll(Arrays.asList(interest.split("-")));
+            }
+
+            String id;
+            if (res.size() != 0) {
+                int count = 2;
+                while (resList.size() < 10 && count > 0) {
+                    Random rand = new Random();
+                    id = res.get(rand.nextInt(Math.max((res.size() - 1), 0)));
+                    count-=1;
+                    resList.addAll(noticeService.selectNoticeByTopic(id));
+                }
+                if (resList.size() >= 10) {
+                    System.out.println("there round == 0");
+//                    resList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
+                    return resList;
+                }
+            }
+        } else if (round == 1) { // favorite, round == 1
+            Similarity.dim = 72;
+//            List<Integer> noticeIdList =  favoriteService.selectFavoriteByUserId(userId);
+            List<Integer> noticeIdList =  favoriteService.selectFavoriteByUserId(1);
+
+            List<MicroNotice> allNotice = noticeService.selectAllNotice();
+            // 分解topic
+            int[] srcArr = new int[Similarity.dim];
+            MicroNotice microSrc = noticeService.getMNoticeById(noticeIdList.get(noticeIdList.size() - 1));
+            if (microSrc != null) {
+                String[] srcTopic = microSrc.getTopic().split("-");
+                for (String str : srcTopic) {
+                    srcArr[Integer.valueOf(str)] = 1;
+                }
+                for (MicroNotice microNotice : allNotice) {
+                    String[] dstTopic = microNotice.getTopic().split("-");
+                    int[] dstArr = new int[Similarity.dim];
+                    for (String str : dstTopic) {
+                        dstArr[Integer.valueOf(str)] = 1;
+                    }
+                    if (Similarity.calCosineSimilarity(srcArr,dstArr) > 0.5) {
+                        resList.add(microNotice);
+                    }
+                }
+                if (resList.size() > 5) {
+                    System.out.println("there round == 1");
+//                    resList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
+                    return resList;
+                }
+            }
+        } else if (round == 2) { // like, round == 2
+//            List<Integer> likeNoticeIds = likeService.getLikeNoticeIdByUserId(userId);
+            List<Integer> likeNoticeIds = likeService.getLikeNoticeIdByUserId(1);
+            if (likeNoticeIds.size() != 0) {
+                Random rand = new Random();
+                int noticeId = likeNoticeIds.get(rand.nextInt(likeNoticeIds.size()));
+                Similarity.dim = 72;
+                int[] srcArr = new int[Similarity.dim];
+                MicroNotice microSrc = noticeService.getMNoticeById(noticeId);
+                if (microSrc != null) {
+                    String[] srcTopic = microSrc.getTopic().split("-");
+                    for (String str : srcTopic) {
+                        srcArr[Integer.valueOf(str)] = 1;
+                    }
+                    List<MicroNotice> allNotice = noticeService.selectAllNotice();
+                    for (MicroNotice microNotice : allNotice) {
+                        String[] dstTopic = microNotice.getTopic().split("-");
+                        int[] dstArr = new int[Similarity.dim];
+                        for (String str : dstTopic) {
+                            dstArr[Integer.valueOf(str)] = 1;
+                        }
+                        if (Similarity.calCosineSimilarity(srcArr,dstArr) > 0.5) {
+                            resList.add(microNotice);
+                        }
+                    }
+                    if (resList.size() > 5) {
+                        System.out.println("there round == 2");
+//                        resList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
+                        return resList;
+                    }
+                }
+            }
+        }
+        System.out.println("default");
         Map<String, Object> queryMap = new HashMap<>();
         queryMap.put("judge",1);
         List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
-        noticeList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
-        return noticeList;
+//        noticeList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
+        return noticeList.subList(0,20);
+
     }
 
     @CrossOrigin
@@ -175,7 +279,7 @@ public class MNoticeController {
             n.setHot(hot);
         }
         noticeList.sort(Comparator.comparing(MicroNotice::getHot).reversed());
-        return noticeList;
+        return noticeList.subList(0,20);
     }
 
 }

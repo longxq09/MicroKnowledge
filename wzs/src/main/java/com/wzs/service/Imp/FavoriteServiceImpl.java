@@ -35,5 +35,9 @@ public class FavoriteServiceImpl implements FavoriteService {
         return favoriteMapper.getFavorNumByNoticeId(noticeId);
     }
 
+    @Override
+    public List<Integer> selectFavoriteByUserId(int userId) {
+        return favoriteMapper.selectFavoriteByUserId(userId);
+    }
 
 }

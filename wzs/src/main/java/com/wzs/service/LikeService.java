@@ -1,5 +1,6 @@
 package com.wzs.service;
 
+import java.util.List;
 import java.util.Map;
 
 public interface LikeService {
@@ -13,5 +14,7 @@ public interface LikeService {
     int getLikeNumByNoticeId(int noticeId);
 
     boolean checkLike(int noticeId, int id);
+
+    List<Integer> getLikeNoticeIdByUserId(int userId);
 
 }

@@ -17,4 +17,7 @@ public interface FavoriteMapper {
 
     @Select("SELECT COUNT(*) from favorite_info where noticeID = #{noticeId}")
     int getFavorNumByNoticeId(int noticeId);
+
+    @Select("select noticeID from favorite_info where userID = #{userID}")
+    List<Integer> selectFavoriteByUserId(int userID);
 }
