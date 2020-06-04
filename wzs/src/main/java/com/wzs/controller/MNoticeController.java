@@ -45,15 +45,15 @@ public class MNoticeController {
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getNotices", method = RequestMethod.GET)
-    public List<MicroNotice> getNotices() {
+    public List<MicroNotice> getNotices(HttpServletRequest request) {
 
         round = (round + 1) % 3;
 
-//        int userId = Integer.parseInt(request.getParameter("accountId"));
+        int userId = Integer.parseInt(request.getParameter("accountId"));
         List<MicroNotice> resList = new ArrayList<>();
         if (round == 0) { // 专业领域topic, round == 0
-//            UserInfo userInfo = userInfoService.getUserInfo(userId);
-            UserInfo userInfo = userInfoService.getUserInfo(1);
+            UserInfo userInfo = userInfoService.getUserInfo(userId);
+//            UserInfo userInfo = userInfoService.getUserInfo(1);
 
             String expertiseStr = userInfo.getExpertise();
             String interest = userInfo.getInterest();
@@ -76,15 +76,14 @@ public class MNoticeController {
                     resList.addAll(noticeService.selectNoticeByTopic(id));
                 }
                 if (resList.size() >= 10) {
-                    System.out.println("there round == 0");
 //                    resList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
                     return resList;
                 }
             }
         } else if (round == 1) { // favorite, round == 1
             Similarity.dim = 72;
-//            List<Integer> noticeIdList =  favoriteService.selectFavoriteByUserId(userId);
-            List<Integer> noticeIdList =  favoriteService.selectFavoriteByUserId(1);
+            List<Integer> noticeIdList =  favoriteService.selectFavoriteByUserId(userId);
+//            List<Integer> noticeIdList =  favoriteService.selectFavoriteByUserId(1);
 
             List<MicroNotice> allNotice = noticeService.selectAllNotice();
             // 分解topic
@@ -106,14 +105,13 @@ public class MNoticeController {
                     }
                 }
                 if (resList.size() > 5) {
-                    System.out.println("there round == 1");
 //                    resList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
                     return resList;
                 }
             }
         } else if (round == 2) { // like, round == 2
-//            List<Integer> likeNoticeIds = likeService.getLikeNoticeIdByUserId(userId);
-            List<Integer> likeNoticeIds = likeService.getLikeNoticeIdByUserId(1);
+            List<Integer> likeNoticeIds = likeService.getLikeNoticeIdByUserId(userId);
+//            List<Integer> likeNoticeIds = likeService.getLikeNoticeIdByUserId(1);
             if (likeNoticeIds.size() != 0) {
                 Random rand = new Random();
                 int noticeId = likeNoticeIds.get(rand.nextInt(likeNoticeIds.size()));
@@ -137,7 +135,6 @@ public class MNoticeController {
                         }
                     }
                     if (resList.size() > 5) {
-                        System.out.println("there round == 2");
 //                        resList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
                         return resList;
                     }
