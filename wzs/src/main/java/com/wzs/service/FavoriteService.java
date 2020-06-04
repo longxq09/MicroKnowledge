@@ -14,4 +14,6 @@ public interface FavoriteService {
     boolean deleteFavorite(Favorite favorite);
 
     int getFavorNumByNoticeId(int noticeId);
+
+    List<Integer> selectFavoriteByUserId(int userId);
 }
