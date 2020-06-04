@@ -132,19 +132,20 @@ public class FollowController {
     @RequestMapping(value = "/addFollow", method = RequestMethod.POST)
     public int addFollow(HttpServletRequest request) {
         int followerID = Integer.parseInt(request.getParameter("id"));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        if (userInfo == null || userInfo.getId() != followerID) {   //用户不对
+            return -1;
+        }
         int followingID = Integer.parseInt(request.getParameter("followingID"));
         if (findFollow(followerID, followingID) == 0) {     //已经关注
-            System.out.println("follow fail");
+            //System.out.println("follow fail");
             return -1;
         }
         Follow follow = new Follow();
         follow.setFollowerID(followerID);
         follow.setFollowingID(followingID);
         followService.insertFollow(follow);
-        //System.out.println("follow success");
         //message
-        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
-        //System.out.println(userInfo);
         addFollowMessage(userInfo, followingID);
         return 0;
     }
@@ -155,6 +156,10 @@ public class FollowController {
     @RequestMapping(value = "/deleteFollow", method = RequestMethod.POST)
     public int deleteFollow(HttpServletRequest request) {
         int followerID = Integer.parseInt(request.getParameter("id"));
+        UserInfo userInfo = (UserInfo) request.getSession().getAttribute("userInfo");
+        if (userInfo == null || userInfo.getId() != followerID) {   //用户不对
+            return -1;
+        }
         int followingID = Integer.parseInt(request.getParameter("followingID"));
         if (findFollow(followerID, followingID) == -1) {    //并没有关注
             // System.out.println("fail");

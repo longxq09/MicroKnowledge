@@ -103,9 +103,11 @@ public class LoginController {
             request.getSession().setAttribute("admin", admin);
             res.put("id", "" + admin.getId());
             res.put("code", "3");
+            //System.out.println("admin");
             res.put("message", "管理员登陆成功！");
         } else if (isUser) {
             Account account = loginService.findAccountByEmail(email);
+            //System.out.println("user");
             if (account.getActiveStatus() == 0) {
                 res.put("code", "2");
                 res.put("message", "账号尚未激活！");
@@ -129,14 +131,21 @@ public class LoginController {
     Object reUserPassword(HttpServletRequest request) {
         String oldPassword = request.getParameter("oldPassword");
         String newPassword = request.getParameter("newPassword");
+        HashMap<String, String> res = new HashMap<>();
+        UserInfo token = (UserInfo) request.getSession().getAttribute("userInfo");
         int id = Integer.parseInt(request.getParameter("id"));
+        if (token == null || token.getId() != id) {
+            res.put("code", "1");
+            res.put("message", "密码修改失败！");
+            return res;
+        }
         String email = request.getParameter("email");
         PasswordHelper helper = new PasswordHelper();
         oldPassword = helper.encryptByName(email, oldPassword);
         newPassword = helper.encryptByName(email, newPassword);
         boolean isUser = loginService.hasMatchUserByEmail(email, oldPassword);
         boolean isAdmin = loginService.hasMatchAdminByEmail(email, oldPassword);
-        HashMap<String, String> res = new HashMap<>();
+
         if (isAdmin) {
             if (loginService.resetAdminPassword(id, newPassword)) {
                 res.put("code", "0");
