@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/review")
@@ -36,11 +33,19 @@ public class ReviewController {
 
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/getReviewList", method = RequestMethod.GET)
-    public List<MicroNotice> getReviewList(){
+    @RequestMapping(value = "/getReviewList", method = RequestMethod.POST)
+    public List<MicroNotice> getReviewList(HttpServletRequest request){
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        List<MicroNotice> retList = new LinkedList<>();
         Map<String,Object> queryMap = new HashMap<>();
         queryMap.put("judge",0);
-        return noticeService.queryMNotice(queryMap);
+        List<MicroNotice> reviewList = noticeService.queryMNotice(queryMap);
+        for(MicroNotice n : reviewList){
+            if(n.getAuthorID()!= userId){
+                retList.add(n);
+            }
+        }
+        return retList;
     }
 
     @CrossOrigin
