@@ -50,17 +50,12 @@ public class MNoticeController {
         round = (round + 1) % 3;
 
         int userId = Integer.parseInt(request.getParameter("accountId"));
-
         System.out.println("userId is: " + userId);
-
         List<MicroNotice> resList = new ArrayList<>();
         if (round == 0) { // 专业领域topic, round == 0
             UserInfo userInfo = userInfoService.getUserInfo(userId);
-//            UserInfo userInfo = userInfoService.getUserInfo(1);
-
             String expertiseStr = userInfo.getExpertise();
             String interest = userInfo.getInterest();
-
             List<String> res = new ArrayList<>();
             if (expertiseStr != null) {
                 res.addAll(Arrays.asList(expertiseStr.split("-")));
@@ -68,8 +63,8 @@ public class MNoticeController {
             if (interest != null) {
                 res.addAll(Arrays.asList(interest.split("-")));
             }
-
             String id;
+            System.out.println("res.size()" + res.size());
             if (res.size() != 0) {
                 int count = 2;
                 while (resList.size() < 10 && count > 0) {
