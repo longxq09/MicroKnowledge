@@ -50,6 +50,9 @@ public class MNoticeController {
         round = (round + 1) % 3;
 
         int userId = Integer.parseInt(request.getParameter("accountId"));
+
+        System.out.println("userId is: " + userId);
+
         List<MicroNotice> resList = new ArrayList<>();
         if (round == 0) { // 专业领域topic, round == 0
             UserInfo userInfo = userInfoService.getUserInfo(userId);
@@ -276,6 +279,8 @@ public class MNoticeController {
             n.setHot(hot);
         }
         noticeList.sort(Comparator.comparing(MicroNotice::getHot).reversed());
+
+        System.out.println("get Hot Temp");
         return noticeList.subList(0,20);
     }
 
