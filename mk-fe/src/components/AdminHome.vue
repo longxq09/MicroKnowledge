@@ -2,7 +2,7 @@
   <div>
     <v-head :key="new Date().getTime()"></v-head>
     <v-admin-menu style="display: inline-block"></v-admin-menu>
-    <div id="admin" style="position: relative; top: 60px;">
+    <div id="admin" style="position: absolute; top: 60px;">
       <router-view></router-view>
     </div>
   </div>
