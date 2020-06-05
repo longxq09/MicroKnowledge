@@ -72,8 +72,11 @@ public class FavoriteController {
         for (Favorite i : favoriteList) {
             Map<String, Object> queryMap = new HashMap();
             queryMap.put("id", i.getNoticeID());
-            MicroNotice microNotice = mNoticeService.queryMNotice(queryMap).get(0);
-            noticeList.add(microNotice);
+            List<MicroNotice> tmp = mNoticeService.queryMNotice(queryMap);
+            if (tmp.size() != 0) {
+                MicroNotice microNotice = tmp.get(0);
+                noticeList.add(microNotice);
+            }
         }
         return noticeList;
     }
