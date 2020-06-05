@@ -92,12 +92,18 @@ public class MNoticeController {
             if (microSrc != null) {
                 String[] srcTopic = microSrc.getTopic().split("-");
                 for (String str : srcTopic) {
+                    if(str.isEmpty()){
+                        continue;
+                    }
                     srcArr[Integer.valueOf(str)] = 1;
                 }
                 for (MicroNotice microNotice : allNotice) {
                     String[] dstTopic = microNotice.getTopic().split("-");
                     int[] dstArr = new int[Similarity.dim];
                     for (String str : dstTopic) {
+                        if(str.isEmpty()){
+                            continue;
+                        }
                         dstArr[Integer.valueOf(str)] = 1;
                     }
                     if (Similarity.calCosineSimilarity(srcArr,dstArr) > 0.5) {
