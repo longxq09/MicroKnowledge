@@ -172,7 +172,8 @@
         params.append('password',this.dataForm.password);
 				this.axios.post('/user/login', params)
           .then((res)=>{
-            if (res.data.code === 0) {
+            console.log(res.data.code)
+            if (res.data.code === "0") {
               const h = this.$createElement;
               this.$notify({
                 title: '登陆成功',
@@ -181,7 +182,7 @@
               sessionStorage.setItem("accountId", res.data.id)
               sessionStorage.setItem("email", this.dataForm.email)
               this.$router.push("/homepage");
-            } else if(res.data.code === 1 || res.data.code === 2){
+            } else if(res.data.code === "1" || res.data.code === "2"){
               let remindTitle = '登陆失败'
               let remindContent = '账号或密码错误'
               if (res.data.code === 2) {

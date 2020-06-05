@@ -82,10 +82,11 @@ public class CommentController {
         commentService.insertComment(comment);
 
         Message message = new Message();
-        message.setUserId(Integer.parseInt(request.getParameter("authorId")));
         if(Integer.parseInt(request.getParameter("toId"))==-1){ //评论
+            message.setUserId(Integer.parseInt(request.getParameter("authorId")));
             message.setType(MessageType.COMMENT.getIndex());
         } else{ //回复评论
+            message.setUserId(Integer.parseInt(request.getParameter("toId")));
             message.setType(MessageType.REPLY.getIndex());
         }
         message.setFromUserId(userInfo.getId());

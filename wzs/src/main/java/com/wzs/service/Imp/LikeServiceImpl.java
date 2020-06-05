@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -63,6 +64,11 @@ public class LikeServiceImpl implements LikeService {
     public boolean checkLike(int noticeId, int id) {
         Like like = likeMapper.checkLike(noticeId,id);
         return  like != null;
+    }
+
+    @Override
+    public List<Integer> getLikeNoticeIdByUserId(int userId) {
+        return likeMapper.getLikeNoticeIdByUserId(userId);
     }
 
 }

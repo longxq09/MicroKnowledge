@@ -31,4 +31,8 @@ public interface MNoticeService {
     List<MicroNotice> selectMNoticeByAuthorList(ArrayList<Integer> authorList);
 
     List<MicroNotice> selectMNoticeByFavorite(List<Favorite> favorites);
+
+    List<MicroNotice> selectNoticeByTopic(String topicId);
+
+    List<MicroNotice> selectAllNotice();
 }

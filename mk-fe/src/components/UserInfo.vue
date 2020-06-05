@@ -16,7 +16,7 @@
             </el-upload>
           </el-form-item>
           <el-form-item label="昵称">
-            <el-input v-model="form.name" style="width: 200px"></el-input>
+            <el-input v-model="form.name" style="width: 200px" maxlength="25"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submit">立即更新</el-button>
@@ -33,10 +33,10 @@
             <el-input type="password" v-model="passwordForm.old" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="新密码" prop="new">
-            <el-input type="password" v-model="passwordForm.new" autocomplete="off"></el-input>
+            <el-input type="password" v-model="passwordForm.new" autocomplete="off" maxlength="20"></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="repeat">
-            <el-input type="password" v-model="passwordForm.repeat" autocomplete="off"></el-input>
+            <el-input type="password" v-model="passwordForm.repeat" autocomplete="off" maxlength="20"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="rePassword">立即更新</el-button>
@@ -47,17 +47,17 @@
       <el-tab-pane label="信息管理">
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="个性签名">
-            <el-input type="textarea" v-model="form.signature"></el-input>
+            <el-input type="textarea" v-model="form.signature" maxlength="200"></el-input>
           </el-form-item>
           <el-form-item label="性别">
             <el-radio v-model="form.sex" label="male">男</el-radio>
             <el-radio v-model="form.sex" label="female">女</el-radio>
           </el-form-item>
           <el-form-item label="学术背景">
-            <el-input v-model="form.education"></el-input>
+            <el-input v-model="form.education" maxlength="100"></el-input>
           </el-form-item>
           <el-form-item label="工作地">
-            <el-input v-model="form.works"></el-input>
+            <el-input v-model="form.works" maxlength="100"></el-input>
           </el-form-item>
           <el-form-item label="专业领域">
             <el-select
@@ -114,6 +114,8 @@
       var validateNew = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'))
+        } else if (value.length < 6) {
+          callback(new Error('密码长度至少6位'))
         } else {
           if (this.passwordForm.repeat !== '') {
             this.$refs.passwordForm.validateField('repeat')
@@ -222,6 +224,14 @@
       },
 
       rePassword() {
+		    if (this.passwordForm.new === "" ||
+          this.passwordForm.new.length < 6 ||
+          this.passwordForm.new !== this.passwordForm.repeat) {
+          this.$alert("请检查输入内容", "输入密码不符合要求", {
+            confirmButtonText: '确定'
+          })
+		      return
+        }
         var params = new URLSearchParams()
         params.append('oldPassword', this.passwordForm.old)
         params.append('newPassword', this.passwordForm.new)
@@ -229,9 +239,9 @@
         params.append('id', sessionStorage.getItem("accountId"))
         this.axios.post('/user/rePassword', params)
           .then((res) => {
-            var remindTitle = res.data.code == 0 ? '修改成功' : '修改失败';
-            var remindContent = res.data.code == 0 ? '密码更新成功！' : '好像哪里出了问题/(ㄒoㄒ)/~~密码更改失败';
-            if(res.data.code == 0) {
+            var remindTitle = res.data.code === 0 ? '修改成功' : '修改失败';
+            var remindContent = res.data.code === 0 ? '密码更新成功！' : '好像哪里出了问题/(ㄒoㄒ)/~~密码更改失败';
+            if(res.data.code === 0) {
               this.$router.push('/user');
             }
             this.$alert(remindContent, remindTitle, {

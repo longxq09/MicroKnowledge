@@ -80,4 +80,16 @@ public class MNoticeServiceImp implements MNoticeService {
     public List<MicroNotice> selectMNoticeByFavorite(List<Favorite> favorites){
         return noticeMapper.selectMNoticeByFavorite(favorites);
     }
+
+    @Override
+    public List<MicroNotice> selectNoticeByTopic(String topicId) {
+        return noticeMapper.selectNoticeByTopic(topicId);
+    }
+
+    @Override
+    public List<MicroNotice> selectAllNotice() {
+        return noticeMapper.selectAllNotice();
+    }
+
+
 }

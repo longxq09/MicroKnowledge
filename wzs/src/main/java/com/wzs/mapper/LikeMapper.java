@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface LikeMapper {
 
@@ -26,5 +28,8 @@ public interface LikeMapper {
 
     @Select("select * from `like` where `noticeId` = #{noticeId} and `id` = #{id}")
     Like checkLike(int noticeId, int id);
+
+    @Select("select noticeId from `like` where `id` = #{userId}")
+    List<Integer> getLikeNoticeIdByUserId(int userId);
 
 }

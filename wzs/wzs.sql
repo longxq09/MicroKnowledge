@@ -102,7 +102,7 @@ CREATE TABLE `favorite_info`  (
 INSERT INTO `favorite_info` VALUES (1, 1, 1, '2020-04-30 13:35:02');
 INSERT INTO `favorite_info` VALUES (2, 1, 2, '2020-04-30 13:35:12');
 INSERT INTO `favorite_info` VALUES (3, 2, 1, '2020-04-30 13:35:22');
-INSERT INTO `favorite_info` VALUES (4, 1, 7, '2020-05-13 20:39:55');
+INSERT INTO `favorite_info` VALUES (4, 1, 8, '2020-05-13 20:39:55');
 
 -- ----------------------------
 -- Table structure for follow_info
@@ -218,22 +218,22 @@ INSERT INTO `message` VALUES (11, 4, 3, 1, 'Changqing Cheng', 8, '2', 'Remote cu
 -- ----------------------------
 -- Table structure for micro_notice
 -- ----------------------------
-DROP TABLE IF EXISTS `micro_notice`;
-CREATE TABLE `micro_notice`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT,
-  `type` int(0) NULL DEFAULT 0,
-  `authorId` int(0) NULL DEFAULT NULL,
-  `authorName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `topic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `reference` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `time` datetime(0) NULL DEFAULT NULL,
-  `judge` int(0) NULL DEFAULT 0,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+-- DROP TABLE IF EXISTS `micro_notice`;
+-- CREATE TABLE `micro_notice`  (
+--   `id` int(0) NOT NULL AUTO_INCREMENT,
+--   `type` int(0) NULL DEFAULT 0,
+--   `authorId` int(0) NULL DEFAULT NULL,
+--   `authorName` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `topic` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `reference` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+--   `time` datetime(0) NULL DEFAULT NULL,
+--   `judge` int(0) NULL DEFAULT 0,
+--   PRIMARY KEY (`id`) USING BTREE
+-- ) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of micro_notice
@@ -365,8 +365,8 @@ CREATE TABLE `user_info`  (
   `signature` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `education` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `works` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `expertise` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `interest` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `expertise` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `interest` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 

@@ -134,6 +134,13 @@
         </foreach>
     </select>
 
+    <select id="selectNoticeByTopic" resultType="com.wzs.bean.MicroNotice">
+        SELECT * from micro_notice
+        where
+            (topic like CONCAT('%-', #{topicId}, '%') and (judge = 1))
+            or
+            (topic like CONCAT('%', #{topicId}, '-%') and (judge = 1))
+    </select>
 
     <select id="selectMNoticeByAuthorList" resultType="com.wzs.bean.MicroNotice">
         SELECT
