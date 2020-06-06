@@ -3,7 +3,9 @@
     <div class="noice_title">
       <el-button type="text" @click="dialogTableVisible = true" class="aaa" style="font-size: 20px;">{{type_name}} | {{title}} </el-button>
 
-      <el-dialog title="详情" :visible.sync="dialogTableVisible">
+      <el-dialog title="详情"
+                 :visible.sync="dialogTableVisible"
+                 :append-to-body="true">
         <v-detail v-bind:noticeId="id" v-bind:comment="comment"></v-detail>
       </el-dialog>
       <el-tag class="keyword" v-if="user">{{state}}</el-tag>

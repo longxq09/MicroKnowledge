@@ -81,11 +81,11 @@
         });
         if (event.to.id === "enable") {
           let topic = this.usedTopic[this.usedTopic.length - 1]
-          topic.flag = 1 - topic.flag
+          topic.flag = topic.flag === 1 ? 2 : 1
           this.updateTopic(topic)
         } else {
           let topic = this.deleteTopic[this.deleteTopic.length - 1]
-          topic.flag = 1 - topic.flag
+          topic.flag = topic.flag === 1 ? 2 : 1
           this.updateTopic(topic)
         }
       },
