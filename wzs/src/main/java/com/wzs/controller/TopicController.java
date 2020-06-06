@@ -43,7 +43,7 @@ public class TopicController {
     @RequestMapping(value = "/topic/getInvalidTopic", method = RequestMethod.GET)
     public List<Topic> getInvalidTopic(HttpServletRequest request){
         Map<String,Object> queryMap = new HashMap();
-        queryMap.put("flag",0);
+        queryMap.put("flag",2);
         return topicService.queryTopic(queryMap);
     }
 
