@@ -111,6 +111,7 @@ public class MessageController {
         message.setFromUserId(fromId);
         message.setFromUserName(fromName);
         message.setDetail(request.getParameter("detail"));
+        message.setTime(new Date());
         messageService.addMessage(message);
         return 0;
     }
@@ -144,9 +145,11 @@ public class MessageController {
         message.setType(MessageType.ADMIN.getIndex());
         message.setUserId(userId);
         message.setFromUserId(0);
+        message.setFromUserName("管理君");
         message.setDetail(detail);
         message.setTime(new Date());
         messageService.addMessage(message);
+        messageService.setFlagById(Integer.parseInt(request.getParameter("id")));
         return 0;
     }
 
@@ -156,6 +159,13 @@ public class MessageController {
     public List<Message> getAdminMessage(HttpServletRequest request){
         List<Message> messageList = messageService.selectMessageByUser(0);
         messageList.sort(Comparator.comparing(Message::getTime).reversed());
+        messageList.sort((m1, m2) -> {
+            if(m1.getFlag()==m1.getFlag()){
+                return m1.getTime().compareTo(m2.getTime());
+            } else {
+                return m1.getFlag() - m2.getFlag();
+            }
+        });
         return messageList;
     }
 

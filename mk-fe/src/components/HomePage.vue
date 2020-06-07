@@ -88,7 +88,9 @@
         }
       },
       getReviewList() {
-        this.axios.get('/review/getReviewList')
+        let noticeParams = new URLSearchParams();
+        noticeParams.append('u', this.accountId);
+        this.axios.get('/review/getReviewList', { params: noticeParams})
           .then((res) => {
             this.review_exhibition = res.data;
             this.review_exhibition.forEach(item => {

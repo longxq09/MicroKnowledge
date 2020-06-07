@@ -14,6 +14,7 @@ import Review from '../components/Review.vue'
 import Feedback from '../components/Feedback.vue'
 import AdminHomePage from '../components/AdminHomePage'
 import TopicManage from '../components/TopicManage'
+import AdminMessage from '../components/AdminMessage.vue'
 import VueRouter from 'vue-router'
 
 const routerPush = VueRouter.prototype.push
@@ -134,6 +135,14 @@ export default new Router({
       path: '/admin/topic',
       name: 'TopicManage',
       component: TopicManage,
+      meta: {
+        admin: true
+      }
+    },
+    {
+      path: '/admin/message',
+      name: 'AdminMessage',
+      component: AdminMessage,
       meta: {
         admin: true
       }

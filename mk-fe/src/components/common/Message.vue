@@ -114,6 +114,10 @@
       } else if (this.type == 7) {
         this.message_text1 = "很抱歉！你发布的微公告未通过评审";
         this.message_text2 = "未通过评审";
+      } else if (this.type == 9) {
+        this.message_text1 = "回复了你的反馈";
+        this.if_has_detail=true;
+        this.if_has_notice = false;
       }
     },
   }

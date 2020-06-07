@@ -41,7 +41,7 @@
         </el-form-item>
 
         <el-form-item label="正文">
-          <el-input type="textarea" rows="10" v-model="form.text"></el-input>
+          <el-input type="textarea" rows="10" maxlength="250" v-model="form.text"></el-input>
         </el-form-item>
 
         <el-form-item>
