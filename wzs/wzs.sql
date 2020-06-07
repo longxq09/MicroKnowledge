@@ -54,8 +54,8 @@ CREATE TABLE `admin`  (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES (1, '123456', 'admin@163.com');
-INSERT INTO `admin` VALUES (2, '3a9b130c9f856fcd10b6c2f483df7bed', 'microknowledge@126.com');
+INSERT INTO `admin` VALUES (1000000, '123456', 'admin@163.com');
+INSERT INTO `admin` VALUES (1000002, '3a9b130c9f856fcd10b6c2f483df7bed', 'microknowledge@126.com');
 
 -- ----------------------------
 -- Table structure for comment
