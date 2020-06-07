@@ -66,8 +66,7 @@ public class MNoticeController {
         if (expertiseStr != null) {
             newTopic.addAll(Arrays.asList(expertiseStr.split("-")));
         }
-        if (newTopic != null) {
-            System.out.println("interest");
+        if (newTopic.size() != 0) {
             for (String id: newTopic) {
                 List<MicroNotice> mnTemp = noticeService.selectNoticeByTopic(id);
                 if (mnTemp.size() > 4) {
@@ -88,7 +87,6 @@ public class MNoticeController {
             microSrc = noticeService.getMNoticeById(favNoticeIds.get(random.nextInt(favNoticeIds.size())));
         }
         if (microSrc != null) {
-            System.out.println("fav");
             String[] srcTopic = microSrc.getTopic().split("-");
             int[] srcArr = new int[Similarity.dim];
             for (String str : srcTopic) {
@@ -97,10 +95,6 @@ public class MNoticeController {
                 } catch (Exception ignored) {
 
                 }
-//                if(str.isEmpty()){
-//                    continue;
-//                }
-//                srcArr[Integer.valueOf(str)] = 1;
             }
             List<MicroNotice> allNotice = noticeService.selectAllNotice();
             for (MicroNotice microNotice : allNotice) {
@@ -125,7 +119,6 @@ public class MNoticeController {
             microSrc = noticeService.getMNoticeById(likeNoticeIds.get(random.nextInt(likeNoticeIds.size())));
         }
         if (microSrc != null) {
-            System.out.println("like");
             String[] srcTopic = microSrc.getTopic().split("-");
             int[] srcArr = new int[Similarity.dim];
             for (String str : srcTopic) {
@@ -152,12 +145,11 @@ public class MNoticeController {
             }
 
         }
-        if (resultRecommend.size() > 5) {
+        if (resultRecommend.size() > 10) {
             List<MicroNotice> resList = new ArrayList<>(resultRecommend);
             Collections.shuffle(resList);
             return resList;
         } else {
-            System.out.println("default");
             Map<String, Object> queryMap = new HashMap<>();
             queryMap.put("judge",1);
             List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
