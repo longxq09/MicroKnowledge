@@ -17,6 +17,9 @@ public interface TopicMapper {
 
     List<Topic> getALLValidTopic();
 
+    @Select("select count(*) from topic")
+    int getTopicCount();
+
     @Select("select * from topic where `id` = #{id}")
     Topic getTopicById(int id);
 

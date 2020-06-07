@@ -21,6 +21,11 @@ public class TopicServiceImp implements TopicService {
     private TopicMapper topicMapper;
 
     @Override
+    public int getTopicCount() {
+        return topicMapper.getTopicCount();
+    }
+
+    @Override
     public List<Topic>getALLValidTopic(){
         return topicMapper.getALLValidTopic();
     }

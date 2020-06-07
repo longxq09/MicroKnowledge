@@ -13,6 +13,8 @@ import java.util.Map;
  */
 public interface TopicService {
 
+    int getTopicCount();
+
     List<Topic> getALLValidTopic();
 
     Topic getTopicById(int id);

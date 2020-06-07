@@ -21,13 +21,23 @@ public class MicroNotice {
     private String keywords = null;
     private String title = null;
     private String summary = null;
-
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private Date time = null;
     private String showTime = null;
     private int Judge = 0;
-
     private double hot;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        } else if (!(obj instanceof MicroNotice)) {
+            return false;
+        } else {
+            MicroNotice right = (MicroNotice) obj;
+            return this.id == right.getId();
+        }
+    }
 
     public int getId() {
         return id;
