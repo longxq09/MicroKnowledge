@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.HEAD;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -41,111 +42,154 @@ public class MNoticeController {
     @Resource
     private UserInfoService userInfoService;
 
-    private int round = 0;
+    private static Set<String> oldTopic = new HashSet<>();
+    private int oldFavSize = 0;
+    private int oldLikeSize = 0;
+    private int oldUserId = 0;
+
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/getNotices", method = RequestMethod.GET)
     public List<MicroNotice> getNotices(HttpServletRequest request) {
-
-        round = (round + 1) % 3;
-
+        // 标识用户
         int userId = Integer.parseInt(request.getParameter("accountId"));
-        System.out.println("userId is: " + userId);
-        List<MicroNotice> resList = new ArrayList<>();
-        if (round == 0) { // 专业领域topic, round == 0
-            UserInfo userInfo = userInfoService.getUserInfo(userId);
-            String expertiseStr = userInfo.getExpertise();
-            String interest = userInfo.getInterest();
-            List<String> res = new ArrayList<>();
-            if (expertiseStr != null) {
-                res.addAll(Arrays.asList(expertiseStr.split("-")));
-            }
-            if (interest != null) {
-                res.addAll(Arrays.asList(interest.split("-")));
-            }
-            String id;
-            System.out.println("res.size()" + res.size());
-            if (res.size() != 0) {
-                int count = 2;
-                while (resList.size() < 10 && count > 0) {
-                    Random rand = new Random();
-                    id = res.get(rand.nextInt(Math.max((res.size() - 1), 0)));
-                    count-=1;
-                    resList.addAll(noticeService.selectNoticeByTopic(id));
-                }
-                if (resList.size() >= 10) {
-//                    resList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
-                    return resList;
-                }
-            }
-        } else if (round == 1) { // favorite, round == 1
-            Similarity.dim = 72;
-            List<Integer> noticeIdList =  favoriteService.selectFavoriteByUserId(userId);
-//            List<Integer> noticeIdList =  favoriteService.selectFavoriteByUserId(1);
 
-            List<MicroNotice> allNotice = noticeService.selectAllNotice();
-            // 分解topic
-            int[] srcArr = new int[Similarity.dim];
-            MicroNotice microSrc = noticeService.getMNoticeById(noticeIdList.get(noticeIdList.size() - 1));
-            if (microSrc != null) {
-                String[] srcTopic = microSrc.getTopic().split("-");
-                for (String str : srcTopic) {
-                    srcArr[Integer.valueOf(str)] = 1;
-                }
-                for (MicroNotice microNotice : allNotice) {
-                    String[] dstTopic = microNotice.getTopic().split("-");
-                    int[] dstArr = new int[Similarity.dim];
-                    for (String str : dstTopic) {
-                        dstArr[Integer.valueOf(str)] = 1;
-                    }
-                    if (Similarity.calCosineSimilarity(srcArr,dstArr) > 0.5) {
-                        resList.add(microNotice);
-                    }
-                }
-                if (resList.size() > 5) {
-//                    resList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
-                    return resList;
+        // 最后输出
+        List<MicroNotice> resList = new ArrayList<>();
+        // 获取当前用户的信息
+        UserInfo userInfo = userInfoService.getUserInfo(userId);
+        // 获取专业兴趣
+        String expertiseStr = userInfo.getExpertise();
+        String interest = userInfo.getInterest();
+
+        Set<String> newTopic = new HashSet<>();
+        if (interest != null) {
+            newTopic.addAll(Arrays.asList(interest.split("-")));
+        }
+        if (expertiseStr != null) {
+            newTopic.addAll(Arrays.asList(expertiseStr.split("-")));
+        }
+        Set<String> setTemp = new HashSet<>();
+        setTemp.addAll(newTopic);
+        setTemp.removeAll(oldTopic);
+
+        if (setTemp.size() == 0) {
+            setTemp = oldTopic;
+        }
+
+
+        if (setTemp.size() != oldTopic.size() && setTemp.size()  != 0) {
+            System.out.println("newTopic.size()" + setTemp.size());
+            System.out.println("oldTopic.size()" + oldTopic.size());
+            oldTopic = newTopic;
+            for (String id: setTemp) {
+                resList.addAll(noticeService.selectNoticeByTopic(id));
+            }
+            if (resList.size() > 4) {
+                return resList;
+            }
+
+        }
+
+//        oldTopic.clear();
+//        for (String str : setTemp){
+//            oldTopic.add(str);
+//        }
+
+        Similarity.dim = 72;
+        List<Integer> favNoticeIds = favoriteService.selectFavoriteByUserId(userId);
+        List<MicroNotice> allNotice = noticeService.selectAllNotice();
+        int[] srcArr = new int[Similarity.dim];
+        MicroNotice microSrc = null;
+        boolean flag = false;
+        if (favNoticeIds.size() != oldFavSize && favNoticeIds.size() > 0) {
+            flag = true;
+            microSrc = noticeService.getMNoticeById(favNoticeIds.get(favNoticeIds.size() - 1));
+        } else if (favNoticeIds.size() > 0) {
+            Random random = new Random();
+            microSrc = noticeService.getMNoticeById(favNoticeIds.get(random.nextInt(favNoticeIds.size())));
+        }
+        oldFavSize = favNoticeIds.size();
+        if (microSrc != null && flag) {
+            System.out.println("fav");
+            String[] srcTopic = microSrc.getTopic().split("-");
+            for (String str : srcTopic) {
+                try {
+                    srcArr[Integer.parseInt(str)] = 1;
+                } catch (Exception ignored) {
                 }
             }
-        } else if (round == 2) { // like, round == 2
-            List<Integer> likeNoticeIds = likeService.getLikeNoticeIdByUserId(userId);
-//            List<Integer> likeNoticeIds = likeService.getLikeNoticeIdByUserId(1);
-            if (likeNoticeIds.size() != 0) {
-                Random rand = new Random();
-                int noticeId = likeNoticeIds.get(rand.nextInt(likeNoticeIds.size()));
-                Similarity.dim = 72;
-                int[] srcArr = new int[Similarity.dim];
-                MicroNotice microSrc = noticeService.getMNoticeById(noticeId);
-                if (microSrc != null) {
-                    String[] srcTopic = microSrc.getTopic().split("-");
-                    for (String str : srcTopic) {
-                        srcArr[Integer.valueOf(str)] = 1;
-                    }
-                    List<MicroNotice> allNotice = noticeService.selectAllNotice();
-                    for (MicroNotice microNotice : allNotice) {
-                        String[] dstTopic = microNotice.getTopic().split("-");
-                        int[] dstArr = new int[Similarity.dim];
-                        for (String str : dstTopic) {
-                            dstArr[Integer.valueOf(str)] = 1;
-                        }
-                        if (Similarity.calCosineSimilarity(srcArr,dstArr) > 0.5) {
-                            resList.add(microNotice);
-                        }
-                    }
-                    if (resList.size() > 5) {
-//                        resList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
-                        return resList;
+            for (MicroNotice microNotice : allNotice) {
+                String[] dstTopic = microNotice.getTopic().split("-");
+                int[] dstArr = new int[Similarity.dim];
+                for (String str : dstTopic) {
+                    try {
+                        dstArr[Integer.parseInt(str)] = 1;
+                    } catch (Exception ignored) {
+
                     }
                 }
+                if (Similarity.calCosineSimilarity(srcArr,dstArr) > 0.5 && Similarity.calCosineSimilarity(srcArr,dstArr) < 0.98) {
+                    resList.add(microNotice);
+                }
+            }
+            if (flag) {
+                return  resList;
+            } else if (resList.size() > 15) {
+                resList = resList.subList(0,15);
             }
         }
-        System.out.println("default");
-        Map<String, Object> queryMap = new HashMap<>();
-        queryMap.put("judge",1);
-        List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
-//        noticeList.sort(Comparator.comparing(MicroNotice::getTime).reversed());
-        return noticeList.subList(0,20);
-
+        microSrc = null;
+        List<Integer> likeNoticeIds = likeService.getLikeNoticeIdByUserId(userId);
+        Similarity.dim = 72;
+        srcArr = new int[Similarity.dim];
+        boolean twiceFlag = false;
+        if (likeNoticeIds.size() != oldLikeSize && likeNoticeIds.size() > 0 ) {
+            int noticeId = likeNoticeIds.get(likeNoticeIds.size() - 1);
+            microSrc = noticeService.getMNoticeById(noticeId);
+            twiceFlag = true;
+        } else if (likeNoticeIds.size() > 0) {
+            Random rand = new Random();
+            int noticeId = likeNoticeIds.get(rand.nextInt(likeNoticeIds.size()));
+            microSrc = noticeService.getMNoticeById(noticeId);
+        }
+        oldLikeSize = likeNoticeIds.size();
+        if (microSrc != null && twiceFlag) {
+            System.out.println("eee");
+            resList.clear();
+            String[] srcTopic = microSrc.getTopic().split("-");
+            for (String str : srcTopic) {
+                if(str.isEmpty()){
+                    continue;
+                }
+                srcArr[Integer.valueOf(str)] = 1;
+            }
+            allNotice = noticeService.selectAllNotice();
+            for (MicroNotice microNotice : allNotice) {
+                String[] dstTopic = microNotice.getTopic().split("-");
+                int[] dstArr = new int[Similarity.dim];
+                for (String str : dstTopic) {
+                    if(str.isEmpty()){
+                        continue;
+                    }
+                    dstArr[Integer.valueOf(str)] = 1;
+                }
+                if (Similarity.calCosineSimilarity(srcArr,dstArr) > 0.5 && Similarity.calCosineSimilarity(srcArr,dstArr) < 0.98) {
+                    resList.add(microNotice);
+                }
+            }
+            if (resList.size() > 5) {
+                return resList;
+            }
+        }
+        if (resList.size() < 3) {
+            System.out.println("default");
+            Map<String, Object> queryMap = new HashMap<>();
+            queryMap.put("judge",1);
+            List<MicroNotice> noticeList = noticeService.queryMNotice(queryMap);
+            return noticeList.subList(0,20);
+        }
+        return  resList;
     }
 
     @CrossOrigin
@@ -274,9 +318,10 @@ public class MNoticeController {
             n.setHot(hot);
         }
         noticeList.sort(Comparator.comparing(MicroNotice::getHot).reversed());
-
-        System.out.println("get Hot Temp");
-        return noticeList.subList(0,20);
+        if (noticeList.size() > 20) {
+            noticeList = noticeList.subList(0,20);
+        }
+        return noticeList;
     }
 
 }

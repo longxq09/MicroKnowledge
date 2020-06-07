@@ -74,27 +74,47 @@
             console.log(error)
           })
       },
-      removeHandle(event){
+      removeHandle(event) {
         this.$message({
           message: '更新成功',
           type: 'success'
         });
         if (event.to.id === "enable") {
-          let topic = this.usedTopic[this.usedTopic.length - 1]
-          topic.flag = 1 - topic.flag
-          this.updateTopic(topic)
+          let topic = this.usedTopic[event.newDraggableIndex]
+          this.activateTopic(topic)
+          console.log(topic.topicName)
         } else {
-          let topic = this.deleteTopic[this.deleteTopic.length - 1]
-          topic.flag = 1 - topic.flag
-          this.updateTopic(topic)
+          let topic = this.deleteTopic[event.newDraggableIndex]
+          this.delTopic(topic)
         }
       },
       updateTopic(topic) {
         let params = new URLSearchParams()
         params.append('id', topic.id)
         params.append('topicName', topic.topicName)
-        params.append('flag', topic.flag)
         this.axios.post('/topic/updateTopic', params)
+          .then((res)=>{
+            console.log(res)
+          })
+          .catch((res)=>{
+            console.log(res.message);
+          });
+      },
+      activateTopic(topic) {
+        let params = new URLSearchParams()
+        params.append('id', topic.id)
+        this.axios.post('/topic/activateTopic', params)
+          .then((res)=>{
+            console.log(res)
+          })
+          .catch((res)=>{
+            console.log(res.message);
+          });
+      },
+      delTopic(topic) {
+        let params = new URLSearchParams()
+        params.append('id', topic.id)
+        this.axios.post('/topic/deleteTopic', params)
           .then((res)=>{
             console.log(res)
           })

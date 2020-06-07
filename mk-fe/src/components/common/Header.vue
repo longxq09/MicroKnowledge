@@ -17,16 +17,21 @@
     <el-button v-if="!login" style="float: right; margin: 14px;" @click="backToVisitor">登录</el-button>
     <el-dropdown v-if="login" @command="handleDropdown" class="dropdown">
       <el-avatar shape="square" :size="34" :src="avator"></el-avatar>
-      <el-dropdown-menu slot="dropdown">
+      <el-dropdown-menu v-if="!manager" slot="dropdown">
         <el-dropdown-item></el-dropdown-item>
         <el-dropdown-item command="logout">退出登录</el-dropdown-item>
         <el-dropdown-item command="editUserInfo">修改个人信息</el-dropdown-item>
       </el-dropdown-menu>
+      <el-dropdown-menu v-if="manager" slot="dropdown">
+        <el-dropdown-item></el-dropdown-item>
+        <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+      </el-dropdown-menu>
     </el-dropdown>
-    <el-badge style="float: right;margin: 10px;position: relative;" v-if="login">
+    <el-badge style="float: right;margin: 10px;position: relative;" v-if="login&&!manager">
       <el-button class="el-icon-message-solid" @click="toUserMessage" circle></el-button>
       <div class="red_dot" v-if="if_show_new">{{new_message}}</div>
     </el-badge>
+    <el-button v-if="manager" style="float: right; margin: 14px;" @click="toUser">回到用户界面</el-button>
   </div>
 </template>
 
@@ -45,6 +50,7 @@
         new_message: 0,
         if_show_new: false,
         login: false,
+        manager: false,
         accountId: sessionStorage.getItem("accountId"),
         avator: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3810033319,3262616285&fm=26&gp=0.jpg',
         male_pic: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2644999504,2046739651&fm=26&gp=0.jpg',
@@ -54,7 +60,13 @@
     mounted() {
       this.login = sessionStorage.getItem("accountId") !== "" &&
         sessionStorage.getItem("accountId") != null
+      this.manager = !!this.$route.path.includes('admin')
       this.getUserInfo();
+    },
+    watch: {
+      $route() {
+        this.manager = !!this.$route.path.includes('admin')
+      },
     },
     methods: {
       async getUserInfo() {
@@ -71,6 +83,10 @@
             console.log(err);
           }
         }
+      },
+      toUser() {
+        sessionStorage.setItem("manager", false)
+        this.$router.push('/homepage')
       },
       toUserMessage(){
         this.$router.push({

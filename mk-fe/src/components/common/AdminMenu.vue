@@ -18,9 +18,13 @@
                    @click="changeCollapse">
         </el-button>
       </div>
-      <el-menu-item index="/admin">
+      <!-- <el-menu-item index="/admin">
         <i class="el-icon-s-home"></i>
         <span slot="title">主页</span>
+      </el-menu-item> -->
+      <el-menu-item index="/admin/message">
+        <i class="el-icon-chat-line-square"></i>
+        <span slot="title">查看反馈</span>
       </el-menu-item>
       <el-menu-item index="/admin/topic">
         <i class="el-icon-magic-stick"></i>

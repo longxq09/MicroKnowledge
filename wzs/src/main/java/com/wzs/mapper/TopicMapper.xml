@@ -28,17 +28,16 @@
     <select id="selectTopic" resultType="com.wzs.bean.Topic" parameterType="java.util.Map">
         SELECT
         <include refid="BASE_COLUMN"/>
-        from
-        <include refid="BASE_TABLE"/>
+        from <include refid="BASE_TABLE"/>
         <where>
             <if test="id !=null and id !=''">
-                and id=#{id,jdbcType=INTEGER}
+                and `id`=#{id,jdbcType=INTEGER}
             </if>
-            <if test="topicName !=null and topic !=''">
+            <if test="topicName !=null and topicName !=''">
                 and `topicName`=#{topicName,jdbcType=VARCHAR}
             </if>
             <if test="flag !=null and flag !=''">
-                and flag=#{flag,jdbcType=INTEGER}
+                and `flag`=#{flag,jdbcType=INTEGER}
             </if>
         </where>
 
@@ -49,10 +48,11 @@
         INSERT INTO
         <include refid="BASE_TABLE"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            `topicName`
+            `topicName`,`flag`
         </trim>
         <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
             #{topicName, jdbcType=VARCHAR},
+            #{flag, jdbcType=INTEGER}
         </trim>
     </insert>
 
@@ -73,7 +73,7 @@
     <delete id="deleteTopicById" parameterType="java.lang.Integer">
         update
         <include refid="BASE_TABLE"/>
-        set flag=0
+        set flag=2
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
