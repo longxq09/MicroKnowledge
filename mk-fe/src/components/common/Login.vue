@@ -200,7 +200,7 @@
                 cancelButtonText: '否，进入用户界面'
               })
                 .then(() => {
-                  this.$router.push('/admin')
+                  this.$router.push('/admin/message')
                   const h = this.$createElement;
                   this.$notify({
                     title: '登陆成功',
