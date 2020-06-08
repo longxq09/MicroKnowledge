@@ -3,57 +3,32 @@
     <div class="drag-box">
       <div class="drag-box-item">
         <div>
-          <div class="drag-title" style="display: inline-block">使用中分类</div>
+          <div class="drag-title" style="display: inline-block">分类</div>
           <el-button icon="el-icon-circle-plus-outline"
                      type="primary"
                      @click="addTopic">
           </el-button>
         </div>
-        <draggable v-model="usedTopic" @remove="removeHandle" :options="dragOptions">
-          <transition-group tag="div" id="enable" class="item-ul">
-            <div v-for="(item, index) in usedTopic" class="drag-list" :key="item.id" @click="updateTopic(item.id)">
-              {{item.topicName}}
-              <el-button icon="el-icon-edit" style="border: none" @click="edit(0, index)"></el-button>
-            </div>
-          </transition-group>
-        </draggable>
-      </div>
-      <div class="drag-box-item">
-        <div class="drag-title">已禁用分类</div>
-        <draggable v-model="deleteTopic" @remove="removeHandle" :options="dragOptions">
-          <transition-group tag="div" id="disable" class="item-ul">
-            <div v-for="item in deleteTopic" class="drag-list" :key="item.id">
-              {{item.topicName}}
-            </div>
-          </transition-group>
-        </draggable>
+        <transition-group tag="div" id="enable" class="item-ul">
+          <div v-for="(item, index) in usedTopic" class="drag-list" :key="item.id" @click="updateTopic(item.id)">
+            {{item.topicName}}
+            <el-button icon="el-icon-edit" style="border: none" @click="edit(0, index)"></el-button>
+          </div>
+        </transition-group>
       </div>
     </div>
-
   </div>
 </template>
 <script>
-  import draggable from 'vuedraggable'
   export default {
     name: 'TopicManage',
     data() {
       return {
-        dragOptions:{
-          animation: 120,
-          scroll: true,
-          group: 'topic',
-          ghostClass: 'ghost-style'
-        },
         usedTopic: [],
-        deleteTopic: []
       }
-    },
-    components: {
-      draggable,
     },
     mounted() {
       this.getTopic()
-      this.getInvalidTopic()
     },
     methods: {
       getTopic() {
@@ -65,56 +40,11 @@
             console.log(error)
           })
       },
-      getInvalidTopic() {
-        this.axios.get('/topic/getInvalidTopic')
-          .then((res) => {
-            this.deleteTopic = res.data
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
-      removeHandle(event) {
-        this.$message({
-          message: '更新成功',
-          type: 'success'
-        });
-        if (event.to.id === "enable") {
-          let topic = this.usedTopic[event.newDraggableIndex]
-          this.activateTopic(topic)
-          console.log(topic.topicName)
-        } else {
-          let topic = this.deleteTopic[event.newDraggableIndex]
-          this.delTopic(topic)
-        }
-      },
       updateTopic(topic) {
         let params = new URLSearchParams()
         params.append('id', topic.id)
         params.append('topicName', topic.topicName)
         this.axios.post('/topic/updateTopic', params)
-          .then((res)=>{
-            console.log(res)
-          })
-          .catch((res)=>{
-            console.log(res.message);
-          });
-      },
-      activateTopic(topic) {
-        let params = new URLSearchParams()
-        params.append('id', topic.id)
-        this.axios.post('/topic/activateTopic', params)
-          .then((res)=>{
-            console.log(res)
-          })
-          .catch((res)=>{
-            console.log(res.message);
-          });
-      },
-      delTopic(topic) {
-        let params = new URLSearchParams()
-        params.append('id', topic.id)
-        this.axios.post('/topic/deleteTopic', params)
           .then((res)=>{
             console.log(res)
           })
@@ -179,7 +109,7 @@
   }
   .drag-box-item {
     flex: 1;
-    width: 450px;
+    width: 900px;
     background-color: #eff1f5;
     margin-right: 16px;
     border-radius: 6px;

@@ -54,8 +54,8 @@ CREATE TABLE `admin`  (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES (1, '123456', 'admin@163.com');
-INSERT INTO `admin` VALUES (2, '3a9b130c9f856fcd10b6c2f483df7bed', 'microknowledge@126.com');
+INSERT INTO `admin` VALUES (1000000, '123456', 'admin@163.com');
+INSERT INTO `admin` VALUES (1000002, '3a9b130c9f856fcd10b6c2f483df7bed', 'microknowledge@126.com');
 
 -- ----------------------------
 -- Table structure for comment
@@ -351,6 +351,7 @@ INSERT INTO `topic` VALUES (64, '宗教', 1);
 INSERT INTO `topic` VALUES (65, '西班牙语和葡萄牙语及文学', 1);
 INSERT INTO `topic` VALUES (66, '戏剧与表演研究', 1);
 INSERT INTO `topic` VALUES (67, '其他', 1);
+INSERT INTO `topic` VALUES (68, '软工赛高！', 1);
 
 -- ----------------------------
 -- Table structure for user_info
@@ -379,6 +380,10 @@ INSERT INTO `user_info` VALUES (3, 'wzs3@163.com', 'Jan Vandenbrande', '', 'male
 INSERT INTO `user_info` VALUES (4, 'wzs4@163.com', 'Matt Mihelic, MD', '', 'male',  'work hard!', 'Associate Professor', 'University of Tennessee', '23-24-29', '21-30-40');
 INSERT INTO `user_info` VALUES (5, 'wzs5@163.com', 'Xiao Liu', '', 'female', 'fighting!', 'Assistant Professor at University of Arkansas; Former Research Scientist at IBM T.J. Watson.', 'Industrial Engineering, University of Arkansas', '30-23-40', '21-34-36-24');
 INSERT INTO `user_info` VALUES (6, 'wzs6@163.com', 'Diane Stevens', '', 'male', 'work hard!', 'Decades of involvement in the humanities, the arts, public service, and science.', 'UCLA, San Francisco State University', '15-52-56-59-61-63', '3-15-19-20');
+INSERT INTO `user_info` VALUES (1000000, '***********', 'x', '', 'male', 'work hard!', 'Decades of involvement in the humanities, the arts, public service, and science.', 'UCLA, San Francisco State University', '15-52-56-59-61-63', '3-15-19-20');
+INSERT INTO `user_info` VALUES (1000002, '***********', 'X', '', 'male', 'やれやれ', '水泊梁山', 'CHINA', '68', '68');
+
+
 
 DROP TABLE IF EXISTS `user_rating`;
 CREATE TABLE `user_rating`  (

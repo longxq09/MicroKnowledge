@@ -31,7 +31,6 @@
       <el-button class="el-icon-message-solid" @click="toUserMessage" circle></el-button>
       <div class="red_dot" v-if="if_show_new">{{new_message}}</div>
     </el-badge>
-    <el-button v-if="manager" style="float: right; margin: 14px;" @click="toUser">回到用户界面</el-button>
   </div>
 </template>
 
