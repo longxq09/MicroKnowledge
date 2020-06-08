@@ -10,7 +10,7 @@
           </el-button>
         </div>
         <transition-group tag="div" id="enable" class="item-ul">
-          <div v-for="(item, index) in usedTopic" class="drag-list" :key="item.id" @click="editTopic(item.id)">
+          <div v-for="(item, index) in usedTopic" class="drag-list" :key="item.id">
             {{item.topicName}}
             <el-button icon="el-icon-edit" style="border: none" @click="edit(0, index)"></el-button>
           </div>
