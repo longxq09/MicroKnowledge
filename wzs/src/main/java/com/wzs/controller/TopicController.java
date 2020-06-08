@@ -65,7 +65,7 @@ public class TopicController {
         int id = Integer.parseInt(request.getParameter("id"));
         Topic topic = topicService.getTopicById(id);
         topic.setTopicName(request.getParameter("topicName"));
-        topic.setFlag(Integer.parseInt(request.getParameter("flag")));
+        topic.setFlag(1);
         topicService.updateTopic(topic);
         return 0;
     }

@@ -10,7 +10,7 @@
           </el-button>
         </div>
         <transition-group tag="div" id="enable" class="item-ul">
-          <div v-for="(item, index) in usedTopic" class="drag-list" :key="item.id" @click="updateTopic(item.id)">
+          <div v-for="(item, index) in usedTopic" class="drag-list" :key="item.id">
             {{item.topicName}}
             <el-button icon="el-icon-edit" style="border: none" @click="edit(0, index)"></el-button>
           </div>
@@ -57,7 +57,7 @@
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         }).then(({ value }) => {
-          let topic = type === 0 ? this.usedTopic[index] : this.deleteTopic[index]
+          let topic = this.usedTopic[index]
           topic.topicName = value
           this.updateTopic(topic)
           this.$message({
