@@ -56,7 +56,11 @@
     },
     mounted() {
       if (sessionStorage.getItem("accountId") !== '' && sessionStorage.getItem("accountId") != null) {
-        this.$router.push('/homepage')
+        if (sessionStorage.getItem("admin") !== "true") {
+          this.$router.push('/homepage')
+        } else {
+          this.$router.push('/admin/message')
+        }
       }
     }
 
