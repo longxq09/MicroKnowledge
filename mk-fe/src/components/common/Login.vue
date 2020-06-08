@@ -29,7 +29,7 @@
       var validateRepeat = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'))
-        } else if (value != this.forgetForm.password) {
+        } else if (value !== this.forgetForm.password) {
           callback(new Error('两次输入密码不一致'))
         } else {
           callback()
@@ -42,60 +42,10 @@
           password: [{required: true, message: '密码不可为空', trigger: 'blur'}],
           email: [{required: true, message: '邮箱不可为空', trigger: 'blur'}],
         },
-        forgetPassVisible: false,
         active: 0,
-        forgetForm: {password: '', email: '', repeat: '', code: ''},
-        forgetRules: {
-          code: [{required: true, message: '验证码不可为空', trigger: 'blur'}],
-          password: [{required: true, validator: validatePass, trigger: 'blur'}],
-          repeat: [{required: true, validator: validateRepeat, trigger: 'blur' }],
-          email: [{required: true, message: '邮箱不可为空', trigger: 'blur'}],
-        },
       }
     },
     methods: {
-      submit() {
-        if (this.forgetForm.password.length < 6) {
-          let remindTitle = '密码长度过短！'
-          let remindContent = '密码长度最少6位，请重新输入！'
-          this.$alert(remindContent, remindTitle, {
-            confirmButtonText: '确定'
-          });
-          return
-        }
-        if (this.forgetForm.password !== this.forgetForm.repeat) {
-          let remindTitle = '确认密码出错！'
-          let remindContent = '两次密码输入不一致，请重新输入！'
-          this.$alert(remindContent, remindTitle, {
-            confirmButtonText: '确定'
-          });
-          return
-        }
-        let params = new URLSearchParams();
-        params.append('email', this.forgetForm.email);
-        params.append('newPassword', this.forgetForm.password);
-        this.axios.post('/user/resetForget', params)
-          .then((res)=>{
-            if (res.data.code == 0) {
-              this.forgetPassVisible = false;
-              this.active = 0
-              const h = this.$createElement;
-              this.$notify({
-                title: '重置密码成功！',
-                message: h('i', { style: 'color: teal'}, '登录试试看吧！')
-              });
-            } else {
-              let remindTitle = '重置密码出错！'
-              let remindContent = '重置密码出错，请重新尝试！'
-              this.$alert(remindContent, remindTitle, {
-                confirmButtonText: '确定'
-              });
-            }
-          })
-          .catch((res)=>{
-            console.log(res.message);
-          });
-      },
       login () {
         var params = new URLSearchParams();
         params.append('email', this.dataForm.email);
@@ -124,6 +74,7 @@
             } else {
               sessionStorage.setItem("accountId", res.data.id)
               sessionStorage.setItem("email", this.dataForm.email)
+              sessionStorage.setItem("admin", "true")
               this.$router.push('/admin/message')
               const h = this.$createElement;
               this.$notify({

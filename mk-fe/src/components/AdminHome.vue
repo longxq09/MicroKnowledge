@@ -22,11 +22,9 @@
       vAdminMenu
     },
     mounted() {
-      /*
       if (sessionStorage.getItem("accountId") === '' || sessionStorage.getItem("accountId") === null) {
         this.$router.push('/')
       }
-      */
       let adminElement = document.getElementById("admin")
       let menuElement = document.getElementById("adminMenu")
       adminElement.style.left = menuElement.style.width
