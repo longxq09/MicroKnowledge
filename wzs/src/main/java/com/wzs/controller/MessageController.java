@@ -139,7 +139,7 @@ public class MessageController {
     @ResponseBody
     @RequestMapping(value = "/adminReply", method = RequestMethod.POST)
     public int adminReply(HttpServletRequest request){
-        int userId = Integer.parseInt(request.getParameter("userId"));
+        int userId = Integer.parseInt(request.getParameter("fromUserId"));
         String detail = request.getParameter("detail");
         Message message = new Message();
         message.setType(MessageType.ADMIN.getIndex());
