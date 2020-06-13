@@ -55,9 +55,65 @@
     </update>
 
     <insert id="addUserInfo" parameterType="com.wzs.bean.UserInfo">
-        insert into user_info values
-        (null,#{email},#{name},#{picture},#{sex},#{signature},#{education},#{works},
-        #{expertise},#{interest})
+        insert into user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test = "email != null">
+                email,
+            </if>
+            <if test = "name != null">
+                `name`,
+            </if>
+            <if test = "picture != null">
+                picture,
+            </if>
+            <if test = "sex != null">
+                sex,
+            </if>
+            <if test = "signature != null">
+                signature,
+            </if>
+            <if test = "education != null">
+                education,
+            </if>
+            <if test = "works != null">
+                works,
+            </if>
+            <if test = "expertise != null">
+                expertise,
+            </if>
+            <if test="interest != null">
+                interest
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test = "email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test = "name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test = "picture != null">
+                #{picture,jdbcType=VARCHAR},
+            </if>
+            <if test = "sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test = "signature != null">
+                #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test = "education != null">
+                #{education,jdbcType=VARCHAR},
+            </if>
+            <if test = "works != null">
+                #{works,jdbcType=VARCHAR},
+            </if>
+            <if test = "expertise != null">
+                #{expertise,jdbcType=VARCHAR},
+            </if>
+            <if test="interest != null">
+                #{interest,jdbcType=VARCHAR},
+            </if>
+        </trim>
     </insert>
 
     <select id="getAllInfos" resultType="com.wzs.bean.UserInfo">
