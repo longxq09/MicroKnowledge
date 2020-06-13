@@ -33,9 +33,9 @@ public class ReviewController {
 
     @CrossOrigin
     @ResponseBody
-    @RequestMapping(value = "/getReviewList", method = RequestMethod.POST)
+    @RequestMapping(value = "/getReviewList", method = RequestMethod.GET)
     public List<MicroNotice> getReviewList(HttpServletRequest request){
-        int userId = Integer.parseInt(request.getParameter("userId"));
+        int userId = Integer.parseInt(request.getParameter("u"));
         List<MicroNotice> retList = new LinkedList<>();
         Map<String,Object> queryMap = new HashMap<>();
         queryMap.put("judge",0);
