@@ -56,8 +56,14 @@ public class MNoticeController {
         // 获取当前用户的信息
         UserInfo userInfo = userInfoService.getUserInfo(userId);
         // 获取专业兴趣
-        String expertiseStr = userInfo.getExpertise();
-        String interest = userInfo.getInterest();
+        String expertiseStr = null;
+        String interest = null;
+        try {
+            expertiseStr = userInfo.getExpertise();
+            interest = userInfo.getInterest();
+        } catch (Exception ignore) {
+
+        }
         // 用户个人的兴趣领域推荐
         Set<String> newTopic = new HashSet<>();
         if (interest != null) {
